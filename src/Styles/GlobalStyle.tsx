@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
     }
+
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
     a, abbr, acronym, address, big, cite, code,
@@ -23,17 +24,20 @@ const GlobalStyle = createGlobalStyle`
         font-size: 100%;
         font-family: sans-serif;
         vertical-align: baseline;
-        font-family: sans-serif;
     }
+
     input {
         font-family: sans-serif;
     }
+
     button {
         font-family: sans-serif;
     }
+
     html {
         font-size: 62.5%;
     }
+
     html, body, #root {
         min-height: 100%;
     }
@@ -42,24 +46,30 @@ const GlobalStyle = createGlobalStyle`
     footer, header, hgroup, menu, nav, section {
         display: block;
     }
+
     body {
         line-height: 1;
     }
+
     ol, ul, li {
         list-style: none;
     }
+
     blockquote, q {
         quotes: none;
     }
-    blockquote:before, blockquote:after,
-    q:before, q:after {
+
+    blockquote::before, blockquote::after,
+    q::before, q::after {
         content: '';
         content: none;
     }
+
     table {
         border-collapse: collapse;
         border-spacing: 0;
     }
+
     /* a {
         text-decoration: none;
         color: inherit;
