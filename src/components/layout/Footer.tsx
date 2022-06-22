@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import oc from '../../styles/openColor';
 
 export default function Footer() {
   return (
@@ -13,6 +14,7 @@ export default function Footer() {
 const FooterWrapper = styled.footer`
   width: 100%;
   bottom: 0;
+  background-color: ${oc.red1};
 `;
 
 const Container = styled.div`
@@ -20,6 +22,7 @@ const Container = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding: 2rem;
+
   span {
     font-size: 1.5rem;
   }

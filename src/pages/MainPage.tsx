@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import oc from '../styles/openColor';
 
 export default function MainPage() {
   return <Container />;
@@ -7,5 +8,5 @@ export default function MainPage() {
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: lightskyblue;
+  background-color: ${oc.indigo2};
 `;
