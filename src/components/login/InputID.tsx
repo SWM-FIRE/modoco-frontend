@@ -43,6 +43,7 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   button,
   input {
     height: 5rem;
@@ -50,7 +51,7 @@ const Form = styled.form`
     width: 100%;
     max-width: 30rem;
     font-size: 2rem;
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    box-shadow: 2px 2px rgb(0 0 0 / 18%);
   }
 `;
 
