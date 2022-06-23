@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import styled from 'styled-components';
+import ShareScreen from './pages/ShareScreen';
 import Layout from './components/layout/Layout';
 import Login from './pages/Login';
 
@@ -11,16 +11,12 @@ function Router() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Login />} />
         </Route>
-        <Route path="/screens" element={<TestContainer2 />} />
+        <Route path="/screens" element={<Layout />}>
+          <Route index element={<ShareScreen />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
 }
-
-const TestContainer2 = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: lightslategray;
-`;
 
 export default Router;
