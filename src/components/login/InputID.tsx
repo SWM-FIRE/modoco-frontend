@@ -35,25 +35,23 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  button,
+  input {
+    height: 5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-with: 30rem;
+    font-size: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  }
 `;
 
 const Button = styled.button`
-  height: 5rem;
-  width: 100%;
   background-color: #fbeaeb;
-  border-radius: 0.5rem;
-  font-size: 1.5rem;
-  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
   margin-top: 2rem;
 `;
 
 const Input = styled.input`
-  height: 5rem;
-  border-radius: 0.5rem;
-  width: 100%;
-  max-width: 30rem;
-  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-  font-size: 2rem;
   text-justify: center;
   padding-left: 1rem;
 `;
