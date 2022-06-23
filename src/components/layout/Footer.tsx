@@ -14,7 +14,7 @@ export default function Footer() {
 const FooterWrapper = styled.footer`
   width: 100%;
   bottom: 0;
-  background-color: ${oc.red1};
+  background-color: ${oc.white};
 `;
 
 const Container = styled.div`
