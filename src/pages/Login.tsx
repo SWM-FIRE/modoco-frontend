@@ -14,7 +14,7 @@ export default function MainPage() {
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: linear-gradient(113.04deg, #d8b9ff 0%, #a5ffb9 100.53%);
+  background: linear-gradient(113deg, #d8b9ff 0%, #a5ffb9 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

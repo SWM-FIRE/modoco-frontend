@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function InputID() {
   const [id, setId] = useState('');
   const navigate = useNavigate();
 
-  const onSubmit = () => {
-    console.log(id);
-    navigate(`screens`);
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // socket connection
+    const uid = uuidv4();
+    const payload = { id, uid };
+    // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
+    //   navigate(`screens`);
+    // });
+    console.log(payload);
+    navigate(`lobby`);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,14 +43,15 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   button,
   input {
     height: 5rem;
     border-radius: 0.5rem;
     width: 100%;
-    max-with: 30rem;
+    max-width: 30rem;
     font-size: 2rem;
-    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    box-shadow: 2px 2px rgb(0 0 0 / 18%);
   }
 `;
 
