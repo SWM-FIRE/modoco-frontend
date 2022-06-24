@@ -16,7 +16,7 @@ export default function InputID() {
     //   navigate(`screens`);
     // });
     console.log(payload);
-    navigate(`screens`);
+    navigate(`lobby`);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

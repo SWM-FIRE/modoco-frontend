@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ShareScreen from './pages/ShareScreen';
+import Lobby from './pages/Lobby';
 import Layout from './components/layout/Layout';
 import Login from './pages/Login';
 
@@ -11,8 +11,8 @@ function Router() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Login />} />
         </Route>
-        <Route path="/screens" element={<Layout />}>
-          <Route index element={<ShareScreen />} />
+        <Route path="/lobby" element={<Layout />}>
+          <Route index element={<Lobby />} />
         </Route>
       </Routes>
     </BrowserRouter>
