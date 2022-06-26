@@ -50,7 +50,6 @@ select,
 table,
 textarea {
   font-size: 12px;
-  line-height: 16px;
   color: #202020;
   font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
