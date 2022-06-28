@@ -5,9 +5,15 @@ import roomInterface from '../../room.interface';
 export default function Room() {
   return (
     <>
-      {roomAPI.map(({ name, total, current }: roomInterface) => {
+      {roomAPI.map(({ name, total, current, id }: roomInterface) => {
         return (
-          <RoomBlock key={name} name={name} total={total} current={current} />
+          <RoomBlock
+            key={id}
+            name={name}
+            total={total}
+            current={current}
+            id={id}
+          />
         );
       })}
     </>

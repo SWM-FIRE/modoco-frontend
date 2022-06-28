@@ -2,16 +2,19 @@
   {
     "name": "room1",
     "total": 4,
-    "current": 0
+    "current": 0,
+    "id": "hash001"
   },
   {
     "name": "room2",
     "total": 4,
-    "current": 0
+    "current": 0,
+    "id": "hash001"
   },
   {
     "name": "room3",
     "total": 4,
-    "current": 0
+    "current": 0,
+    "id": "hash001"
   }
 ]
