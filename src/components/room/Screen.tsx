@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import screenInterface from '../../screen.interface';
+import screenInterface from '../../interface/screen.interface';
 
 export default function RoomBlock({ name, id }: screenInterface) {
   return (
