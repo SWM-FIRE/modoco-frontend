@@ -16,7 +16,7 @@ function Router() {
           <Route index element={<Lobby />} />
         </Route>
         <Route path="/room" element={<Layout />}>
-          <Route index element={<Room />} />
+          <Route path=":roomId" element={<Room />} />
         </Route>
       </Routes>
     </BrowserRouter>
