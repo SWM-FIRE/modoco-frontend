@@ -8,7 +8,7 @@ import {
 
 export default function MainPage() {
   const { room } = useParams();
-  const galleryRef = useRef(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
   const localVideoRef = useRef(null);
   const mainRef = useRef(null);
 

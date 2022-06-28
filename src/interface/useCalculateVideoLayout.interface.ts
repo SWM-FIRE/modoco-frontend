@@ -1,3 +1,5 @@
 export default interface useCalculateVideoLayout {
-  headerHeight: HTMLCollectionOf<HTMLElement>;
+  gallery: HTMLDivElement;
+  videoCount: number;
+  headerHeight: HTMLElement;
 }
