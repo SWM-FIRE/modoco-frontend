@@ -1,24 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { forwardRef } from 'react';
+import { Video, VideoContainer } from './video';
 
-export const LocalVideo = React.forwardRef<PropsType, RefType>((props, ref) => {
+export const LocalVideo = forwardRef<
+  HTMLVideoElement,
+  React.HTMLProps<HTMLVideoElement>
+>((props, ref) => {
   return (
     <VideoContainer>
-      <VoiceVisualizer id="local" />
-      <Video {...props} ref={ref} />
+      <Video ref={ref} autoPlay playsInline muted />
     </VideoContainer>
   );
 });
-
-const VideoContainer = styled.div`
-  width: var(--width);
-  height: var(--height);
-  background-color: #3a3a3e;
-  box-sizing: border-box;
-  position: relative;
-`;
-
-const Video = styled.video`
-  height: 100%;
-  width: 100%;
-`;
+LocalVideo.displayName = 'Video';

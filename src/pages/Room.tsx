@@ -5,11 +5,13 @@ import {
   useCalculateVideoLayout,
   useStartPeerSession,
 } from '../componets/hooks';
+import { LocalVideo } from '../components/room/video/LocalVideo';
+import { RemoteVideo } from '../components/room/video/RemoteVideo';
 
 export default function MainPage() {
   const { room } = useParams();
   const galleryRef = useRef<HTMLDivElement>(null);
-  const localVideoRef = useRef(null);
+  const localVideoRef = useRef<HTMLVideoElement>(null);
   const mainRef = useRef(null);
 
   const userMediaStream = useCreateMediaStream(localVideoRef);
@@ -22,8 +24,8 @@ export default function MainPage() {
     <Main ref={mainRef}>
       <Gallery ref={galleryRef}>
         <Header>방번호</Header>
-        <LocalVideo ref={localVideoRef} autoPlay playsInline muted />
-        {connectedUsers.map((user) => (
+        <LocalVideo ref={localVideoRef} />
+        {connectedUsers.map((user: any) => (
           <RemoteVideo key={user} id={user} autoPlay playsInline />
         ))}
         <Button>화면 공유 ON</Button>
