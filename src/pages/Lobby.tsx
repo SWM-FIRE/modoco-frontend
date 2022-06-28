@@ -11,10 +11,10 @@ export default function Lobby() {
 }
 
 const Header = styled.div`
-  margin-top: 5rem;
   width: 20rem;
   height: 10rem;
   font-size: 10rem;
+  text-align: center;
 `;
 
 const Container = styled.div`
@@ -23,5 +23,5 @@ const Container = styled.div`
   background: linear-gradient(113deg, #9f9f9f 0%, #636363 100%);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
 `;
