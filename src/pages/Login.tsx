@@ -23,7 +23,7 @@ const Container = styled.div`
 
 const MDC = styled.p`
   margin-top: 5rem;
-  height: 8rem;
+  height: 10rem;
   font-size: 10rem;
 `;
 
