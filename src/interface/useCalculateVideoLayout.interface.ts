@@ -1,5 +1,7 @@
+import { RefObject } from 'react';
+
 export default interface useCalculateVideoLayout {
-  gallery: any;
+  gallery: RefObject<HTMLDivElement>;
   videoCount: number;
-  headerHeight: any;
+  headerHeight: RefObject<HTMLVideoElement>;
 }

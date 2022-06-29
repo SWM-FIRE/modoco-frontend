@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable no-param-reassign */
+import { RefObject, useEffect, useState } from 'react';
 
-export const useCreateMediaStream = (localVideoRef) => {
+export const useCreateMediaStream = (
+  localVideoRef: RefObject<HTMLVideoElement>,
+) => {
   const [userMediaStream, setUserMediaStream] = useState(null);
 
   useEffect(() => {
     const createMediaStream = async () => {
-      const stream = await navigator.mediaDevices.getUserMedia({
+      const stream: any = await navigator.mediaDevices.getUserMedia({
         video: {
           width: { min: 640, ideal: 1920 },
           height: { min: 400, ideal: 1080 },
@@ -14,11 +17,12 @@ export const useCreateMediaStream = (localVideoRef) => {
         audio: true,
       });
 
-      localVideoRef.current.srcObject = stream;
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = stream;
+      }
 
       setUserMediaStream(stream);
     };
-
     createMediaStream();
   }, [localVideoRef]);
 

@@ -25,7 +25,6 @@ export const useCalculateVideoLayout = ({
       gallery.current?.style?.setProperty('--width', `${width}px`);
       gallery.current?.style?.setProperty('--height', `${height}px`);
       gallery.current?.style?.setProperty('--cols', `${cols}`);
-      // gallery.current?.style?.setProperty('--cols', `${cols}`);
     };
 
     recalculateLayout();

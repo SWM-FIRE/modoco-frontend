@@ -8,11 +8,12 @@ import {
 } from '../../components/hooks';
 import { LocalVideo } from '../components/room/video/LocalVideo';
 import { RemoteVideo } from '../components/room/video/RemoteVideo';
+import { toggleFullscreen } from '../utils/helper';
 
 export default function MainPage() {
   const { room } = useParams();
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const localVideoRef = useRef<HTMLVideoElement>(null);
+  const galleryRef = useRef<HTMLDivElement | null>(null);
+  const localVideoRef = useRef<HTMLVideoElement | null>(null);
   const mainRef = useRef(null);
 
   const userMediaStream = useCreateMediaStream(localVideoRef);
@@ -20,6 +21,18 @@ export default function MainPage() {
     useStartPeerSession(room, userMediaStream, localVideoRef);
 
   useCalculateVideoLayout(galleryRef, connectedUsers.length + 1);
+
+  async function handleScreenSharing(share) {
+    if (share) {
+      await shareScreen();
+    } else {
+      await cancelScreenSharing();
+    }
+  }
+
+  function handleFullscreen(fullscreen) {
+    toggleFullscreen(fullscreen, mainRef.current);
+  }
 
   return (
     <Main ref={mainRef}>
