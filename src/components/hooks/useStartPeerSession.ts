@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { useEffect, useMemo, useState } from 'react';
-import { createPeerConnectionContext } from '../utils/PeerConnectionSession';
+import { createPeerConnectionContext } from '../room/rtc/PeerConnectionSession';
 import peerSessionInterface from '../../interface/useStartPeerSession.interface';
 
 export const useStartPeerSession = ({
@@ -13,7 +13,7 @@ export const useStartPeerSession = ({
     [],
   );
 
-  const [displayMediaStream, setDisplayMediaStream] = useState(null);
+  const [displayMediaStream, setDisplayMediaStream] = useState<MediaStream>();
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export const useStartPeerSession = ({
     if (displayMediaStream) {
       displayMediaStream.getTracks().forEach((track: any) => track.stop());
     }
-    setDisplayMediaStream(null);
+    setDisplayMediaStream(undefined);
   };
 
   const shareScreen = async () => {
@@ -108,10 +108,11 @@ export const useStartPeerSession = ({
     }
 
     stream.getVideoTracks()[0].addEventListener('ended', () => {
-      cancelScreenSharing(stream);
+      cancelScreenSharing();
+      // cancelScreenSharing(stream);
     });
 
-    if (localVideoRef) {
+    if (localVideoRef?.current) {
       // eslint-disable-next-line no-param-reassign
       localVideoRef.current.srcObject = stream;
     }
