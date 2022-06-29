@@ -1,8 +1,17 @@
+/* eslint-disable no-param-reassign */
 import { useEffect, useMemo, useState } from 'react';
 import { createPeerConnectionContext } from '../utils/PeerConnectionSession';
+import peerSessionInterface from '../../interface/useStartPeerSession.interface';
 
-export const useStartPeerSession = (room, userMediaStream, localVideoRef) => {
-  const peerVideoConnection = useMemo(() => createPeerConnectionContext(), []);
+export const useStartPeerSession = ({
+  room,
+  userMediaStream,
+  localVideoRef,
+}: peerSessionInterface) => {
+  const peerVideoConnection: any = useMemo(
+    () => createPeerConnectionContext(),
+    [],
+  );
 
   const [displayMediaStream, setDisplayMediaStream] = useState(null);
   const [connectedUsers, setConnectedUsers] = useState([]);
@@ -10,37 +19,44 @@ export const useStartPeerSession = (room, userMediaStream, localVideoRef) => {
   useEffect(() => {
     if (userMediaStream) {
       peerVideoConnection.joinRoom(room);
-      peerVideoConnection.onAddUser((user) => {
-        setConnectedUsers((users) => [...users, user]);
+      peerVideoConnection.onAddUser((user: any) => {
+        setConnectedUsers((users: any): any => [...users, user]);
         peerVideoConnection.addPeerConnection(
           `${user}`,
           userMediaStream,
-          (_stream) => {
-            document.getElementById(user).srcObject = _stream;
+          (_stream: any) => {
+            if (user) {
+              const box = <HTMLVideoElement>document.getElementById(user);
+              box.srcObject = _stream;
+              // document.getElementById(user).srcObject = _stream;
+            }
           },
         );
         peerVideoConnection.callUser(user);
       });
 
-      peerVideoConnection.onRemoveUser((socketId) => {
+      peerVideoConnection.onRemoveUser((socketId: string) => {
         setConnectedUsers((users) => users.filter((user) => user !== socketId));
         peerVideoConnection.removePeerConnection(socketId);
       });
 
-      peerVideoConnection.onUpdateUserList(async (users) => {
+      peerVideoConnection.onUpdateUserList(async (users: any) => {
         setConnectedUsers(users);
-        for (const user of users) {
+        users.forEach((user: any) => {
           peerVideoConnection.addPeerConnection(
             `${user}`,
             userMediaStream,
-            (_stream) => {
-              document.getElementById(user).srcObject = _stream;
+            (_stream: any) => {
+              if (user) {
+                const box = <HTMLVideoElement>document.getElementById(user);
+                box.srcObject = _stream;
+              }
             },
           );
-        }
+        });
       });
 
-      peerVideoConnection.onAnswerMade((socket) =>
+      peerVideoConnection.onAnswerMade((socket: any) =>
         peerVideoConnection.callUser(socket),
       );
     }
@@ -48,26 +64,32 @@ export const useStartPeerSession = (room, userMediaStream, localVideoRef) => {
     return () => {
       if (userMediaStream) {
         peerVideoConnection.clearConnections();
-        userMediaStream?.getTracks()?.forEach((track) => track.stop());
+        userMediaStream?.getTracks()?.forEach((track: any) => track.stop());
       }
     };
   }, [peerVideoConnection, room, userMediaStream]);
 
   const cancelScreenSharing = async () => {
     const senders = await peerVideoConnection.senders.filter(
-      (sender) => sender.track.kind === 'video',
+      (sender: any) => sender.track.kind === 'video',
     );
 
     if (senders) {
-      senders.forEach((sender) =>
+      senders.forEach((sender: any) =>
         sender.replaceTrack(
-          userMediaStream.getTracks().find((track) => track.kind === 'video'),
+          userMediaStream
+            .getTracks()
+            .find((track: any) => track.kind === 'video'),
         ),
       );
     }
 
-    localVideoRef.current.srcObject = userMediaStream;
-    displayMediaStream.getTracks().forEach((track) => track.stop());
+    if (localVideoRef?.current) {
+      localVideoRef.current.srcObject = userMediaStream;
+    }
+    if (displayMediaStream) {
+      displayMediaStream.getTracks().forEach((track: any) => track.stop());
+    }
     setDisplayMediaStream(null);
   };
 
@@ -76,18 +98,23 @@ export const useStartPeerSession = (room, userMediaStream, localVideoRef) => {
       displayMediaStream || (await navigator.mediaDevices.getDisplayMedia());
 
     const senders = await peerVideoConnection.senders.filter(
-      (sender) => sender.track.kind === 'video',
+      (sender: any) => sender.track.kind === 'video',
     );
 
     if (senders) {
-      senders.forEach((sender) => sender.replaceTrack(stream.getTracks()[0]));
+      senders.forEach((sender: any) =>
+        sender.replaceTrack(stream.getTracks()[0]),
+      );
     }
 
     stream.getVideoTracks()[0].addEventListener('ended', () => {
       cancelScreenSharing(stream);
     });
 
-    localVideoRef.current.srcObject = stream;
+    if (localVideoRef) {
+      // eslint-disable-next-line no-param-reassign
+      localVideoRef.current.srcObject = stream;
+    }
 
     setDisplayMediaStream(stream);
   };
