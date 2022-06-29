@@ -5,10 +5,12 @@ import {
   useCalculateVideoLayout,
   useStartPeerSession,
   useCreateMediaStream,
-} from '../../components/hooks';
-import { LocalVideo } from '../components/room/video/LocalVideo';
-import { RemoteVideo } from '../components/room/video/RemoteVideo';
-import { toggleFullscreen } from '../utils/helper';
+} from '../components/hooks';
+import {
+  LocalVideo,
+  RemoteVideo,
+  VideoControls,
+} from '../components/room/video';
 
 export default function MainPage() {
   const { room } = useParams();
@@ -44,6 +46,11 @@ export default function MainPage() {
         ))}
         <Button>화면 공유 ON</Button>
       </Gallery>
+      <VideoControls
+        isScreenShared={isScreenShared}
+        onScreenShare={handleScreenSharing}
+        onToggleFullscreen={handleFullscreen}
+      />
     </Main>
   );
 }

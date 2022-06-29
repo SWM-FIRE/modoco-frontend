@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useCalculateVoiceVolume } from '../../hooks';
+import { useCalculateVoiceVolume } from '../../hooks/useCalculateVoiceVolume';
 import { Video, VideoContainer } from './video';
 
 export function RemoteVideo(props: any) {
-  const [mediaStream, setMediaStream] = useState();
+  type MediaProvider = MediaStream | MediaSource | Blob;
+  const [mediaStream, setMediaStream] = useState<MediaProvider>();
 
   const { id } = props;
   useCalculateVoiceVolume(mediaStream, id);
