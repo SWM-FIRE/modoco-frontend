@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom';
 import {
   useCalculateVideoLayout,
   useStartPeerSession,
-} from '../componets/hooks';
+  useCreateMediaStream,
+} from '../../components/hooks';
 import { LocalVideo } from '../components/room/video/LocalVideo';
 import { RemoteVideo } from '../components/room/video/RemoteVideo';
 

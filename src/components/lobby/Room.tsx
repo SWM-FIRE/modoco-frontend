@@ -1,6 +1,6 @@
 import roomAPI from '../../rooms.json';
 import RoomBlock from './RoomBlock';
-import roomInterface from '../../room.interface';
+import roomInterface from '../../interface/room.interface';
 
 export default function Room() {
   return (

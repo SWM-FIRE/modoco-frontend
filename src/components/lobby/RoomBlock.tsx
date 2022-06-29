@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import roomInterface from '../../room.interface';
+import roomInterface from '../../interface/room.interface';
 import oc from '../../styles/openColor';
 
 export default function RoomBlock({ name, total, current, id }: roomInterface) {

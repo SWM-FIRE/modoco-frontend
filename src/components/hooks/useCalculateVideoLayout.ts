@@ -22,9 +22,9 @@ export const useCalculateVideoLayout = ({
         aspectRatio,
       );
 
-      gallery.style?.setProperty('--width', `${width}px`);
-      gallery.style?.setProperty('--height', `${height}px`);
-      gallery.style?.setProperty('--cols', `${cols}`);
+      gallery.current?.style?.setProperty('--width', `${width}px`);
+      gallery.current?.style?.setProperty('--height', `${height}px`);
+      gallery.current?.style?.setProperty('--cols', `${cols}`);
       // gallery.current?.style?.setProperty('--cols', `${cols}`);
     };
 
