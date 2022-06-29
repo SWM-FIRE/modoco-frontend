@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import screenAPI from '../../screens.json';
 import Screen from './Screen';
-import screenInterface from '../../screen.interface';
+import screenInterface from '../../interface/screen.interface';
 
 export default function Screens() {
   return (

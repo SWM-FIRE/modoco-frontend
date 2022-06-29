@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import RoomBlock from './RoomBlock';
-import roomInterface from '../../room.interface';
+import roomInterface from '../../interface/room.interface';
 
 export default function Room() {
   const [rooms, setRooms] = useState([
