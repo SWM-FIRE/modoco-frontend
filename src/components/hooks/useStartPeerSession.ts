@@ -1,13 +1,12 @@
 /* eslint-disable no-param-reassign */
-import { useEffect, useMemo, useState } from 'react';
+import { RefObject, useEffect, useMemo, useState } from 'react';
 import { createPeerConnectionContext } from '../room/rtc/PeerConnectionSession';
-import peerSessionInterface from '../../interface/useStartPeerSession.interface';
 
-export const useStartPeerSession = ({
-  room,
-  userMediaStream,
-  localVideoRef,
-}: peerSessionInterface) => {
+export const useStartPeerSession = (
+  room: any,
+  userMediaStream: any,
+  localVideoRef: RefObject<HTMLVideoElement>,
+) => {
   const peerVideoConnection: any = useMemo(
     () => createPeerConnectionContext(),
     [],

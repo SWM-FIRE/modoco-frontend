@@ -1,11 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, RefObject } from 'react';
 import { calculateLayout } from '../../utils/helper';
-import CalculateInterface from '../../interface/useCalculateVideoLayout.interface';
 
-export const useCalculateVideoLayout = ({
-  gallery,
-  videoCount,
-}: CalculateInterface) => {
+export const useCalculateVideoLayout = (
+  gallery: RefObject<HTMLDivElement>,
+  videoCount: number,
+) => {
   useEffect(() => {
     const recalculateLayout = () => {
       const headerHeight =

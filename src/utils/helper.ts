@@ -1,9 +1,9 @@
 // https://adosov.dev/zoom-video-gallery-p1/
 export function calculateLayout(
-  containerWidth,
-  containerHeight,
-  videoCount,
-  aspectRatio,
+  containerWidth: number,
+  containerHeight: number,
+  videoCount: number,
+  aspectRatio: number,
 ) {
   let bestLayout = {
     area: 0,
@@ -39,28 +39,4 @@ export function calculateLayout(
     }
   }
   return bestLayout;
-}
-
-export function toggleFullscreen(fullscreen, element) {
-  if (fullscreen) {
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    }
-  } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-  }
 }

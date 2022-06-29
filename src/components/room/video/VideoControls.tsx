@@ -1,19 +1,6 @@
-import React, { useState } from 'react';
 import { Button } from '../../atoms/Button';
 
-export function VideoControls({
-  isScreenShared,
-  onScreenShare,
-  onToggleFullscreen,
-}) {
-  const [isFullscreen, setFullscreen] = useState(false);
-
-  const handleToggleFullscreen = () => {
-    const value = !isFullscreen;
-    setFullscreen(value);
-    onToggleFullscreen(value);
-  };
-
+export function VideoControls(isScreenShared: any, onScreenShare: any) {
   const handleScreenShare = () => {
     onScreenShare(!isScreenShared);
   };
@@ -32,9 +19,6 @@ export function VideoControls({
       <div>
         <Button onClick={handleScreenShare}>
           {isScreenShared ? 'Cancel Sharing' : 'Share Screen'}
-        </Button>
-        <Button onClick={handleToggleFullscreen}>
-          {isFullscreen ? 'Exit Full Screen' : 'Full Screen'}
         </Button>
         ;
       </div>

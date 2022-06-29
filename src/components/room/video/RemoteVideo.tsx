@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useCalculateVoiceVolume } from '../../hooks/useCalculateVoiceVolume';
 import { Video, VideoContainer } from './video';
 
 export function RemoteVideo(props: any) {
@@ -7,7 +6,6 @@ export function RemoteVideo(props: any) {
   const [mediaStream, setMediaStream] = useState<MediaProvider>();
 
   const { id } = props;
-  useCalculateVoiceVolume(mediaStream, id);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,6 +19,7 @@ export function RemoteVideo(props: any) {
           clearInterval(interval);
         }
       }
+      console.log(mediaStream);
     }, 100);
 
     return () => {

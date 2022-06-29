@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import { useRef } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
@@ -24,16 +25,12 @@ export default function MainPage() {
 
   useCalculateVideoLayout(galleryRef, connectedUsers.length + 1);
 
-  async function handleScreenSharing(share) {
+  async function handleScreenSharing(share: any) {
     if (share) {
       await shareScreen();
     } else {
       await cancelScreenSharing();
     }
-  }
-
-  function handleFullscreen(fullscreen) {
-    toggleFullscreen(fullscreen, mainRef.current);
   }
 
   return (
@@ -49,7 +46,6 @@ export default function MainPage() {
       <VideoControls
         isScreenShared={isScreenShared}
         onScreenShare={handleScreenSharing}
-        onToggleFullscreen={handleFullscreen}
       />
     </Main>
   );
