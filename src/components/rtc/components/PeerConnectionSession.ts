@@ -18,6 +18,7 @@ class PeerConnectionSession {
   }
 
   addPeerConnection(id: any, stream: any, callback: any) {
+    console.log('mOnConnected', this.mOnConnected);
     this.peerConnections[id] = new RTCPeerConnection({
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
     });

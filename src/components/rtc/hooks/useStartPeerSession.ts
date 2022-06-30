@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { RefObject, useEffect, useMemo, useState } from 'react';
-import { createPeerConnectionContext } from '../room/rtc/PeerConnectionSession';
+import { createPeerConnectionContext } from '../components/PeerConnectionSession';
 
 export const useStartPeerSession = (
   room: any,
