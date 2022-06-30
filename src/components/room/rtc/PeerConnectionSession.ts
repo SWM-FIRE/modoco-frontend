@@ -1,5 +1,5 @@
 /* eslint-disable lines-between-class-members */
-import { Socket, io } from 'socket.io-client';
+import io from 'socket.io-client';
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
@@ -10,9 +10,9 @@ class PeerConnectionSession {
   peerConnections: { [key: string]: any } = {};
   senders: any = [];
   listeners: { [key: string]: any } = {};
-  socket: Socket;
+  socket: any;
 
-  constructor(socket: Socket) {
+  constructor(socket: any) {
     this.socket = socket;
     this.onCallMade();
   }
@@ -21,7 +21,6 @@ class PeerConnectionSession {
     this.peerConnections[id] = new RTCPeerConnection({
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
     });
-
     stream.getTracks().forEach((track: any) => {
       this.senders.push(this.peerConnections[id].addTrack(track, stream));
     });
@@ -93,7 +92,7 @@ class PeerConnectionSession {
   }
 
   onCallMade() {
-    this.socket.on('call-made', async (data) => {
+    this.socket.on('call-made', async (data: any) => {
       await this.peerConnections[data.socket].setRemoteDescription(
         new RTCSessionDescription(data.offer),
       );
@@ -110,21 +109,24 @@ class PeerConnectionSession {
   }
 
   onAddUser(callback: any) {
-    this.socket.on(`${this.mRoom}-add-user`, async ({ user }) => {
+    this.socket.on(`${this.mRoom}-add-user`, async ({ user }: any) => {
       callback(user);
     });
   }
 
   onRemoveUser(callback: any) {
-    this.socket.on(`${this.mRoom}-remove-user`, ({ socketId }) => {
+    this.socket.on(`${this.mRoom}-remove-user`, ({ socketId }: any) => {
       callback(socketId);
     });
   }
 
   onUpdateUserList(callback: any) {
-    this.socket.on(`${this.mRoom}-update-user-list`, ({ users, current }) => {
-      callback(users, current);
-    });
+    this.socket.on(
+      `${this.mRoom}-update-user-list`,
+      ({ users, current }: any) => {
+        callback(users, current);
+      },
+    );
   }
 
   onAnswerMade(callback: any) {
@@ -146,7 +148,7 @@ class PeerConnectionSession {
 }
 
 export const createPeerConnectionContext = () => {
-  const socket = io(process.env.REACT_APP_SOCKET_URL as string);
-
+  const socket = io('http://172.16.101.93:8282/room');
+  console.log(socket);
   return new PeerConnectionSession(socket);
 };

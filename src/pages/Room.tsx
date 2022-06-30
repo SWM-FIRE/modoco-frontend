@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 import { useRef } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import {
   useCalculateVideoLayout,
   useStartPeerSession,
@@ -14,7 +14,8 @@ import {
 } from '../components/room/video';
 
 export default function MainPage() {
-  const { room } = useParams();
+  // room에 useParams로 방 할당필요
+  const room = 'test';
   const galleryRef = useRef<HTMLDivElement | null>(null);
   const localVideoRef = useRef<HTMLVideoElement | null>(null);
   const mainRef = useRef(null);
@@ -22,7 +23,6 @@ export default function MainPage() {
   const userMediaStream = useCreateMediaStream(localVideoRef);
   const { connectedUsers, shareScreen, cancelScreenSharing, isScreenShared } =
     useStartPeerSession(room, userMediaStream, localVideoRef);
-
   useCalculateVideoLayout(galleryRef, connectedUsers.length + 1);
 
   async function handleScreenSharing(share: any) {

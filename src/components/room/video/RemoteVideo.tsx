@@ -17,6 +17,8 @@ export function RemoteVideo(props: any) {
         if (stream) {
           setMediaStream(stream);
           clearInterval(interval);
+          console.log(interval);
+          console.log(interval);
         }
       }
       console.log(mediaStream);

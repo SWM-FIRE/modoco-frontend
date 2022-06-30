@@ -20,6 +20,7 @@ export const useStartPeerSession = (
       peerVideoConnection.joinRoom(room);
       peerVideoConnection.onAddUser((user: any) => {
         setConnectedUsers((users: any): any => [...users, user]);
+
         peerVideoConnection.addPeerConnection(
           `${user}`,
           userMediaStream,
@@ -58,6 +59,7 @@ export const useStartPeerSession = (
       peerVideoConnection.onAnswerMade((socket: any) =>
         peerVideoConnection.callUser(socket),
       );
+      console.log(peerVideoConnection);
     }
 
     return () => {

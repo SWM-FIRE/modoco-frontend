@@ -20,7 +20,6 @@ export function VideoControls(isScreenShared: any, onScreenShare: any) {
         <Button onClick={handleScreenShare}>
           {isScreenShared ? 'Cancel Sharing' : 'Share Screen'}
         </Button>
-        ;
       </div>
     </div>
   );
