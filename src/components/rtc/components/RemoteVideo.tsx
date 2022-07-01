@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Video, VideoContainer } from './Video';
 
-export function RemoteVideo(props: any) {
+export function RemoteVideo(props) {
   type MediaProvider = MediaStream | MediaSource | Blob;
   const [mediaStream, setMediaStream] = useState<MediaProvider>();
 

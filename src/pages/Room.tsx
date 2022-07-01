@@ -31,7 +31,7 @@ export default function MainPage() {
         <LocalVideo ref={localVideoRef} />
         {connectedUsers.map((user: string) => (
           <>
-            <p>{user}</p>
+            <p>USER : {user}</p>
             <RemoteVideo key={user} id={user} autoPlay playsInline />
           </>
         ))}

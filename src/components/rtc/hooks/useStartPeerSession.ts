@@ -3,28 +3,26 @@ import { RefObject, useEffect, useMemo, useState } from 'react';
 import { createPeerConnectionContext } from '../components/PeerConnectionSession';
 
 export const useStartPeerSession = (
-  room: any,
-  userMediaStream: any,
+  room: string,
+  userMediaStream: MediaStream,
   localVideoRef: RefObject<HTMLVideoElement>,
 ) => {
-  const peerVideoConnection: any = useMemo(
-    () => createPeerConnectionContext(),
-    [],
-  );
+  const peerVideoConnection = useMemo(() => createPeerConnectionContext(), []);
 
   const [displayMediaStream, setDisplayMediaStream] = useState<MediaStream>();
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   useEffect(() => {
     if (userMediaStream) {
+      console.log('mediaStream', userMediaStream);
       peerVideoConnection.joinRoom(room);
-      peerVideoConnection.onAddUser((user: any) => {
-        setConnectedUsers((users: any): any => [...users, user]);
+      peerVideoConnection.onAddUser((user: string) => {
+        setConnectedUsers((users) => [...users, user]);
 
         peerVideoConnection.addPeerConnection(
           `${user}`,
           userMediaStream,
-          (_stream: any) => {
+          (_stream) => {
             if (user) {
               const box = <HTMLVideoElement>document.getElementById(user);
               box.srcObject = _stream;
@@ -40,13 +38,13 @@ export const useStartPeerSession = (
         peerVideoConnection.removePeerConnection(socketId);
       });
 
-      peerVideoConnection.onUpdateUserList(async (users: any) => {
+      peerVideoConnection.onUpdateUserList(async (users) => {
         setConnectedUsers(users);
-        users.forEach((user: any) => {
+        users.forEach((user: string) => {
           peerVideoConnection.addPeerConnection(
             `${user}`,
             userMediaStream,
-            (_stream: any) => {
+            (_stream) => {
               if (user) {
                 const box = <HTMLVideoElement>document.getElementById(user);
                 box.srcObject = _stream;
@@ -56,7 +54,7 @@ export const useStartPeerSession = (
         });
       });
 
-      peerVideoConnection.onAnswerMade((socket: any) =>
+      peerVideoConnection.onAnswerMade((socket) =>
         peerVideoConnection.callUser(socket),
       );
       console.log(peerVideoConnection);
@@ -65,22 +63,20 @@ export const useStartPeerSession = (
     return () => {
       if (userMediaStream) {
         peerVideoConnection.clearConnections();
-        userMediaStream?.getTracks()?.forEach((track: any) => track.stop());
+        userMediaStream?.getTracks()?.forEach((track) => track.stop());
       }
     };
   }, [peerVideoConnection, room, userMediaStream]);
 
   const cancelScreenSharing = async () => {
     const senders = await peerVideoConnection.senders.filter(
-      (sender: any) => sender.track.kind === 'video',
+      (sender) => sender.track.kind === 'video',
     );
 
     if (senders) {
-      senders.forEach((sender: any) =>
+      senders.forEach((sender) =>
         sender.replaceTrack(
-          userMediaStream
-            .getTracks()
-            .find((track: any) => track.kind === 'video'),
+          userMediaStream.getTracks().find((track) => track.kind === 'video'),
         ),
       );
     }
@@ -89,7 +85,7 @@ export const useStartPeerSession = (
       localVideoRef.current.srcObject = userMediaStream;
     }
     if (displayMediaStream) {
-      displayMediaStream.getTracks().forEach((track: any) => track.stop());
+      displayMediaStream.getTracks().forEach((track) => track.stop());
     }
     setDisplayMediaStream(undefined);
   };
@@ -99,13 +95,11 @@ export const useStartPeerSession = (
       displayMediaStream || (await navigator.mediaDevices.getDisplayMedia());
 
     const senders = await peerVideoConnection.senders.filter(
-      (sender: any) => sender.track.kind === 'video',
+      (sender) => sender.track.kind === 'video',
     );
 
     if (senders) {
-      senders.forEach((sender: any) =>
-        sender.replaceTrack(stream.getTracks()[0]),
-      );
+      senders.forEach((sender) => sender.replaceTrack(stream.getTracks()[0]));
     }
 
     stream.getVideoTracks()[0].addEventListener('ended', () => {
