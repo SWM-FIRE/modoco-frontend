@@ -5,7 +5,7 @@ import Layout from './components/layout/Layout';
 import Login from './pages/Login';
 import Room from './pages/Room';
 
-function Router() {
+function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -23,4 +23,4 @@ function Router() {
   );
 }
 
-export default Router;
+export default App;

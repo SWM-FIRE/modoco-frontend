@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { Video, VideoContainer } from './video';
+import { Video, VideoContainer } from './Video';
 
 export const LocalVideo = forwardRef<
   HTMLVideoElement,

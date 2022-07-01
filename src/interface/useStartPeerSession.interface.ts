@@ -1,7 +1,7 @@
 import { RefObject } from 'react';
 
 export default interface useStartPeerSession {
-  room: any;
-  userMediaStream: any;
+  room;
+  userMediaStream;
   localVideoRef: RefObject<HTMLVideoElement> | null;
 }

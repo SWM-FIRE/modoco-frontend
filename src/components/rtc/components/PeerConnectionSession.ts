@@ -1,38 +1,40 @@
 /* eslint-disable lines-between-class-members */
-import { Socket, io } from 'socket.io-client';
+import io from 'socket.io-client';
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
 class PeerConnectionSession {
-  mOnConnected: any;
-  mOnDisconnected: any;
-  mRoom: any;
-  peerConnections: { [key: string]: any } = {};
-  senders: any = [];
-  listeners: { [key: string]: any } = {};
-  socket: Socket;
+  mOnConnected;
+  mOnDisconnected;
+  mRoom;
+  peerConnections = {};
+  senders = [];
+  listeners = {};
+  socket;
 
-  constructor(socket: Socket) {
+  constructor(socket) {
     this.socket = socket;
     this.onCallMade();
   }
 
-  addPeerConnection(id: any, stream: any, callback: any) {
+  addPeerConnection(id, stream, callback) {
     this.peerConnections[id] = new RTCPeerConnection({
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
     });
-
-    stream.getTracks().forEach((track: any) => {
+    stream.getTracks().forEach((track) => {
       this.senders.push(this.peerConnections[id].addTrack(track, stream));
     });
 
-    this.listeners[id] = (event: any) => {
+    this.listeners[id] = (event) => {
       let fn;
       if (this.peerConnections[id].connectionState === 'connected') {
+        console.log('mOnConnected', this.mOnConnected);
         fn = this.mOnConnected;
       } else if (this.peerConnections[id].connectionState === 'disconnected') {
+        console.log('mOnDisconnected', this.mOnDisconnected);
         fn = this.mOnDisconnected;
       } else {
+        console.log('mRoom', this.mRoom);
         fn = this.mRoom;
       }
       if (fn === null) {
@@ -48,7 +50,7 @@ class PeerConnectionSession {
     this.peerConnections[id].ontrack = function ({
       streams: [stream],
     }: {
-      streams: any;
+      streams;
     }) {
       console.log({ id, stream });
       callback(stream);
@@ -79,15 +81,15 @@ class PeerConnectionSession {
     }
   }
 
-  onConnected(callback: any) {
+  onConnected(callback) {
     this.mOnConnected = callback;
   }
 
-  onDisconnected(callback: any) {
+  onDisconnected(callback) {
     this.mOnDisconnected = callback;
   }
 
-  joinRoom(room: any) {
+  joinRoom(room) {
     this.mRoom = room;
     this.socket.emit('joinRoom', room);
   }
@@ -109,26 +111,26 @@ class PeerConnectionSession {
     });
   }
 
-  onAddUser(callback: any) {
+  onAddUser(callback) {
     this.socket.on(`${this.mRoom}-add-user`, async ({ user }) => {
       callback(user);
     });
   }
 
-  onRemoveUser(callback: any) {
+  onRemoveUser(callback) {
     this.socket.on(`${this.mRoom}-remove-user`, ({ socketId }) => {
       callback(socketId);
     });
   }
 
-  onUpdateUserList(callback: any) {
+  onUpdateUserList(callback) {
     this.socket.on(`${this.mRoom}-update-user-list`, ({ users, current }) => {
       callback(users, current);
     });
   }
 
-  onAnswerMade(callback: any) {
-    this.socket.on('answer-made', async (data: any) => {
+  onAnswerMade(callback) {
+    this.socket.on('answer-made', async (data) => {
       await this.peerConnections[data.socket].setRemoteDescription(
         new RTCSessionDescription(data.answer),
       );
@@ -146,7 +148,7 @@ class PeerConnectionSession {
 }
 
 export const createPeerConnectionContext = () => {
-  const socket = io(process.env.REACT_APP_SOCKET_URL as string);
-
+  const socket = io('http://172.16.101.93:8282/room');
+  console.log(socket);
   return new PeerConnectionSession(socket);
 };
