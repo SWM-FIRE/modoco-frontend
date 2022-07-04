@@ -1,14 +1,21 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Rooms from '../components/lobby/Room';
 import UserStore from '../stores/userstore';
 
 export default function Lobby() {
-  const { nickname, uid } = UserStore();
+  const navigate = useNavigate();
+  const { nickname, setNickname, setUid } = UserStore();
   useEffect(() => {
-    console.log(nickname, uid);
+    console.log('왜? ', localStorage.getItem('uid'));
+    if (!localStorage.getItem('uid') || !localStorage.getItem('nickname')) {
+      navigate('/');
+    } else {
+      setNickname(localStorage.getItem('nickname'));
+      setUid(localStorage.getItem('uid'));
+    }
   }, []);
-
   return (
     <Container>
       <Header>Lobby</Header>
