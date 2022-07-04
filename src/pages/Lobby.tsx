@@ -1,7 +1,13 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import Rooms from '../components/lobby/Room';
+import IdStore from '../stores/idstore';
 
 export default function Lobby() {
+  const { id, uid } = IdStore();
+  useEffect(() => {
+    console.log(id, uid);
+  }, []);
   return (
     <Container>
       <Header>Lobby</Header>
