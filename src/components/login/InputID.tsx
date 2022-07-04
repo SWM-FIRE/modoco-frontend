@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,11 +8,20 @@ export default function InputID() {
   const navigate = useNavigate();
   const { id, setId, setUid } = IdStore();
 
+  useEffect(() => {
+    if (localStorage.getItem('id') !== '') {
+      setId(localStorage.getItem('id'));
+    }
+  }, []);
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // socket connection
     const uid = uuidv4();
     const payload = { id, uid };
+
+    localStorage.setItem('id', id);
+    localStorage.setItem('uid', uid);
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
