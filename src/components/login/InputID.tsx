@@ -6,27 +6,31 @@ import IdStore from '../../stores/idstore';
 
 export default function InputID() {
   const navigate = useNavigate();
-  const { id, setId, setUid } = IdStore();
+  const { id, uid, setId, setUid } = IdStore();
 
   useEffect(() => {
-    if (localStorage.getItem('id') !== '') {
+    if (localStorage.getItem('uid')) {
+      console.log('existing user');
+      setUid(localStorage.getItem('uid'));
       setId(localStorage.getItem('id'));
+    } else {
+      console.log('new user');
+      const newUID = uuidv4();
+      setUid(newUID);
+      localStorage.setItem('uid', uid);
     }
   }, []);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // socket connection
-    const uid = uuidv4();
     const payload = { id, uid };
-
     localStorage.setItem('id', id);
-    localStorage.setItem('uid', uid);
+
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
     console.log(payload);
-    setUid(uid);
     navigate(`lobby`);
   };
 
@@ -43,7 +47,7 @@ export default function InputID() {
         placeholder="Enter ID"
         id="nickname"
       />
-      <Button disabled={!id.length}>Enter</Button>
+      <Button disabled={id === null || !id.length}>Enter</Button>
     </Form>
   );
 }

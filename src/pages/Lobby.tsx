@@ -8,13 +8,25 @@ export default function Lobby() {
   useEffect(() => {
     console.log(id, uid);
   }, []);
+
   return (
     <Container>
       <Header>Lobby</Header>
+      <Nickname>{id}</Nickname>
       <Rooms />
     </Container>
   );
 }
+
+const Nickname = styled.div`
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 5rem;
+  height: 3rem;
+`;
 
 const Header = styled.div`
   width: 20rem;
