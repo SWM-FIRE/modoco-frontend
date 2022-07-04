@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import IdStore from '../../stores/idstore';
 
 export default function InputID() {
-  const [id, setId] = useState('');
   const navigate = useNavigate();
+  const { id, setId, setUid } = IdStore();
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -16,6 +17,7 @@ export default function InputID() {
     //   navigate(`screens`);
     // });
     console.log(payload);
+    setUid(uid);
     navigate(`lobby`);
   };
 
