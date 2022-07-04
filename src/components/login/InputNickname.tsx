@@ -16,7 +16,8 @@ export default function InputNickname() {
       console.log('new user');
       const newUID = uuidv4();
       setUid(newUID);
-      localStorage.setItem('uid', uid);
+      localStorage.setItem('uid', newUID);
+      console.log('uid는 ', newUID);
     }
   }, []);
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -24,7 +25,7 @@ export default function InputNickname() {
     // socket connection
     const payload = { nickname, uid };
     localStorage.setItem('nickname', nickname);
-
+    // localStorage.setItem('uid', uid);
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });

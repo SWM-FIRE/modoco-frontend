@@ -8,6 +8,7 @@ export default function Lobby() {
   const navigate = useNavigate();
   const { nickname, setNickname, setUid } = UserStore();
   useEffect(() => {
+    console.log('왜? ', localStorage.getItem('uid'));
     if (!localStorage.getItem('uid') || !localStorage.getItem('nickname')) {
       navigate('/');
     } else {
