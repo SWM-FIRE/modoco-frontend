@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import InputID from '../components/login/InputNickname';
+import InputNickname from '../components/login/InputNickname';
 
 export default function MainPage() {
   return (
     <Container>
       <MDC>MODOCO</MDC>
       <Sub>모여서 도란도란 코딩</Sub>
-      <InputID />
+      <InputNickname />
     </Container>
   );
 }
