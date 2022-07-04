@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import Rooms from '../components/lobby/Room';
-import IdStore from '../stores/idstore';
+import UserStore from '../stores/userstore';
 
 export default function Lobby() {
-  const { id, uid } = IdStore();
+  const { nickname, uid } = UserStore();
   useEffect(() => {
-    console.log(id, uid);
+    console.log(nickname, uid);
   }, []);
 
   return (
     <Container>
       <Header>Lobby</Header>
-      <Nickname>{id}</Nickname>
+      <Nickname>{nickname}</Nickname>
       <Rooms />
     </Container>
   );

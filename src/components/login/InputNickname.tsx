@@ -2,17 +2,17 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import IdStore from '../../stores/idstore';
+import UserStore from '../../stores/userstore';
 
-export default function InputID() {
+export default function InputNickname() {
   const navigate = useNavigate();
-  const { id, uid, setId, setUid } = IdStore();
+  const { nickname, uid, setNickname, setUid } = UserStore();
 
   useEffect(() => {
     if (localStorage.getItem('uid')) {
       console.log('existing user');
       setUid(localStorage.getItem('uid'));
-      setId(localStorage.getItem('id'));
+      setNickname(localStorage.getItem('nickname'));
     } else {
       console.log('new user');
       const newUID = uuidv4();
@@ -24,8 +24,8 @@ export default function InputID() {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // socket connection
-    const payload = { id, uid };
-    localStorage.setItem('id', id);
+    const payload = { nickname, uid };
+    localStorage.setItem('nickname', nickname);
 
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
@@ -35,19 +35,19 @@ export default function InputID() {
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setId(event.target.value);
+    setNickname(event.target.value);
   };
 
   return (
     <Form onSubmit={onSubmit}>
       <Input
         autoComplete="off"
-        value={id}
+        value={nickname}
         onChange={onChange}
         placeholder="Enter ID"
         id="nickname"
       />
-      <Button disabled={id === null || !id.length}>Enter</Button>
+      <Button disabled={nickname === null || !nickname.length}>Enter</Button>
     </Form>
   );
 }
