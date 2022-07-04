@@ -7,7 +7,6 @@ import UserStore from '../../stores/userstore';
 export default function InputNickname() {
   const navigate = useNavigate();
   const { nickname, uid, setNickname, setUid } = UserStore();
-
   useEffect(() => {
     if (localStorage.getItem('uid')) {
       console.log('existing user');
@@ -20,7 +19,6 @@ export default function InputNickname() {
       localStorage.setItem('uid', uid);
     }
   }, []);
-
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // socket connection
