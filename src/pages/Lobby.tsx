@@ -1,20 +1,32 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import Rooms from '../components/lobby/Room';
-import IdStore from '../stores/idstore';
+import UserStore from '../stores/userstore';
 
 export default function Lobby() {
-  const { id, uid } = IdStore();
+  const { nickname, uid } = UserStore();
   useEffect(() => {
-    console.log(id, uid);
+    console.log(nickname, uid);
   }, []);
+
   return (
     <Container>
       <Header>Lobby</Header>
+      <Nickname>{nickname}</Nickname>
       <Rooms />
     </Container>
   );
 }
+
+const Nickname = styled.div`
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 5rem;
+  height: 3rem;
+`;
 
 const Header = styled.div`
   width: 20rem;

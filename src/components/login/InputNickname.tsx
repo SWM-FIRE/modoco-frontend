@@ -2,48 +2,52 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import IdStore from '../../stores/idstore';
+import UserStore from '../../stores/userstore';
 
-export default function InputID() {
+export default function InputNickname() {
   const navigate = useNavigate();
-  const { id, setId, setUid } = IdStore();
+  const { nickname, uid, setNickname, setUid } = UserStore();
 
   useEffect(() => {
-    if (localStorage.getItem('id') !== '') {
-      setId(localStorage.getItem('id'));
+    if (localStorage.getItem('uid')) {
+      console.log('existing user');
+      setUid(localStorage.getItem('uid'));
+      setNickname(localStorage.getItem('nickname'));
+    } else {
+      console.log('new user');
+      const newUID = uuidv4();
+      setUid(newUID);
+      localStorage.setItem('uid', uid);
     }
   }, []);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // socket connection
-    const uid = uuidv4();
-    const payload = { id, uid };
+    const payload = { nickname, uid };
+    localStorage.setItem('nickname', nickname);
 
-    localStorage.setItem('id', id);
-    localStorage.setItem('uid', uid);
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
     console.log(payload);
-    setUid(uid);
     navigate(`lobby`);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setId(event.target.value);
+    setNickname(event.target.value);
   };
 
   return (
     <Form onSubmit={onSubmit}>
       <Input
         autoComplete="off"
-        value={id}
+        value={nickname}
         onChange={onChange}
         placeholder="Enter ID"
         id="nickname"
       />
-      <Button disabled={!id.length}>Enter</Button>
+      <Button disabled={nickname === null || !nickname.length}>Enter</Button>
     </Form>
   );
 }

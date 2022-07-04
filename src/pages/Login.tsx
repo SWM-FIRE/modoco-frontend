@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import InputID from '../components/login/InputID';
+import InputID from '../components/login/InputNickname';
 
 export default function MainPage() {
   return (
