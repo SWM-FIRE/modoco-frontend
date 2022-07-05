@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 import { useRef } from 'react';
 import styled from 'styled-components';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   useStartPeerSession,
   useCreateMediaStream,
@@ -9,11 +9,20 @@ import {
 import { LocalVideo, RemoteVideo } from '../components/rtc/components';
 
 export default function MainPage() {
-  // room에 useParams로 방 할당필요
-  const room = 'test';
+  const room = useParams().roomId;
   const galleryRef = useRef<HTMLDivElement | null>(null);
   const localVideoRef = useRef<HTMLVideoElement | null>(null);
   const mainRef = useRef(null);
+
+  /**
+   * @brief RTC Connection 순서
+   *
+   * @useCreateMediaStream - 사용자의 미디어 스트림을 생성하는 함수
+   * @useStartPeerSession - 사용자의 미디어 스트림을 생성하고 상대방에게 연결을 시작하는 함수
+   * @param room - 방 아이디
+   * @param userMediaStream - 사용자의 미디어 스트림
+   * @param localVideoRef - 사용자의 미디어 스트림을 보여주는 요소
+   */
 
   const userMediaStream = useCreateMediaStream(localVideoRef);
   const { connectedUsers } = useStartPeerSession(
