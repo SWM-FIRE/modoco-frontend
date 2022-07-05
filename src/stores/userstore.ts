@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 import create from 'zustand';
 
 interface User {
   nickname: string;
   uid: string;
-  setNickname: (by: string) => void;
-  setUid: (by: string) => void;
+  setNickname: (_by: string) => void;
+  setUid: (_by: string) => void;
 }
 const UserStore = create<User>((set) => ({
   nickname: '',
