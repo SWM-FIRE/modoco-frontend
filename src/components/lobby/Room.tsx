@@ -19,13 +19,14 @@ export default function Room() {
 
   return (
     <Component>
-      {rooms.map(({ id, name, total, current }: roomInterface) => {
+      {rooms.map(({ id, name, total, current, image }: roomInterface) => {
         return (
           <RoomBlock
             key={id}
             name={name}
             total={total}
             current={current}
+            image={image}
             id={id}
           />
         );
