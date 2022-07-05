@@ -58,6 +58,7 @@ const Information = styled.div`
   &:hover {
     background-color: rgb(0, 0, 0, 60%);
   }
+  transition: all ease 0.5s;
 `;
 
 const Top = styled.div`
