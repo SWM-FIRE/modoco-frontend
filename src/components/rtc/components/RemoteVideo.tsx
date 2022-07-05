@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/destructuring-assignment */
 import React, { useEffect, useState } from 'react';
-import { Video, VideoContainer } from './Video';
+import styled from 'styled-components';
 
 export function RemoteVideo(props) {
   type MediaProvider = MediaStream | MediaSource | Blob;
@@ -33,3 +33,12 @@ export function RemoteVideo(props) {
     </VideoContainer>
   );
 }
+const VideoContainer = styled.div`
+  box-sizing: border-box;
+  position: relative;
+`;
+
+const Video = styled.video`
+  height: 100%;
+  width: 100%;
+`;
