@@ -1,14 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/destructuring-assignment */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 export function RemoteVideo(props) {
-  type MediaProvider = MediaStream | MediaSource | Blob;
-  const [mediaStream, setMediaStream] = useState<MediaProvider>();
+  // type MediaProvider = MediaStream | MediaSource | Blob;
+  // const [mediaStream, setMediaStream] = useState<MediaProvider>();
 
   useEffect(() => {
-    console.log('props', props);
     const interval = setInterval(() => {
       const remote = document.getElementById(
         props.id,
@@ -16,9 +15,8 @@ export function RemoteVideo(props) {
       const stream = remote?.srcObject;
 
       if (stream) {
-        setMediaStream(stream);
+        // setMediaStream(stream);
         clearInterval(interval);
-        console.log(mediaStream);
       }
     }, 100);
 
