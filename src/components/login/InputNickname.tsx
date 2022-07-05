@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userstore';
 
 export default function InputNickname() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { nickname, uid, setNickname, setUid } = UserStore();
   useEffect(() => {
     if (localStorage.getItem('uid')) {
@@ -20,17 +21,33 @@ export default function InputNickname() {
       console.log('uid는 ', newUID);
     }
   }, []);
+
+  const sendData = async () => {
+    const url = '';
+    await axios
+      .post(url, {
+        nickname: `nickname`,
+        uid: `uid`,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+  };
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // socket connection
     const payload = { nickname, uid };
     localStorage.setItem('nickname', nickname);
-    // localStorage.setItem('uid', uid);
+    console.log(payload);
+    sendData();
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
-    console.log(payload);
-    navigate(`lobby`);
+    // navigate(`lobby`);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
