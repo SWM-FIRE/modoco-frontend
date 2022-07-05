@@ -1,5 +1,5 @@
 /* eslint-disable lines-between-class-members */
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
@@ -7,20 +7,34 @@ class PeerConnectionSession {
   mOnConnected;
   mOnDisconnected;
   mRoom;
+  socket;
   peerConnections = {};
   senders = [];
   listeners = {};
-  socket;
 
-  constructor(socket) {
+  constructor(socket: Socket) {
     this.socket = socket;
     this.onCallMade();
   }
 
-  addPeerConnection(id, stream, callback) {
+  /**
+   * @brief - 새로운 peer connection을 생성하고, peer connection object에 추가한다
+   * @param id
+   * @param stream
+   * @param callback
+   */
+
+  addPeerConnection(
+    id: string,
+    stream: MediaStream,
+    callback: (_stream: MediaStream) => void,
+  ) {
+    // 새로운 stun 서버에 추가
     this.peerConnections[id] = new RTCPeerConnection({
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
     });
+
+    // 나의 track을 추가
     stream.getTracks().forEach((track) => {
       this.senders.push(this.peerConnections[id].addTrack(track, stream));
     });
@@ -59,6 +73,11 @@ class PeerConnectionSession {
     console.log(this.peerConnections);
   }
 
+  /**
+   * @breif 해당하는 peer connection을 삭제
+   * @param id
+   *
+   */
   removePeerConnection(id: string) {
     this.peerConnections[id].removeEventListener(
       'connectionstatechange',
@@ -81,15 +100,15 @@ class PeerConnectionSession {
     }
   }
 
-  onConnected(callback) {
+  onConnected(callback: () => void) {
     this.mOnConnected = callback;
   }
 
-  onDisconnected(callback) {
+  onDisconnected(callback: () => void) {
     this.mOnDisconnected = callback;
   }
 
-  joinRoom(room) {
+  joinRoom(room: string) {
     this.mRoom = room;
     this.socket.emit('joinRoom', room);
   }
@@ -111,19 +130,19 @@ class PeerConnectionSession {
     });
   }
 
-  onAddUser(callback) {
+  onAddUser(callback: (_user: string) => void) {
     this.socket.on(`${this.mRoom}-add-user`, async ({ user }) => {
       callback(user);
     });
   }
 
-  onRemoveUser(callback) {
+  onRemoveUser(callback: (_socketId: string) => void) {
     this.socket.on(`${this.mRoom}-remove-user`, ({ socketId }) => {
       callback(socketId);
     });
   }
 
-  onUpdateUserList(callback) {
+  onUpdateUserList(callback: (_users: string[], _current: string) => void) {
     this.socket.on(`${this.mRoom}-update-user-list`, ({ users, current }) => {
       callback(users, current);
     });
@@ -146,6 +165,12 @@ class PeerConnectionSession {
     );
   }
 }
+
+/**
+ *
+ * @brief socket 연결
+ * @returns {PeerConnectionSession} : 연결된 소켓에 해당하는 class
+ */
 
 export const createPeerConnectionContext = () => {
   const socket = io('http://172.16.101.93:8282/room');

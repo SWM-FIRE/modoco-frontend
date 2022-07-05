@@ -7,26 +7,28 @@ export const useStartPeerSession = (
   userMediaStream: MediaStream,
   localVideoRef: RefObject<HTMLVideoElement>,
 ) => {
+  /**
+   * @peerVideoConnection 1회 PeerConnection 생성
+   * @displayMediaStream 내 mediaStream
+   * @connectedUsers 접속중인 유저 목록
+   */
   const peerVideoConnection = useMemo(() => createPeerConnectionContext(), []);
-
   const [displayMediaStream, setDisplayMediaStream] = useState<MediaStream>();
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   useEffect(() => {
     if (userMediaStream) {
-      console.log('mediaStream', userMediaStream);
       peerVideoConnection.joinRoom(room);
       peerVideoConnection.onAddUser((user: string) => {
         setConnectedUsers((users) => [...users, user]);
 
         peerVideoConnection.addPeerConnection(
-          `${user}`,
+          user,
           userMediaStream,
-          (_stream) => {
+          (_stream: MediaStream) => {
             if (user) {
               const box = <HTMLVideoElement>document.getElementById(user);
               box.srcObject = _stream;
-              // document.getElementById(user).srcObject = _stream;
             }
           },
         );
@@ -108,7 +110,6 @@ export const useStartPeerSession = (
     });
 
     if (localVideoRef?.current) {
-      // eslint-disable-next-line no-param-reassign
       localVideoRef.current.srcObject = stream;
     }
 
