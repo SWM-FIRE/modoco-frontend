@@ -4,9 +4,9 @@ import io, { Socket } from 'socket.io-client';
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
 class PeerConnectionSession {
-  mOnConnected;
-  mOnDisconnected;
-  mRoom;
+  mOnConnected: () => void;
+  mOnDisconnected: () => void;
+  mRoom: string;
   socket;
   peerConnections = {};
   senders = [];
@@ -34,11 +34,12 @@ class PeerConnectionSession {
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
     });
 
-    // 나의 track을 추가
+    // user의 media track을 추가
     stream.getTracks().forEach((track) => {
       this.senders.push(this.peerConnections[id].addTrack(track, stream));
     });
 
+    // peer의 connection state에 따라 callback 함수 호출
     this.listeners[id] = (event) => {
       let fn;
       if (this.peerConnections[id].connectionState === 'connected') {
@@ -56,6 +57,7 @@ class PeerConnectionSession {
       }
     };
 
+    // peer의 state 변경할 수 있는 eventListener
     this.peerConnections[id].addEventListener(
       'connectionstatechange',
       this.listeners[id],
@@ -75,7 +77,7 @@ class PeerConnectionSession {
 
   /**
    * @breif 해당하는 peer connection을 삭제
-   * @param id
+   * @param id 에 해당하는 peer connection 삭제
    *
    */
   removePeerConnection(id: string) {
@@ -89,6 +91,10 @@ class PeerConnectionSession {
 
   isAlreadyCalling = false;
 
+  /**
+   * @brief 누구에게 전화를 걸지 RTCSession 생성 후 call
+   * @param to 에게 call
+   */
   async callUser(to: string) {
     if (this.peerConnections[to].iceConnectionState === 'new') {
       const offer = await this.peerConnections[to].createOffer();
@@ -99,6 +105,11 @@ class PeerConnectionSession {
       this.socket.emit('call-user', { offer, to });
     }
   }
+
+  /**
+   * @onConnected @onDisconnected @joinRoom -> state에 따라 callback
+   * @param callback
+   */
 
   onConnected(callback: () => void) {
     this.mOnConnected = callback;
@@ -112,6 +123,10 @@ class PeerConnectionSession {
     this.mRoom = room;
     this.socket.emit('joinRoom', room);
   }
+
+  /**
+   * call 만들어 졌을 때 알려주는 함수
+   */
 
   onCallMade() {
     this.socket.on('call-made', async (data) => {
