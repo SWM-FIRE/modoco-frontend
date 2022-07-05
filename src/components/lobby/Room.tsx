@@ -19,7 +19,7 @@ export default function Room() {
 
   return (
     <Component>
-      {rooms.map(({ id, name, total, current, image }: roomInterface) => {
+      {rooms.map(({ id, name, total, current, image, tags }: roomInterface) => {
         return (
           <RoomBlock
             key={id}
@@ -28,6 +28,7 @@ export default function Room() {
             current={current}
             image={image}
             id={id}
+            tags={tags}
           />
         );
       })}

@@ -4,4 +4,5 @@ export default interface roomInterface {
   current: number;
   id: string;
   image: string;
+  tags: [];
 }
