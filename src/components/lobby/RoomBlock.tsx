@@ -13,6 +13,7 @@ export default function RoomBlock({
   current,
   image,
   id,
+  tags,
 }: roomInterface) {
   /*
   socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
@@ -28,31 +29,62 @@ export default function RoomBlock({
   return (
     <Button onClick={onSubmit} image={image}>
       <Information>
-        <div>{name}</div>
-        <div>
-          {current} / {total}
-        </div>
+        <Top>
+          <RoomName>{name}</RoomName>
+          <UserNumber>
+            {current} / {total}
+          </UserNumber>
+        </Top>
+        <Tags>
+          {tags.map((tag: string) => {
+            return <Tag key={tag}>{tag}</Tag>;
+          })}
+        </Tags>
       </Information>
     </Button>
   );
 }
 
 const Information = styled.div`
-  font-size: 3rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   padding: 2rem;
   height: 100%;
   color: white;
+  background-color: rgb(0, 0, 0, 28%);
+  border-radius: 3rem;
+  &:hover {
+    background-color: rgb(0, 0, 0, 60%);
+  }
+`;
+
+const Top = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+const RoomName = styled.span`
+  font-size: 4rem;
+`;
+
+const UserNumber = styled.span`
+  font-size: 2rem;
+  background-color: rgba(250, 250, 250, 60%);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  color: black;
 `;
 
 const Button = styled.button<Props>`
   text-align: center;
   width: 22vw;
   height: 22vw;
-  background-color: darkGray;
+  background-color: lightGray;
   background-image: url(${(props) => props.image});
   background-position: center;
   cursor: pointer;
@@ -66,4 +98,22 @@ const Button = styled.button<Props>`
     width: 60vw;
     height: 60vw;
   }
+`;
+
+const Tags = styled.ul`
+  width: 100%;
+  display: felx;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const Tag = styled.li`
+  margin-right: 1rem;
+  font-size: 2rem;
+  background-color: rgba(250, 250, 250, 60%);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  color: black;
+  margin-top: 1rem;
 `;
