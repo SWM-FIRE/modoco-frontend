@@ -3,18 +3,63 @@
     "name": "room1",
     "total": 4,
     "current": 0,
-    "id": "1"
+    "id": "1",
+    "image": "https://user-images.githubusercontent.com/64428916/177264713-936644da-69c0-48a0-b999-bc710852bf6d.png"
   },
   {
     "name": "room2",
     "total": 4,
     "current": 0,
-    "id": "2"
+    "id": "2",
+    "image": "https://user-images.githubusercontent.com/64428916/177262016-da086f2f-a9f0-4368-a9f3-99888e835438.png"
   },
   {
     "name": "room3",
     "total": 4,
     "current": 0,
-    "id": "3"
+    "id": "3",
+    "image": "https://user-images.githubusercontent.com/64428916/177264995-18de6a5d-8ff8-474e-ac1c-2fe62227edbd.png"
+  },
+  {
+    "name": "room4",
+    "total": 4,
+    "current": 0,
+    "id": "4",
+    "image": "https://user-images.githubusercontent.com/64428916/177265172-5085a569-8223-406a-ba96-1684980b0736.png"
+  },
+  {
+    "name": "room5",
+    "total": 4,
+    "current": 0,
+    "id": "5",
+    "image": "https://user-images.githubusercontent.com/64428916/177265398-a1da8497-35d1-492c-bbc6-b0efc43fe0af.png"
+  },
+  {
+    "name": "room6",
+    "total": 4,
+    "current": 0,
+    "id": "6",
+    "image": "https://user-images.githubusercontent.com/64428916/177265411-c12959f5-57a9-436e-b1a2-c7ef8aa084ae.png"
+  },
+  {
+    "name": "room7",
+    "total": 4,
+    "current": 0,
+    "id": "7",
+    "image": "https://user-images.githubusercontent.com/64428916/177265422-cf858716-bef9-4630-ac50-6a0167f0ae77.png"
+  },
+  {
+    "name": "room8",
+    "total": 4,
+    "current": 0,
+    "id": "8",
+    "image": "https://user-images.githubusercontent.com/64428916/177265759-b292de9d-ab0f-4114-8e06-871000c34d42.png"
+  },
+  {
+    "name": "room9",
+    "total": 4,
+    "current": 0,
+    "id": "9",
+    "image": "https://user-images.githubusercontent.com/64428916/177265430-d40732e8-7a70-4e2c-8cdf-780e6d45dff7.png"
   }
 ]
