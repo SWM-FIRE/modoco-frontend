@@ -1,16 +1,10 @@
 import { useEffect, useState } from 'react';
 import RoomBlock from './RoomBlock';
 import roomInterface from '../../interface/room.interface';
+import roomsData from '../../rooms.json';
 
 export default function Room() {
-  const [rooms, setRooms] = useState([
-    {
-      id: 'init',
-      name: 'initName',
-      total: 5,
-      current: 3,
-    },
-  ]);
+  const [rooms, setRooms] = useState(roomsData);
   useEffect(() => {
     const API_URL: string = process.env.REACT_APP_SERVER as string;
     console.log(API_URL);

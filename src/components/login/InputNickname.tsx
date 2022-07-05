@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userstore';
 
 export default function InputNickname() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { nickname, uid, setNickname, setUid } = UserStore();
   useEffect(() => {
     if (localStorage.getItem('uid')) {
@@ -22,20 +22,20 @@ export default function InputNickname() {
     }
   }, []);
 
-  const sendData = async () => {
-    const url = '';
-    await axios
-      .post(url, {
-        nickname: `nickname`,
-        uid: `uid`,
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((res) => {
-        console.log(res.data);
-      });
-  };
+  // const sendData = async () => {
+  //   const url = '';
+  //   await axios
+  //     .post(url, {
+  //       nickname: `nickname`,
+  //       uid: `uid`,
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((res) => {
+  //       console.log(res.data);
+  //     });
+  // };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -43,11 +43,11 @@ export default function InputNickname() {
     const payload = { nickname, uid };
     localStorage.setItem('nickname', nickname);
     console.log(payload);
-    sendData();
+    // sendData();
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
-    // navigate(`lobby`);
+    navigate(`lobby`);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
