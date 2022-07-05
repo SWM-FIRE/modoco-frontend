@@ -32,10 +32,18 @@ const RoomName = styled.div`
 
 const Button = styled.button`
   text-align: center;
-  width: 20rem;
-  height: 10rem;
+  width: 22vw;
+  height: 22vw;
   background-color: ${oc.gray3};
   cursor: pointer;
   margin-top: 5rem;
   border-radius: 2rem;
+  @media screen and (max-width: 1200px) {
+    width: 30vw;
+    height: 30vw;
+  }
+  @media screen and (max-width: 900px) {
+    width: 60vw;
+    height: 60vw;
+  }
 `;

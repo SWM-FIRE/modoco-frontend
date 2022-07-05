@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import RoomBlock from './RoomBlock';
 import roomInterface from '../../interface/room.interface';
 import roomsData from '../../rooms.json';
@@ -17,7 +18,7 @@ export default function Room() {
   }, []);
 
   return (
-    <>
+    <Component>
       {rooms.map(({ id, name, total, current }: roomInterface) => {
         return (
           <RoomBlock
@@ -29,6 +30,14 @@ export default function Room() {
           />
         );
       })}
-    </>
+    </Component>
   );
 }
+
+const Component = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 5rem 15rem;
+`;
