@@ -43,8 +43,6 @@ const Header = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
   background: linear-gradient(113deg, #9f9f9f 0%, #636363 100%);
   display: flex;
   flex-direction: column;

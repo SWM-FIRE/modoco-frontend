@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import RoomBlock from './RoomBlock';
 import roomInterface from '../../interface/room.interface';
+import roomsData from '../../rooms.json';
 
 export default function RoomBlocks() {
-  const [rooms, setRooms] = useState([
-    {
-      id: 'init',
-      name: 'initName',
-      total: 5,
-      current: 3,
-    },
-  ]);
+  const [rooms, setRooms] = useState(roomsData);
   useEffect(() => {
     const API_URL: string = process.env.REACT_APP_SERVER as string;
     console.log(API_URL);
@@ -23,18 +18,28 @@ export default function RoomBlocks() {
   }, []);
 
   return (
-    <>
-      {rooms.map(({ id, name, total, current }: roomInterface) => {
+    <Component>
+      {rooms.map(({ id, name, total, current, image, tags }: roomInterface) => {
         return (
           <RoomBlock
             key={id}
             name={name}
             total={total}
             current={current}
+            image={image}
             id={id}
+            tags={tags}
           />
         );
       })}
-    </>
+    </Component>
   );
 }
+
+const Component = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 5rem 15rem;
+`;

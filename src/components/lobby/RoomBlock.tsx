@@ -2,9 +2,19 @@ import styled from 'styled-components';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import roomInterface from '../../interface/room.interface';
-import oc from '../../styles/openColor';
 
-export default function RoomBlock({ name, total, current, id }: roomInterface) {
+interface Props {
+  image: string;
+}
+
+export default function RoomBlock({
+  name,
+  total,
+  current,
+  image,
+  id,
+  tags,
+}: roomInterface) {
   /*
   socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     navigate(`room/${confirmRoomId}`);
@@ -17,25 +27,94 @@ export default function RoomBlock({ name, total, current, id }: roomInterface) {
     navigate(`/room/${id}`);
   };
   return (
-    <Button onClick={onSubmit}>
-      <RoomName>{name}</RoomName>
-      <div>
-        {current} / {total}
-      </div>
+    <Button onClick={onSubmit} image={image}>
+      <Information>
+        <Top>
+          <RoomName>{name}</RoomName>
+          <UserNumber>
+            {current} / {total}
+          </UserNumber>
+        </Top>
+        <Tags>
+          {tags.map((tag: string) => {
+            return <Tag key={tag}>{tag}</Tag>;
+          })}
+        </Tags>
+      </Information>
     </Button>
   );
 }
 
-const RoomName = styled.div`
-  font-size: 5rem;
+const Information = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  height: 100%;
+  color: white;
+  background-color: rgb(0, 0, 0, 28%);
+  border-radius: 3rem;
+  &:hover {
+    background-color: rgb(0, 0, 0, 60%);
+  }
+  transition: all ease 0.5s;
 `;
 
-const Button = styled.button`
+const Top = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+const RoomName = styled.span`
+  font-size: 4rem;
+`;
+
+const UserNumber = styled.span`
+  font-size: 2rem;
+  background-color: rgba(250, 250, 250, 60%);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  color: black;
+`;
+
+const Button = styled.button<Props>`
   text-align: center;
-  width: 20rem;
-  height: 10rem;
-  background-color: ${oc.gray3};
+  width: 22vw;
+  height: 22vw;
+  background-color: lightGray;
+  background-image: url(${(props) => props.image});
+  background-position: center;
   cursor: pointer;
   margin-top: 5rem;
-  border-radius: 2rem;
+  border-radius: 3rem;
+  @media screen and (max-width: 1200px) {
+    width: 30vw;
+    height: 30vw;
+  }
+  @media screen and (max-width: 900px) {
+    width: 60vw;
+    height: 60vw;
+  }
+`;
+
+const Tags = styled.ul`
+  width: 100%;
+  display: felx;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const Tag = styled.li`
+  margin-right: 1rem;
+  font-size: 2rem;
+  background-color: rgba(250, 250, 250, 60%);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  color: black;
+  margin-top: 1rem;
 `;

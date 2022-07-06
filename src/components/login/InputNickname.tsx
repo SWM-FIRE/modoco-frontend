@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,16 +21,33 @@ export default function InputNickname() {
       console.log('uid는 ', newUID);
     }
   }, []);
+
+  const sendData = async () => {
+    const API_URL: string = process.env
+      .REACT_APP_SEND_USER_INFORMATION_URL as string;
+    await axios
+      .post(API_URL, {
+        uid,
+        nickname,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // socket connection
     const payload = { nickname, uid };
     localStorage.setItem('nickname', nickname);
-    // localStorage.setItem('uid', uid);
+    console.log('payload: ', payload);
+    sendData();
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
-    console.log(payload);
     navigate(`lobby`);
   };
 
