@@ -26,7 +26,7 @@ export function RemoteVideo(props: Props) {
         clearInterval(interval);
       }
       console.log('remote', stream);
-    }, 10000);
+    }, 100);
 
     return () => {
       clearInterval(interval);

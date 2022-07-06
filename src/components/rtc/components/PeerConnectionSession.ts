@@ -91,7 +91,7 @@ class PeerConnectionSession {
   }
 
   /**
-   * call 만들어 졌을 때 알려주는 함수
+   * @onCallMade 만들어 졌을 때 알려주는 함수
    */
 
   onCallMade() {
@@ -153,9 +153,7 @@ class PeerConnectionSession {
  */
 
 export const createPeerConnectionContext = () => {
-  const socket = io(process.env.REACT_APP_SOCKET_URL as string, {
-    secure: true,
-  });
+  const socket = io(process.env.REACT_APP_SOCKET_URL as string);
   console.log(socket);
   return new PeerConnectionSession(socket);
 };
