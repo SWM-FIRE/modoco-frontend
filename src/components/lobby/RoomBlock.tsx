@@ -23,7 +23,6 @@ export default function RoomBlock({
     console.log('test');
     navigate(`/room/${id}`);
   };
-  console.log(backgroundImgae[image]);
   return (
     <Component onClick={onSubmit} src={backgroundImgae[image]}>
       <Information>
