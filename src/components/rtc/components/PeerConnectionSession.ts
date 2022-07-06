@@ -128,7 +128,7 @@ class PeerConnectionSession {
     });
   }
 
-  onAnswerMade(callback) {
+  onAnswerMade(callback: (_answer: string) => void) {
     this.socket.on('answer-made', async (data) => {
       await this.peerConnections[data.socket].setRemoteDescription(
         new RTCSessionDescription(data.answer),
@@ -153,7 +153,9 @@ class PeerConnectionSession {
  */
 
 export const createPeerConnectionContext = () => {
-  const socket = io(process.env.REACT_APP_SOCKET_URL as string);
+  const socket = io(process.env.REACT_APP_SOCKET_URL as string, {
+    secure: true,
+  });
   console.log(socket);
   return new PeerConnectionSession(socket);
 };
