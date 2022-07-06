@@ -25,11 +25,7 @@ export default function MainPage() {
    */
 
   const userMediaStream = useCreateMediaStream(localVideoRef);
-  const { connectedUsers } = useStartPeerSession(
-    room,
-    userMediaStream,
-    // localVideoRef,
-  );
+  const { connectedUsers } = useStartPeerSession(room, userMediaStream);
   console.log('users', connectedUsers);
 
   return (

@@ -12,9 +12,6 @@ interface Props {
 }
 
 export function RemoteVideo(props: Props) {
-  // type MediaProvider = MediaStream | MediaSource | Blob;
-  // const [mediaStream, setMediaStream] = useState<MediaProvider>();
-
   useEffect(() => {
     const interval = setInterval(() => {
       const remote = document.getElementById(

@@ -4,8 +4,6 @@ import io, { Socket } from 'socket.io-client';
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
 class PeerConnectionSession {
-  // mOnConnected: () => void;
-  // mOnDisconnected: () => void;
   mRoom: string;
   socket: Socket;
   peerConnections = {};
