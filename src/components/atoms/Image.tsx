@@ -11,17 +11,17 @@ import camping3 from '../../assets/img/camping-3.png';
 import camping4 from '../../assets/img/camping-4.png';
 
 const Image = {
-  beach1,
-  beach2,
-  beach3,
-  cafe1,
-  cafe2,
-  cafe3,
-  cafe4,
-  camping1,
-  camping2,
-  camping3,
-  camping4,
+  beach_1: beach1,
+  beach_2: beach2,
+  beach_3: beach3,
+  cafe_1: cafe1,
+  cafe_2: cafe2,
+  cafe_3: cafe3,
+  cafe_4: cafe4,
+  camping_1: camping1,
+  camping_2: camping2,
+  camping_3: camping3,
+  camping_4: camping4,
 };
 
 export default Image;

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import roomInterface from '../../interface/room.interface';
+import backgroundImgae from '../atoms/Image';
 
 export default function RoomBlock({
   name,
@@ -17,17 +18,14 @@ export default function RoomBlock({
   });
   */
   const navigate = useNavigate();
-  const onSubmit = (event: React.MouseEvent<HTMLImageElement>) => {
+  const onSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     console.log('test');
     navigate(`/room/${id}`);
   };
+  console.log(backgroundImgae[image]);
   return (
-    <Component
-      onClick={onSubmit}
-      src={require(`../../assets/img/${image}.png`).default}
-      alt={image}
-    >
+    <Component onClick={onSubmit} src={backgroundImgae[image]}>
       <Information>
         <Top>
           <RoomName>{name}</RoomName>
@@ -81,10 +79,11 @@ const UserNumber = styled.span`
   color: black;
 `;
 
-const Component = styled.img`
+const Component = styled.button`
   text-align: center;
   width: 22vw;
   height: 22vw;
+  background-image: url(${(props: { src: string }) => props.src});
   background-color: lightGray;
   background-position: center;
   cursor: pointer;
