@@ -3,10 +3,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import roomInterface from '../../interface/room.interface';
 
-interface Props {
-  image: string;
-}
-
 export default function RoomBlock({
   name,
   total,
@@ -21,13 +17,17 @@ export default function RoomBlock({
   });
   */
   const navigate = useNavigate();
-  const onSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onSubmit = (event: React.MouseEvent<HTMLImageElement>) => {
     event.preventDefault();
     console.log('test');
     navigate(`/room/${id}`);
   };
   return (
-    <Button onClick={onSubmit} image={image}>
+    <Component
+      onClick={onSubmit}
+      src={require(`../../assets/img/${image}.png`).default}
+      alt={image}
+    >
       <Information>
         <Top>
           <RoomName>{name}</RoomName>
@@ -41,7 +41,7 @@ export default function RoomBlock({
           })}
         </Tags>
       </Information>
-    </Button>
+    </Component>
   );
 }
 
@@ -81,12 +81,11 @@ const UserNumber = styled.span`
   color: black;
 `;
 
-const Button = styled.button<Props>`
+const Component = styled.img`
   text-align: center;
   width: 22vw;
   height: 22vw;
   background-color: lightGray;
-  background-image: url(${(props) => props.image});
   background-position: center;
   cursor: pointer;
   margin-top: 5rem;
