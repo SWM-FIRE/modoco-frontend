@@ -4,10 +4,10 @@ import io, { Socket } from 'socket.io-client';
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
 class PeerConnectionSession {
-  mOnConnected: () => void;
-  mOnDisconnected: () => void;
+  // mOnConnected: () => void;
+  // mOnDisconnected: () => void;
   mRoom: string;
-  socket;
+  socket: Socket;
   peerConnections = {};
   senders = [];
   listeners = {};
@@ -39,46 +39,20 @@ class PeerConnectionSession {
       this.senders.push(this.peerConnections[id].addTrack(track, stream));
     });
 
-    // peer의 connection state에 따라 callback 함수 호출
-    this.listeners[id] = (event) => {
-      let fn;
-      if (this.peerConnections[id].connectionState === 'connected') {
-        console.log('mOnConnected', this.mOnConnected);
-        fn = this.mOnConnected;
-      } else if (this.peerConnections[id].connectionState === 'disconnected') {
-        console.log('mOnDisconnected', this.mOnDisconnected);
-        fn = this.mOnDisconnected;
-      } else {
-        console.log('mRoom', this.mRoom);
-        fn = this.mRoom;
-      }
-      if (fn === null) {
-        fn(event, id);
-      }
-    };
-
-    // peer의 state 변경할 수 있는 eventListener
-    this.peerConnections[id].addEventListener(
-      'connectionstatechange',
-      this.listeners[id],
-    );
-
-    this.peerConnections[id].ontrack = function ({
-      streams: [stream],
-    }: {
-      streams;
-    }) {
+    // peerConnection의 track마다 생성된 stream을 callback함수로 전달
+    this.peerConnections[id].ontrack = ({ streams: [stream] }) => {
       console.log({ id, stream });
       callback(stream);
     };
 
     console.log(this.peerConnections);
+    // end of addPeerConnection
   }
 
   /**
    * @breif 해당하는 peer connection을 삭제
    * @param id 에 해당하는 peer connection 삭제
-   *
+   * 해당하는 peerConnection의 eventListener를 삭제
    */
   removePeerConnection(id: string) {
     this.peerConnections[id].removeEventListener(
@@ -93,7 +67,7 @@ class PeerConnectionSession {
 
   /**
    * @brief 누구에게 전화를 걸지 RTCSession 생성 후 call
-   * @param to 에게 call
+   * @param to 에게 call -> socket 연결
    */
   async callUser(to: string) {
     if (this.peerConnections[to].iceConnectionState === 'new') {
@@ -110,14 +84,6 @@ class PeerConnectionSession {
    * @onConnected @onDisconnected @joinRoom -> state에 따라 callback
    * @param callback
    */
-
-  onConnected(callback: () => void) {
-    this.mOnConnected = callback;
-  }
-
-  onDisconnected(callback: () => void) {
-    this.mOnDisconnected = callback;
-  }
 
   joinRoom(room: string) {
     this.mRoom = room;
@@ -137,7 +103,6 @@ class PeerConnectionSession {
       await this.peerConnections[data.socket].setLocalDescription(
         new RTCSessionDescription(answer),
       );
-
       this.socket.emit('make-answer', {
         answer,
         to: data.socket,

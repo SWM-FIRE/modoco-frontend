@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
-import { RefObject, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createPeerConnectionContext } from '../components/PeerConnectionSession';
 
 export const useStartPeerSession = (
   room: string,
   userMediaStream: MediaStream,
-  localVideoRef: RefObject<HTMLVideoElement>,
+  // localVideoRef: RefObject<HTMLVideoElement>,
 ) => {
   /**
    * @peerVideoConnection 1회 PeerConnection 생성
@@ -14,11 +14,11 @@ export const useStartPeerSession = (
    */
 
   const peerVideoConnection = useMemo(() => createPeerConnectionContext(), []);
-  const [displayMediaStream, setDisplayMediaStream] = useState<MediaStream>();
+  // const [displayMediaStream, setDisplayMediaStream] = useState<MediaStream>();
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   /**
-   * @brief 최초 useStartPeerSession시
+   * @brief 최초 useStartPeerSession시 useEffect
    * @joinRoom
    * @onAddUser -> @setConnectedUsers 추가 -> @addPeerConnection -> @callUser
    * @onRemoveUser -> @setConnectedUsers 삭제 -> @removePeerConnection
@@ -30,9 +30,9 @@ export const useStartPeerSession = (
   useEffect(() => {
     if (userMediaStream) {
       peerVideoConnection.joinRoom(room);
+
       peerVideoConnection.onAddUser((user: string) => {
         setConnectedUsers((users) => [...users, user]);
-
         peerVideoConnection.addPeerConnection(
           user,
           userMediaStream,
@@ -87,29 +87,29 @@ export const useStartPeerSession = (
    * 2. 모든 senders에 대해 track 변경
    * 3. 내 모든 track stop
    */
-  const cancelScreenSharing = async () => {
-    const senders = await peerVideoConnection.senders.filter(
-      (sender) => sender.track.kind === 'video',
-    );
+  // const cancelScreenSharing = async () => {
+  //   const senders = await peerVideoConnection.senders.filter(
+  //     (sender) => sender.track.kind === 'video',
+  //   );
 
-    if (senders) {
-      senders.forEach((sender) =>
-        sender.replaceTrack(
-          // console.log로 뭐하는 놈인지 확인필요
-          userMediaStream.getTracks().find((track) => track.kind === 'video'),
-        ),
-      );
-    }
+  //   if (senders) {
+  //     senders.forEach((sender) =>
+  //       sender.replaceTrack(
+  //         // console.log로 뭐하는 놈인지 확인필요
+  //         userMediaStream.getTracks().find((track) => track.kind === 'video'),
+  //       ),
+  //     );
+  //   }
 
-    // 필요?
-    if (localVideoRef?.current) {
-      localVideoRef.current.srcObject = userMediaStream;
-    }
-    if (displayMediaStream) {
-      displayMediaStream.getTracks().forEach((track) => track.stop());
-    }
-    setDisplayMediaStream(undefined);
-  };
+  //   // 필요?
+  //   if (localVideoRef?.current) {
+  //     localVideoRef.current.srcObject = userMediaStream;
+  //   }
+  //   if (displayMediaStream) {
+  //     displayMediaStream.getTracks().forEach((track) => track.stop());
+  //   }
+  //   setDisplayMediaStream(undefined);
+  // };
 
   /**
    * @breif screenShare 해!
@@ -118,35 +118,32 @@ export const useStartPeerSession = (
    * 3. 비디오 보낼거라도 트랙 변경
    * 4. ended 라면 cancel 하게 EventListner 설정
    */
-  const shareScreen = async () => {
-    const stream =
-      displayMediaStream || (await navigator.mediaDevices.getDisplayMedia());
+  // const shareScreen = async () => {
+  //   const stream =
+  //     displayMediaStream || (await navigator.mediaDevices.getDisplayMedia());
 
-    const senders = await peerVideoConnection.senders.filter(
-      (sender) => sender.track.kind === 'video',
-    );
+  //   const senders = await peerVideoConnection.senders.filter(
+  //     (sender) => sender.track.kind === 'video',
+  //   );
 
-    if (senders) {
-      senders.forEach((sender) => sender.replaceTrack(stream.getTracks()[0]));
-    }
+  //   if (senders) {
+  //     senders.forEach((sender) => sender.replaceTrack(stream.getTracks()[0]));
+  //   }
 
-    stream.getVideoTracks()[0].addEventListener('ended', () => {
-      cancelScreenSharing();
-      // cancelScreenSharing(stream);
-    });
+  //   stream.getVideoTracks()[0].addEventListener('ended', () => {
+  //     cancelScreenSharing();
+  //     // cancelScreenSharing(stream);
+  //   });
 
-    if (localVideoRef?.current) {
-      localVideoRef.current.srcObject = stream;
-    }
+  //   if (localVideoRef?.current) {
+  //     localVideoRef.current.srcObject = stream;
+  //   }
 
-    setDisplayMediaStream(stream);
-  };
+  //   setDisplayMediaStream(stream);
+  // };
 
   return {
     connectedUsers,
-    shareScreen,
-    cancelScreenSharing,
     peerVideoConnection,
-    isScreenShared: !!displayMediaStream,
   };
 };

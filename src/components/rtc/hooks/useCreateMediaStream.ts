@@ -11,10 +11,15 @@ export const useCreateMediaStream = (
    */
   useEffect(() => {
     const createMediaStream = async () => {
-      const stream: MediaStream = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
-        audio: true,
-      });
+      let stream: MediaStream = null;
+      try {
+        stream = await navigator.mediaDevices.getDisplayMedia({
+          video: true,
+          audio: true,
+        });
+      } catch (e) {
+        console.log('cannot get display');
+      }
 
       if (localVideoRef.current) {
         localVideoRef.current.srcObject = stream;

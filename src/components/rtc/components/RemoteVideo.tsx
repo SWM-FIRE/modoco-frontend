@@ -3,7 +3,15 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-export function RemoteVideo(props) {
+interface Props {
+  key: string;
+  id: string;
+  autoPlay: boolean;
+  playsInline: boolean;
+  muted: boolean;
+}
+
+export function RemoteVideo(props: Props) {
   // type MediaProvider = MediaStream | MediaSource | Blob;
   // const [mediaStream, setMediaStream] = useState<MediaProvider>();
 
@@ -13,12 +21,12 @@ export function RemoteVideo(props) {
         props.id,
       ) as HTMLVideoElement | null;
       const stream = remote?.srcObject;
-
       if (stream) {
         // setMediaStream(stream);
         clearInterval(interval);
       }
-    }, 100);
+      console.log('remote', stream);
+    }, 10000);
 
     return () => {
       clearInterval(interval);

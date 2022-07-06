@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Rooms from '../components/lobby/Room';
+import RoomBlocks from '../components/lobby/RoomBlocks';
 import UserStore from '../stores/userstore';
 
 export default function Lobby() {
@@ -20,7 +20,7 @@ export default function Lobby() {
     <Container>
       <Header>Lobby</Header>
       <Nickname>{nickname}</Nickname>
-      <Rooms />
+      <RoomBlocks />
     </Container>
   );
 }
