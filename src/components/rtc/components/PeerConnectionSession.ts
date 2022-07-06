@@ -1,64 +1,57 @@
 /* eslint-disable lines-between-class-members */
-import io from 'socket.io-client';
+import io, { Socket } from 'socket.io-client';
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
 class PeerConnectionSession {
-  mOnConnected;
-  mOnDisconnected;
-  mRoom;
+  mRoom: string;
+  socket: Socket;
   peerConnections = {};
   senders = [];
   listeners = {};
-  socket;
 
-  constructor(socket) {
+  constructor(socket: Socket) {
     this.socket = socket;
     this.onCallMade();
   }
 
-  addPeerConnection(id, stream, callback) {
+  /**
+   * @brief - 새로운 peer connection을 생성하고, peer connection object에 추가한다
+   * @param id
+   * @param stream
+   * @param callback
+   */
+
+  addPeerConnection(
+    id: string,
+    stream: MediaStream,
+    callback: (_stream: MediaStream) => void,
+  ) {
+    // 새로운 stun 서버에 추가
     this.peerConnections[id] = new RTCPeerConnection({
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
     });
+
+    // user의 media track을 추가
     stream.getTracks().forEach((track) => {
       this.senders.push(this.peerConnections[id].addTrack(track, stream));
     });
 
-    this.listeners[id] = (event) => {
-      let fn;
-      if (this.peerConnections[id].connectionState === 'connected') {
-        console.log('mOnConnected', this.mOnConnected);
-        fn = this.mOnConnected;
-      } else if (this.peerConnections[id].connectionState === 'disconnected') {
-        console.log('mOnDisconnected', this.mOnDisconnected);
-        fn = this.mOnDisconnected;
-      } else {
-        console.log('mRoom', this.mRoom);
-        fn = this.mRoom;
-      }
-      if (fn === null) {
-        fn(event, id);
-      }
-    };
-
-    this.peerConnections[id].addEventListener(
-      'connectionstatechange',
-      this.listeners[id],
-    );
-
-    this.peerConnections[id].ontrack = function ({
-      streams: [stream],
-    }: {
-      streams;
-    }) {
+    // peerConnection의 track마다 생성된 stream을 callback함수로 전달
+    this.peerConnections[id].ontrack = ({ streams: [stream] }) => {
       console.log({ id, stream });
       callback(stream);
     };
 
     console.log(this.peerConnections);
+    // end of addPeerConnection
   }
 
+  /**
+   * @breif 해당하는 peer connection을 삭제
+   * @param id 에 해당하는 peer connection 삭제
+   * 해당하는 peerConnection의 eventListener를 삭제
+   */
   removePeerConnection(id: string) {
     this.peerConnections[id].removeEventListener(
       'connectionstatechange',
@@ -70,6 +63,10 @@ class PeerConnectionSession {
 
   isAlreadyCalling = false;
 
+  /**
+   * @brief 누구에게 전화를 걸지 RTCSession 생성 후 call
+   * @param to 에게 call -> socket 연결
+   */
   async callUser(to: string) {
     if (this.peerConnections[to].iceConnectionState === 'new') {
       const offer = await this.peerConnections[to].createOffer();
@@ -81,18 +78,19 @@ class PeerConnectionSession {
     }
   }
 
-  onConnected(callback) {
-    this.mOnConnected = callback;
-  }
+  /**
+   * @onConnected @onDisconnected @joinRoom -> state에 따라 callback
+   * @param callback
+   */
 
-  onDisconnected(callback) {
-    this.mOnDisconnected = callback;
-  }
-
-  joinRoom(room) {
+  joinRoom(room: string) {
     this.mRoom = room;
     this.socket.emit('joinRoom', room);
   }
+
+  /**
+   * @onCallMade 만들어 졌을 때 알려주는 함수
+   */
 
   onCallMade() {
     this.socket.on('call-made', async (data) => {
@@ -103,7 +101,6 @@ class PeerConnectionSession {
       await this.peerConnections[data.socket].setLocalDescription(
         new RTCSessionDescription(answer),
       );
-
       this.socket.emit('make-answer', {
         answer,
         to: data.socket,
@@ -111,25 +108,25 @@ class PeerConnectionSession {
     });
   }
 
-  onAddUser(callback) {
+  onAddUser(callback: (_user: string) => void) {
     this.socket.on(`${this.mRoom}-add-user`, async ({ user }) => {
       callback(user);
     });
   }
 
-  onRemoveUser(callback) {
+  onRemoveUser(callback: (_socketId: string) => void) {
     this.socket.on(`${this.mRoom}-remove-user`, ({ socketId }) => {
       callback(socketId);
     });
   }
 
-  onUpdateUserList(callback) {
+  onUpdateUserList(callback: (_users: string[], _current: string) => void) {
     this.socket.on(`${this.mRoom}-update-user-list`, ({ users, current }) => {
       callback(users, current);
     });
   }
 
-  onAnswerMade(callback) {
+  onAnswerMade(callback: (_answer: string) => void) {
     this.socket.on('answer-made', async (data) => {
       await this.peerConnections[data.socket].setRemoteDescription(
         new RTCSessionDescription(data.answer),
@@ -147,8 +144,14 @@ class PeerConnectionSession {
   }
 }
 
+/**
+ *
+ * @brief socket 연결
+ * @returns {PeerConnectionSession} : 연결된 소켓에 해당하는 class
+ */
+
 export const createPeerConnectionContext = () => {
-  const socket = io('http://172.16.101.93:8282/room');
+  const socket = io(process.env.REACT_APP_SOCKET_URL as string);
   console.log(socket);
   return new PeerConnectionSession(socket);
 };

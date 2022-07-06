@@ -4,7 +4,7 @@ import RoomBlock from './RoomBlock';
 import roomInterface from '../../interface/room.interface';
 import roomsData from '../../rooms.json';
 
-export default function Room() {
+export default function RoomBlocks() {
   const [rooms, setRooms] = useState(roomsData);
   useEffect(() => {
     const API_URL: string = process.env.REACT_APP_SERVER as string;

@@ -1,25 +1,28 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/destructuring-assignment */
-import React, { useEffect, useState } from 'react';
-import { Video, VideoContainer } from './Video';
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
 
-export function RemoteVideo(props) {
-  type MediaProvider = MediaStream | MediaSource | Blob;
-  const [mediaStream, setMediaStream] = useState<MediaProvider>();
+interface Props {
+  key: string;
+  id: string;
+  autoPlay: boolean;
+  playsInline: boolean;
+  muted: boolean;
+}
 
+export function RemoteVideo(props: Props) {
   useEffect(() => {
-    console.log('props', props);
     const interval = setInterval(() => {
       const remote = document.getElementById(
         props.id,
       ) as HTMLVideoElement | null;
       const stream = remote?.srcObject;
-
       if (stream) {
-        setMediaStream(stream);
+        // setMediaStream(stream);
         clearInterval(interval);
-        console.log(mediaStream);
       }
+      console.log('remote', stream);
     }, 100);
 
     return () => {
@@ -33,3 +36,12 @@ export function RemoteVideo(props) {
     </VideoContainer>
   );
 }
+const VideoContainer = styled.div`
+  box-sizing: border-box;
+  position: relative;
+`;
+
+const Video = styled.video`
+  height: 100%;
+  width: 100%;
+`;

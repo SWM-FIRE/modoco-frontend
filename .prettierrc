@@ -8,5 +8,6 @@
   "arrowParens": "always",
   "orderedImports": true,
   "bracketSpacing": true,
-  "jsxBracketSameLine": false
+  "jsxBracketSameLine": false,
+  "endOfLine": "auto"
 }

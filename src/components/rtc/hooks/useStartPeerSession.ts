@@ -1,32 +1,43 @@
 /* eslint-disable no-param-reassign */
-import { RefObject, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createPeerConnectionContext } from '../components/PeerConnectionSession';
 
 export const useStartPeerSession = (
   room: string,
   userMediaStream: MediaStream,
-  localVideoRef: RefObject<HTMLVideoElement>,
 ) => {
-  const peerVideoConnection = useMemo(() => createPeerConnectionContext(), []);
+  /**
+   * @peerVideoConnection 1회 PeerConnection 생성
+   * @displayMediaStream 내 mediaStream
+   * @connectedUsers 접속중인 유저 목록
+   */
 
-  const [displayMediaStream, setDisplayMediaStream] = useState<MediaStream>();
+  const peerVideoConnection = useMemo(() => createPeerConnectionContext(), []);
   const [connectedUsers, setConnectedUsers] = useState([]);
 
+  /**
+   * @brief 최초 useStartPeerSession시 useEffect
+   * @joinRoom
+   * @onAddUser -> @setConnectedUsers 추가 -> @addPeerConnection -> @callUser
+   * @onRemoveUser -> @setConnectedUsers 삭제 -> @removePeerConnection
+   * @onUpdateUserList -> @setConnectedUsers유지 -> user마다 @addPeerConnection
+   * @onAnswerMade -> @callUser
+   * @return -> mediaStream 삭제하며 disconnect
+   *
+   */
   useEffect(() => {
     if (userMediaStream) {
-      console.log('mediaStream', userMediaStream);
       peerVideoConnection.joinRoom(room);
+
       peerVideoConnection.onAddUser((user: string) => {
         setConnectedUsers((users) => [...users, user]);
-
         peerVideoConnection.addPeerConnection(
-          `${user}`,
+          user,
           userMediaStream,
-          (_stream) => {
+          (_stream: MediaStream) => {
             if (user) {
               const box = <HTMLVideoElement>document.getElementById(user);
               box.srcObject = _stream;
-              // document.getElementById(user).srcObject = _stream;
             }
           },
         );
@@ -68,58 +79,8 @@ export const useStartPeerSession = (
     };
   }, [peerVideoConnection, room, userMediaStream]);
 
-  const cancelScreenSharing = async () => {
-    const senders = await peerVideoConnection.senders.filter(
-      (sender) => sender.track.kind === 'video',
-    );
-
-    if (senders) {
-      senders.forEach((sender) =>
-        sender.replaceTrack(
-          userMediaStream.getTracks().find((track) => track.kind === 'video'),
-        ),
-      );
-    }
-
-    if (localVideoRef?.current) {
-      localVideoRef.current.srcObject = userMediaStream;
-    }
-    if (displayMediaStream) {
-      displayMediaStream.getTracks().forEach((track) => track.stop());
-    }
-    setDisplayMediaStream(undefined);
-  };
-
-  const shareScreen = async () => {
-    const stream =
-      displayMediaStream || (await navigator.mediaDevices.getDisplayMedia());
-
-    const senders = await peerVideoConnection.senders.filter(
-      (sender) => sender.track.kind === 'video',
-    );
-
-    if (senders) {
-      senders.forEach((sender) => sender.replaceTrack(stream.getTracks()[0]));
-    }
-
-    stream.getVideoTracks()[0].addEventListener('ended', () => {
-      cancelScreenSharing();
-      // cancelScreenSharing(stream);
-    });
-
-    if (localVideoRef?.current) {
-      // eslint-disable-next-line no-param-reassign
-      localVideoRef.current.srcObject = stream;
-    }
-
-    setDisplayMediaStream(stream);
-  };
-
   return {
     connectedUsers,
     peerVideoConnection,
-    shareScreen,
-    cancelScreenSharing,
-    isScreenShared: !!displayMediaStream,
   };
 };
