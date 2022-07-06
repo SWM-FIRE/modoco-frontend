@@ -28,7 +28,7 @@ export default function MainPage() {
   const { connectedUsers } = useStartPeerSession(
     room,
     userMediaStream,
-    localVideoRef,
+    // localVideoRef,
   );
   console.log('users', connectedUsers);
 
@@ -41,7 +41,7 @@ export default function MainPage() {
         {connectedUsers.map((user: string) => (
           <>
             <p>USER : {user}</p>
-            <RemoteVideo key={user} id={user} autoPlay playsInline />
+            <RemoteVideo key={user} id={user} autoPlay playsInline muted />
           </>
         ))}
       </Gallery>
@@ -63,5 +63,4 @@ const Header = styled.header`
 
 const Gallery = styled.div`
   justify-content: center;
-  max-width: calc(var(--width) * var(--cols));
 `;

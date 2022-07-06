@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import RoomBlock from './RoomBlock';
 import roomInterface from '../../interface/room.interface';
 
-export default function Room() {
+export default function RoomBlocks() {
   const [rooms, setRooms] = useState([
     {
       id: 'init',
