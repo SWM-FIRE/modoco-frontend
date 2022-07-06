@@ -188,7 +188,7 @@ class PeerConnectionSession {
  */
 
 export const createPeerConnectionContext = () => {
-  const socket = io('http://172.16.101.93:8282/room');
+  const socket = io(process.env.REACT_APP_SOCKET_URL as string);
   console.log(socket);
   return new PeerConnectionSession(socket);
 };

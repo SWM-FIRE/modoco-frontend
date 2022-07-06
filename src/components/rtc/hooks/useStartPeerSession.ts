@@ -144,6 +144,8 @@ export const useStartPeerSession = (
 
   return {
     connectedUsers,
+    shareScreen,
+    cancelScreenSharing,
     peerVideoConnection,
     isScreenShared: !!displayMediaStream,
   };
