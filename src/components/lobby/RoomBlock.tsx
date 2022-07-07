@@ -2,10 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import roomInterface from '../../interface/room.interface';
-
-interface Props {
-  image: string;
-}
+import backgroundImgae from '../atoms/Image';
 
 export default function RoomBlock({
   name,
@@ -27,7 +24,7 @@ export default function RoomBlock({
     navigate(`/room/${id}`);
   };
   return (
-    <Button onClick={onSubmit} image={image}>
+    <Component onClick={onSubmit} src={backgroundImgae[image]}>
       <Information>
         <Top>
           <RoomName>{name}</RoomName>
@@ -41,7 +38,7 @@ export default function RoomBlock({
           })}
         </Tags>
       </Information>
-    </Button>
+    </Component>
   );
 }
 
@@ -81,12 +78,12 @@ const UserNumber = styled.span`
   color: black;
 `;
 
-const Button = styled.button<Props>`
+const Component = styled.button`
   text-align: center;
   width: 22vw;
   height: 22vw;
+  background-image: url(${(props: { src: string }) => props.src});
   background-color: lightGray;
-  background-image: url(${(props) => props.image});
   background-position: center;
   cursor: pointer;
   margin-top: 5rem;
