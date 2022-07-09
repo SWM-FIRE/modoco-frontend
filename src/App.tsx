@@ -4,6 +4,7 @@ import Lobby from './pages/Lobby';
 import Layout from './components/layout/Layout';
 import Login from './pages/Login';
 import Room from './pages/Room';
+import Main from './pages/Main';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/room" element={<Layout />}>
           <Route path=":roomId" element={<Room />} />
         </Route>
+        <Route path="/main" element={<Main />} />
       </Routes>
     </BrowserRouter>
   );
