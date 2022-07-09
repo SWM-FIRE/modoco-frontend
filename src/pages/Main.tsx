@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 
 export default function Main() {
   return (
@@ -13,9 +14,40 @@ export default function Main() {
       </TitleContainer>
       <Search />
       <RandomEnter />
+      <ScrollContainer>
+        <ScrollMenu>
+          <Block />
+          <Block />
+          <Block />
+          <Block />
+        </ScrollMenu>
+      </ScrollContainer>
     </Container>
   );
 }
+
+const ScrollContainer = styled.div`
+  margin-top: 3.6rem;
+  width: calc(100% - 10rem);
+  overflow: hidden;
+  .react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  .react-horizontal-scrolling-menu--scroll-container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  align-self: start;
+  margin-left: 10rem;
+`;
+
+const Block = styled.div`
+  background-color: gray;
+  margin-right: 2.4rem;
+  border-radius: 2rem;
+  width: 34rem;
+  height: 50rem;
+`;
 
 const RandomEnter = styled.div`
   width: 16.1rem;
@@ -53,8 +85,11 @@ const Title = styled.h1`
 
 const Logo = styled.div`
   font-size: 2.4rem;
-  font-family: PretendardRegular, Arial;
   position: absolute;
+  width: 9.2rem;
+  height: 2.2rem;
+  font-family: PretendardRegular, Arial;
+  color: white;
   left: 4rem;
 `;
 
@@ -68,9 +103,8 @@ const Profile = styled.div`
 `;
 
 const Header = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 10rem;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,8 +112,10 @@ const Header = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: calc(100vw - 20px);
+  height: 140vh;
   display: flex;
   flex-direction: column;
   align-items: center;

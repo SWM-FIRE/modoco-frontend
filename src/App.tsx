@@ -19,9 +19,7 @@ function App() {
         <Route path="/room" element={<Layout />}>
           <Route path=":roomId" element={<Room />} />
         </Route>
-        <Route path="/main" element={<Layout />}>
-          <Route index element={<Main />} />
-        </Route>
+        <Route path="/main" element={<Main />} />
       </Routes>
     </BrowserRouter>
   );
