@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
+import vectors from '../components/atoms/Vectors';
 
 export default function Main() {
   return (
@@ -9,11 +10,15 @@ export default function Main() {
         <Profile />
       </Header>
       <TitleContainer>
+        <Vector src={vectors.Circle} left={15} top={48} size={7} />
+        <Vector src={vectors.Z} left={13.5} top={17.8} size={11} />
+        <Vector src={vectors.Triangle} left={121.8} top={14.6} size={10} />
+        <Vector src={vectors.Plus} left={123} top={46.3} size={11} />
         <Title>모여서 도란도란</Title>
         <Title>코딩해요</Title>
+        <Search />
+        <RandomEnter />
       </TitleContainer>
-      <Search />
-      <RandomEnter />
       <ScrollContainer>
         <ScrollMenu>
           <Block />
@@ -25,6 +30,20 @@ export default function Main() {
     </Container>
   );
 }
+
+interface Position {
+  size?: number;
+  left?: number;
+  top: number;
+  right?: number;
+}
+
+const Vector = styled.img<Position>`
+  position: absolute;
+  width: ${(props) => props.size}rem;
+  left: ${(props) => props.left}rem;
+  top: ${(props) => props.top}rem;
+`;
 
 const ScrollContainer = styled.div`
   margin-top: 3.6rem;
@@ -63,14 +82,13 @@ const Search = styled.div`
   margin-top: 2.4rem;
   background-color: transparent;
   border-radius: 10rem;
-  background-color: lightgray;
   border: solid 0.1rem #374151;
 `;
 
 const TitleContainer = styled.div`
   margin-top: 6rem;
   width: 62rem;
-  height: 16rem;
+  height: 35rem;
   display: flex;
   flex-direction: column;
   align-items: center;
