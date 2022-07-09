@@ -1,4 +1,4 @@
-const Avatar15 = () => {
+function Avatar15() {
   return (
     <svg
       viewBox="0 0 36 36"
@@ -54,6 +54,6 @@ const Avatar15 = () => {
       </g>
     </svg>
   );
-};
+}
 
 export default Avatar15;
