@@ -10,10 +10,10 @@ export default function Main() {
         <Profile />
       </Header>
       <TitleContainer>
-        <Vector src={vectors.Circle} left={15} top={48} size={7} />
-        <Vector src={vectors.Z} left={13.5} top={17.8} size={11} />
-        <Vector src={vectors.Triangle} left={121.8} top={14.6} size={10} />
-        <Vector src={vectors.Plus} left={123} top={46.3} size={11} />
+        <Vector src={vectors.Circle} left={15} top={61} size={7} />
+        <Vector src={vectors.Z} left={10} top={23} size={11} />
+        <Vector src={vectors.Triangle} left={85} top={18} size={10} />
+        <Vector src={vectors.Plus} left={84} top={58} size={11} />
         <Title>모여서 도란도란</Title>
         <Title>코딩해요</Title>
         <Search />
@@ -41,8 +41,8 @@ interface Position {
 const Vector = styled.img<Position>`
   position: absolute;
   width: ${(props) => props.size}rem;
-  left: ${(props) => props.left}rem;
-  top: ${(props) => props.top}rem;
+  left: ${(props) => props.left}%;
+  top: ${(props) => props.top}%;
 `;
 
 const ScrollContainer = styled.div`
