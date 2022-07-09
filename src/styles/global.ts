@@ -70,7 +70,6 @@ body {
   padding: 0;
   margin: 0;
   scroll-behavior: smooth;
-  background-color: #121212;
 }
 a {
   color: inherit;
