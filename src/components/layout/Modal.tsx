@@ -167,16 +167,6 @@ const ModalBox = styled.div`
   padding: 9rem 3rem 7rem 3rem;
 `;
 
-// const ModalBtn = styled.button`
-//   margin-bottom: 30px;
-//   border: none;
-//   background-color: rgba(22, 29, 52, 1);
-//   color: white;
-//   font-size: 20px;
-//   cursor: pointer;
-//   right: 0;
-// `;
-
 const Message = styled.div`
   display: flex;
   flex-direction: column;
