@@ -4,8 +4,8 @@ import InputNickname from '../components/login/InputNickname';
 export default function MainPage() {
   return (
     <Container>
-      <MDC>MODOCO</MDC>
-      <Sub>모여서 도란도란 코딩</Sub>
+      <Title>MODOCO</Title>
+      <Sub>모여서 도란도란 코딩해요</Sub>
       <InputNickname />
     </Container>
   );
@@ -21,14 +21,16 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const MDC = styled.p`
+const Title = styled.p`
   margin-top: 5rem;
   height: 10rem;
   font-size: 10rem;
+  font-family: GmarketSansTTFLight, sans-serif, Arial;
 `;
 
 const Sub = styled.p`
   margin-left: -10rem;
   height: 4rem;
   font-size: 4rem;
+  font-family: GmarketSansTTFBold;
 `;

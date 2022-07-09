@@ -2,6 +2,12 @@ import { createGlobalStyle } from 'styled-components';
 import GmarketSansTTFBold from '../fonts/GmarketSansTTFBold.ttf';
 import GmarketSansTTFMedium from '../fonts/GmarketSansTTFMedium.ttf';
 import GmarketSansTTFLight from '../fonts/GmarketSansTTFLight.ttf';
+import IBMPlexSansKRRegular from '../fonts/IBMPlexSansKR-Regular.ttf';
+import IBMPlexMonoRegular from '../fonts/IBMPlexMono-Regular.ttf';
+import JostRegular from '../fonts/Jost-Regular.ttf';
+import PoppinsRegular from '../fonts/Poppins-Regular.ttf';
+import PretendardRegular from '../fonts/Pretendard-Regular.ttf';
+import SFProDisplayRegular from '../fonts/SFPRODISPLAYREGULAR.otf';
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -21,6 +27,42 @@ const GlobalStyle = createGlobalStyle`
         src: local('GmarketSansTTFLight'), local('GmarketSansTTFLight');
         font-style: normal;
         src: url(${GmarketSansTTFLight}) format('truetype');
+  }
+  @font-face {
+    font-family: 'IBMPlexSansKRRegular';
+    src: local('IBMPlexSansKRRegular'), local('IBMPlexSansKRRegular');
+        font-style: normal;
+        src: url(${IBMPlexSansKRRegular}) format('truetype');
+  }
+  @font-face {
+    font-family: 'IBMPlexMonoRegular';
+    src: local('IBMPlexMonoRegular'), local('IBMPlexMonoRegular');
+        font-style: normal;
+        src: url(${IBMPlexMonoRegular}) format('truetype');
+  }
+  @font-face {
+    font-family: 'JostRegular';
+    src: local('JostRegular'), local('JostRegular');
+        font-style: normal;
+        src: url(${JostRegular}) format('truetype');
+  }
+  @font-face {
+    font-family: 'PoppinsRegular';
+    src: local('PoppinsRegular'), local('PoppinsRegular');
+        font-style: normal;
+        src: url(${PoppinsRegular}) format('truetype');
+  }
+  @font-face {
+    font-family: 'PretendardRegular';
+    src: local('PretendardRegular'), local('PretendardRegular');
+        font-style: normal;
+        src: url(${PretendardRegular}) format('truetype');
+  }
+  @font-face {
+    font-family: 'SFProDisplayRegular';
+    src: local('SFProDisplayRegular'), local('SFProDisplayRegular');
+        font-style: normal;
+        src: url(${SFProDisplayRegular}) format('opentype');
   }
 html,
 body {
