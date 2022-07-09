@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import vectors from '../components/atoms/Vectors';
+import Blocks from '../components/lobby/Blocks';
 
 export default function Main() {
   return (
@@ -14,17 +15,17 @@ export default function Main() {
         <Vector src={vectors.Z} left={10} top={23} size={11} />
         <Vector src={vectors.Triangle} left={85} top={18} size={10} />
         <Vector src={vectors.Plus} left={84} top={58} size={11} />
-        <Title>모여서 도란도란</Title>
-        <Title>코딩해요</Title>
+        <TitleFlex>
+          <Title color="FFFFFF">모여서</Title>
+          <Title color="96CEB4">도란도란</Title>
+        </TitleFlex>
+        <Title color="FFFFFF">코딩해요</Title>
         <Search />
         <RandomEnter />
       </TitleContainer>
       <ScrollContainer>
         <ScrollMenu>
-          <Block />
-          <Block />
-          <Block />
-          <Block />
+          <Blocks />
         </ScrollMenu>
       </ScrollContainer>
     </Container>
@@ -37,6 +38,10 @@ interface Position {
   top: number;
   right?: number;
 }
+
+const TitleFlex = styled.div`
+  display: flex;
+`;
 
 const Vector = styled.img<Position>`
   position: absolute;
@@ -58,14 +63,6 @@ const ScrollContainer = styled.div`
   }
   align-self: start;
   margin-left: 10rem;
-`;
-
-const Block = styled.div`
-  background-color: gray;
-  margin-right: 2.4rem;
-  border-radius: 2rem;
-  width: 34rem;
-  height: 50rem;
 `;
 
 const RandomEnter = styled.div`
@@ -94,11 +91,12 @@ const TitleContainer = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h1`
+const Title = styled.h1<{ color: string }>`
   font-family: GmarketSansTTFBold;
+  margin-left: 2rem;
   font-size: 7.2rem;
   align-self: center;
-  color: #ffffff;
+  color: #${(props) => props.color};
 `;
 
 const Logo = styled.div`

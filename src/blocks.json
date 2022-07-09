@@ -1,0 +1,37 @@
+[
+  {
+    "avatar": 1,
+    "nickname": "yoon",
+    "title": "모여서 도란도란 코딩",
+    "detail": "상세설명입니다. 내용을 입력해주세요!우리모두 모여서 도란도란 코딩해요.",
+    "tags": "Front-End"
+  },
+  {
+    "avatar": 8,
+    "nickname": "juhyeong",
+    "title": "모여서 도란도란 코딩",
+    "detail": "상세설명입니다. 내용을 입력해주세요!우리모두 모여서 도란도란 코딩해요.",
+    "tags": "Back-End"
+  },
+  {
+    "avatar": 3,
+    "nickname": "halang",
+    "title": "모여서 도란도란 코딩",
+    "detail": "상세설명입니다. 내용을 입력해주세요!우리모두 모여서 도란도란 코딩해요.",
+    "tags": "Algorithm"
+  },
+  {
+    "avatar": 17,
+    "nickname": "sukyeong",
+    "title": "모여서 도란도란 코딩",
+    "detail": "상세설명입니다. 내용을 입력해주세요!우리모두 모여서 도란도란 코딩해요.",
+    "tags": "Algorithm"
+  },
+  {
+    "avatar": 11,
+    "nickname": "test",
+    "title": "모여서 도란도란 코딩",
+    "detail": "상세설명입니다. 내용을 입력해주세요!우리모두 모여서 도란도란 코딩해요.",
+    "tags": "Algorithm"
+  }
+]
