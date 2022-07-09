@@ -1,4 +1,4 @@
-const Avatar4 = () => {
+function Avatar4() {
   return (
     <svg
       viewBox="0 0 36 36"
@@ -35,7 +35,7 @@ const Avatar4 = () => {
             d="M15 20c2 1 4 1 6 0"
             stroke="#FFFFFF"
             fill="none"
-            stroke-linecap="round"
+            strokeLinecap="round"
           />
           <rect
             x="11"
@@ -59,6 +59,6 @@ const Avatar4 = () => {
       </g>
     </svg>
   );
-};
+}
 
 export default Avatar4;
