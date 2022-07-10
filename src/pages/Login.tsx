@@ -1,37 +1,48 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import vectors from '../components/atoms/Vectors';
+import Blocks from '../components/lobby/Blocks';
+import Search from '../components/lobby/Search';
 import Modal from '../components/layout/Modal';
 
 export default function Main() {
+  const navigate = useNavigate();
+  const [isModal, setIsModal] = useState(true);
+  const modalHandler = () => {
+    setIsModal((isModal) => !isModal);
+  };
+
+  const randomEnter = () => {
+    navigate(`/room/random`);
+  };
   return (
-    <>
-      <Container>
-        <Header>
-          <Logo>modoco</Logo>
-          <Profile />
-        </Header>
-        <TitleContainer>
-          <Vector src={vectors.Circle} left={15} top={61} size={7} />
-          <Vector src={vectors.Z} left={10} top={23} size={11} />
-          <Vector src={vectors.Triangle} left={85} top={18} size={10} />
-          <Vector src={vectors.Plus} left={84} top={58} size={11} />
-          <Title>모여서 도란도란</Title>
-          <Title>코딩해요</Title>
-          <Search />
-          <RandomEnter />
-        </TitleContainer>
-        <ScrollContainer>
-          <ScrollMenu>
-            <Block />
-            <Block />
-            <Block />
-            <Block />
-          </ScrollMenu>
-        </ScrollContainer>
-      </Container>
-      <Modal />
-    </>
+    <Container>
+      <Header>
+        <Logo>modoco</Logo>
+        <Profile />
+      </Header>
+      <TitleContainer>
+        <Vector src={vectors.Circle} left={15} top={61} size={7} />
+        <Vector src={vectors.Z} left={10} top={23} size={11} />
+        <Vector src={vectors.Triangle} left={85} top={18} size={10} />
+        <Vector src={vectors.Plus} left={84} top={58} size={11} />
+        <TitleFlex>
+          <Title color="ffffff">모여서</Title>
+          <Title color="96CEB4">도란도란</Title>
+        </TitleFlex>
+        <Title color="ffffff">코딩해요</Title>
+        <Search />
+        <RandomEnter onClick={randomEnter}>랜덤 입장</RandomEnter>
+      </TitleContainer>
+      <ScrollContainer>
+        <ScrollMenu>
+          <Blocks />
+        </ScrollMenu>
+      </ScrollContainer>
+      {isModal && <Modal modalHandler={modalHandler} />}
+    </Container>
   );
 }
 
@@ -41,6 +52,11 @@ interface Position {
   top: number;
   right?: number;
 }
+
+const TitleFlex = styled.div`
+  display: flex;
+  z-index: 999;
+`;
 
 const Vector = styled.img<Position>`
   position: absolute;
@@ -64,29 +80,17 @@ const ScrollContainer = styled.div`
   margin-left: 10rem;
 `;
 
-const Block = styled.div`
-  background-color: gray;
-  margin-right: 2.4rem;
-  border-radius: 2rem;
-  width: 34rem;
-  height: 50rem;
-`;
-
-const RandomEnter = styled.div`
+const RandomEnter = styled.button`
   width: 16.1rem;
   height: 5.4rem;
   background-color: white;
   margin-top: 4rem;
   border-radius: 6.2rem;
-`;
-
-const Search = styled.div`
-  width: 52.6rem;
-  height: 5.6rem;
-  margin-top: 2.4rem;
-  background-color: transparent;
-  border-radius: 10rem;
-  border: solid 0.1rem #374151;
+  cursor: pointer;
+  color: black;
+  font-size: 1.8rem;
+  font-family: JostRegular;
+  font-weight: 700;
 `;
 
 const TitleContainer = styled.div`
@@ -98,11 +102,12 @@ const TitleContainer = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h1`
+const Title = styled.h1<{ color: string }>`
   font-family: GmarketSansTTFBold;
+  margin-left: 2rem;
   font-size: 7.2rem;
   align-self: center;
-  color: #ffffff;
+  color: #${(props) => props.color};
 `;
 
 const Logo = styled.div`
@@ -136,7 +141,7 @@ const Header = styled.div`
 const Container = styled.div`
   margin: 0;
   padding: 0;
-  width: calc(100vw - 20px);
+  width: 100vw;
   height: 140vh;
   display: flex;
   flex-direction: column;
