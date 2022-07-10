@@ -5,13 +5,14 @@ import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import vectors from '../components/atoms/Vectors';
 import Blocks from '../components/lobby/Blocks';
 import Search from '../components/lobby/Search';
-import Modal from '../components/layout/Modal';
+import InputNickname from '../components/login/InputNickname';
+import Modal from '../components/atoms/Modal';
 
 export default function Main() {
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(true);
   const modalHandler = () => {
-    setIsModal((isModal) => !isModal);
+    setIsModal(false);
   };
 
   const randomEnter = () => {
@@ -41,7 +42,11 @@ export default function Main() {
           <Blocks />
         </ScrollMenu>
       </ScrollContainer>
-      {isModal && <Modal modalHandler={modalHandler} />}
+      {isModal && (
+        <Modal modalHandler={modalHandler}>
+          <InputNickname />
+        </Modal>
+      )}
     </Container>
   );
 }
