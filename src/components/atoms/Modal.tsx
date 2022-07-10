@@ -2,7 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import vectors from './Vectors';
 
-export default function Modal({ modalHandler }: { modalHandler: () => void }) {
+export default function Modal({
+  modalHandler,
+  children,
+}: {
+  modalHandler: () => void;
+  children: any;
+}) {
   return (
     <ModalBackground onClick={modalHandler}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
@@ -13,6 +19,7 @@ export default function Modal({ modalHandler }: { modalHandler: () => void }) {
           size={2}
           onClick={modalHandler}
         />
+        {children}
       </ModalBox>
     </ModalBackground>
   );
