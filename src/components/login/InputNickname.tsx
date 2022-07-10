@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
+import vectors from '../atoms/Vectors';
 
 export default function InputNickname() {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ export default function InputNickname() {
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
-    navigate(`lobby`);
+    navigate(`/`);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,43 +57,96 @@ export default function InputNickname() {
   };
 
   return (
-    <Form onSubmit={onSubmit}>
-      <Input
-        autoComplete="off"
-        value={nickname}
-        onChange={onChange}
-        placeholder="Enter ID"
-        id="nickname"
-      />
-      <Button disabled={nickname === null || !nickname.length}>Enter</Button>
-    </Form>
+    <>
+      <Vector src={vectors.Lamp} left={0} top={0} size={40} />
+      <Vector src={vectors.Book} left={28.7} top={14.4} size={60} />
+      <Message>
+        <TitleLogo>
+          모여서 도란도란 코딩,<span>Modoco</span>
+        </TitleLogo>
+        <TitleStart>시작하기</TitleStart>
+      </Message>
+      <Form onSubmit={onSubmit}>
+        <Input
+          autoComplete="off"
+          value={nickname}
+          onChange={onChange}
+          placeholder="Enter ID"
+          id="nickname"
+        />
+        <Button disabled={nickname === null || !nickname.length}>Enter</Button>
+        {/* <Button>GitHub 계정</Button> */}
+      </Form>
+    </>
   );
 }
 
+interface Position {
+  size?: number;
+  left?: number;
+  top: number;
+  right?: number;
+}
+
+const Vector = styled.img<Position>`
+  position: absolute;
+  width: ${(props) => props.size}rem;
+  left: ${(props) => props.left}%;
+  top: ${(props) => props.top}%;
+  opacity: 0.5;
+  z-index: 1000;
+`;
+
+const Message = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 100%;
+  z-index: 1001;
+`;
+
+const TitleLogo = styled.div`
+  font-size: 18px;
+  font-family: IBMPlexMonoRegular;
+`;
+
+const TitleStart = styled.div`
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 4rem;
+  margin-top: 2rem;
+`;
+
 const Form = styled.form`
-  margin-top: 10rem;
+  margin-top: 15rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
+  z-index: 1001;
   button,
   input {
-    height: 5rem;
-    border-radius: 0.5rem;
-    width: 100%;
-    max-width: 30rem;
-    font-size: 2rem;
-    box-shadow: 2px 2px rgb(0 0 0 / 18%);
+    font-family: Pretendard;
+    font-weight: 600;
+    height: 6rem;
+    width: 40rem;
+    border-radius: 0.8rem;
   }
 `;
 
 const Button = styled.button`
-  background-color: #fbeaeb;
+  font-size: 1.5rem;
+  background-color: white;
   margin-top: 2rem;
+  cursor: pointer;
 `;
 
 const Input = styled.input`
+  background-color: rgb(30, 41, 75);
+  color: white;
+  font-size: 1.7rem;
   text-justify: center;
   padding-left: 1rem;
 `;
