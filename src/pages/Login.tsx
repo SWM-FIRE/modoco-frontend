@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import vectors from '../components/atoms/Vectors';
-import Blocks from '../components/lobby/Blocks';
-import Search from '../components/lobby/Search';
+import Blocks from '../components/main/Blocks';
+import Search from '../components/main/Search';
 import InputNickname from '../components/login/InputNickname';
 import Modal from '../components/atoms/Modal';
 

@@ -1,10 +1,16 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Scrolls from '../components/main/Scrolls';
 import Header from '../components/main/Header';
 import Title from '../components/main/TitleContainer';
-import Modal from '../components/layout/Modal';
+import Modal from '../components/atoms/Modal';
+import InputNickname from '../components/login/InputNickname';
 
 export default function Main() {
+  const [isModal, setIsModal] = useState(true);
+  const modalHandler = () => {
+    setIsModal(false);
+  };
   return (
     <>
       <Container>
@@ -12,7 +18,11 @@ export default function Main() {
         <Title />
         <Scrolls />
       </Container>
-      <Modal />
+      {isModal && (
+        <Modal modalHandler={modalHandler}>
+          <InputNickname />
+        </Modal>
+      )}
     </>
   );
 }
