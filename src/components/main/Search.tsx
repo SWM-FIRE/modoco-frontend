@@ -9,6 +9,7 @@ export default function Search() {
   const changeTag = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTag(event.target.value);
   };
+
   return (
     <SearchContainer>
       <SearhIconContainer>
