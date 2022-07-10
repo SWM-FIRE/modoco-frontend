@@ -1,9 +1,15 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import vectors from '../components/atoms/Vectors';
 import Blocks from '../components/lobby/Blocks';
+import Search from '../components/lobby/Search';
 
 export default function Main() {
+  const navigate = useNavigate();
+  const randomEnter = () => {
+    navigate(`/room/random`);
+  };
   return (
     <Container>
       <Header>
@@ -16,12 +22,12 @@ export default function Main() {
         <Vector src={vectors.Triangle} left={85} top={18} size={10} />
         <Vector src={vectors.Plus} left={84} top={58} size={11} />
         <TitleFlex>
-          <Title color="FFFFFF">모여서</Title>
+          <Title color="ffffff">모여서</Title>
           <Title color="96CEB4">도란도란</Title>
         </TitleFlex>
-        <Title color="FFFFFF">코딩해요</Title>
+        <Title color="ffffff">코딩해요</Title>
         <Search />
-        <RandomEnter />
+        <RandomEnter onClick={randomEnter}>랜덤 입장</RandomEnter>
       </TitleContainer>
       <ScrollContainer>
         <ScrollMenu>
@@ -66,21 +72,17 @@ const ScrollContainer = styled.div`
   margin-left: 10rem;
 `;
 
-const RandomEnter = styled.div`
+const RandomEnter = styled.button`
   width: 16.1rem;
   height: 5.4rem;
   background-color: white;
   margin-top: 4rem;
   border-radius: 6.2rem;
-`;
-
-const Search = styled.div`
-  width: 52.6rem;
-  height: 5.6rem;
-  margin-top: 2.4rem;
-  background-color: transparent;
-  border-radius: 10rem;
-  border: solid 0.1rem #374151;
+  cursor: pointer;
+  color: black;
+  font-size: 1.8rem;
+  font-family: JostRegular;
+  font-weight: 700;
 `;
 
 const TitleContainer = styled.div`

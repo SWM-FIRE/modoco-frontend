@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Block from './Block';
 import blockInterface from '../../interface/block.interface';
 import blocksData from '../../blocks.json';
+import TagStore from '../../stores/tagStore';
 
 export default function Blocks() {
   //   useEffect(() => {
@@ -14,9 +15,17 @@ export default function Blocks() {
   //       method: 'GET',
   //     }).then((res) => res.json().then((data) => setRooms(data)));
   //   }, []);
+  const { tag } = TagStore();
+  const filteredData = blocksData.filter((block) =>
+    block.tags.some((blockTag) =>
+      blockTag.toLowerCase().includes(tag.toLowerCase()),
+    )
+      ? block
+      : null,
+  );
   return (
     <Component>
-      {blocksData.map(
+      {filteredData.map(
         ({ avatar, nickname, title, detail, tags }: blockInterface) => {
           return (
             <Block
