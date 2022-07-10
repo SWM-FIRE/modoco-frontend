@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,15 +6,10 @@ import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
 import vectors from '../atoms/Vectors';
 
-export default function Modal() {
-  const [isModal, setIsModal] = useState(false);
-
-  const ModalHandler = () => {
-    setIsModal((prev) => !prev);
-  };
-
+export default function Modal({ modalHandler }: any) {
   const navigate = useNavigate();
   const { nickname, uid, setNickname, setUid } = UserStore();
+
   useEffect(() => {
     if (localStorage.getItem('uid')) {
       console.log('existing user');
@@ -55,7 +50,7 @@ export default function Modal() {
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
-    navigate(`lobby`);
+    navigate(`/`);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,44 +58,38 @@ export default function Modal() {
   };
 
   return (
-    <div>
-      {isModal ? (
-        <ModalBackground>
-          <ModalBox>
-            <Vector src={vectors.Lamp} left={0} top={0} size={40} />
-            <Vector src={vectors.Book} left={28.7} top={14.4} size={60} />
-            <VectorX
-              src={vectors.X}
-              left={93}
-              top={6}
-              size={2}
-              onClick={ModalHandler}
-            />
-            <Message>
-              <TitleLogo>
-                모여서 도란도란 코딩,<span>Modoco</span>
-              </TitleLogo>
-              <TitleStart>시작하기</TitleStart>
-            </Message>
-            <Form onSubmit={onSubmit}>
-              <Input
-                autoComplete="off"
-                value={nickname}
-                onChange={onChange}
-                placeholder="Enter ID"
-                id="nickname"
-              />
-              <Button disabled={nickname === null || !nickname.length}>
-                Enter
-              </Button>
-              {/* <Button>GitHub 계정</Button> */}
-            </Form>
-          </ModalBox>
-        </ModalBackground>
-      ) : (
-        <OpenModal onClick={ModalHandler}>Open Modal!</OpenModal>
-      )}
-    </div>
+    <ModalBackground>
+      <ModalBox>
+        <Vector src={vectors.Lamp} left={0} top={0} size={40} />
+        <Vector src={vectors.Book} left={28.7} top={14.4} size={60} />
+        <VectorX
+          src={vectors.X}
+          left={93}
+          top={6}
+          size={2}
+          onClick={modalHandler}
+        />
+        <Message>
+          <TitleLogo>
+            모여서 도란도란 코딩,<span>Modoco</span>
+          </TitleLogo>
+          <TitleStart>시작하기</TitleStart>
+        </Message>
+        <Form onSubmit={onSubmit}>
+          <Input
+            autoComplete="off"
+            value={nickname}
+            onChange={onChange}
+            placeholder="Enter ID"
+            id="nickname"
+          />
+          <Button disabled={nickname === null || !nickname.length}>
+            Enter
+          </Button>
+          {/* <Button>GitHub 계정</Button> */}
+        </Form>
+      </ModalBox>
+    </ModalBackground>
   );
 }
 
@@ -111,30 +100,16 @@ interface Position {
   right?: number;
 }
 
-const OpenModal = styled.button`
-  position: fixed;
-  top: 10rem;
-  left: 10rem;
-  background-color: lightGray;
-  width: 150px;
-  height: 80px;
-  border: none;
-  border-radius: 30px;
-  color: black;
-  font-size: 20px;
-  font-weight: 600;
-  cursor: pointer;
-`;
-
 const ModalBackground = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
   justify-content: center;
   align-items: center;
   top: 0;
+  display: flex;
+  z-index: 999;
 `;
 
 const Vector = styled.img<Position>`
@@ -143,7 +118,7 @@ const Vector = styled.img<Position>`
   left: ${(props) => props.left}%;
   top: ${(props) => props.top}%;
   opacity: 0.5;
-  z-index: 98;
+  z-index: 1000;
 `;
 
 const VectorX = styled.img<Position>`
@@ -174,7 +149,7 @@ const Message = styled.div`
   align-items: center;
   color: white;
   width: 100%;
-  z-index: 99;
+  z-index: 1001;
 `;
 
 const TitleLogo = styled.div`
@@ -195,7 +170,7 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 99;
+  z-index: 1001;
   button,
   input {
     font-family: Pretendard;
