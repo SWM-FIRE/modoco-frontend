@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
@@ -13,7 +12,6 @@ export default function Modal() {
     setIsModal((prev) => !prev);
   };
 
-  const navigate = useNavigate();
   const { nickname, uid, setNickname, setUid } = UserStore();
   useEffect(() => {
     if (localStorage.getItem('uid')) {
@@ -55,7 +53,7 @@ export default function Modal() {
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
-    navigate(`lobby`);
+    setIsModal((prev) => !prev);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
