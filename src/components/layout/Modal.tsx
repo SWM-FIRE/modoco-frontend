@@ -6,10 +6,9 @@ import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
 import vectors from '../atoms/Vectors';
 
-export default function Modal({ modalHandler }: any) {
+export default function Modal({ modalHandler }: { modalHandler: () => void }) {
   const navigate = useNavigate();
   const { nickname, uid, setNickname, setUid } = UserStore();
-
   useEffect(() => {
     if (localStorage.getItem('uid')) {
       console.log('existing user');
@@ -58,7 +57,7 @@ export default function Modal({ modalHandler }: any) {
   };
 
   return (
-    <ModalBackground>
+    <ModalBackground onClick={modalHandler}>
       <ModalBox>
         <Vector src={vectors.Lamp} left={0} top={0} size={40} />
         <Vector src={vectors.Book} left={28.7} top={14.4} size={60} />
