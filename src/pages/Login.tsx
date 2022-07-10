@@ -11,7 +11,6 @@ import Modal from '../components/atoms/Modal';
 export default function Main() {
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(true);
-  console.log(isModal);
   const modalHandler = () => {
     setIsModal(false);
   };
