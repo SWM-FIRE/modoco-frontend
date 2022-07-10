@@ -112,6 +112,7 @@ select,
 table,
 textarea {
   font-size: 12px;
+  overflow-x: hidden;
   color: #202020;
   font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",

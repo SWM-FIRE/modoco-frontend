@@ -3,5 +3,5 @@ export default interface blockInterface {
   nickname: string;
   title: string;
   detail: string;
-  tags: string;
+  tags: string[];
 }

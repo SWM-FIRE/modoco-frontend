@@ -41,6 +41,7 @@ interface Position {
 
 const TitleFlex = styled.div`
   display: flex;
+  z-index: 999;
 `;
 
 const Vector = styled.img<Position>`
@@ -130,7 +131,7 @@ const Header = styled.div`
 const Container = styled.div`
   margin: 0;
   padding: 0;
-  width: calc(100vw - 20px);
+  width: 100vw;
   height: 140vh;
   display: flex;
   flex-direction: column;

@@ -1,3 +1,5 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import blockInterface from '../../interface/block.interface';
 import MyAvatar from '../../assets/avatar/MyAvatar';
@@ -9,6 +11,11 @@ export default function Block({
   detail,
   tags,
 }: blockInterface) {
+  const navigate = useNavigate();
+  const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigate(`/room/${nickname}${title}`);
+  };
   return (
     <Container>
       <AvatarContainer>
@@ -18,16 +25,27 @@ export default function Block({
       <DetailContainer>
         <Title>{title}</Title>
         <Detail>{detail}</Detail>
-        <Tag>
-          <p>#{tags}</p>
-        </Tag>
+        <Tags>
+          {tags.map((tag) => (
+            <Tag key={tag}>#{tag}</Tag>
+          ))}
+        </Tags>
       </DetailContainer>
-      <Enter>입장하기 →</Enter>
+      <Enter onClick={enterRoom}>입장하기 →</Enter>
     </Container>
   );
 }
 
-const Enter = styled.div`
+const Tags = styled.div`
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Enter = styled.button`
   position: absolute;
   bottom: 6.4rem;
   width: 12.6rem;
@@ -40,19 +58,18 @@ const Enter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Tag = styled.div`
-  position: absolute;
-  width: 9.4rem;
+  padding: 0 1rem;
   height: 3.1rem;
   color: #45b26b;
-  bottom: 0;
   background-color: rgba(69, 178, 107, 0.1);
+  border-radius: 0.6rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0.6rem;
 `;
 
 const DetailContainer = styled.div`
