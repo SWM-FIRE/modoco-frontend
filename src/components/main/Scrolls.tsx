@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import Blocks from './Blocks';
