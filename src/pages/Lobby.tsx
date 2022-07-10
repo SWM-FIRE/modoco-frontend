@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import RoomBlocks from '../components/lobby/RoomBlocks';
-import UserStore from '../stores/userstore';
+import UserStore from '../stores/userStore';
 
 export default function Lobby() {
   const navigate = useNavigate();

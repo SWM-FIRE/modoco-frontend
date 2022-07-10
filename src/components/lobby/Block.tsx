@@ -26,8 +26,8 @@ export default function Block({
         <Title>{title}</Title>
         <Detail>{detail}</Detail>
         <Tags>
-          {tags.map((tag) => (
-            <Tag key={tag}>#{tag}</Tag>
+          {tags.map((myTag) => (
+            <Tag key={myTag}>#{myTag}</Tag>
           ))}
         </Tags>
       </DetailContainer>
