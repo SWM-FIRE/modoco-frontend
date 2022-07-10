@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import UserStore from '../../stores/userstore';
+import UserStore from '../../stores/userStore';
 import vectors from '../atoms/Vectors';
 
 export default function Modal() {
