@@ -6,7 +6,11 @@ import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
 import vectors from '../atoms/Vectors';
 
-export default function InputNickname() {
+export default function InputNickname({
+  modalHandler,
+}: {
+  modalHandler: () => void;
+}) {
   const navigate = useNavigate();
   const { nickname, uid, setNickname, setUid } = UserStore();
   useEffect(() => {
@@ -56,6 +60,13 @@ export default function InputNickname() {
     setNickname(event.target.value);
   };
 
+  const onKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setNickname(event.target.value);
+      modalHandler();
+    }
+  };
+
   return (
     <>
       <Vector src={vectors.Lamp} left={0} top={0} size={40} />
@@ -71,6 +82,7 @@ export default function InputNickname() {
           autoComplete="off"
           value={nickname}
           onChange={onChange}
+          onKeyPress={onKeyPress}
           placeholder="Enter Nickname"
           id="nickname"
         />

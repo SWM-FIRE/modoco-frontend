@@ -6,14 +6,18 @@ import vectors from '../components/atoms/Vectors';
 import Blocks from '../components/lobby/Blocks';
 import Search from '../components/lobby/Search';
 import InputNickname from '../components/login/InputNickname';
-import Modal from '../components/atoms/Modal';
+import Modal from '../components/layout/Modal';
 
 export default function Main() {
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(true);
-  const modalHandler = () => {
+  const closeModalHandler = () => {
     setIsModal(false);
   };
+
+  // const openModalHandler = () => {
+  //   setIsModal(true);
+  // };
 
   const randomEnter = () => {
     navigate(`/room/random`);
@@ -43,8 +47,8 @@ export default function Main() {
         </ScrollMenu>
       </ScrollContainer>
       {isModal && (
-        <Modal modalHandler={modalHandler}>
-          <InputNickname />
+        <Modal modalHandler={closeModalHandler}>
+          <InputNickname modalHandler={closeModalHandler} />
         </Modal>
       )}
     </Container>
