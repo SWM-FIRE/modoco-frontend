@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import Block from './Block';
 import blockInterface from '../../interface/block.interface';
 import blocksData from '../../blocks.json';
@@ -26,9 +27,10 @@ export default function Blocks() {
   return (
     <Component>
       {filteredData.map(
-        ({ avatar, nickname, title, detail, tags }: blockInterface) => {
+        ({ avatar, nickname, title, detail, tags, itemId }: blockInterface) => {
           return (
             <Block
+              itemId={itemId}
               key={nickname}
               nickname={nickname}
               avatar={avatar}
