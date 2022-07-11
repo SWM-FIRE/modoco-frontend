@@ -6,7 +6,11 @@ import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
 import vectors from '../atoms/Vectors';
 
-export default function InputNickname() {
+export default function InputNickname({
+  modalHandler,
+}: {
+  modalHandler: () => void;
+}) {
   const navigate = useNavigate();
   const { nickname, uid, setNickname, setUid } = UserStore();
   useEffect(() => {
@@ -56,6 +60,13 @@ export default function InputNickname() {
     setNickname(event.target.value);
   };
 
+  const onKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setNickname(event.target.value);
+      modalHandler();
+    }
+  };
+
   return (
     <>
       <Vector src={vectors.Lamp} left={0} top={0} size={40} />
@@ -71,7 +82,8 @@ export default function InputNickname() {
           autoComplete="off"
           value={nickname}
           onChange={onChange}
-          placeholder="Enter ID"
+          onKeyPress={onKeyPress}
+          placeholder="Enter Nickname"
           id="nickname"
         />
         <Button disabled={nickname === null || !nickname.length}>Enter</Button>
@@ -113,7 +125,7 @@ const TitleLogo = styled.div`
 `;
 
 const TitleStart = styled.div`
-  font-family: Pretendard;
+  font-family: PretendardRegular;
   font-weight: 500;
   font-size: 4rem;
   margin-top: 2rem;
@@ -128,7 +140,7 @@ const Form = styled.form`
   z-index: 1001;
   button,
   input {
-    font-family: Pretendard;
+    font-family: PretendardRegular;
     font-weight: 600;
     height: 6rem;
     width: 40rem;
