@@ -3,14 +3,19 @@ import styled from 'styled-components';
 import Scrolls from '../components/main/Scrolls';
 import Header from '../components/main/Header';
 import Title from '../components/main/TitleContainer';
-import Modal from '../components/atoms/Modal';
-import InputNickname from '../components/login/InputNickname';
+import Modal from '../components/layout/Modal';
+import InputNickname from '../components/login/UserInput';
 
 export default function Main() {
   const [isModal, setIsModal] = useState(true);
-  const modalHandler = () => {
+  const closeModalHandler = () => {
     setIsModal(false);
   };
+
+  // const openModalHandler = () => {
+  //   setIsModal(true);
+  // };
+
   return (
     <>
       <Container>
@@ -19,8 +24,8 @@ export default function Main() {
         <Scrolls />
       </Container>
       {isModal && (
-        <Modal modalHandler={modalHandler}>
-          <InputNickname />
+        <Modal modalHandler={closeModalHandler}>
+          <InputNickname modalHandler={closeModalHandler} />
         </Modal>
       )}
     </>
