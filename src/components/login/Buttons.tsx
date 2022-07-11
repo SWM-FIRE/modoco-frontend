@@ -10,7 +10,9 @@ export default function Buttons() {
   };
   return (
     <Component>
-      <Button onClick={onClick}>Random Character</Button>
+      <Button type="button" onClick={onClick}>
+        Random Character
+      </Button>
       <Button disabled={nickname === null || !nickname.length}>Enter</Button>
     </Component>
   );
