@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import UserStore from '../../stores/userStore';
 
 export default function Buttons() {
-  const { nickname } = UserStore();
+  const { nickname, setAvatar } = UserStore();
+  const onClick = () => {
+    const randomNumber = Math.floor(Math.random() * 30) + 1; // 1~30 사이 정수 생성
+    setAvatar(JSON.stringify(randomNumber));
+  };
   return (
     <Component>
-      <Button onClick={(e) => console.log(e)}>Random Character</Button>
+      <Button onClick={onClick}>Random Character</Button>
       <Button disabled={nickname === null || !nickname.length}>Enter</Button>
     </Component>
   );
