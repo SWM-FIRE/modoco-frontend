@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -13,19 +13,14 @@ export default function UserInput({
   modalHandler: () => void;
 }) {
   const navigate = useNavigate();
-  const { nickname, uid, avatar, setNickname, setUid, setAvatar } = UserStore();
+  const { nickname, uid, avatar, setNickname, setUid } = UserStore();
+  const [newNickname, setNewNickname] = useState(nickname);
+  console.log('newnickname ', newNickname);
   useEffect(() => {
-    if (localStorage.getItem('uid')) {
-      console.log('existing user');
-      setUid(localStorage.getItem('uid'));
-      setNickname(localStorage.getItem('nickname'));
-      setAvatar(localStorage.getItem('avatar'));
-    } else {
-      console.log('new user');
+    if (!localStorage.getItem('uid')) {
       const newUID = uuidv4();
       setUid(newUID);
       localStorage.setItem('uid', newUID);
-      console.log('uid는 ', newUID);
     }
   }, []);
 
@@ -47,27 +42,27 @@ export default function UserInput({
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (newNickname === null) {
+      console.log('으악');
+      return false;
+    }
     // socket connection
-    const payload = { nickname, uid };
-    localStorage.setItem('nickname', nickname);
+    const payload = { nickname, uid, avatar };
+    setNickname(newNickname);
+    localStorage.setItem('nickname', newNickname);
     localStorage.setItem('avatar', avatar);
     console.log('payload: ', payload);
     sendData();
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
-    navigate(`/`);
+    modalHandler();
+    navigate(`/main`);
+    return true;
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(event.target.value);
-  };
-
-  const onKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      setNickname(event.target.value);
-      modalHandler();
-    }
+    setNewNickname(event.target.value);
   };
 
   return (
@@ -76,9 +71,8 @@ export default function UserInput({
         <Avater />
         <Input
           autoComplete="off"
-          value={nickname}
+          value={newNickname}
           onChange={onChange}
-          onKeyPress={onKeyPress}
           placeholder="Enter Nickname"
           id="nickname"
         />

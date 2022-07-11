@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import UserStore from '../../stores/userStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 
-export default function Header() {
+export default function Header({ modalHandler }: { modalHandler: () => void }) {
   const { nickname, avatar } = UserStore();
   return (
     <Container>
       <Logo>modoco</Logo>
-      <Profile>
+      <Profile onClick={modalHandler}>
         <AvatarContainer>
           <MyAvatar num={Number(avatar)} />
         </AvatarContainer>
@@ -48,6 +48,7 @@ const Profile = styled.div`
   font-family: IBMPlexSansKRRegular;
   font-size: 1.5rem;
   color: white;
+  cursor: pointer;
 `;
 
 const Container = styled.div`
