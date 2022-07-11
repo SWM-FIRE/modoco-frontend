@@ -13,15 +13,11 @@ export default function UserInput({
   modalHandler: () => void;
 }) {
   const navigate = useNavigate();
-  const { nickname, uid, avatar, setNickname, setUid, setAvatar } = UserStore();
+  const { nickname, uid, avatar, setNickname, setUid } = UserStore();
+  console.log('nickname: ', nickname);
   const [newNickname, setNewNickname] = useState(nickname);
   useEffect(() => {
-    if (localStorage.getItem('uid')) {
-      console.log('existing user');
-      setUid(localStorage.getItem('uid'));
-      setNickname(localStorage.getItem('nickname'));
-      setAvatar(localStorage.getItem('avatar'));
-    } else {
+    if (!localStorage.getItem('uid')) {
       console.log('new user');
       const newUID = uuidv4();
       setUid(newUID);
@@ -48,8 +44,9 @@ export default function UserInput({
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!newNickname) return false;
     // socket connection
-    const payload = { nickname, uid };
+    const payload = { nickname, uid, avatar };
     setNickname(newNickname);
     localStorage.setItem('nickname', newNickname);
     localStorage.setItem('avatar', avatar);
@@ -60,17 +57,12 @@ export default function UserInput({
     // });
     modalHandler();
     navigate(`/main`);
+    return true;
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewNickname(event.target.value);
-  };
-
-  const onKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      setNickname(newNickname);
-      modalHandler();
-    }
+    console.log('change nickname!');
   };
 
   return (
@@ -80,7 +72,6 @@ export default function UserInput({
         <Input
           autoComplete="off"
           value={newNickname}
-          onKeyPress={onKeyPress}
           onChange={onChange}
           placeholder="Enter Nickname"
           id="nickname"

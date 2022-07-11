@@ -17,8 +17,6 @@ export default function Main() {
       setNickname(localStorage.getItem('nickname'));
       setUid(localStorage.getItem('uid'));
       setAvatar(localStorage.getItem('avatar'));
-    } else {
-      console.log('new user');
     }
   }, []);
   const closeModalHandler = () => {

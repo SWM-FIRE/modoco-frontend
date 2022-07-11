@@ -4,7 +4,7 @@ import MyAvatar from '../../assets/avatar/MyAvatar';
 
 export default function Header({ modalHandler }: { modalHandler: () => void }) {
   const { nickname, avatar } = UserStore();
-  console.log('avatar ', localStorage.getItem('avatar'));
+  console.log('uid ', localStorage.getItem('uid'));
   return (
     <Container>
       <Logo>modoco</Logo>
