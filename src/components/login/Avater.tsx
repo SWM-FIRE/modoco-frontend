@@ -7,7 +7,7 @@ export default function Avater() {
   const { avatar } = UserStore();
   return (
     <AvatarContainer>
-      <MyAvatar num={avatar} />
+      <MyAvatar num={Number(avatar)} />
     </AvatarContainer>
   );
 }

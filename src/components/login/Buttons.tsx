@@ -6,7 +6,7 @@ export default function Buttons() {
   const { nickname } = UserStore();
   return (
     <Component>
-      <Button>Random Character</Button>
+      <Button onClick={(e) => console.log(e)}>Random Character</Button>
       <Button disabled={nickname === null || !nickname.length}>Enter</Button>
     </Component>
   );

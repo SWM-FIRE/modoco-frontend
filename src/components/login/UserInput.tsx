@@ -13,12 +13,13 @@ export default function UserInput({
   modalHandler: () => void;
 }) {
   const navigate = useNavigate();
-  const { nickname, uid, setNickname, setUid } = UserStore();
+  const { nickname, uid, avatar, setNickname, setUid, setAvatar } = UserStore();
   useEffect(() => {
     if (localStorage.getItem('uid')) {
       console.log('existing user');
       setUid(localStorage.getItem('uid'));
       setNickname(localStorage.getItem('nickname'));
+      setAvatar(localStorage.getItem('avatar'));
     } else {
       console.log('new user');
       const newUID = uuidv4();
@@ -49,6 +50,7 @@ export default function UserInput({
     // socket connection
     const payload = { nickname, uid };
     localStorage.setItem('nickname', nickname);
+    localStorage.setItem('avatar', avatar);
     console.log('payload: ', payload);
     sendData();
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
