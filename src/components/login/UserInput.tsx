@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -14,6 +14,7 @@ export default function UserInput({
 }) {
   const navigate = useNavigate();
   const { nickname, uid, avatar, setNickname, setUid, setAvatar } = UserStore();
+  const [newNickname, setNewNickname] = useState(nickname);
   useEffect(() => {
     if (localStorage.getItem('uid')) {
       console.log('existing user');
@@ -49,23 +50,25 @@ export default function UserInput({
     event.preventDefault();
     // socket connection
     const payload = { nickname, uid };
-    localStorage.setItem('nickname', nickname);
+    setNickname(newNickname);
+    localStorage.setItem('nickname', newNickname);
     localStorage.setItem('avatar', avatar);
     console.log('payload: ', payload);
     sendData();
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
     //   navigate(`screens`);
     // });
-    navigate(`/`);
+    modalHandler();
+    navigate(`/main`);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(event.target.value);
+    setNewNickname(event.target.value);
   };
 
   const onKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      setNickname(event.target.value);
+      setNickname(newNickname);
       modalHandler();
     }
   };
@@ -76,9 +79,9 @@ export default function UserInput({
         <Avater />
         <Input
           autoComplete="off"
-          value={nickname}
-          onChange={onChange}
+          value={newNickname}
           onKeyPress={onKeyPress}
+          onChange={onChange}
           placeholder="Enter Nickname"
           id="nickname"
         />
