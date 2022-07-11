@@ -113,7 +113,7 @@ const TitleLogo = styled.div`
 `;
 
 const TitleStart = styled.div`
-  font-family: Pretendard;
+  font-family: PretendardRegular;
   font-weight: 500;
   font-size: 4rem;
   margin-top: 2rem;
@@ -128,7 +128,7 @@ const Form = styled.form`
   z-index: 1001;
   button,
   input {
-    font-family: Pretendard;
+    font-family: PretendardRegular;
     font-weight: 600;
     height: 6rem;
     width: 40rem;
