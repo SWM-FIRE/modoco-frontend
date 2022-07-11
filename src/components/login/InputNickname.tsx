@@ -71,7 +71,7 @@ export default function InputNickname() {
           autoComplete="off"
           value={nickname}
           onChange={onChange}
-          placeholder="Enter ID"
+          placeholder="Enter Nickname"
           id="nickname"
         />
         <Button disabled={nickname === null || !nickname.length}>Enter</Button>
