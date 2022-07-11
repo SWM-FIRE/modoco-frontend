@@ -10,7 +10,7 @@
   {
     "avatar": 8,
     "nickname": "juhyeong",
-    "title": "모여서 도란도란 코딩",
+    "title": "백엔드 쌉고수 구함",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["Back-End", "Nest.js", "TypeScript"],
     "itemId": "2"
@@ -18,7 +18,7 @@
   {
     "avatar": 3,
     "nickname": "halang",
-    "title": "모여서 도란도란 코딩",
+    "title": "백준 플레달기",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["Algorithm", "C++"],
     "itemId": "3"
@@ -26,7 +26,7 @@
   {
     "avatar": 17,
     "nickname": "sukyeong",
-    "title": "모여서 도란도란 코딩",
+    "title": "SWM team Fire",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["SWM", "Fire"],
     "itemId": "4"
@@ -34,7 +34,7 @@
   {
     "avatar": 11,
     "nickname": "junseo",
-    "title": "모여서 도란도란 코딩",
+    "title": "42서울 하던사람",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["Algorithm", "42Seoul"],
     "itemId": "5"
@@ -42,7 +42,7 @@
   {
     "avatar": 13,
     "nickname": "369",
-    "title": "모여서 도란도란 코딩",
+    "title": "369팀 모각코",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["Algorithm", "SWM"],
     "itemId": "6"

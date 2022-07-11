@@ -12,10 +12,10 @@ export default function TitleContainer() {
 
   return (
     <Container>
-      <Vector src={vectors.Circle} left={15} top={61} size={7} />
-      <Vector src={vectors.Z} left={10} top={23} size={11} />
-      <Vector src={vectors.Triangle} left={85} top={18} size={10} />
-      <Vector src={vectors.Plus} left={84} top={58} size={11} />
+      <Vector src={vectors.Circle} left={15} top={90} size={7} />
+      <Vector src={vectors.Z} left={10} top={10} size={11} />
+      <Vector src={vectors.Triangle} left={85} top={8} size={10} />
+      <Vector src={vectors.Plus} left={84} top={85} size={11} />
       <TitleFlex>
         <Title color="ffffff">모여서</Title>
         <Title color="96CEB4">도란도란</Title>
@@ -41,8 +41,9 @@ const RandomEnter = styled.button`
 `;
 
 const Container = styled.div`
+  position: relative;
   margin-top: 6rem;
-  width: 62rem;
+  width: 100%;
   height: 35rem;
   display: flex;
   flex-direction: column;
