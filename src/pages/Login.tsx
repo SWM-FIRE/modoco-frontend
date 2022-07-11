@@ -5,8 +5,8 @@ import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import vectors from '../components/atoms/Vectors';
 import Blocks from '../components/main/Blocks';
 import Search from '../components/main/Search';
-import InputNickname from '../components/login/InputNickname';
 import Modal from '../components/layout/Modal';
+import LoginModal from '../components/login/LoginModal';
 
 export default function Main() {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ export default function Main() {
       </ScrollContainer>
       {isModal && (
         <Modal modalHandler={closeModalHandler}>
-          <InputNickname modalHandler={closeModalHandler} />
+          <LoginModal modalHandler={closeModalHandler} />
         </Modal>
       )}
     </Container>
