@@ -4,16 +4,22 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
-import vectors from '../atoms/Vectors';
+import Avater from './Avater';
+import Buttons from './Buttons';
 
-export default function InputNickname() {
+export default function UserInput({
+  modalHandler,
+}: {
+  modalHandler: () => void;
+}) {
   const navigate = useNavigate();
-  const { nickname, uid, setNickname, setUid } = UserStore();
+  const { nickname, uid, avatar, setNickname, setUid, setAvatar } = UserStore();
   useEffect(() => {
     if (localStorage.getItem('uid')) {
       console.log('existing user');
       setUid(localStorage.getItem('uid'));
       setNickname(localStorage.getItem('nickname'));
+      setAvatar(localStorage.getItem('avatar'));
     } else {
       console.log('new user');
       const newUID = uuidv4();
@@ -44,6 +50,7 @@ export default function InputNickname() {
     // socket connection
     const payload = { nickname, uid };
     localStorage.setItem('nickname', nickname);
+    localStorage.setItem('avatar', avatar);
     console.log('payload: ', payload);
     sendData();
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
@@ -56,68 +63,31 @@ export default function InputNickname() {
     setNickname(event.target.value);
   };
 
+  const onKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setNickname(event.target.value);
+      modalHandler();
+    }
+  };
+
   return (
-    <>
-      <Vector src={vectors.Lamp} left={0} top={0} size={40} />
-      <Vector src={vectors.Book} left={28.7} top={14.4} size={60} />
-      <Message>
-        <TitleLogo>
-          모여서 도란도란 코딩,<span>Modoco</span>
-        </TitleLogo>
-        <TitleStart>시작하기</TitleStart>
-      </Message>
-      <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit}>
+      <Settings>
+        <Avater />
         <Input
           autoComplete="off"
           value={nickname}
           onChange={onChange}
-          placeholder="Enter ID"
+          onKeyPress={onKeyPress}
+          placeholder="Enter Nickname"
           id="nickname"
         />
-        <Button disabled={nickname === null || !nickname.length}>Enter</Button>
-        {/* <Button>GitHub 계정</Button> */}
-      </Form>
-    </>
+      </Settings>
+      <Buttons />
+      {/* <Button>GitHub 계정</Button> */}
+    </Form>
   );
 }
-
-interface Position {
-  size?: number;
-  left?: number;
-  top: number;
-  right?: number;
-}
-
-const Vector = styled.img<Position>`
-  position: absolute;
-  width: ${(props) => props.size}rem;
-  left: ${(props) => props.left}%;
-  top: ${(props) => props.top}%;
-  opacity: 0.5;
-  z-index: 1000;
-`;
-
-const Message = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  width: 100%;
-  z-index: 1001;
-`;
-
-const TitleLogo = styled.div`
-  font-size: 18px;
-  font-family: IBMPlexMonoRegular;
-`;
-
-const TitleStart = styled.div`
-  font-family: Pretendard;
-  font-weight: 500;
-  font-size: 4rem;
-  margin-top: 2rem;
-`;
 
 const Form = styled.form`
   margin-top: 15rem;
@@ -126,21 +96,22 @@ const Form = styled.form`
   align-items: center;
   justify-content: center;
   z-index: 1001;
+  width: 35rem;
   button,
   input {
     font-family: PretendardRegular;
     font-weight: 600;
     height: 6rem;
-    width: 40rem;
+    width: 17rem;
     border-radius: 0.8rem;
   }
 `;
 
-const Button = styled.button`
-  font-size: 1.5rem;
-  background-color: white;
-  margin-top: 2rem;
-  cursor: pointer;
+const Settings = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 const Input = styled.input`

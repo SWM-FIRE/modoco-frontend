@@ -1,27 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
-import vectors from './Vectors';
+import ModalPortal from '../atoms/ModalPotal';
+import vectors from '../atoms/Vectors';
 
-export default function Modal({
-  modalHandler,
-  children,
-}: {
-  modalHandler: () => void;
+type Props = {
   children: any;
-}) {
+  modalHandler: () => void;
+};
+
+export default function Modal({ modalHandler, children }: Props) {
   return (
-    <ModalBackground onClick={modalHandler}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <VectorX
-          src={vectors.X}
-          left={93}
-          top={6}
-          size={2}
-          onClick={modalHandler}
-        />
-        {children}
-      </ModalBox>
-    </ModalBackground>
+    <ModalPortal>
+      <ModalBackground onClick={modalHandler}>
+        <ModalBox onClick={(e) => e.stopPropagation()}>
+          <VectorX
+            src={vectors.X}
+            left={93}
+            top={6}
+            size={2}
+            onClick={modalHandler}
+          />
+          {children}
+        </ModalBox>
+      </ModalBackground>
+    </ModalPortal>
   );
 }
 

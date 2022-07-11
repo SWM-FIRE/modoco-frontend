@@ -9,7 +9,7 @@ export default function Header() {
       <Logo>modoco</Logo>
       <Profile>
         <AvatarContainer>
-          <MyAvatar num={avatar} />
+          <MyAvatar num={Number(avatar)} />
         </AvatarContainer>
         {nickname}
       </Profile>
