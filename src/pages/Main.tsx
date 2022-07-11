@@ -4,7 +4,7 @@ import Scrolls from '../components/main/Scrolls';
 import Header from '../components/main/Header';
 import Title from '../components/main/TitleContainer';
 import Modal from '../components/layout/Modal';
-import InputNickname from '../components/login/UserInput';
+import LoginModal from '../components/login/LoginModal';
 
 export default function Main() {
   const [isModal, setIsModal] = useState(true);
@@ -25,7 +25,7 @@ export default function Main() {
       </Container>
       {isModal && (
         <Modal modalHandler={closeModalHandler}>
-          <InputNickname modalHandler={closeModalHandler} />
+          <LoginModal modalHandler={closeModalHandler} />
         </Modal>
       )}
     </>

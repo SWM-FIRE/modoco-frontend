@@ -4,7 +4,7 @@ import ModalPortal from '../atoms/ModalPotal';
 import vectors from '../atoms/Vectors';
 
 type Props = {
-  children: any;
+  children;
   modalHandler: () => void;
 };
 
