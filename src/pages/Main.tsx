@@ -19,6 +19,7 @@ export default function Main() {
       setAvatar(localStorage.getItem('avatar'));
     }
   }, []);
+
   const closeModalHandler = () => {
     setIsModal(false);
   };

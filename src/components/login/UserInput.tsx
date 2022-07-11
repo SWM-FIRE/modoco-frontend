@@ -14,15 +14,13 @@ export default function UserInput({
 }) {
   const navigate = useNavigate();
   const { nickname, uid, avatar, setNickname, setUid } = UserStore();
-  console.log('nickname: ', nickname);
   const [newNickname, setNewNickname] = useState(nickname);
+  console.log('newnickname ', newNickname);
   useEffect(() => {
     if (!localStorage.getItem('uid')) {
-      console.log('new user');
       const newUID = uuidv4();
       setUid(newUID);
       localStorage.setItem('uid', newUID);
-      console.log('uid는 ', newUID);
     }
   }, []);
 
@@ -44,7 +42,10 @@ export default function UserInput({
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!newNickname) return false;
+    if (newNickname === null) {
+      console.log('으악');
+      return false;
+    }
     // socket connection
     const payload = { nickname, uid, avatar };
     setNickname(newNickname);
@@ -62,7 +63,6 @@ export default function UserInput({
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewNickname(event.target.value);
-    console.log('change nickname!');
   };
 
   return (
