@@ -4,34 +4,47 @@
     "nickname": "yoon",
     "title": "모여서 도란도란 코딩",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
-    "tags": ["Front-End", "React", "TypeScript"]
+    "tags": ["Front-End", "React", "TypeScript"],
+    "itemId": "1"
   },
   {
     "avatar": 8,
     "nickname": "juhyeong",
     "title": "모여서 도란도란 코딩",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
-    "tags": ["Back-End", "Nest.js", "TypeScript"]
+    "tags": ["Back-End", "Nest.js", "TypeScript"],
+    "itemId": "2"
   },
   {
     "avatar": 3,
     "nickname": "halang",
     "title": "모여서 도란도란 코딩",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
-    "tags": ["Algorithm", "C++"]
+    "tags": ["Algorithm", "C++"],
+    "itemId": "3"
   },
   {
     "avatar": 17,
     "nickname": "sukyeong",
     "title": "모여서 도란도란 코딩",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
-    "tags": ["SWM", "Fire"]
+    "tags": ["SWM", "Fire"],
+    "itemId": "4"
   },
   {
     "avatar": 11,
     "nickname": "junseo",
     "title": "모여서 도란도란 코딩",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
-    "tags": ["Algorithm", "42Seoul"]
+    "tags": ["Algorithm", "42Seoul"],
+    "itemId": "5"
+  },
+  {
+    "avatar": 13,
+    "nickname": "369",
+    "title": "모여서 도란도란 코딩",
+    "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
+    "tags": ["Algorithm", "SWM"],
+    "itemId": "6"
   }
 ]

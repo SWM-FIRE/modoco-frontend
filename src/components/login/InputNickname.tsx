@@ -128,7 +128,7 @@ const Form = styled.form`
   z-index: 1001;
   button,
   input {
-    font-family: Pretendard;
+    font-family: PretendardRegular;
     font-weight: 600;
     height: 6rem;
     width: 40rem;

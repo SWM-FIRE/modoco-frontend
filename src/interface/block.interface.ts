@@ -4,4 +4,5 @@ export default interface blockInterface {
   title: string;
   detail: string;
   tags: string[];
+  itemId: string;
 }
