@@ -15,6 +15,7 @@ export default function UserInput({
   const navigate = useNavigate();
   const { nickname, uid, avatar, setNickname, setUid } = UserStore();
   const [newNickname, setNewNickname] = useState(nickname);
+  const [newAvatar, setNewNavatar] = useState('1');
   const getData = (newNickname) => {
     setNewNickname(newNickname);
   };

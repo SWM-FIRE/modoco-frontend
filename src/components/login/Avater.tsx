@@ -8,7 +8,6 @@ export default function Avater() {
   const onClick = () => {
     const randomNumber = Math.floor(Math.random() * 30) + 1; // 1~30 사이 정수 생성
     setAvatar(JSON.stringify(randomNumber));
-    console.log(avatar);
   };
   return (
     <AvatarContainer>
