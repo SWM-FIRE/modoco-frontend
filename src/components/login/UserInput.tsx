@@ -15,7 +15,10 @@ export default function UserInput({
   const navigate = useNavigate();
   const { nickname, uid, avatar, setNickname, setUid } = UserStore();
   const [newNickname, setNewNickname] = useState(nickname);
-  console.log(setNewNickname);
+  const getData = (newNickname) => {
+    setNewNickname(newNickname);
+  };
+
   useEffect(() => {
     if (!localStorage.getItem('uid')) {
       const newUID = uuidv4();
@@ -64,7 +67,7 @@ export default function UserInput({
     <Form onSubmit={onSubmit}>
       <Settings>
         <Avater />
-        <Nickname />
+        <Nickname getData={getData} newNickname={newNickname} />
       </Settings>
       {/* <Button>GitHub 계정</Button> */}
     </Form>

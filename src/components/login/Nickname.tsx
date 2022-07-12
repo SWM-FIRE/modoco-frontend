@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import UserStore from '../../stores/userStore';
 
-export default function Nickname() {
-  const { nickname } = UserStore();
-  const [newNickname, setNewNickname] = useState(nickname);
-
+export default function Nickname({
+  newNickname,
+  getData,
+}: {
+  newNickname: string;
+  getData: (_newNickname: string) => void;
+}) {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewNickname(event.target.value);
+    getData(event.target.value);
   };
 
   return (
