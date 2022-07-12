@@ -5,8 +5,7 @@ import blockInterface from '../../interface/block.interface';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 
 export default function Block({
-  nickname,
-  avatar,
+  moderator,
   title,
   detail,
   tags,
@@ -14,13 +13,13 @@ export default function Block({
   const navigate = useNavigate();
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    navigate(`/room/${nickname}${title}`);
+    navigate(`/room/${moderator.nickname}${title}`);
   };
   return (
     <Container>
       <AvatarContainer>
-        <MyAvatar num={avatar} />
-        <Nickname>{nickname}</Nickname>
+        <MyAvatar num={Number(moderator.avatar)} />
+        <Nickname>{moderator.nickname}</Nickname>
       </AvatarContainer>
       <DetailContainer>
         <Title>{title}</Title>

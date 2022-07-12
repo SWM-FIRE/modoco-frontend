@@ -1,50 +1,80 @@
 [
   {
-    "avatar": 1,
-    "nickname": "yoon",
+    "itemId": 1,
+    "moderator": {
+      "uid": "19191293481234",
+      "nickname": "yoon",
+      "avatar": "1"
+    },
     "title": "모여서 도란도란 코딩",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["Front-End", "React", "TypeScript"],
-    "itemId": "1"
+    "current": 2,
+    "total": 4
   },
   {
-    "avatar": 8,
-    "nickname": "juhyeong",
+    "itemId": 2,
+    "moderator": {
+      "uid": "123498213",
+      "nickname": "juhyeong",
+      "avatar": "18"
+    },
     "title": "백엔드 쌉고수 구함",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["Back-End", "Nest.js", "TypeScript"],
-    "itemId": "2"
+    "current": 2,
+    "total": 4
   },
   {
-    "avatar": 3,
-    "nickname": "halang",
+    "itemId": 3,
+    "moderator": {
+      "uid": "3o1u2432",
+      "nickname": "halang",
+      "avatar": "3"
+    },
     "title": "백준 플레달기",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["Algorithm", "C++"],
-    "itemId": "3"
+    "current": 2,
+    "total": 4
   },
   {
-    "avatar": 17,
-    "nickname": "sukyeong",
+    "itemId": 4,
+    "moderator": {
+      "uid": "12o3fj0af923",
+      "nickname": "sukyeong",
+      "avatar": "17"
+    },
     "title": "SWM team Fire",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["SWM", "Fire"],
-    "itemId": "4"
+    "current": 2,
+    "total": 4
   },
   {
-    "avatar": 11,
-    "nickname": "junseo",
+    "itemId": 5,
+    "moderator": {
+      "uid": "awj983na93f2",
+      "nickname": "junseo",
+      "avatar": "11"
+    },
     "title": "42서울 하던사람",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["Algorithm", "42Seoul"],
-    "itemId": "5"
+    "current": 2,
+    "total": 4
   },
   {
-    "avatar": 13,
-    "nickname": "369",
+    "itemId": 6,
+    "moderator": {
+      "uid": "alsifja3oijo",
+      "nickname": "369",
+      "avatar": "13"
+    },
     "title": "369팀 모각코",
     "detail": "상세설명입니다. 내용을 입력해주세요! 우리모두 모여서 도란도란 코딩해요.",
     "tags": ["Algorithm", "SWM"],
-    "itemId": "6"
+    "current": 2,
+    "total": 4
   }
 ]

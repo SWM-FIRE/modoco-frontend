@@ -20,23 +20,17 @@ export default function Scrolls() {
     <Container>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
         {filteredData.map(
-          ({
-            avatar,
-            nickname,
-            title,
-            detail,
-            tags,
-            itemId,
-          }: blockInterface) => {
+          ({ moderator, title, detail, tags, itemId }: blockInterface) => {
             return (
               <Block
                 itemId={itemId}
-                key={nickname}
-                nickname={nickname}
-                avatar={avatar}
+                key={moderator.nickname}
+                moderator={moderator}
                 title={title}
                 detail={detail}
                 tags={tags}
+                current={0}
+                total={0}
               />
             );
           },

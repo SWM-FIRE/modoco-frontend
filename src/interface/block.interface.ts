@@ -1,8 +1,11 @@
+import User from './user.interface';
+
 export default interface blockInterface {
-  avatar: number;
-  nickname: string;
+  itemId: number;
+  moderator: User;
   title: string;
-  detail: string;
+  detail?: string;
   tags: string[];
-  itemId: string;
+  current: number;
+  total: number;
 }
