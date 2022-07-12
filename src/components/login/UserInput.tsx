@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
 import Avater from './Avater';
-import Buttons from './Buttons';
+import Nickname from './Nickname';
 
 export default function UserInput({
   modalHandler,
@@ -15,7 +15,10 @@ export default function UserInput({
   const navigate = useNavigate();
   const { nickname, uid, avatar, setNickname, setUid } = UserStore();
   const [newNickname, setNewNickname] = useState(nickname);
-  console.log('newnickname ', newNickname);
+  const getData = (newNickname) => {
+    setNewNickname(newNickname);
+  };
+
   useEffect(() => {
     if (!localStorage.getItem('uid')) {
       const newUID = uuidv4();
@@ -43,7 +46,6 @@ export default function UserInput({
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (newNickname === null) {
-      console.log('으악');
       return false;
     }
     // socket connection
@@ -61,57 +63,38 @@ export default function UserInput({
     return true;
   };
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewNickname(event.target.value);
-  };
-
   return (
     <Form onSubmit={onSubmit}>
       <Settings>
         <Avater />
-        <Input
-          autoComplete="off"
-          value={newNickname}
-          onChange={onChange}
-          placeholder="Enter Nickname"
-          id="nickname"
-        />
+        <Nickname getData={getData} newNickname={newNickname} />
       </Settings>
-      <Buttons />
       {/* <Button>GitHub 계정</Button> */}
     </Form>
   );
 }
 
 const Form = styled.form`
-  margin-top: 15rem;
+  margin-top: 4rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: flex-end; */
   justify-content: center;
   z-index: 1001;
-  width: 35rem;
-  button,
-  input {
+  /* width: 40rem; */
+  input,
+  button {
     font-family: PretendardRegular;
     font-weight: 600;
     height: 6rem;
-    width: 17rem;
     border-radius: 0.8rem;
   }
 `;
 
 const Settings = styled.div`
+  gap: 3rem;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   width: 100%;
-`;
-
-const Input = styled.input`
-  background-color: rgb(30, 41, 75);
-  color: white;
-  font-size: 1.7rem;
-  text-justify: center;
-  padding-left: 1rem;
 `;

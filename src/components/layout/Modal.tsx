@@ -63,6 +63,6 @@ const ModalBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 20rem;
+  top: 16rem;
   padding: 9rem 3rem 7rem 3rem;
 `;
