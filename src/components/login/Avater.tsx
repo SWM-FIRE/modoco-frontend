@@ -21,7 +21,7 @@ export default function Avater() {
 }
 
 const AvatarContainer = styled.div`
-  height: 20rem;
+  height: 23rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -12,7 +12,7 @@ export default function LoginModal({
   return (
     <>
       <Vector src={vectors.Lamp} left={0} top={0} size={40} />
-      <Vector src={vectors.Book} left={28.7} top={14.4} size={60} />
+      <Vector src={vectors.Book} left={28.7} top={10.4} size={60} />
       <ModalTitle />
       <UserInput modalHandler={modalHandler} />
     </>

@@ -75,13 +75,13 @@ export default function UserInput({
 }
 
 const Form = styled.form`
-  margin-top: 15rem;
+  margin-top: 4rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  /* align-items: flex-end; */
   justify-content: center;
   z-index: 1001;
-  width: 40rem;
+  /* width: 40rem; */
   input,
   button {
     font-family: PretendardRegular;
@@ -92,6 +92,7 @@ const Form = styled.form`
 `;
 
 const Settings = styled.div`
+  gap: 3rem;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
