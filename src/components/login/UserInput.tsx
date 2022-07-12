@@ -13,10 +13,14 @@ export default function UserInput({
   modalHandler: () => void;
 }) {
   const navigate = useNavigate();
-  const { nickname, uid, avatar, setNickname, setUid } = UserStore();
+  const { nickname, uid, avatar, setNickname, setUid, setAvatar } = UserStore();
   const [newNickname, setNewNickname] = useState(nickname);
-  const getData = (newNickname) => {
+  const [newAvatar, setNewAvatar] = useState('1');
+  const getNewNickname = (newNickname) => {
     setNewNickname(newNickname);
+  };
+  const getNewAvatar = (newAvatar) => {
+    setNewAvatar(newAvatar);
   };
 
   useEffect(() => {
@@ -51,8 +55,10 @@ export default function UserInput({
     // socket connection
     const payload = { nickname, uid, avatar };
     setNickname(newNickname);
+    setAvatar(newAvatar);
     localStorage.setItem('nickname', newNickname);
-    localStorage.setItem('avatar', avatar);
+    localStorage.setItem('avatar', newAvatar);
+
     console.log('payload: ', payload);
     sendData();
     // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
@@ -66,8 +72,8 @@ export default function UserInput({
   return (
     <Form onSubmit={onSubmit}>
       <Settings>
-        <Avater />
-        <Nickname getData={getData} newNickname={newNickname} />
+        <Avater getData={getNewAvatar} newAvatar={newAvatar} />
+        <Nickname getData={getNewNickname} newNickname={newNickname} />
       </Settings>
       {/* <Button>GitHub 계정</Button> */}
     </Form>

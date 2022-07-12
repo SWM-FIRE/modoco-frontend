@@ -1,18 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../assets/avatar/MyAvatar';
-import UserStore from '../../stores/userStore';
 
-export default function Avater() {
-  const { avatar, setAvatar } = UserStore();
+export default function Avater({
+  newAvatar,
+  getData,
+}: {
+  newAvatar: string;
+  getData: (_newAvatar: string) => void;
+}) {
   const onClick = () => {
     const randomNumber = Math.floor(Math.random() * 30) + 1; // 1~30 사이 정수 생성
-    setAvatar(JSON.stringify(randomNumber));
-    console.log(avatar);
+    getData(JSON.stringify(randomNumber));
   };
   return (
     <AvatarContainer>
-      <MyAvatar num={Number(avatar)} />
+      <MyAvatar num={Number(newAvatar)} />
       <Button type="button" onClick={onClick}>
         아바타 재생성
       </Button>

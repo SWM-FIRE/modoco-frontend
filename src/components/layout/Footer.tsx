@@ -1,11 +1,13 @@
 import styled from 'styled-components';
-import oc from '../../styles/openColor';
 
 export default function Footer() {
   return (
     <FooterWrapper>
       <Container>
-        <span>&copy; {new Date().getFullYear()} by FIRE </span>
+        <div style={{ color: 'white' }}>
+          {' '}
+          &copy; {new Date().getFullYear()} by FIRE{' '}
+        </div>
       </Container>
     </FooterWrapper>
   );
@@ -14,7 +16,7 @@ export default function Footer() {
 const FooterWrapper = styled.footer`
   width: 100%;
   bottom: 0;
-  background-color: ${oc.white};
+  background-color: black;
 `;
 
 const Container = styled.div`
