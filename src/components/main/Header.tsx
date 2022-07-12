@@ -1,23 +1,48 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import UserStore from '../../stores/userStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 
 export default function Header({ modalHandler }: { modalHandler: () => void }) {
   const { nickname, avatar } = UserStore();
+  const navigate = useNavigate();
+
+  const clickLogo = () => {
+    navigate('/#/');
+  };
   return (
     <Container>
-      <Logo>modoco</Logo>
-      <Profile onClick={modalHandler}>
-        <AvatarContainer>
-          <MyAvatar num={Number(avatar)} />
-        </AvatarContainer>
-        {nickname}
-      </Profile>
+      <Logo onClick={clickLogo}>modoco</Logo>
+      {nickname ? (
+        <Profile onClick={modalHandler}>
+          <AvatarContainer>
+            <MyAvatar num={Number(avatar)} />
+          </AvatarContainer>
+          {nickname}
+        </Profile>
+      ) : (
+        <Login onClick={modalHandler}>로그인</Login>
+      )}
     </Container>
   );
 }
 
+const Login = styled.button`
+  position: absolute;
+  right: 5rem;
+  width: 9.1rem;
+  height: 4.8rem;
+  border: 2px solid #494e5b;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  color: #fcfcf9;
+  font-size: 1.6rem;
+  font-family: IBMPlexSansKRRegular;
+  font-weight: 700;
+`;
+
 const Logo = styled.div`
+  cursor: pointer;
   font-size: 2.4rem;
   position: absolute;
   width: 9.2rem;
@@ -30,7 +55,6 @@ const Logo = styled.div`
 const AvatarContainer = styled.div`
   height: 4rem;
   svg {
-    width: 100%;
     height: 100%;
   }
 `;
@@ -39,11 +63,8 @@ const Profile = styled.div`
   right: 4rem;
   position: absolute;
   height: 4rem;
-  width: 9rem;
-  border-radius: 4.8rem;
   display: flex;
   justify-content: center;
-  gap: 1rem;
   align-items: center;
   font-family: IBMPlexSansKRRegular;
   font-size: 1.5rem;
