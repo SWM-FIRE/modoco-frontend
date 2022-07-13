@@ -1,21 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
-import { useQuery } from 'react-query';
-import axios from 'axios';
 import { LeftArrow, RightArrow } from './Arrow';
 import Block from './Block';
+import useRooms from '../../hooks/useRooms';
 import blockInterface from '../../interface/block.interface';
 import TagStore from '../../stores/tagStore';
 
 export default function Scrolls() {
   const { tag } = TagStore();
-
-  const { isLoading, error, data } = useQuery('roomData', async () => {
-    const { data } = await axios.get('https://xn--hq1br4kwqt.com/api/v1/rooms');
-    return data;
-  });
-
+  const { isLoading, error, data } = useRooms();
   if (isLoading)
     return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
 
