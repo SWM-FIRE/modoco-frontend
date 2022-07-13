@@ -9,11 +9,11 @@ import UserStore from '../stores/userStore';
 
 export default function Main() {
   const [isModal, setIsModal] = useState(false);
-  const { setNickname, setUid, setAvatar } = UserStore();
+  const { setNickname, uid, setUid, setAvatar } = UserStore();
 
   useEffect(() => {
     if (localStorage.getItem('uid')) {
-      console.log('existing user');
+      console.log('existing user', uid);
       setNickname(localStorage.getItem('nickname'));
       setUid(localStorage.getItem('uid'));
       setAvatar(localStorage.getItem('avatar'));
