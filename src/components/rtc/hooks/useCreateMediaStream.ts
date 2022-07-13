@@ -5,30 +5,27 @@ export const useCreateMediaStream = (
   localVideoRef: RefObject<HTMLVideoElement>,
 ) => {
   const [userMediaStream, setUserMediaStream] = useState<MediaStream>();
+  useEffect(() => {
+    createMediaStream();
+  }, [localVideoRef]);
+
   /**
    * @stream getUserMedia - webCam
    * @stream getDisplayMedia - screen
    */
-  useEffect(() => {
-    const createMediaStream = async () => {
-      let stream: MediaStream = null;
-      try {
-        stream = await navigator.mediaDevices.getDisplayMedia({
-          video: true,
-          audio: true,
-        });
-      } catch (e) {
-        console.log('cannot get display');
-      }
-
-      if (localVideoRef.current) {
-        localVideoRef.current.srcObject = stream;
-      }
-
+  const createMediaStream = async () => {
+    console.log('Requesting local stream');
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+        audio: true,
+      });
+      localVideoRef.current.srcObject = stream;
       setUserMediaStream(stream);
-    };
-    createMediaStream();
-  }, [localVideoRef]);
+    } catch (e) {
+      console.log('cannot get display');
+    }
+  };
 
   return userMediaStream;
 };

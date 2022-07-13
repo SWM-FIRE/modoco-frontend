@@ -152,6 +152,6 @@ class PeerConnectionSession {
 
 export const createPeerConnectionContext = () => {
   const socket = io(process.env.REACT_APP_SOCKET_URL as string);
-  console.log(socket);
+  console.log('socket: ', socket);
   return new PeerConnectionSession(socket);
 };
