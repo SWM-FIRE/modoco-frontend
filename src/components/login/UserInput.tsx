@@ -7,6 +7,8 @@ import UserStore from '../../stores/userStore';
 import Avater from './Avater';
 import Nickname from './Nickname';
 
+let type: string;
+
 export default function UserInput({
   modalHandler,
 }: {
@@ -29,17 +31,24 @@ export default function UserInput({
       const newUID = uuidv4();
       setUid(newUID);
       localStorage.setItem('uid', newUID);
+      type = 'post';
+    } else {
+      type = 'put';
     }
   }, []);
 
   const sendData = async () => {
     const API_URL: string = process.env
       .REACT_APP_SEND_USER_INFORMATION_URL as string;
-    await axios
-      .post(API_URL, {
+    await axios({
+      method: type,
+      url: API_URL,
+      data: {
         uid,
-        nickname,
-      })
+        nickname: newNickname,
+        avatar: newAvatar,
+      },
+    })
       .then((res) => {
         console.log(res.data);
       })
@@ -54,17 +63,11 @@ export default function UserInput({
       return false;
     }
     // socket connection
-    const payload = { nickname, uid, avatar };
     setNickname(newNickname);
     setAvatar(newAvatar);
     localStorage.setItem('nickname', newNickname);
     localStorage.setItem('avatar', newAvatar);
-
-    console.log('payload: ', payload);
     sendData();
-    // socket.emit('ENTER_ROOM', payload, (confirmRoomId) => {
-    //   navigate(`screens`);
-    // });
     modalHandler();
     navigate(`/main`);
     return true;
@@ -85,10 +88,8 @@ const Form = styled.form`
   margin-top: 4rem;
   display: flex;
   flex-direction: column;
-  /* align-items: flex-end; */
   justify-content: center;
   z-index: 1001;
-  /* width: 40rem; */
   input,
   button {
     font-family: PretendardRegular;
