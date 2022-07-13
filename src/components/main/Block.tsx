@@ -7,7 +7,7 @@ import MyAvatar from '../../assets/avatar/MyAvatar';
 export default function Block({
   moderator,
   title,
-  detail,
+  details,
   tags,
 }: blockInterface) {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export default function Block({
       </AvatarContainer>
       <DetailContainer>
         <Title>{title}</Title>
-        <Detail>{detail}</Detail>
+        <Detail>{details}</Detail>
         <Tags>
           {tags.map((myTag) => (
             <Tag key={myTag}>#{myTag}</Tag>
