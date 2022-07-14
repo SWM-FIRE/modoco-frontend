@@ -46,14 +46,13 @@ class PeerConnectionSession {
       this.senders.push(this.peerConnections[id].addTrack(track, stream));
     });
 
-    console.log('sending track: ', this.senders);
-
     this.listeners[id] = (event) => {
       const fn =
         this[
           '_on' +
             capitalizeFirstLetter(this.peerConnections[id].connectionState)
         ];
+      console.log('on connection state change callback call');
       fn && fn(event, id);
     };
 
@@ -66,8 +65,6 @@ class PeerConnectionSession {
     this.peerConnections[id].ontrack = ({ streams: [stream] }) => {
       callback(stream);
     };
-
-    console.log('peerConnection track: ', this.peerConnections[id]);
 
     // end of addPeerConnection
   }
