@@ -14,7 +14,6 @@ export const useCreateMediaStream = (
    * @stream getDisplayMedia - screen
    */
   const createMediaStream = async () => {
-    console.log('Requesting local stream');
     try {
       const stream = await navigator.mediaDevices.getDisplayMedia({
         video: true,
@@ -22,6 +21,7 @@ export const useCreateMediaStream = (
       });
       localVideoRef.current.srcObject = stream;
       setUserMediaStream(stream);
+      console.log('my stream : ', stream);
     } catch (e) {
       console.log('cannot get display');
     }

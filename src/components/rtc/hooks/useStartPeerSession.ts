@@ -68,7 +68,6 @@ export const useStartPeerSession = (
       peerVideoConnection.onAnswerMade((socket) =>
         peerVideoConnection.callUser(socket),
       );
-      console.log(peerVideoConnection);
     }
 
     return () => {

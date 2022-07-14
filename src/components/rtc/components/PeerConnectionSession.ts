@@ -31,19 +31,22 @@ class PeerConnectionSession {
     this.peerConnections[id] = new RTCPeerConnection({
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
     });
+    console.log('new rtc peer connection {ice}: ', this.peerConnections[id]);
 
     // user의 media track을 추가
     stream.getTracks().forEach((track) => {
       this.senders.push(this.peerConnections[id].addTrack(track, stream));
     });
 
+    console.log('sending track: ', this.senders);
+
     // peerConnection의 track마다 생성된 stream을 callback함수로 전달
     this.peerConnections[id].ontrack = ({ streams: [stream] }) => {
-      console.log({ id, stream });
       callback(stream);
     };
 
-    console.log(this.peerConnections);
+    console.log('peerConnection track: ', this.peerConnections[id]);
+
     // end of addPeerConnection
   }
 
@@ -53,6 +56,7 @@ class PeerConnectionSession {
    * 해당하는 peerConnection의 eventListener를 삭제
    */
   removePeerConnection(id: string) {
+    console.log('remove peer connection: ', this.peerConnections[id]);
     this.peerConnections[id].removeEventListener(
       'connectionstatechange',
       this.listeners[id],
@@ -75,6 +79,7 @@ class PeerConnectionSession {
       );
 
       this.socket.emit('call-user', { offer, to });
+      console.log('calling user: ', this.peerConnections[to]);
     }
   }
 
@@ -86,6 +91,7 @@ class PeerConnectionSession {
   joinRoom(room: string) {
     this.mRoom = room;
     this.socket.emit('joinRoom', room);
+    console.log('join Room :', this.mRoom);
   }
 
   /**
