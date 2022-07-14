@@ -8,6 +8,17 @@ type Props = {
   modalHandler: () => void;
 };
 
+interface Position {
+  size?: number;
+  left?: number;
+  top: number;
+  right?: number;
+}
+
+/**
+ * @brief Modal background와 닫기 버튼이 있는 modal layout
+ * @param {children, modalHandler}
+ */
 export default function Modal({ modalHandler, children }: Props) {
   return (
     <ModalPortal>
@@ -25,13 +36,6 @@ export default function Modal({ modalHandler, children }: Props) {
       </ModalBackground>
     </ModalPortal>
   );
-}
-
-interface Position {
-  size?: number;
-  left?: number;
-  top: number;
-  right?: number;
 }
 
 const ModalBackground = styled.div`
