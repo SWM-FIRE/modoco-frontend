@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from 'react-query';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
 import Avater from './Avater';
 import Nickname from './Nickname';
+
+interface UserType {
+  uid: string;
+  nickname: string;
+  avatar: string;
+}
 
 let type: string;
 
@@ -32,44 +39,38 @@ export default function UserInput({
       setUid(newUID);
       localStorage.setItem('uid', newUID);
       type = 'post';
-    } else {
-      type = 'put';
-    }
+    } else type = 'put';
   }, []);
 
-  const sendData = async () => {
+  const userRequest = async (newUser: UserType) => {
     const API_URL: string = process.env
       .REACT_APP_SEND_USER_INFORMATION_URL as string;
-    await axios({
+    const { data } = await axios({
       method: type,
       url: API_URL,
-      data: {
-        uid,
-        nickname: newNickname,
-        avatar: newAvatar,
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      data: newUser,
+    });
+    return data;
   };
+
+  const { mutate } = useMutation(userRequest, {
+    onSuccess: () => {
+      modalHandler();
+      navigate('/main');
+    },
+  });
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (newNickname === null) {
       return false;
     }
-    // socket connection
     setNickname(newNickname);
     setAvatar(newAvatar);
     localStorage.setItem('nickname', newNickname);
     localStorage.setItem('avatar', newAvatar);
-    sendData();
-    modalHandler();
-    navigate(`/main`);
+    mutate({ uid, nickname: newNickname, avatar: newAvatar });
+
     return true;
   };
 
