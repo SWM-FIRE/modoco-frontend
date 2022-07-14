@@ -1,9 +1,17 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable prefer-template */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable lines-between-class-members */
 import io, { Socket } from 'socket.io-client';
 
 const { RTCPeerConnection, RTCSessionDescription } = window;
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 class PeerConnectionSession {
+  _onConnected;
+  _onDisconnected;
   mRoom: string;
   socket: Socket;
   peerConnections = {};
@@ -39,6 +47,20 @@ class PeerConnectionSession {
     });
 
     console.log('sending track: ', this.senders);
+
+    this.listeners[id] = (event) => {
+      const fn =
+        this[
+          '_on' +
+            capitalizeFirstLetter(this.peerConnections[id].connectionState)
+        ];
+      fn && fn(event, id);
+    };
+
+    this.peerConnections[id].addEventListener(
+      'connectionstatechange',
+      this.listeners[id],
+    );
 
     // peerConnection의 track마다 생성된 stream을 callback함수로 전달
     this.peerConnections[id].ontrack = ({ streams: [stream] }) => {
@@ -87,6 +109,14 @@ class PeerConnectionSession {
    * @onConnected @onDisconnected @joinRoom -> state에 따라 callback
    * @param callback
    */
+
+  onConnected(callback) {
+    this._onConnected = callback;
+  }
+
+  onDisconnected(callback) {
+    this._onDisconnected = callback;
+  }
 
   joinRoom(room: string) {
     this.mRoom = room;

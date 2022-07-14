@@ -50,7 +50,7 @@ const Main = styled.div`
   flex-direction: column;
   width: 100vw;
   height: 100vh;
-  color: white;
+  color: black;
 `;
 
 const Header = styled.header`
