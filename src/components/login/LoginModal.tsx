@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import vectors from '../atoms/Vectors';
 import ModalTitle from './ModalTitle';
 import UserInput from './UserInput';
+import Position from '../../interface/position.interface';
 
+/**
+ * @brief 로그인 모달창
+ * @param modalHandler - modal을 닫는 함수
+ */
 export default function LoginModal({
   modalHandler,
 }: {
@@ -12,18 +17,11 @@ export default function LoginModal({
   return (
     <>
       <Vector src={vectors.Lamp} left={0} top={0} size={40} />
-      <Vector src={vectors.Book} left={28.7} top={10.4} size={60} />
+      <Vector src={vectors.Book} left={28.75} top={10.8} size={60} />
       <ModalTitle />
       <UserInput modalHandler={modalHandler} />
     </>
   );
-}
-
-interface Position {
-  size?: number;
-  left?: number;
-  top: number;
-  right?: number;
 }
 
 const Vector = styled.img<Position>`
