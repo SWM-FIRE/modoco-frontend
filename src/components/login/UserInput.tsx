@@ -1,34 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
-import Avater from './Avater';
+import Avater from './Avatar';
 import Nickname from './Nickname';
-
-interface UserType {
-  uid: string;
-  nickname: string;
-  avatar: string;
-}
+import userInterface from '../../interface/user.interface';
 
 let type: string;
 
+/**
+ * @brief 유저 정보(아바타, 닉네임) 수정
+ * @param modalHandler - modal을 닫는 함수
+ */
 export default function UserInput({
   modalHandler,
 }: {
   modalHandler: () => void;
 }) {
-  const navigate = useNavigate();
   const { nickname, uid, avatar, setNickname, setUid, setAvatar } = UserStore();
   const [newNickname, setNewNickname] = useState(nickname);
   const [newAvatar, setNewAvatar] = useState(avatar);
+
   const getNewNickname = (newNickname) => {
     setNewNickname(newNickname);
   };
-
   const getNewAvatar = (newAvatar) => {
     setNewAvatar(newAvatar);
   };
@@ -42,7 +39,7 @@ export default function UserInput({
     } else type = 'put';
   }, []);
 
-  const userRequest = async (newUser: UserType) => {
+  const userRequest = async (newUser: userInterface) => {
     const API_URL: string = process.env
       .REACT_APP_SEND_USER_INFORMATION_URL as string;
     const { data } = await axios({
@@ -56,7 +53,6 @@ export default function UserInput({
   const { mutate } = useMutation(userRequest, {
     onSuccess: () => {
       modalHandler();
-      navigate('/main');
     },
   });
 
@@ -70,7 +66,6 @@ export default function UserInput({
     localStorage.setItem('nickname', newNickname);
     localStorage.setItem('avatar', newAvatar);
     mutate({ uid, nickname: newNickname, avatar: newAvatar });
-
     return true;
   };
 
@@ -80,16 +75,12 @@ export default function UserInput({
         <Avater getData={getNewAvatar} newAvatar={newAvatar} />
         <Nickname getData={getNewNickname} newNickname={newNickname} />
       </Settings>
-      {/* <Button>GitHub 계정</Button> */}
     </Form>
   );
 }
 
 const Form = styled.form`
   margin-top: 4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   z-index: 1001;
   input,
   button {
@@ -97,6 +88,7 @@ const Form = styled.form`
     font-weight: 600;
     height: 6rem;
     border-radius: 0.8rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -104,6 +96,4 @@ const Settings = styled.div`
   gap: 3rem;
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
-  width: 100%;
 `;
