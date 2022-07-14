@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import UserStore from '../../stores/userStore';
@@ -22,7 +22,6 @@ export default function UserInput({
   modalHandler: () => void;
 }) {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { nickname, uid, avatar, setNickname, setUid, setAvatar } = UserStore();
   const [newNickname, setNewNickname] = useState(nickname);
   const [newAvatar, setNewAvatar] = useState(avatar);
@@ -54,9 +53,8 @@ export default function UserInput({
     return data;
   };
 
-  const { mutate } = useMutation(['user'], userRequest, {
+  const { mutate } = useMutation(userRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries('user');
       modalHandler();
       navigate('/main');
     },
