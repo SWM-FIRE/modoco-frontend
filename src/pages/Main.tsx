@@ -6,6 +6,7 @@ import Title from '../components/main/TitleContainer';
 import Modal from '../components/layout/Modal';
 import LoginModal from '../components/login/LoginModal';
 import UserStore from '../stores/userStore';
+import LandingPage from '../components/main/LandingPage';
 
 export default function Main() {
   const [isModal, setIsModal] = useState(false);
@@ -34,6 +35,7 @@ export default function Main() {
         <Header modalHandler={openModalHandler} />
         <Title />
         <Scrolls />
+        <LandingPage />
       </Container>
       {isModal && (
         <Modal modalHandler={closeModalHandler}>
@@ -48,7 +50,6 @@ const Container = styled.div`
   margin: 0;
   padding: 0;
   width: 100vw;
-  height: 140vh;
   display: flex;
   flex-direction: column;
   align-items: center;
