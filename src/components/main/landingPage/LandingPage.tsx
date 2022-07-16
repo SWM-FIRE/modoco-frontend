@@ -14,6 +14,5 @@ export default function LandingPage() {
 }
 
 const Container = styled.div`
-  position: relative;
-  width: 100%;
+  width: 100vw;
 `;

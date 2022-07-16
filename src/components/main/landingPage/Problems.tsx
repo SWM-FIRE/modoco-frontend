@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { ReactComponent as WantToBuildTeam } from '../../assets/svg/WantToBuildTeam.svg';
-import { ReactComponent as Problem1 } from '../../assets/svg/Problem1.svg';
-import { ReactComponent as Problem2 } from '../../assets/svg/Problem2.svg';
-import { ReactComponent as Problem3 } from '../../assets/svg/Problem3.svg';
-import { ReactComponent as Problem4 } from '../../assets/svg/Problem4.svg';
+import { ReactComponent as WantToBuildTeam } from '../../../assets/svg/WantToBuildTeam.svg';
+import { ReactComponent as Problem1 } from '../../../assets/svg/Problem1.svg';
+import { ReactComponent as Problem2 } from '../../../assets/svg/Problem2.svg';
+import { ReactComponent as Problem3 } from '../../../assets/svg/Problem3.svg';
+import { ReactComponent as Problem4 } from '../../../assets/svg/Problem4.svg';
 
 export default function Problems() {
   return (
@@ -93,6 +93,6 @@ const ProblemTitle = styled.div`
 
 const Container = styled.div`
   margin-top: 30rem;
-  margin-left: 20rem;
+  margin-left: 15%;
   color: #fcfcf9;
 `;

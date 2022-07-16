@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { ReactComponent as Positive } from '../../assets/svg/PositiveCircle.svg';
-import { ReactComponent as PositivePerson } from '../../assets/svg/PositivePerson.svg';
+import { ReactComponent as Positive } from '../../../assets/svg/PositiveCircle.svg';
+import { ReactComponent as PositivePerson } from '../../../assets/svg/PositivePerson.svg';
 
 export default function GiveWhat() {
   return (
@@ -110,21 +110,16 @@ const PersonPosition = styled.div`
 
 const Circle = styled.div`
   position: relative;
-  background: linear-gradient(
-    180deg,
-    rgba(24, 24, 27, 0.05) 0%,
-    rgba(216, 160, 251, 0.05) 100%
-  );
 `;
 
 const Container = styled.div`
-  margin-top: 20rem;
   position: relative;
-  margin-left: 10rem;
+  margin-top: 20rem;
+  margin-left: 5%;
 `;
 
 const MainTitle = styled.div`
-  left: 83rem;
+  left: 50%;
   position: absolute;
   font-family: IBMPlexSansKRRegular;
   font-weight: 600;

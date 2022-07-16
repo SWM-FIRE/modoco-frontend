@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as DevelopingSocialNetwork } from '../../assets/svg/DevelopingSocialNetwork.svg';
+import { ReactComponent as DevelopingSocialNetwork } from '../../../assets/svg/DevelopingSocialNetwork.svg';
 
 export default function WhatIsModoco() {
   return (
