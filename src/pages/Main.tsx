@@ -6,7 +6,7 @@ import Title from '../components/main/TitleContainer';
 import Modal from '../components/layout/Modal';
 import LoginModal from '../components/login/LoginModal';
 import UserStore from '../stores/userStore';
-import LandingPage from '../components/main/LandingPage';
+import LandingPage from '../components/main/landingPage/LandingPage';
 
 export default function Main() {
   const [isModal, setIsModal] = useState(false);
