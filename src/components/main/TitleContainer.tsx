@@ -51,7 +51,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1<{ color: string }>`
-  font-family: GmarketSansTTFBold;
+  font-family: GmarketSansBold;
   margin-left: 2rem;
   font-size: 7.2rem;
   align-self: center;

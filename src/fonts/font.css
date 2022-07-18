@@ -1,0 +1,72 @@
+@font-face {
+  font-family: GmarketSansBold;
+  src: local('GmarketSansTTFBold'), local('GmarketSansTTFBold');
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff2')
+      format('woff2'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff')
+      format('woff'),
+    url('./GmarketSansBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: GmarketSansMedium;
+  src: local('GmarketSansTTFMedium'), local('GmarketSansTTFMedium');
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.woff2')
+      format('woff2'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.woff')
+      format('woff'),
+    url('./GmarketSansTTFMedium.ttf') format('truetype');
+}
+@font-face {
+  font-family: IBMPlexSansKRRegular;
+  src: local('IBMPlexSansKRRegular'), local('IBMPlexSansKRRegular');
+  font-style: normal;
+  src: url('./IBMPlexSansKR-Regular.woff2') format('woff2'),
+    url('./IBMPlexSansKR-Regular.woff') format('woff'),
+    url('./IBMPlexSansKR-Regular.otf') format('opentype'),
+    url('./IBMPlexSansKR-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: IBMPlexMonoRegular;
+  src: local('IBMPlexMonoRegular'), local('IBMPlexMonoRegular');
+  font-style: normal;
+  src: url('./IBMPlexMono-Regular.woff2') format('woff2'),
+    url('./IBMPlexMono-Regular.woff') format('woff'),
+    url('./IBMPlexMono-Regular.otf') format('opentype'),
+    url('./IBMPlexMono-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: JostRegular;
+  src: local('JostRegular'), local('JostRegular');
+  font-style: normal;
+  src: url('./jost-v14-latin-regular.woff2') format('woff2'),
+    url('./jost-v14-latin-regular.woff') format('woff'),
+    url('./jost-v14-latin-regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: PoppinsRegular;
+  src: local('PoppinsRegular'), local('PoppinsRegular');
+  font-style: normal;
+  src: url('./poppins-v20-latin-regular.woff2') format('woff2'),
+    url('./poppins-v20-latin-regular.woff') format('woff'),
+    url('./poppins-v20-latin-regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: PretendardRegular;
+  src: local('PretendardRegular'), local('PretendardRegular');
+  font-style: normal;
+  src: url('../fonts/Pretendard-Regular.woff2') format('woff2'),
+    url('../fonts/Pretendard-Regular.woff') format('woff'),
+    url('../fonts/Pretendard-Regular.otf') format('opentype'),
+    url('../fonts/Pretendard-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: SFProDisplayRegular;
+  src: local('SFProDisplayRegular'), local('SFProDisplayRegular');
+  font-style: normal;
+  src: url('./SF\ Pro\ Display\ Regular.woff2') format('woff2'),
+    url('./SF\ Pro\ Display\ Regular.woff') format('woff'),
+    url('./SF\ Pro\ Display\ Regular.otf') format('opentype'),
+    url('./SF\ Pro\ Display\ Regular.ttf') format('truetype');
+}
