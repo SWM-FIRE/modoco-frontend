@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import { ReactComponent as MessageSend } from '../../assets/svg/MessageSend.svg';
+import ChattingItem from './ChattingItem';
 
 export default function Chatting() {
   return (
     <Component>
       <Title>채팅</Title>
-
+      <ChattingList>
+        <ChattingItem user="you" />
+      </ChattingList>
       <NewMessage>
         <Input placeholder="Write your message...." />
         <Button>
@@ -17,6 +20,11 @@ export default function Chatting() {
 }
 
 const Component = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
   font-family: IBMPlexSansKRRegular;
   font-size: 1.3rem;
   color: #6b7280;
@@ -26,8 +34,13 @@ const Title = styled.div`
   margin-top: 2.4rem;
 `;
 
+const ChattingList = styled.ul`
+  flex-grow: 1;
+`;
+
 const NewMessage = styled.div`
   position: relative;
+  width: 100%;
 `;
 
 const Input = styled.input`
