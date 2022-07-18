@@ -23,5 +23,6 @@ const Contents = styled.div`
   /* background-color: rgba(14, 19, 33, 1); */
   background-color: #18181b;
   height: calc(100% - 10rem);
+  display: flex;
   position: relative;
 `;
