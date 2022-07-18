@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import './fonts/font.css';
 import Layout from './components/layout/Layout';
 import Room from './pages/Room';
 import Main from './pages/Main';
