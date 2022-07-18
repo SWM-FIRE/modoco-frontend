@@ -49,7 +49,6 @@ const Component = styled.div`
   font-family: IBMPlexSansKRRegular;
   font-size: 1.3rem;
   color: #6b7280;
-  overflow: auto;
 `;
 
 const Title = styled.div`
@@ -59,6 +58,11 @@ const Title = styled.div`
 const ChattingList = styled.ul`
   flex-grow: 1;
   width: 100%;
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const NewMessage = styled.div`
