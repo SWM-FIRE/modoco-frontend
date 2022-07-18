@@ -53,7 +53,8 @@ const MessageBox = styled.div<userInterface>`
     props.user === '나' ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
   padding: 1.6rem;
   margin-top: 0.4rem;
-  background-color: #1b1b1e;
+  background-color: ${(props) =>
+    props.user === '나' ? 'rgb(53, 55, 65)' : 'rgb(31, 35, 49)'};
   overflow: hidden;
 `;
 
