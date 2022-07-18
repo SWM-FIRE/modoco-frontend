@@ -4,15 +4,15 @@ import messageInterface from '../../interface/message.interface';
 
 export default function ChattingItem({ user, msg, time }: messageInterface) {
   return (
-    <Component user={user}>
-      {user !== '나' && (
+    <Component user={user.nickname}>
+      {user.nickname !== '나' && (
         <AvatarComponent>
-          <MyAvatar num={1} />
+          <MyAvatar num={Number(user.avatar)} />
         </AvatarComponent>
       )}
-      <MessageComponent user={user}>
-        <Nickname user={user}>{user}</Nickname>
-        <MessageBox user={user}>
+      <MessageComponent user={user.nickname}>
+        <Nickname user={user.nickname}>{user.nickname}</Nickname>
+        <MessageBox user={user.nickname}>
           <Message>{msg}</Message>
           <Time>{time}</Time>
         </MessageBox>

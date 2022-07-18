@@ -1,5 +1,8 @@
 export default interface messageInterface {
-  user: string;
+  user: {
+    nickname: string;
+    avatar: string;
+  };
   msg: string;
   time: string;
 }

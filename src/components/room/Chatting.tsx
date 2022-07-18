@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { ReactComponent as MessageSend } from '../../assets/svg/MessageSend.svg';
-// import MyAvatar from '../../assets/avatar/MyAvatar';
 import ChattingItem from './ChattingItem';
 
 export default function Chatting() {
@@ -8,24 +7,28 @@ export default function Chatting() {
     <Component>
       <Title>채팅</Title>
       <ChattingList>
-        <ChattingItem user="halang" msg="안녕하세용" time="12:02pm" />
         <ChattingItem
-          user="halang"
+          user={{ nickname: 'halang', avatar: '1' }}
+          msg="안녕하세용"
+          time="12:02pm"
+        />
+        <ChattingItem
+          user={{ nickname: 'halang', avatar: '1' }}
           msg="안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용"
           time="12:02pm"
         />
         <ChattingItem
-          user="halang"
+          user={{ nickname: 'halang', avatar: '1' }}
           msg="안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용"
           time="12:02pm"
         />
         <ChattingItem
-          user="나"
+          user={{ nickname: '나', avatar: '1' }}
           msg="그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥"
           time="15:07pm"
         />
         <ChattingItem
-          user="나"
+          user={{ nickname: '나', avatar: '1' }}
           msg="그냥그냥그냥그냥그냥그냥그냥그냥"
           time="15:07pm"
         />
