@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { ReactComponent as MessageSend } from '../../assets/svg/MessageSend.svg';
+// import MyAvatar from '../../assets/avatar/MyAvatar';
 import ChattingItem from './ChattingItem';
 
 export default function Chatting() {
@@ -7,7 +8,27 @@ export default function Chatting() {
     <Component>
       <Title>채팅</Title>
       <ChattingList>
-        <ChattingItem user="you" />
+        <ChattingItem user="halang" msg="안녕하세용" time="12:02pm" />
+        <ChattingItem
+          user="halang"
+          msg="안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용"
+          time="12:02pm"
+        />
+        <ChattingItem
+          user="halang"
+          msg="안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용"
+          time="12:02pm"
+        />
+        <ChattingItem
+          user="나"
+          msg="그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥"
+          time="15:07pm"
+        />
+        <ChattingItem
+          user="나"
+          msg="그냥그냥그냥그냥그냥그냥그냥그냥"
+          time="15:07pm"
+        />
       </ChattingList>
       <NewMessage>
         <Input placeholder="Write your message...." />
@@ -28,6 +49,7 @@ const Component = styled.div`
   font-family: IBMPlexSansKRRegular;
   font-size: 1.3rem;
   color: #6b7280;
+  overflow: auto;
 `;
 
 const Title = styled.div`
@@ -36,6 +58,7 @@ const Title = styled.div`
 
 const ChattingList = styled.ul`
   flex-grow: 1;
+  width: 100%;
 `;
 
 const NewMessage = styled.div`
