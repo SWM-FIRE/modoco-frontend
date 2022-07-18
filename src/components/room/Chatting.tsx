@@ -68,6 +68,7 @@ const ChattingList = styled.ul`
 const NewMessage = styled.div`
   position: relative;
   width: 100%;
+  margin-top: 3rem;
 `;
 
 const Input = styled.input`
@@ -76,7 +77,6 @@ const Input = styled.input`
   font-size: 1.3rem;
   border-radius: 1rem;
   padding: 1.6rem 2rem;
-  /* background-color: rgba(30, 39, 69, 1); */
   background-color: #1b1b1e;
   font-family: IBMPlexSansKRRegular;
   color: rgba(255, 255, 255, 1);
