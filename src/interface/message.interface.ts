@@ -1,8 +1,7 @@
+import User from './user.interface';
+
 export default interface messageInterface {
-  user: {
-    nickname: string;
-    avatar: string;
-  };
+  user: User;
   msg: string;
   time: string;
 }

@@ -8,27 +8,27 @@ export default function Chatting() {
       <Title>채팅</Title>
       <ChattingList>
         <ChattingItem
-          user={{ nickname: 'halang', avatar: '1' }}
+          user={{ nickname: 'halang', avatar: '1', uid: '123' }}
           msg="안녕하세용"
           time="12:02pm"
         />
         <ChattingItem
-          user={{ nickname: 'halang', avatar: '1' }}
+          user={{ nickname: 'halang', avatar: '1', uid: '123' }}
           msg="안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용"
           time="12:02pm"
         />
         <ChattingItem
-          user={{ nickname: 'halang', avatar: '1' }}
+          user={{ nickname: 'halang', avatar: '1', uid: '123' }}
           msg="안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용안녕하세용"
           time="12:02pm"
         />
         <ChattingItem
-          user={{ nickname: '나', avatar: '1' }}
+          user={{ nickname: '나', avatar: '1', uid: '1234' }}
           msg="그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥그냥"
           time="15:07pm"
         />
         <ChattingItem
-          user={{ nickname: '나', avatar: '1' }}
+          user={{ nickname: '나', avatar: '1', uid: '1234' }}
           msg="그냥그냥그냥그냥그냥그냥그냥그냥"
           time="15:07pm"
         />
