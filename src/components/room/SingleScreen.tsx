@@ -1,20 +1,27 @@
 import styled from 'styled-components';
 import MyAvatar from '../../assets/avatar/MyAvatar';
+import controlModal from '../../stores/controlModal';
 
-export default function SingkleScreen({
+export default function SingleScreen({
   nickname,
   avatar,
 }: {
   nickname: string;
   avatar: string;
 }) {
+  const { toggleModal, setNickname, setAvatar } = controlModal();
+  const OpenModal = () => {
+    setNickname(nickname);
+    setAvatar(avatar);
+    toggleModal();
+  };
   return (
-    <Screen>
+    <Container onClick={OpenModal}>
       <AvatarPosition>
         <MyAvatar num={Number(avatar)} />
         <NameContainer>{nickname}</NameContainer>
       </AvatarPosition>
-    </Screen>
+    </Container>
   );
 }
 
@@ -41,7 +48,8 @@ const AvatarPosition = styled.div`
   position: absolute;
 `;
 
-const Screen = styled.div`
+const Container = styled.div`
+  cursor: pointer;
   background-color: #4a4a4a;
   display: flex;
   justify-content: center;
