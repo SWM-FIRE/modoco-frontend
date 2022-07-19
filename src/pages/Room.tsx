@@ -2,16 +2,23 @@ import styled from 'styled-components';
 import Header from '../components/room/Header';
 import ScreenShare from '../components/room/ScreenShare';
 import Sidebar from '../components/room/Sidebar';
+import ScreenShareModal from '../components/room/ScreenModal';
+import controlModal from '../stores/controlModal';
 
 export default function Room() {
+  const { isOpen } = controlModal();
+
   return (
-    <Component>
-      <Header />
-      <Contents>
-        <ScreenShare />
-        <Sidebar />
-      </Contents>
-    </Component>
+    <>
+      <Component>
+        <Header />
+        <Contents>
+          <ScreenShare />
+          <Sidebar />
+        </Contents>
+      </Component>
+      {isOpen && <ScreenShareModal />}
+    </>
   );
 }
 
