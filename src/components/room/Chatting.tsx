@@ -48,7 +48,7 @@ const Component = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  height: 100%;
+  height: calc(100% - 17.8rem);
   font-family: IBMPlexSansKRRegular;
   font-size: 1.3rem;
   color: #6b7280;
