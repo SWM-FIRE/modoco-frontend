@@ -88,7 +88,7 @@ const Container = styled.footer`
 `;
 
 const FooterWrapper = styled.div`
-  width: 120rem;
+  width: 80%;
   height: 22rem;
 `;
 

@@ -13,7 +13,6 @@ export default function Sidebar() {
 
 const Component = styled.div`
   position: absolute;
-  /* background-color: rgba(22, 29, 52, 1); */
   background-color: #29292e;
   margin: 2rem 2rem 2rem 2rem;
   border-radius: 1rem;
@@ -21,5 +20,5 @@ const Component = styled.div`
   width: 40rem;
   right: 0;
   top: 0;
-  height: -webkit-fill-available;
+  height: calc(100vh - 14rem);
 `;
