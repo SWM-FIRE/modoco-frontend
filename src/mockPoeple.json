@@ -1,0 +1,15 @@
+{
+  "roomName": "영기의 테스트방",
+  "current": 3,
+  "total": 4,
+  "people": [
+    {
+      "nickname": "groot",
+      "avatar": "10"
+    },
+    {
+      "nickname": "halang",
+      "avatar": "27"
+    }
+  ]
+}

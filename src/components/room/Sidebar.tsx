@@ -19,7 +19,6 @@ const Component = styled.div`
   border-radius: 1rem;
   padding: 3rem 2rem;
   width: 40rem;
-  margin: 2rem;
   right: 0;
   top: 0;
   height: -webkit-fill-available;
