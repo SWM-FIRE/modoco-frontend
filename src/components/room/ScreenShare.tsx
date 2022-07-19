@@ -8,7 +8,7 @@ export default function ScreenShare() {
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem('uid') || !localStorage.getItem('nickname')) {
-      alert('잘못된 접근입니다');
+      alert('로그인 후 이용해주세요');
       navigate('/main');
     }
   }, []);
