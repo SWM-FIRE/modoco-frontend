@@ -1,19 +1,27 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
+import io from 'socket.io-client';
+import { useParams } from 'react-router-dom';
 import Header from '../components/room/Header';
 import ScreenShare from '../components/room/ScreenShare';
 import Sidebar from '../components/room/Sidebar';
-import { initSocket, disconnectSocket } from '../adaptors/chat/socketio';
 
 export default function Room() {
+  const socket = io(process.env.REACT_APP_SOCKET_CHAT_URL as string);
+  const { roomId } = useParams();
+
   useEffect(() => {
-    // socket connection
-    console.log('connecting...');
-    initSocket();
+    socket.on('connect', () => {
+      console.log('socket server connected!!!');
+      socket.emit('joinChatRoom', roomId);
+    });
+
+    socket.on('joinedRoom', (room) => {
+      console.log('joined Room : ', room);
+    });
 
     return () => {
-      // socket disconnection
-      disconnectSocket();
+      socket.emit('leaveChatRoom', roomId);
     };
   }, []);
   return (
@@ -21,7 +29,7 @@ export default function Room() {
       <Header />
       <Contents>
         <ScreenShare />
-        <Sidebar />
+        <Sidebar socket={socket} />
       </Contents>
     </Component>
   );
