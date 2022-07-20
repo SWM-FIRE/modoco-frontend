@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { ReactComponent as MessageSend } from '../../assets/svg/MessageSend.svg';
 import ChattingItem from './ChattingItem';
 
-export default function Chatting({ socket }) {
+export function Chat({ socket }) {
   const [userList, setUserList] = useState({});
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
@@ -41,18 +41,14 @@ export default function Chatting({ socket }) {
     }
   }, []);
 
-  // const userRequest = async (message) => {
-  //   const API_URL: string =
-  //     `https://모도코.com/users/${message.sender}` as string;
-  //   const { data } = await axios.get(API_URL);
-  //   return data;
-  // };
   const receiveMessage = useCallback(
     (receiveMsg) => {
       if (!userList[receiveMsg.sender]) {
         try {
           axios
-            .get(`https://모도코.com/api/v1/users/${receiveMsg.sender}`)
+            .get(process.env.REACT_APP_GET_USER_INFO as string, {
+              params: receiveMsg.sender,
+            })
             .then((res) => {
               // if user is not in userList, add it
               setUserList((users) => {
@@ -85,8 +81,6 @@ export default function Chatting({ socket }) {
           },
         ]);
       }
-      // add message to messages
-      // setMessages((message) => [...message, receiveMsg]);
       moveScrollToReceiveMessage();
     },
     [moveScrollToReceiveMessage],
@@ -122,6 +116,8 @@ export default function Chatting({ socket }) {
     </Component>
   );
 }
+
+export const Chatting = React.memo(Chat);
 
 const Component = styled.div`
   display: flex;

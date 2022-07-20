@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Participants from './Participants';
-import Chatting from './Chatting';
+import { Chatting } from './Chatting';
 
 export default function Sidebar({ socket }) {
   return (
