@@ -3,16 +3,19 @@ import MyAvatar from '../../assets/avatar/MyAvatar';
 import messageInterface from '../../interface/message.interface';
 
 export default function ChattingItem({ user, msg, time }: messageInterface) {
+  const uid = localStorage.getItem('uid');
   return (
-    <Component user={user.nickname}>
-      {user.nickname !== '나' && (
+    <Component isMe={user.uid === uid}>
+      {user.uid !== uid && (
         <AvatarComponent>
           <MyAvatar num={Number(user.avatar)} />
         </AvatarComponent>
       )}
-      <MessageComponent user={user.nickname}>
-        <Nickname user={user.nickname}>{user.nickname}</Nickname>
-        <MessageBox user={user.nickname}>
+      <MessageComponent isMe={user.uid === uid}>
+        <Nickname isMe={user.uid === uid}>
+          {user.uid === uid ? '나' : `${user.nickname}`}
+        </Nickname>
+        <MessageBox isMe={user.uid === uid}>
           <Message>{msg}</Message>
           <Time>{time}</Time>
         </MessageBox>
@@ -22,12 +25,12 @@ export default function ChattingItem({ user, msg, time }: messageInterface) {
 }
 
 interface userInterface {
-  user: string;
+  isMe: boolean;
 }
 
 const Component = styled.li<userInterface>`
   display: flex;
-  flex-direction: ${(props) => (props.user === '나' ? 'row-reverse' : 'row')};
+  flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
   width: 100%;
   gap: 1.6rem;
   margin-top: 2.4rem;
@@ -43,18 +46,18 @@ const AvatarComponent = styled.div`
 const MessageComponent = styled.div<userInterface>`
   display: flex;
   flex-direction: column;
-  align-items: ${({ user }) => (user === '나' ? 'flex-end' : 'flex-start')};
+  align-items: ${({ isMe }) => (isMe ? 'flex-end' : 'flex-start')};
 `;
 
 const Nickname = styled.div<userInterface>``;
 
 const MessageBox = styled.div<userInterface>`
-  border-radius: ${(props) =>
-    props.user === '나' ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
+  border-radius: ${({ isMe }) =>
+    isMe ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
   padding: 1.6rem;
   margin-top: 0.4rem;
-  background-color: ${(props) =>
-    props.user === '나' ? 'rgb(53, 55, 65)' : 'rgb(31, 35, 49)'};
+  background-color: ${({ isMe }) =>
+    isMe ? 'rgb(53, 55, 65)' : 'rgb(31, 35, 49)'};
   overflow: hidden;
 `;
 
