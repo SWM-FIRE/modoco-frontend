@@ -18,7 +18,7 @@ export function Chat({ socket }) {
   }, []);
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (newMessage === '') return;
+    if (newMessage.trim() === '') return;
     socket.emit('chatMessage', {
       room: roomId,
       sender: localStorage.getItem('uid'),
