@@ -45,27 +45,23 @@ export function Chat({ socket }) {
     (receiveMsg) => {
       if (!userList[receiveMsg.sender]) {
         try {
-          axios
-            .get(process.env.REACT_APP_GET_USER_INFO as string, {
-              params: receiveMsg.sender,
-            })
-            .then((res) => {
-              // if user is not in userList, add it
-              setUserList((users) => {
-                return { ...users, [receiveMsg.sender]: res.data };
-              });
-
-              setMessages((message) => [
-                ...message,
-                {
-                  uid: receiveMsg.sender,
-                  nickname: res.data.nickname,
-                  avatar: res.data.avatar,
-                  message: receiveMsg.message,
-                  creratedAt: receiveMsg.createdAt,
-                },
-              ]);
+          const API_URL = process.env.REACT_APP_GET_USER_INFO as string;
+          axios.get(API_URL + receiveMsg.sender).then((res) => {
+            setUserList((users) => {
+              return { ...users, [receiveMsg.sender]: res.data };
             });
+
+            setMessages((message) => [
+              ...message,
+              {
+                uid: receiveMsg.sender,
+                nickname: res.data.nickname,
+                avatar: res.data.avatar,
+                message: receiveMsg.message,
+                creratedAt: receiveMsg.createdAt,
+              },
+            ]);
+          });
         } catch (err) {
           console.log('error!! ', err);
         }
