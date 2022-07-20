@@ -1,16 +1,22 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Timer from './Timer';
 import Settings from './Settings';
 import About from './About';
 import { ReactComponent as X } from '../../assets/svg/X.svg';
 
 export default function Header() {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate('/main');
+  };
+
   return (
     <Component>
       <About />
       <Timer />
       <Settings />
-      <Button>
+      <Button onClick={onClick}>
         나가기 <X />
       </Button>
     </Component>
