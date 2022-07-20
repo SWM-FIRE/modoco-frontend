@@ -5,10 +5,13 @@ import { useParams } from 'react-router-dom';
 import Header from '../components/room/Header';
 import ScreenShare from '../components/room/ScreenShare';
 import Sidebar from '../components/room/Sidebar';
+import ScreenShareModal from '../components/room/ScreenModal';
+import controlModal from '../stores/controlModal';
 
 export default function Room() {
   const socket = io(process.env.REACT_APP_SOCKET_CHAT_URL as string);
   const { roomId } = useParams();
+  const { isOpen } = controlModal();
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -24,14 +27,18 @@ export default function Room() {
       socket.emit('leaveChatRoom', roomId);
     };
   }, []);
+
   return (
-    <Component>
-      <Header />
-      <Contents>
-        <ScreenShare />
-        <Sidebar socket={socket} />
-      </Contents>
-    </Component>
+    <>
+      <Component>
+        <Header />
+        <Contents>
+          <ScreenShare />
+          <Sidebar socket={socket} />
+        </Contents>
+      </Component>
+      {isOpen && <ScreenShareModal />}
+    </>
   );
 }
 
