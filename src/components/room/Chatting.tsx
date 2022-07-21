@@ -33,12 +33,9 @@ export function Chat({ socket }) {
     setNewMessage('');
   };
 
-  const onMessageChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setNewMessage(event.target.value);
-    },
-    [],
-  );
+  const onMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewMessage(event.target.value);
+  };
 
   const moveScrollToReceiveMessage = useCallback(() => {
     if (chatWindow.current) {
@@ -49,45 +46,42 @@ export function Chat({ socket }) {
     }
   }, []);
 
-  const receiveMessage = useCallback(
-    (receiveMsg) => {
-      if (!userList[receiveMsg.sender]) {
-        try {
-          const API_URL = process.env.REACT_APP_GET_USER_INFO as string;
-          axios.get(API_URL + receiveMsg.sender).then((res) => {
-            setUserList((users) => {
-              return { ...users, [receiveMsg.sender]: res.data };
-            });
-
-            setMessages((message) => [
-              ...message,
-              {
-                uid: receiveMsg.sender,
-                nickname: res.data.nickname,
-                avatar: res.data.avatar,
-                message: receiveMsg.message,
-                creratedAt: receiveMsg.createdAt,
-              },
-            ]);
+  const receiveMessage = useCallback((receiveMsg) => {
+    if (!userList[receiveMsg.sender]) {
+      try {
+        const API_URL = process.env.REACT_APP_GET_USER_INFO as string;
+        axios.get(API_URL + receiveMsg.sender).then((res) => {
+          setUserList((users) => {
+            return { ...users, [receiveMsg.sender]: res.data };
           });
-        } catch (err) {
-          console.log('error!! ', err);
-        }
-      } else {
-        setMessages((message) => [
-          ...message,
-          {
-            uid: receiveMsg.sender,
-            nickname: userList[receiveMsg.sender].nickname,
-            avatar: userList[receiveMsg.sender].avatar,
-            message: receiveMsg.message,
-            creratedAt: receiveMsg.createdAt,
-          },
-        ]);
+
+          setMessages((message) => [
+            ...message,
+            {
+              uid: receiveMsg.sender,
+              nickname: res.data.nickname,
+              avatar: res.data.avatar,
+              message: receiveMsg.message,
+              creratedAt: receiveMsg.createdAt,
+            },
+          ]);
+        });
+      } catch (err) {
+        console.log('error!! ', err);
       }
-    },
-    [moveScrollToReceiveMessage],
-  );
+    } else {
+      setMessages((message) => [
+        ...message,
+        {
+          uid: receiveMsg.sender,
+          nickname: userList[receiveMsg.sender].nickname,
+          avatar: userList[receiveMsg.sender].avatar,
+          message: receiveMsg.message,
+          creratedAt: receiveMsg.createdAt,
+        },
+      ]);
+    }
+  }, []);
 
   return (
     <Component>
