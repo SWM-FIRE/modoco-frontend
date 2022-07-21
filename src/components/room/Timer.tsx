@@ -5,12 +5,11 @@ import { ReactComponent as Divide } from '../../assets/svg/Divide.svg';
 export default function Timer() {
   const [time, setTime] = useState(0);
   function timer() {
-    let start = Date.now();
+    const start = Date.now();
     const callback = () => {
       const ts = Date.now();
-      if (ts - 1000 > start) {
-        setTime((time) => time + 1);
-        start = Date.now();
+      if ((ts - start) % 1000 >= -10 || (ts - start) % 1000 <= 10) {
+        setTime(() => (ts - start) / 1000);
         requestAnimationFrame(callback);
       } else {
         requestAnimationFrame(callback);
