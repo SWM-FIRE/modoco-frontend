@@ -16,9 +16,9 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Main />} />
           </Route>
-          {/* <Route path="/room" element={<Layout />}> */}
-          <Route path="/room/*" element={<Room />} />
-          {/* </Route> */}
+          <Route path="/room">
+            <Route path=":roomId" element={<Room />} />
+          </Route>
           <Route path="/main" element={<Main />} />
         </Routes>
       </BrowserRouter>
