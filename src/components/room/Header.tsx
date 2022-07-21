@@ -7,8 +7,10 @@ import { ReactComponent as X } from '../../assets/svg/X.svg';
 
 export default function Header() {
   const navigate = useNavigate();
+
   const onClick = () => {
-    navigate('/main');
+    const result = window.confirm('정말 모도코를 종료하시겠습니까?');
+    if (result) navigate('/');
   };
 
   return (
