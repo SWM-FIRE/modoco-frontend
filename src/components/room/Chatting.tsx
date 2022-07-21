@@ -16,9 +16,14 @@ export function Chat({ socket }) {
   useEffect(() => {
     socket.on('chatMessage', receiveMessage);
   }, []);
+
+  useEffect(() => {
+    moveScrollToReceiveMessage();
+  }, [messages]);
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (newMessage === '') return;
+    if (newMessage.trim() === '') return;
     socket.emit('chatMessage', {
       room: roomId,
       sender: localStorage.getItem('uid'),
@@ -41,46 +46,42 @@ export function Chat({ socket }) {
     }
   }, []);
 
-  const receiveMessage = useCallback(
-    (receiveMsg) => {
-      if (!userList[receiveMsg.sender]) {
-        try {
-          const API_URL = process.env.REACT_APP_GET_USER_INFO as string;
-          axios.get(API_URL + receiveMsg.sender).then((res) => {
-            setUserList((users) => {
-              return { ...users, [receiveMsg.sender]: res.data };
-            });
-
-            setMessages((message) => [
-              ...message,
-              {
-                uid: receiveMsg.sender,
-                nickname: res.data.nickname,
-                avatar: res.data.avatar,
-                message: receiveMsg.message,
-                creratedAt: receiveMsg.createdAt,
-              },
-            ]);
+  const receiveMessage = useCallback((receiveMsg) => {
+    if (!userList[receiveMsg.sender]) {
+      try {
+        const API_URL = process.env.REACT_APP_GET_USER_INFO as string;
+        axios.get(API_URL + receiveMsg.sender).then((res) => {
+          setUserList((users) => {
+            return { ...users, [receiveMsg.sender]: res.data };
           });
-        } catch (err) {
-          console.log('error!! ', err);
-        }
-      } else {
-        setMessages((message) => [
-          ...message,
-          {
-            uid: receiveMsg.sender,
-            nickname: userList[receiveMsg.sender].nickname,
-            avatar: userList[receiveMsg.sender].avatar,
-            message: receiveMsg.message,
-            creratedAt: receiveMsg.createdAt,
-          },
-        ]);
+
+          setMessages((message) => [
+            ...message,
+            {
+              uid: receiveMsg.sender,
+              nickname: res.data.nickname,
+              avatar: res.data.avatar,
+              message: receiveMsg.message,
+              creratedAt: receiveMsg.createdAt,
+            },
+          ]);
+        });
+      } catch (err) {
+        console.log('error!! ', err);
       }
-      moveScrollToReceiveMessage();
-    },
-    [moveScrollToReceiveMessage],
-  );
+    } else {
+      setMessages((message) => [
+        ...message,
+        {
+          uid: receiveMsg.sender,
+          nickname: userList[receiveMsg.sender].nickname,
+          avatar: userList[receiveMsg.sender].avatar,
+          message: receiveMsg.message,
+          creratedAt: receiveMsg.createdAt,
+        },
+      ]);
+    }
+  }, []);
 
   return (
     <Component>
