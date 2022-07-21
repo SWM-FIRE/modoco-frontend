@@ -16,6 +16,11 @@ export function Chat({ socket }) {
   useEffect(() => {
     socket.on('chatMessage', receiveMessage);
   }, []);
+
+  useEffect(() => {
+    moveScrollToReceiveMessage();
+  }, [messages]);
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (newMessage.trim() === '') return;
@@ -28,9 +33,12 @@ export function Chat({ socket }) {
     setNewMessage('');
   };
 
-  const onMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewMessage(event.target.value);
-  };
+  const onMessageChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setNewMessage(event.target.value);
+    },
+    [],
+  );
 
   const moveScrollToReceiveMessage = useCallback(() => {
     if (chatWindow.current) {
@@ -77,7 +85,6 @@ export function Chat({ socket }) {
           },
         ]);
       }
-      moveScrollToReceiveMessage();
     },
     [moveScrollToReceiveMessage],
   );
