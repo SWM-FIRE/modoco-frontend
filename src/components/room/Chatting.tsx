@@ -5,8 +5,18 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as MessageSend } from '../../assets/svg/MessageSend.svg';
 import ChattingItem from './ChattingItem';
+import {
+  socketInit,
+  emitJoinChatRoom,
+  onJoinedRoom,
+  emitChatMessage,
+  onChatMessage,
+  emitLeaveChatRoom,
+  onLeftRoom,
+  reConnect,
+} from '../../adapters/chat/socketio';
 
-export function Chat({ socket }) {
+export function Chat() {
   const [userList, setUserList] = useState({});
   const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([]);
@@ -14,7 +24,13 @@ export function Chat({ socket }) {
   const chatWindow = useRef(null);
 
   useEffect(() => {
-    socket.on('chatMessage', receiveMessage);
+    socketInit();
+    emitJoinChatRoom(roomId);
+    onJoinedRoom(localStorage.getItem('nickname'));
+    onChatMessage(receiveMessage);
+    onLeftRoom();
+    reConnect();
+    return () => emitLeaveChatRoom(roomId);
   }, []);
 
   useEffect(() => {
@@ -24,7 +40,7 @@ export function Chat({ socket }) {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (newMessage.trim() === '') return;
-    socket.emit('chatMessage', {
+    emitChatMessage({
       room: roomId,
       sender: localStorage.getItem('uid'),
       message: newMessage,
@@ -87,9 +103,10 @@ export function Chat({ socket }) {
     <Component>
       <Title>채팅</Title>
       <ChattingList ref={chatWindow}>
-        {messages.map((message) => (
+        {messages.map((message, id) => (
           <ChattingItem
-            key={message.createdAt}
+            // eslint-disable-next-line react/no-array-index-key
+            key={id}
             user={{
               nickname: message.nickname,
               avatar: message.avatar,

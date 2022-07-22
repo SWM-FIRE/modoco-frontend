@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import Participants from './Participants';
 import { Chatting } from './Chatting';
 
-export default function Sidebar({ socket }) {
+export default function Sidebar() {
   return (
     <Component>
       <Participants />
-      <Chatting socket={socket} />
+      <Chatting />
     </Component>
   );
 }

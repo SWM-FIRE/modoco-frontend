@@ -1,16 +1,24 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Timer from './Timer';
 import Settings from './Settings';
 import About from './About';
 import { ReactComponent as X } from '../../assets/svg/X.svg';
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    const result = window.confirm('정말 모도코를 종료하시겠습니까?');
+    if (result) navigate('/');
+  };
+
   return (
     <Component>
       <About />
       <Timer />
       <Settings />
-      <Button>
+      <Button onClick={onClick}>
         나가기 <X />
       </Button>
     </Component>
