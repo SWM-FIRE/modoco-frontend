@@ -12,7 +12,6 @@ export default function Room() {
   const socket = io(process.env.REACT_APP_SOCKET_CHAT_URL as string);
   const { roomId } = useParams();
   const { isOpen } = controlModal();
-
   useEffect(() => {
     socket.on('connect', () => {
       console.log('socket server connected!!!');
