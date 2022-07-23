@@ -26,6 +26,7 @@ export default function Room() {
 
   useEffect(() => {
     enablePrevent();
+    socket.emit('leaveChatRoom', roomId);
     return disablePrevent;
   }, []);
 
