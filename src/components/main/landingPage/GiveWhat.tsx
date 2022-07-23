@@ -26,4 +26,5 @@ const MainTitle = styled.div`
   font-weight: 600;
   font-size: 5.2rem;
   color: #fcfcf9;
+  z-index: 1;
 `;
