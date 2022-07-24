@@ -11,11 +11,21 @@ export default function Problems() {
       </ProblemTitle>
       <ProblemsContainer>
         <ProblemWords />
-        <WantToBuildTeamImage />
+        <ImageContainer>
+          <WantToBuildTeamImage />
+        </ImageContainer>
       </ProblemsContainer>
     </Container>
   );
 }
+
+const ImageContainer = styled.div`
+  @media screen and (max-width: 1200px) {
+    svg {
+      display: none;
+    }
+  }
+`;
 
 const ProblemsContainer = styled.div`
   display: flex;
