@@ -1,7 +1,6 @@
 import { io } from 'socket.io-client';
 
 let socket;
-// const socket = io(process.env.REACT_APP_SOCKET_CHAT_URL as string);
 
 function socketInit() {
   socket = io(process.env.REACT_APP_SOCKET_CHAT_URL as string);
@@ -41,10 +40,6 @@ function onLeftRoom() {
   });
 }
 
-function reConnect() {
-  setTimeout(socketInit, 10000);
-}
-
 export {
   socketInit,
   emitJoinChatRoom,
@@ -53,5 +48,4 @@ export {
   onChatMessage,
   emitLeaveChatRoom,
   onLeftRoom,
-  reConnect,
 };

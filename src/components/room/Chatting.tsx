@@ -13,7 +13,6 @@ import {
   onChatMessage,
   emitLeaveChatRoom,
   onLeftRoom,
-  reConnect,
 } from '../../adapters/chat/socketio';
 
 export function Chat() {
@@ -29,7 +28,6 @@ export function Chat() {
     onJoinedRoom(localStorage.getItem('nickname'));
     onChatMessage(receiveMessage);
     onLeftRoom();
-    reConnect();
     return () => emitLeaveChatRoom(roomId);
   }, []);
 
