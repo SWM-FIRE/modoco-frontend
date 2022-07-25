@@ -33,7 +33,7 @@ export default function Room() {
   return (
     <>
       <Component>
-        <Header />
+        <Header socket={socket} />
         <Contents>
           <ScreenShare />
           <Sidebar socket={socket} />

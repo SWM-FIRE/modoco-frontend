@@ -1,15 +1,13 @@
 import styled from 'styled-components';
-import io from 'socket.io-client';
 import { useNavigate, useParams } from 'react-router-dom';
 import Timer from './Timer';
 import Settings from './Settings';
 import About from './About';
 import { ReactComponent as X } from '../../assets/svg/X.svg';
 
-export default function Header() {
+export default function Header({ socket }) {
   const navigate = useNavigate();
   const { roomId } = useParams();
-  const socket = io(process.env.REACT_APP_SOCKET_CHAT_URL as string);
 
   const onClick = () => {
     const result = window.confirm('정말 모도코를 종료하시겠습니까?');
