@@ -1,9 +1,8 @@
 import { io } from 'socket.io-client';
 
-let socket;
+const socket = io(process.env.REACT_APP_SOCKET_CHAT_URL as string);
 
 function socketInit() {
-  socket = io(process.env.REACT_APP_SOCKET_CHAT_URL as string);
   socket.on('connect', () => {
     console.log('socket server connected.', socket.id);
   });

@@ -1,35 +1,15 @@
 import styled from 'styled-components';
 import moment from 'moment';
-import axios from 'axios';
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as MessageSend } from '../../assets/svg/MessageSend.svg';
 import ChattingItem from './ChattingItem';
-import {
-  socketInit,
-  emitJoinChatRoom,
-  onJoinedRoom,
-  emitChatMessage,
-  onChatMessage,
-  emitLeaveChatRoom,
-  onLeftRoom,
-} from '../../adapters/chat/socketio';
+import { emitChatMessage } from '../../adapters/chat/socketio';
 
-export function Chat() {
-  const [userList, setUserList] = useState({});
+export function Chat({ messages }) {
   const [newMessage, setNewMessage] = useState('');
-  const [messages, setMessages] = useState([]);
   const { roomId } = useParams();
   const chatWindow = useRef(null);
-
-  useEffect(() => {
-    socketInit();
-    emitJoinChatRoom(roomId);
-    onJoinedRoom(localStorage.getItem('nickname'));
-    onChatMessage(receiveMessage);
-    onLeftRoom();
-    return () => emitLeaveChatRoom(roomId);
-  }, []);
 
   useEffect(() => {
     moveScrollToReceiveMessage();
@@ -57,43 +37,6 @@ export function Chat() {
         top: chatWindow.current.scrollHeight,
         behavior: 'smooth',
       });
-    }
-  }, []);
-
-  const receiveMessage = useCallback((receiveMsg) => {
-    if (!userList[receiveMsg.sender]) {
-      try {
-        const API_URL = process.env.REACT_APP_GET_USER_INFO as string;
-        axios.get(API_URL + receiveMsg.sender).then((res) => {
-          setUserList((users) => {
-            return { ...users, [receiveMsg.sender]: res.data };
-          });
-
-          setMessages((message) => [
-            ...message,
-            {
-              uid: receiveMsg.sender,
-              nickname: res.data.nickname,
-              avatar: res.data.avatar,
-              message: receiveMsg.message,
-              creratedAt: receiveMsg.createdAt,
-            },
-          ]);
-        });
-      } catch (err) {
-        console.log('error!! ', err);
-      }
-    } else {
-      setMessages((message) => [
-        ...message,
-        {
-          uid: receiveMsg.sender,
-          nickname: userList[receiveMsg.sender].nickname,
-          avatar: userList[receiveMsg.sender].avatar,
-          message: receiveMsg.message,
-          creratedAt: receiveMsg.createdAt,
-        },
-      ]);
     }
   }, []);
 

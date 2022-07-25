@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import Participants from './Participants';
 import { Chatting } from './Chatting';
 
-export default function Sidebar() {
+export default function Sidebar({ messages }) {
   return (
     <Component>
       <Participants />
-      <Chatting />
+      <Chatting messages={messages} />
     </Component>
   );
 }
