@@ -12,9 +12,9 @@ function emitJoinChatRoom(roomId) {
   socket.emit('joinChatRoom', roomId);
 }
 
-function onJoinedRoom(nickname) {
-  socket.on('joinedRoom', () => {
-    console.log(nickname, ' 님이 입장하셨습니다.');
+function onJoinedRoom() {
+  socket.on('joinedRoom', (a) => {
+    console.log('joinedRoom : ', a);
   });
 }
 

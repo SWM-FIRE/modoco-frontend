@@ -26,7 +26,7 @@ export default function Room() {
   useEffect(() => {
     socketInit();
     emitJoinChatRoom(roomId);
-    onJoinedRoom(localStorage.getItem('nickname'));
+    onJoinedRoom();
     onChatMessage(receiveMessage);
     onLeftRoom();
   }, []);
