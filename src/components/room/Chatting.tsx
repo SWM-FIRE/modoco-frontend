@@ -1,21 +1,15 @@
 import styled from 'styled-components';
 import moment from 'moment';
-import axios from 'axios';
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as MessageSend } from '../../assets/svg/MessageSend.svg';
 import ChattingItem from './ChattingItem';
+import { emitChatMessage } from '../../adapters/chat/socketio';
 
-export function Chat({ socket }) {
-  const [userList, setUserList] = useState({});
+export function Chat({ messages }) {
   const [newMessage, setNewMessage] = useState('');
-  const [messages, setMessages] = useState([]);
   const { roomId } = useParams();
   const chatWindow = useRef(null);
-
-  useEffect(() => {
-    socket.on('chatMessage', receiveMessage);
-  }, []);
 
   useEffect(() => {
     moveScrollToReceiveMessage();
@@ -24,7 +18,7 @@ export function Chat({ socket }) {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (newMessage.trim() === '') return;
-    socket.emit('chatMessage', {
+    emitChatMessage({
       room: roomId,
       sender: localStorage.getItem('uid'),
       message: newMessage,
@@ -46,50 +40,14 @@ export function Chat({ socket }) {
     }
   }, []);
 
-  const receiveMessage = useCallback((receiveMsg) => {
-    if (!userList[receiveMsg.sender]) {
-      try {
-        const API_URL = process.env.REACT_APP_GET_USER_INFO as string;
-        axios.get(API_URL + receiveMsg.sender).then((res) => {
-          setUserList((users) => {
-            return { ...users, [receiveMsg.sender]: res.data };
-          });
-
-          setMessages((message) => [
-            ...message,
-            {
-              uid: receiveMsg.sender,
-              nickname: res.data.nickname,
-              avatar: res.data.avatar,
-              message: receiveMsg.message,
-              creratedAt: receiveMsg.createdAt,
-            },
-          ]);
-        });
-      } catch (err) {
-        console.log('error!! ', err);
-      }
-    } else {
-      setMessages((message) => [
-        ...message,
-        {
-          uid: receiveMsg.sender,
-          nickname: userList[receiveMsg.sender].nickname,
-          avatar: userList[receiveMsg.sender].avatar,
-          message: receiveMsg.message,
-          creratedAt: receiveMsg.createdAt,
-        },
-      ]);
-    }
-  }, []);
-
   return (
     <Component>
       <Title>채팅</Title>
       <ChattingList ref={chatWindow}>
-        {messages.map((message) => (
+        {messages.map((message, id) => (
           <ChattingItem
-            key={message.createdAt}
+            // eslint-disable-next-line react/no-array-index-key
+            key={id}
             user={{
               nickname: message.nickname,
               avatar: message.avatar,

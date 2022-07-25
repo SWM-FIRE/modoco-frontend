@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import React from 'react';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import messageInterface from '../../interface/message.interface';
 
 export default function ChattingItem({ user, msg, time }: messageInterface) {
   const uid = localStorage.getItem('uid');
+
   return (
     <Component isMe={user.uid === uid}>
       {user.uid !== uid && (
