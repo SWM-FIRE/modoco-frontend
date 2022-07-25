@@ -1,4 +1,4 @@
-import UserMediaStreamStore from '../../../stores/userMediaStream';
+import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
 
 export const useCreateMediaStream = () => {
   const { userMediaStream, setUserMediaStream } = UserMediaStreamStore();

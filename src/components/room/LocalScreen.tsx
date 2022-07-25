@@ -6,7 +6,9 @@ import { useCreateMediaStream } from '../rtc/hooks/useCreateLocalStream';
 
 export default function LocalScreen({ nickname, avatar }) {
   const { userMediaStream, createMediaStream } = useCreateMediaStream();
-  createMediaStream();
+  useEffect(() => {
+    createMediaStream();
+  }, []);
   const { toggleModal, setNickname, setAvatar } = controlModal();
   const videoRef = useRef<HTMLVideoElement>(null);
   const OpenModal = () => {
