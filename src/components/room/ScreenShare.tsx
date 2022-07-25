@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import mockPeople from '../../mockPoeple.json';
 import SingleScreen from './SingleScreen';
+import LocalScreen from './LocalScreen';
 
 export default function ScreenShare() {
   const navigate = useNavigate();
@@ -12,10 +13,11 @@ export default function ScreenShare() {
       navigate('/main');
     }
   }, []);
+
   return (
     <Container>
       <ScreenWrapper>
-        <SingleScreen
+        <LocalScreen
           nickname={localStorage.getItem('nickname')}
           avatar={localStorage.getItem('avatar')}
         />
