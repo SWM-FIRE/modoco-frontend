@@ -4,15 +4,16 @@ import Timer from './Timer';
 import Settings from './Settings';
 import About from './About';
 import { ReactComponent as X } from '../../assets/svg/X.svg';
+import { emitLeaveChatRoom } from '../../adapters/chat/socketio';
 
-export default function Header({ socket }) {
+export default function Header() {
   const navigate = useNavigate();
   const { roomId } = useParams();
 
   const onClick = () => {
     const result = window.confirm('정말 모도코를 종료하시겠습니까?');
     if (result) {
-      socket.emit('leaveChatRoom', roomId);
+      emitLeaveChatRoom(roomId);
       navigate('/');
     }
   };

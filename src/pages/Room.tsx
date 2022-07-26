@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../components/room/Header';
 import ScreenShare from '../components/room/ScreenShare';
@@ -10,12 +10,20 @@ import ScreenShareModal from '../components/room/ScreenModal';
 import controlModal from '../stores/controlModal';
 import usePreventLeave from '../hooks/usePreventLeave';
 import connectedUsersStore from '../stores/connectedUsersStore';
+import {
+  socketInit,
+  emitJoinChatRoom,
+  onJoinedRoom,
+  onChatMessage,
+  onLeftRoom,
+} from '../adapters/chat/socketio';
 
 export default function Room() {
-  const socket = io(process.env.REACT_APP_SOCKET_CHAT_URL as string);
   const videoSocket = io(process.env.REACT_APP_SOCKET_VIDEO_URL as string);
-  const { roomId } = useParams();
+  const [userList, setUserList] = useState({});
+  const [messages, setMessages] = useState([]);
   const { isOpen } = controlModal();
+  const { roomId } = useParams();
   const { enablePrevent, disablePrevent } = usePreventLeave();
   const { connectedUsers, appendUser, removeUser } = connectedUsersStore();
 
@@ -66,29 +74,62 @@ export default function Room() {
       console.log('remove user', user);
       removeUser(user.socketId);
     });
+    socketInit();
+    emitJoinChatRoom(roomId);
+    onJoinedRoom(localStorage.getItem('nickname'));
+    onChatMessage(receiveMessage);
+    onLeftRoom();
   }, []);
 
   useEffect(() => {
-    socket.on('connect', () => {
-      console.log('socket server connected!!!');
-      socket.emit('joinChatRoom', roomId);
-    });
-
-    socket.on('joinedRoom', (room) => {
-      console.log('joined Room : ', room);
-    });
     enablePrevent();
-    socket.emit('leaveChatRoom', roomId);
     return disablePrevent;
+  }, []);
+
+  const receiveMessage = useCallback((receiveMsg) => {
+    if (!userList[receiveMsg.sender]) {
+      try {
+        const API_URL = process.env.REACT_APP_GET_USER_INFO as string;
+        axios.get(API_URL + receiveMsg.sender).then((res) => {
+          setUserList((users) => {
+            return { ...users, [receiveMsg.sender]: res.data };
+          });
+
+          setMessages((message) => [
+            ...message,
+            {
+              uid: receiveMsg.sender,
+              nickname: res.data.nickname,
+              avatar: res.data.avatar,
+              message: receiveMsg.message,
+              createdAt: receiveMsg.createdAt,
+            },
+          ]);
+        });
+      } catch (err) {
+        console.log('error!! ', err);
+      }
+    } else {
+      setMessages((message) => [
+        ...message,
+        {
+          uid: receiveMsg.sender,
+          nickname: userList[receiveMsg.sender].nickname,
+          avatar: userList[receiveMsg.sender].avatar,
+          message: receiveMsg.message,
+          createdAt: receiveMsg.createdAt,
+        },
+      ]);
+    }
   }, []);
 
   return (
     <>
       <Component>
-        <Header socket={socket} />
+        <Header />
         <Contents>
           <ScreenShare />
-          <Sidebar socket={socket} />
+          <Sidebar messages={messages} />
         </Contents>
       </Component>
       {isOpen && <ScreenShareModal />}
@@ -101,7 +142,6 @@ const Component = styled.div`
 `;
 
 const Contents = styled.div`
-  /* background-color: rgba(14, 19, 33, 1); */
   background-color: #18181b;
   height: calc(100% - 10rem);
   display: flex;
