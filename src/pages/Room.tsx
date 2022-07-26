@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import io from 'socket.io-client';
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Header from '../components/room/Header';
 import ScreenShare from '../components/room/ScreenShare';
@@ -9,7 +10,6 @@ import ScreenShareModal from '../components/room/ScreenModal';
 import controlModal from '../stores/controlModal';
 import usePreventLeave from '../hooks/usePreventLeave';
 import connectedUsersStore from '../stores/connectedUsersStore';
-import useUserInfo from '../hooks/useUserInfo';
 
 export default function Room() {
   const socket = io(process.env.REACT_APP_SOCKET_CHAT_URL as string);
@@ -17,28 +17,50 @@ export default function Room() {
   const { roomId } = useParams();
   const { isOpen } = controlModal();
   const { enablePrevent, disablePrevent } = usePreventLeave();
-  const { connectedUsers, appendUser, removeUser } = connectedUsersStore();
-
-  console.log(useUserInfo(localStorage.getItem('uid')));
+  const { appendUser, removeUser } = connectedUsersStore();
 
   useEffect(() => {
     videoSocket.on('connect', () => {
       console.log('video socket connected');
-      videoSocket.emit('joinRoom', roomId);
+      const payload = { room: roomId, uid: localStorage.getItem('uid') };
+      console.log('payload', payload);
+      videoSocket.emit('joinRoom', payload);
     });
+
     videoSocket.on(`${roomId}-update-user-list`, ({ users }) => {
-      // setUsers(users);
-      console.log(users);
-      console.log('updated user list', connectedUsers);
+      users.map((user) => {
+        axios
+          .get((process.env.REACT_APP_GET_USER_INFO as string) + user.uid)
+          .then((res) => {
+            appendUser({
+              nickname: res.data.nickname,
+              uid: res.data.uid,
+              avatar: res.data.avatar,
+              socketId: user.id,
+            });
+          });
+        return user;
+      });
+      console.log('updated user list');
     });
+
     videoSocket.on(`${roomId}-add-user`, (user) => {
-      appendUser(user);
-      console.log('add user', user);
+      axios
+        .get((process.env.REACT_APP_GET_USER_INFO as string) + user.uid)
+        .then((res) => {
+          console.log('new', res.data.nickname, 'joined');
+          appendUser({
+            nickname: res.data.nickname,
+            uid: user.uid,
+            avatar: res.data.avatar,
+            socketId: user.user,
+          });
+        });
     });
 
     videoSocket.on(`${roomId}-remove-user`, (user) => {
-      removeUser(user);
       console.log('remove user', user);
+      removeUser(user.socketId);
     });
   }, []);
 

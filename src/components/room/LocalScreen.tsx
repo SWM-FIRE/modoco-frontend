@@ -4,16 +4,17 @@ import MyAvatar from '../../assets/avatar/MyAvatar';
 import controlModal from '../../stores/controlModal';
 import { useCreateMediaStream } from '../rtc/hooks/useCreateLocalStream';
 
-export default function LocalScreen({ nickname, avatar }) {
+export default function LocalScreen({ nickname, avatar, uid }) {
   const { userMediaStream, createMediaStream } = useCreateMediaStream();
   useEffect(() => {
     createMediaStream();
   }, []);
-  const { toggleModal, setNickname, setAvatar } = controlModal();
+  const { toggleModal, setNickname, setAvatar, setUid } = controlModal();
   const videoRef = useRef<HTMLVideoElement>(null);
   const OpenModal = () => {
     setNickname(nickname);
     setAvatar(avatar);
+    setUid(uid);
     toggleModal();
   };
 
@@ -123,6 +124,7 @@ const AvatarPosition = styled.div`
 const Video = styled.video`
   z-index: 0;
   width: 100%;
+  height: 100%;
   border-radius: 1rem;
   position: absolute;
 `;

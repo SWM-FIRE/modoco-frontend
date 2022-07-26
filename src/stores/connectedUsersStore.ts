@@ -1,8 +1,9 @@
 import create from 'zustand';
-import UserInterface from '../interface/user.interface';
 
 interface VideoUserInterface {
-  user: UserInterface;
+  nickname: string;
+  uid: string;
+  avatar: string;
   socketId: string;
 }
 
@@ -10,7 +11,7 @@ interface connectedUsers {
   connectedUsers: VideoUserInterface[];
   setUsers: (_users: VideoUserInterface[]) => void;
   appendUser: (_user: VideoUserInterface) => void;
-  removeUser: (_user: VideoUserInterface) => void;
+  removeUser: (_user: string) => void;
 }
 const connectedUsersStore = create<connectedUsers>((set) => ({
   connectedUsers: [],
@@ -19,7 +20,9 @@ const connectedUsersStore = create<connectedUsers>((set) => ({
     set((state) => ({ connectedUsers: [...state.connectedUsers, by] })),
   removeUser: (by) =>
     set((state) => ({
-      connectedUsers: state.connectedUsers.filter((user) => user !== by),
+      connectedUsers: state.connectedUsers.filter(
+        (user) => user.socketId !== by,
+      ),
     })),
 }));
 

@@ -5,11 +5,13 @@
   "people": [
     {
       "nickname": "groot",
-      "avatar": "10"
+      "avatar": "10",
+      "uid": "391230df8123f8hdsk"
     },
     {
       "nickname": "halang",
-      "avatar": "27"
+      "avatar": "27",
+      "uid": "zgd8u9szsg8d09uz"
     }
   ]
 }

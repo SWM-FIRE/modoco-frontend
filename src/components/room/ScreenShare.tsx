@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import mockPeople from '../../mockPoeple.json';
 import SingleScreen from './SingleScreen';
 import LocalScreen from './LocalScreen';
+import connectedUsersStore from '../../stores/connectedUsersStore';
 
 export default function ScreenShare() {
   const navigate = useNavigate();
+  const { connectedUsers } = connectedUsersStore();
   useEffect(() => {
     if (!localStorage.getItem('uid') || !localStorage.getItem('nickname')) {
       alert('로그인 후 이용해주세요');
@@ -20,12 +21,14 @@ export default function ScreenShare() {
         <LocalScreen
           nickname={localStorage.getItem('nickname')}
           avatar={localStorage.getItem('avatar')}
+          uid={localStorage.getItem('uid')}
         />
-        {mockPeople.people.map((person) => (
+        {connectedUsers.map((user) => (
           <SingleScreen
-            key={person.nickname}
-            nickname={person.nickname}
-            avatar={person.avatar}
+            key={user.nickname}
+            nickname={user.nickname}
+            avatar={user.avatar}
+            uid={user.uid}
           />
         ))}
       </ScreenWrapper>
