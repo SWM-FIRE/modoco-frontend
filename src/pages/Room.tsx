@@ -28,7 +28,6 @@ export default function Room() {
   const { isOpen } = controlModal();
   const { roomId } = useParams();
   const { enablePrevent, disablePrevent } = usePreventLeave();
-  console.log('room rerendering, prev : ', prev);
   const { connectedUsers, appendUser, removeUser } = connectedUsersStore();
 
   useEffect(() => {
@@ -92,7 +91,13 @@ export default function Room() {
   }, []);
 
   const receiveJoin = (uid) => {
-    setMessages([...messages, { prev: '0', uid }]);
+    const API_URL = process.env.REACT_APP_GET_USER_INFO as string;
+    axios.get(API_URL + uid).then((res) => {
+      setMessages([
+        ...messages,
+        { prev: '0', uid, nickname: res.data.nickname },
+      ]);
+    });
     setPrev(Date.now().toString());
   };
 

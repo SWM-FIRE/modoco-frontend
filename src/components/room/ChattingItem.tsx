@@ -17,7 +17,7 @@ export default function ChattingItem({
     <div>
       {entrance ? (
         <EntranceComponent isMe={isMe}>
-          <Entrance>{user.uid} 님이 입장했습니다.</Entrance>
+          <Entrance>{user.nickname} 님이 입장했습니다.</Entrance>
         </EntranceComponent>
       ) : (
         <Component isMe={isMe}>
@@ -36,20 +36,6 @@ export default function ChattingItem({
         </Component>
       )}
     </div>
-    // <Component isMe={isMe}>
-    //   {isMe && (
-    //     <AvatarComponent>
-    //       <MyAvatar num={Number(user.avatar)} />
-    //     </AvatarComponent>
-    //   )}
-    //   <MessageComponent isMe={isMe}>
-    //     <Nickname isMe={isMe}>{isMe ? '나' : `${user.nickname}`}</Nickname>
-    //     <MessageBox isMe={isMe}>
-    //       <Message isMe={isMe}>{msg}</Message>
-    //       <Time>{time}</Time>
-    //     </MessageBox>
-    //   </MessageComponent>
-    // </Component>
   );
 }
 
@@ -61,6 +47,7 @@ const EntranceComponent = styled.div<userInterface>`
   display: ${({ isMe }) => (isMe ? 'none' : 'flex')};
   align-items: center;
   justify-content: center;
+  margin-top: 2.4rem;
 `;
 
 const Entrance = styled.div`
@@ -68,6 +55,7 @@ const Entrance = styled.div`
   border-radius: 2rem;
   padding: 0.7rem;
   background-color: rgb(53, 55, 65);
+  color: #bbbaba;
 `;
 
 const Component = styled.li<userInterface>`
