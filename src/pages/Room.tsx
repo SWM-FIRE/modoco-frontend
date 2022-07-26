@@ -17,7 +17,7 @@ export default function Room() {
   const { roomId } = useParams();
   const { isOpen } = controlModal();
   const { enablePrevent, disablePrevent } = usePreventLeave();
-  const { appendUser, removeUser } = connectedUsersStore();
+  const { connectedUsers, appendUser, removeUser } = connectedUsersStore();
 
   useEffect(() => {
     videoSocket.on('connect', () => {
@@ -32,12 +32,14 @@ export default function Room() {
         axios
           .get((process.env.REACT_APP_GET_USER_INFO as string) + user.uid)
           .then((res) => {
-            appendUser({
-              nickname: res.data.nickname,
-              uid: res.data.uid,
-              avatar: res.data.avatar,
-              socketId: user.id,
-            });
+            if (!connectedUsers.includes(user.uid)) {
+              appendUser({
+                nickname: res.data.nickname,
+                uid: res.data.uid,
+                avatar: res.data.avatar,
+                socketId: user.id,
+              });
+            }
           });
         return user;
       });
@@ -48,13 +50,15 @@ export default function Room() {
       axios
         .get((process.env.REACT_APP_GET_USER_INFO as string) + user.uid)
         .then((res) => {
-          console.log('new', res.data.nickname, 'joined');
-          appendUser({
-            nickname: res.data.nickname,
-            uid: user.uid,
-            avatar: res.data.avatar,
-            socketId: user.user,
-          });
+          if (!connectedUsers.includes(user.uid)) {
+            console.log('new', res.data.nickname, 'joined');
+            appendUser({
+              nickname: res.data.nickname,
+              uid: user.uid,
+              avatar: res.data.avatar,
+              socketId: user.user,
+            });
+          }
         });
     });
 
