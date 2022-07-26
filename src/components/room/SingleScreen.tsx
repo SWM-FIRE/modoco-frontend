@@ -5,14 +5,17 @@ import controlModal from '../../stores/controlModal';
 export default function SingleScreen({
   nickname,
   avatar,
+  uid,
 }: {
   nickname: string;
   avatar: string;
+  uid: string;
 }) {
-  const { toggleModal, setNickname, setAvatar } = controlModal();
+  const { toggleModal, setNickname, setAvatar, setUid } = controlModal();
   const OpenModal = () => {
     setNickname(nickname);
     setAvatar(avatar);
+    setUid(uid);
     toggleModal();
   };
   return (

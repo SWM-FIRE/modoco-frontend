@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import io from 'socket.io-client';
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,6 +9,7 @@ import Sidebar from '../components/room/Sidebar';
 import ScreenShareModal from '../components/room/ScreenModal';
 import controlModal from '../stores/controlModal';
 import usePreventLeave from '../hooks/usePreventLeave';
+import connectedUsersStore from '../stores/connectedUsersStore';
 import {
   socketInit,
   emitJoinChatRoom,
@@ -17,13 +19,61 @@ import {
 } from '../adapters/chat/socketio';
 
 export default function Room() {
+  const videoSocket = io(process.env.REACT_APP_SOCKET_VIDEO_URL as string);
   const [userList, setUserList] = useState({});
   const [messages, setMessages] = useState([]);
   const { isOpen } = controlModal();
   const { roomId } = useParams();
   const { enablePrevent, disablePrevent } = usePreventLeave();
+  const { connectedUsers, appendUser, removeUser } = connectedUsersStore();
 
   useEffect(() => {
+    videoSocket.on('connect', () => {
+      console.log('video socket connected');
+      const payload = { room: roomId, uid: localStorage.getItem('uid') };
+      console.log('payload', payload);
+      videoSocket.emit('joinRoom', payload);
+    });
+
+    videoSocket.on(`${roomId}-update-user-list`, ({ users }) => {
+      users.map((user) => {
+        axios
+          .get((process.env.REACT_APP_GET_USER_INFO as string) + user.uid)
+          .then((res) => {
+            if (!connectedUsers.includes(user.uid)) {
+              appendUser({
+                nickname: res.data.nickname,
+                uid: res.data.uid,
+                avatar: res.data.avatar,
+                socketId: user.id,
+              });
+            }
+          });
+        return user;
+      });
+      console.log('updated user list');
+    });
+
+    videoSocket.on(`${roomId}-add-user`, (user) => {
+      axios
+        .get((process.env.REACT_APP_GET_USER_INFO as string) + user.uid)
+        .then((res) => {
+          if (!connectedUsers.includes(user.uid)) {
+            console.log('new', res.data.nickname, 'joined');
+            appendUser({
+              nickname: res.data.nickname,
+              uid: user.uid,
+              avatar: res.data.avatar,
+              socketId: user.user,
+            });
+          }
+        });
+    });
+
+    videoSocket.on(`${roomId}-remove-user`, (user) => {
+      console.log('remove user', user);
+      removeUser(user.socketId);
+    });
     socketInit();
     emitJoinChatRoom(roomId);
     onJoinedRoom(localStorage.getItem('nickname'));
