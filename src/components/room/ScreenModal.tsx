@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import ModalPortal from '../atoms/ModalPotal';
 import { ReactComponent as LeftArrow } from '../../assets/svg/arrow-left.svg';
 import controlModal from '../../stores/controlModal';
 import MyAvatar from '../../assets/avatar/MyAvatar';
+import { useCreateMediaStream } from '../rtc/hooks/useCreateLocalStream';
 
 export default function ScreenModal() {
-  const { nickname, avatar, toggleModal } = controlModal();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const { uid, nickname, avatar, toggleModal } = controlModal();
+  const { userMediaStream } = useCreateMediaStream();
+  useEffect(() => {
+    if (uid === localStorage.getItem('uid') && videoRef.current) {
+      videoRef.current.srcObject = userMediaStream;
+    }
+  }, [videoRef, userMediaStream]);
+
   return (
     <ModalPortal>
       <ModalBackground>
@@ -18,19 +27,16 @@ export default function ScreenModal() {
             <MyAvatar num={Number(avatar)} />
             <Nickname>{nickname}</Nickname>
           </ModalController>
-          <Screen />
+          <ModalVideo ref={videoRef} autoPlay playsInline muted />
         </ModalBox>
       </ModalBackground>
     </ModalPortal>
   );
 }
 
-const Screen = styled.div`
+const ModalVideo = styled.video`
   margin-top: 1.6rem;
   width: calc(100% - 1.43rem);
-  height: 0;
-  padding-bottom: 53%;
-  background-color: #4a4a4a;
 `;
 
 const Nickname = styled.div`
@@ -60,10 +66,10 @@ const ArrowBox = styled.div`
 const ModalBackground = styled.div`
   position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   justify-content: center;
   align-items: center;
-  top: 0;
+  top: -7rem;
   display: flex;
   z-index: 999;
 `;
@@ -79,4 +85,5 @@ const ModalBox = styled.div`
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 `;

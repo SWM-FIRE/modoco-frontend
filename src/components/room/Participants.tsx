@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import mockPeople from '../../mockPoeple.json';
 import SingleParticipant from './SingleParticipant';
+import connectedUsersStore from '../../stores/connectedUsersStore';
 
 export default function Participants() {
+  const { connectedUsers } = connectedUsersStore();
   return (
     <Component>
       <Title>참여자 목록</Title>
@@ -11,11 +12,11 @@ export default function Participants() {
           nickname={localStorage.getItem('nickname')}
           avatar={localStorage.getItem('avatar')}
         />
-        {mockPeople.people.map((person) => (
+        {connectedUsers.map((user) => (
           <SingleParticipant
-            key={person.nickname}
-            nickname={person.nickname}
-            avatar={person.avatar}
+            key={user.nickname}
+            nickname={user.nickname}
+            avatar={user.avatar}
           />
         ))}
       </UserList>

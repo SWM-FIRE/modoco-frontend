@@ -1,5 +1,5 @@
 export default interface User {
-  uid: string;
-  nickname: string;
   avatar: string;
+  nickname: string;
+  uid: string;
 }
