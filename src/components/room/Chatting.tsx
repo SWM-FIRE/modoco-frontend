@@ -55,6 +55,7 @@ export function Chat({ messages }) {
             }}
             msg={message.message}
             time={moment(message.createdAt).format('LT')}
+            prev={message.prev}
           />
         ))}
       </ChattingList>

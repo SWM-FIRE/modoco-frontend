@@ -3,4 +3,5 @@ export default interface chatMessage {
   sender: string; // 보내는 사람 uid
   message: string;
   createdAt: string;
+  prev: string;
 }
