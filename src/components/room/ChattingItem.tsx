@@ -3,31 +3,72 @@ import React from 'react';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import messageInterface from '../../interface/message.interface';
 
-export default function ChattingItem({ user, msg, time }: messageInterface) {
+export default function ChattingItem({
+  user,
+  msg,
+  time,
+  prev,
+}: messageInterface) {
   const uid = localStorage.getItem('uid');
   const isMe = user.uid === uid;
+  const entrance = prev === '0';
 
   return (
-    <Component isMe={isMe}>
-      {user.uid !== uid && (
-        <AvatarComponent>
-          <MyAvatar num={Number(user.avatar)} />
-        </AvatarComponent>
+    <div>
+      {entrance ? (
+        <EntranceComponent isMe={isMe}>
+          <Entrance>{user.uid} 님이 입장했습니다.</Entrance>
+        </EntranceComponent>
+      ) : (
+        <Component isMe={isMe}>
+          {!isMe && (
+            <AvatarComponent>
+              <MyAvatar num={Number(user.avatar)} />
+            </AvatarComponent>
+          )}
+          <MessageComponent isMe={isMe}>
+            <Nickname isMe={isMe}>{isMe ? '나' : `${user.nickname}`}</Nickname>
+            <MessageBox isMe={isMe}>
+              <Message isMe={isMe}>{msg}</Message>
+              <Time>{time}</Time>
+            </MessageBox>
+          </MessageComponent>
+        </Component>
       )}
-      <MessageComponent isMe={isMe}>
-        <Nickname isMe={isMe}>{isMe ? '나' : `${user.nickname}`}</Nickname>
-        <MessageBox isMe={isMe}>
-          <Message isMe={isMe}>{msg}</Message>
-          <Time>{time}</Time>
-        </MessageBox>
-      </MessageComponent>
-    </Component>
+    </div>
+    // <Component isMe={isMe}>
+    //   {isMe && (
+    //     <AvatarComponent>
+    //       <MyAvatar num={Number(user.avatar)} />
+    //     </AvatarComponent>
+    //   )}
+    //   <MessageComponent isMe={isMe}>
+    //     <Nickname isMe={isMe}>{isMe ? '나' : `${user.nickname}`}</Nickname>
+    //     <MessageBox isMe={isMe}>
+    //       <Message isMe={isMe}>{msg}</Message>
+    //       <Time>{time}</Time>
+    //     </MessageBox>
+    //   </MessageComponent>
+    // </Component>
   );
 }
 
 interface userInterface {
   isMe: boolean;
 }
+
+const EntranceComponent = styled.div<userInterface>`
+  display: ${({ isMe }) => (isMe ? 'none' : 'flex')};
+  align-items: center;
+  justify-content: center;
+`;
+
+const Entrance = styled.div`
+  border: 1px solid rgb(53, 55, 65);
+  border-radius: 2rem;
+  padding: 0.7rem;
+  background-color: rgb(53, 55, 65);
+`;
 
 const Component = styled.li<userInterface>`
   display: flex;

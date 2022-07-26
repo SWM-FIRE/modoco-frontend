@@ -4,4 +4,5 @@ export default interface messageInterface {
   user: User;
   msg: string;
   time: string;
+  prev: string;
 }
