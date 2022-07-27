@@ -1,33 +1,38 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import controlModal from '../../stores/controlModal';
 
-export default function SingleScreen({
-  nickname,
-  avatar,
-  uid,
-}: {
-  nickname: string;
-  avatar: string;
-  uid: string;
-}) {
+export default function SingleScreen({ nickname, avatar, uid, messages }) {
   const { toggleModal, setNickname, setAvatar, setUid } = controlModal();
+  const [currentTime, setCurrentTime] = useState<Date>(new Date());
+
   const OpenModal = () => {
     setNickname(nickname);
     setAvatar(avatar);
     setUid(uid);
     toggleModal();
   };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 250);
+    return () => clearInterval(timer);
+  }, []);
+  const newMessages = messages.filter(
+    (message) =>
+      message.uid === uid &&
+      new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
+  );
+
   return (
     <Container onClick={OpenModal}>
       <ChatContainer>
         <ChatInner>
-          <Chats>Lorem ipsum dolor sit amet,</Chats>
-          <Chats>Vestibulum sit amet tellus suscipit</Chats>
-          <Chats>
-            Fusce eget lacus eu magna finibus interdum vel vel felis.
-          </Chats>
-          <Chats>Last Chat</Chats>
+          {newMessages.map((message) => (
+            <Chats key={message.createdAt}>{message.message}</Chats>
+          ))}
         </ChatInner>
       </ChatContainer>
       <AvatarPosition>
