@@ -32,7 +32,7 @@ export default function LocalScreen({ nickname, avatar, uid, messages }) {
     return () => clearInterval(timer);
   }, []);
 
-  const newMessage = messages.filter(
+  const newMessages = messages.filter(
     (message) =>
       message.uid === uid &&
       new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
@@ -43,7 +43,7 @@ export default function LocalScreen({ nickname, avatar, uid, messages }) {
       <ControlBar>
         <ChatContainer>
           <ChatInner>
-            {newMessage.map((message) => (
+            {newMessages.map((message) => (
               <Chats key={message.createdAt}>{message.message}</Chats>
             ))}
             {/* <Chats>Lorem ipsum dolor sit amet,</Chats> */}
