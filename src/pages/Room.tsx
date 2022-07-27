@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import io from 'socket.io-client';
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
@@ -17,9 +16,9 @@ import {
   onChatMessage,
   onLeftRoom,
 } from '../adapters/chat/socketio';
+import { videoSocket, videoSocketInit } from '../adapters/video/videoSocket';
 
 export default function Room() {
-  const videoSocket = io(process.env.REACT_APP_SOCKET_VIDEO_URL as string);
   const [userList, setUserList] = useState({});
   const [messages, setMessages] = useState([]);
   const { isOpen } = controlModal();
@@ -28,12 +27,7 @@ export default function Room() {
   const { connectedUsers, appendUser, removeUser } = connectedUsersStore();
 
   useEffect(() => {
-    videoSocket.on('connect', () => {
-      console.log('video socket connected');
-      const payload = { room: roomId, uid: localStorage.getItem('uid') };
-      console.log('payload', payload);
-      videoSocket.emit('joinRoom', payload);
-    });
+    videoSocketInit();
 
     videoSocket.on(`${roomId}-update-user-list`, ({ users }) => {
       users.map((user) => {
