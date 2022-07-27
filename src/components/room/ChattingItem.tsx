@@ -7,11 +7,13 @@ export default function ChattingItem({
   user,
   msg,
   time,
-  prev,
+  type,
+  isHideTime,
+  isHideNicknameAndAvatar,
 }: messageInterface) {
   const uid = localStorage.getItem('uid');
   const isMe = user.uid === uid;
-  const entrance = prev === '0';
+  const entrance = type === 'join';
 
   return (
     <div>
@@ -20,17 +22,21 @@ export default function ChattingItem({
           <Entrance>{user.nickname} 님이 입장했습니다.</Entrance>
         </EntranceComponent>
       ) : (
-        <Component isMe={isMe}>
+        <Component isMe={isMe} isHide={isHideNicknameAndAvatar}>
           {!isMe && (
-            <AvatarComponent>
+            <AvatarComponent isHide={isHideNicknameAndAvatar}>
               <MyAvatar num={Number(user.avatar)} />
             </AvatarComponent>
           )}
           <MessageComponent isMe={isMe}>
-            <Nickname isMe={isMe}>{isMe ? '나' : `${user.nickname}`}</Nickname>
+            {!isHideNicknameAndAvatar && (
+              <Nickname isMe={isMe}>
+                {isMe ? '나' : `${user.nickname}`}
+              </Nickname>
+            )}
             <MessageBox isMe={isMe}>
               <Message isMe={isMe}>{msg}</Message>
-              <Time>{time}</Time>
+              {!isHideTime && <Time>{time}</Time>}
             </MessageBox>
           </MessageComponent>
         </Component>
@@ -41,6 +47,15 @@ export default function ChattingItem({
 
 interface userInterface {
   isMe: boolean;
+}
+
+interface hideInterface {
+  isHide: boolean;
+}
+
+interface componentInterface {
+  isMe: boolean;
+  isHide: boolean;
 }
 
 const EntranceComponent = styled.div<userInterface>`
@@ -58,16 +73,18 @@ const Entrance = styled.div`
   color: #bbbaba;
 `;
 
-const Component = styled.li<userInterface>`
+const Component = styled.li<componentInterface>`
   display: flex;
   flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
   width: 100%;
   gap: 1.6rem;
-  margin-top: 2.4rem;
+  margin-top: ${({ isHide }) => (isHide ? '1rem' : '2rem')};
 `;
 
-const AvatarComponent = styled.div`
+const AvatarComponent = styled.div<hideInterface>`
+  margin-left: ${({ isHide }) => (isHide ? '4.8rem' : '0')};
   svg {
+    display: ${({ isHide }) => (isHide ? 'none' : 'block')};
     width: 4.8rem;
     height: 4.8rem;
   }
