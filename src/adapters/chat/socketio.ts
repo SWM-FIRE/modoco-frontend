@@ -8,13 +8,16 @@ function socketInit() {
   });
 }
 
-function emitJoinChatRoom(roomId) {
-  socket.emit('joinChatRoom', roomId);
+function emitJoinChatRoom(room, uid) {
+  socket.emit('joinChatRoom', {
+    room,
+    uid,
+  });
 }
 
-function onJoinedRoom(nickname) {
-  socket.on('joinedRoom', () => {
-    console.log(nickname, ' 님이 입장하셨습니다.');
+function onJoinedRoom(receiveFn) {
+  socket.on('joinedRoom', (uid) => {
+    receiveFn(uid);
   });
 }
 
@@ -39,6 +42,12 @@ function onLeftRoom() {
   });
 }
 
+function onDisconnect() {
+  socket.on('disconnect', (reason) => {
+    console.log('disconnected! ', reason);
+  });
+}
+
 export {
   socketInit,
   emitJoinChatRoom,
@@ -47,4 +56,5 @@ export {
   onChatMessage,
   emitLeaveChatRoom,
   onLeftRoom,
+  onDisconnect,
 };

@@ -55,6 +55,7 @@ export function Chat({ messages }) {
             }}
             msg={message.message}
             time={moment(message.createdAt).format('LT')}
+            prev={message.prev}
           />
         ))}
       </ChattingList>
@@ -100,17 +101,18 @@ const ChattingList = styled.ul`
 `;
 
 const NewMessage = styled.form`
-  position: relative;
   width: 100%;
+  height: 4.8rem;
   margin-top: 3rem;
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  background-color: #1b1b1e;
 `;
 
 const Input = styled.input`
-  width: 100%;
-  height: 4.8rem;
+  width: calc(100% - 2.7rem);
+  height: 100%;
   font-size: 1.3rem;
-  border-radius: 1rem;
-  padding: 1.6rem 2rem;
   background-color: #1b1b1e;
   font-family: IBMPlexSansKRRegular;
   color: rgba(255, 255, 255, 1);
@@ -121,9 +123,10 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  position: absolute;
   cursor: pointer;
-  right: 1.8rem;
-  top: 50%;
-  transform: translateY(-50%);
+  float: right;
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
 `;

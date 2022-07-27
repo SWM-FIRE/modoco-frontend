@@ -15,12 +15,14 @@ import {
   onJoinedRoom,
   onChatMessage,
   onLeftRoom,
+  onDisconnect,
 } from '../adapters/chat/socketio';
 import { videoSocket, videoSocketInit } from '../adapters/video/videoSocket';
 
 export default function Room() {
   const [userList, setUserList] = useState({});
   const [messages, setMessages] = useState([]);
+  const [prev, setPrev] = useState('');
   const { isOpen } = controlModal();
   const { roomId } = useParams();
   const { enablePrevent, disablePrevent } = usePreventLeave();
@@ -69,16 +71,28 @@ export default function Room() {
       removeUser(user.socketId);
     });
     socketInit();
-    emitJoinChatRoom(roomId);
-    onJoinedRoom(localStorage.getItem('nickname'));
+    emitJoinChatRoom(roomId, uid);
+    onJoinedRoom(receiveJoin);
     onChatMessage(receiveMessage);
     onLeftRoom();
+    onDisconnect();
   }, []);
 
   useEffect(() => {
     enablePrevent();
     return disablePrevent;
   }, []);
+
+  const receiveJoin = (uid) => {
+    const API_URL = process.env.REACT_APP_GET_USER_INFO as string;
+    axios.get(API_URL + uid).then((res) => {
+      setMessages([
+        ...messages,
+        { prev: '0', uid, nickname: res.data.nickname },
+      ]);
+    });
+    setPrev(Date.now().toString());
+  };
 
   const receiveMessage = useCallback((receiveMsg) => {
     if (!userList[receiveMsg.sender]) {
@@ -97,6 +111,7 @@ export default function Room() {
               avatar: res.data.avatar,
               message: receiveMsg.message,
               createdAt: receiveMsg.createdAt,
+              prev,
             },
           ]);
         });
@@ -112,9 +127,11 @@ export default function Room() {
           avatar: userList[receiveMsg.sender].avatar,
           message: receiveMsg.message,
           createdAt: receiveMsg.createdAt,
+          prev,
         },
       ]);
     }
+    setPrev(receiveMsg.createdAt);
   }, []);
 
   return (

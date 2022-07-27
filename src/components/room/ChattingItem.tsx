@@ -3,32 +3,60 @@ import React from 'react';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import messageInterface from '../../interface/message.interface';
 
-export default function ChattingItem({ user, msg, time }: messageInterface) {
+export default function ChattingItem({
+  user,
+  msg,
+  time,
+  prev,
+}: messageInterface) {
   const uid = localStorage.getItem('uid');
+  const isMe = user.uid === uid;
+  const entrance = prev === '0';
 
   return (
-    <Component isMe={user.uid === uid}>
-      {user.uid !== uid && (
-        <AvatarComponent>
-          <MyAvatar num={Number(user.avatar)} />
-        </AvatarComponent>
+    <div>
+      {entrance ? (
+        <EntranceComponent isMe={isMe}>
+          <Entrance>{user.nickname} 님이 입장했습니다.</Entrance>
+        </EntranceComponent>
+      ) : (
+        <Component isMe={isMe}>
+          {!isMe && (
+            <AvatarComponent>
+              <MyAvatar num={Number(user.avatar)} />
+            </AvatarComponent>
+          )}
+          <MessageComponent isMe={isMe}>
+            <Nickname isMe={isMe}>{isMe ? '나' : `${user.nickname}`}</Nickname>
+            <MessageBox isMe={isMe}>
+              <Message isMe={isMe}>{msg}</Message>
+              <Time>{time}</Time>
+            </MessageBox>
+          </MessageComponent>
+        </Component>
       )}
-      <MessageComponent isMe={user.uid === uid}>
-        <Nickname isMe={user.uid === uid}>
-          {user.uid === uid ? '나' : `${user.nickname}`}
-        </Nickname>
-        <MessageBox isMe={user.uid === uid}>
-          <Message>{msg}</Message>
-          <Time>{time}</Time>
-        </MessageBox>
-      </MessageComponent>
-    </Component>
+    </div>
   );
 }
 
 interface userInterface {
   isMe: boolean;
 }
+
+const EntranceComponent = styled.div<userInterface>`
+  display: ${({ isMe }) => (isMe ? 'none' : 'flex')};
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.4rem;
+`;
+
+const Entrance = styled.div`
+  border: 1px solid rgb(53, 55, 65);
+  border-radius: 2rem;
+  padding: 0.7rem;
+  background-color: rgb(53, 55, 65);
+  color: #bbbaba;
+`;
 
 const Component = styled.li<userInterface>`
   display: flex;
@@ -54,23 +82,28 @@ const MessageComponent = styled.div<userInterface>`
 const Nickname = styled.div<userInterface>``;
 
 const MessageBox = styled.div<userInterface>`
-  border-radius: ${({ isMe }) =>
-    isMe ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
-  padding: 1.6rem;
+  display: flex;
+  flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
+  justify-content: center;
+  align-items: flex-end;
   margin-top: 0.4rem;
-  background-color: ${({ isMe }) =>
-    isMe ? 'rgb(53, 55, 65)' : 'rgb(31, 35, 49)'};
   overflow: hidden;
+  gap: 0.3rem;
 `;
 
-const Message = styled.div`
+const Message = styled.div<userInterface>`
   color: rgb(255, 255, 255);
   font-size: 1.5rem;
-  width: 100%;
+  padding: 1.6rem;
+  overflow: hidden;
+  border-radius: ${({ isMe }) =>
+    isMe ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
+  background-color: ${({ isMe }) =>
+    isMe ? 'rgb(53, 55, 65)' : 'rgb(31, 35, 49)'};
 `;
 
 const Time = styled.div`
   font-size: 0.8rem;
-  float: right;
   margin-top: 0.2rem;
+  flex-shrink: 0;
 `;
