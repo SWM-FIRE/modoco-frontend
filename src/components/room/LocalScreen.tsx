@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import controlModal from '../../stores/controlModal';
 import { useCreateMediaStream } from '../rtc/hooks/useCreateLocalStream';
 
-export default function LocalScreen({ nickname, avatar, uid }) {
+export default function LocalScreen({ nickname, avatar, uid, messages }) {
   const { userMediaStream, createMediaStream } = useCreateMediaStream();
+  const [currentTime, setCurrentTime] = useState<Date>(new Date());
   useEffect(() => {
     createMediaStream();
   }, []);
@@ -24,14 +25,29 @@ export default function LocalScreen({ nickname, avatar, uid }) {
     }
   }, [videoRef, userMediaStream]);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 250);
+    return () => clearInterval(timer);
+  }, []);
+
+  const newMessages = messages.filter(
+    (message) =>
+      message.uid === uid &&
+      new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
+  );
   return (
     <Container onClick={OpenModal}>
       <Video ref={videoRef} autoPlay playsInline muted />
       <ControlBar>
         <ChatContainer>
           <ChatInner>
-            <Chats>Lorem ipsum dolor sit amet,</Chats>
-            <Chats>Vestibulum sit amet tellus suscipit</Chats>
+            {newMessages.map((message) => (
+              <Chats key={message.createdAt}>{message.message}</Chats>
+            ))}
+            {/* <Chats>Lorem ipsum dolor sit amet,</Chats> */}
+            {/* <Chats>Vestibulum sit amet tellus suscipit</Chats> */}
           </ChatInner>
         </ChatContainer>
         <AvatarPosition>

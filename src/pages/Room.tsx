@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import io from 'socket.io-client';
 import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
+import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import Header from '../components/room/Header';
 import ScreenShare from '../components/room/ScreenShare';
@@ -20,8 +20,6 @@ import {
 } from '../adapters/chat/socketio';
 
 export default function Room() {
-  const uid = localStorage.getItem('uid');
-  const videoSocket = io(process.env.REACT_APP_SOCKET_VIDEO_URL as string);
   const [userList, setUserList] = useState({});
   const [messages, setMessages] = useState([]);
   const [prev, setPrev] = useState('');
@@ -29,12 +27,14 @@ export default function Room() {
   const { roomId } = useParams();
   const { enablePrevent, disablePrevent } = usePreventLeave();
   const { connectedUsers, appendUser, removeUser } = connectedUsersStore();
+  const myuid = localStorage.getItem('uid');
 
   useEffect(() => {
+    const videoSocket = io(process.env.REACT_APP_SOCKET_VIDEO_URL as string);
+
     videoSocket.on('connect', () => {
-      console.log('video socket connected');
-      const payload = { room: roomId, uid: localStorage.getItem('uid') };
-      console.log('payload', payload);
+      console.log('socket server connected.');
+      const payload = { room: roomId, uid: myuid };
       videoSocket.emit('joinRoom', payload);
     });
 
@@ -78,7 +78,7 @@ export default function Room() {
       removeUser(user.socketId);
     });
     socketInit();
-    emitJoinChatRoom(roomId, uid);
+    emitJoinChatRoom(roomId, myuid);
     onJoinedRoom(receiveJoin);
     onChatMessage(receiveMessage);
     onLeftRoom();
@@ -146,7 +146,7 @@ export default function Room() {
       <Component>
         <Header />
         <Contents>
-          <ScreenShare />
+          <ScreenShare messages={messages} />
           <Sidebar messages={messages} />
         </Contents>
       </Component>

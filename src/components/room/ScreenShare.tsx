@@ -5,7 +5,7 @@ import SingleScreen from './SingleScreen';
 import LocalScreen from './LocalScreen';
 import connectedUsersStore from '../../stores/connectedUsersStore';
 
-export default function ScreenShare() {
+export default function ScreenShare({ messages }) {
   const navigate = useNavigate();
   const { connectedUsers } = connectedUsersStore();
   useEffect(() => {
@@ -22,6 +22,7 @@ export default function ScreenShare() {
           nickname={localStorage.getItem('nickname')}
           avatar={localStorage.getItem('avatar')}
           uid={localStorage.getItem('uid')}
+          messages={messages}
         />
         {connectedUsers.map((user) => (
           <SingleScreen
@@ -29,6 +30,7 @@ export default function ScreenShare() {
             nickname={user.nickname}
             avatar={user.avatar}
             uid={user.uid}
+            messages={messages}
           />
         ))}
       </ScreenWrapper>
