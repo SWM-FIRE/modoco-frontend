@@ -5,6 +5,7 @@ import './fonts/font.css';
 import Layout from './components/layout/Layout';
 import Room from './pages/Room';
 import Main from './pages/Main';
+import Test from './pages/Test';
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ function App() {
             <Route path=":roomId" element={<Room />} />
           </Route>
           <Route path="/main" element={<Main />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
