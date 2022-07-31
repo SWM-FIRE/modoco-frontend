@@ -22,7 +22,6 @@ import {
 export default function Room() {
   const [userList, setUserList] = useState({});
   const [messages, setMessages] = useState([]);
-  const [prev, setPrev] = useState('');
   const { isOpen } = controlModal();
   const { roomId } = useParams();
   const { enablePrevent, disablePrevent } = usePreventLeave();
@@ -95,10 +94,22 @@ export default function Room() {
     axios.get(API_URL + uid).then((res) => {
       setMessages([
         ...messages,
-        { prev: '0', uid, nickname: res.data.nickname },
+        { type: 'join', uid, nickname: res.data.nickname },
       ]);
     });
-    setPrev(Date.now().toString());
+  };
+
+  const isHide = (messages, receiveMsg) => {
+    let isHideNicknameAndAvatar = true;
+
+    if (messages.length !== 0) {
+      if (messages[messages.length - 1].createdAt !== receiveMsg.createdAt) {
+        isHideNicknameAndAvatar = false;
+      } else if (messages[messages.length - 1].uid !== receiveMsg.sender) {
+        isHideNicknameAndAvatar = false;
+      }
+    } else isHideNicknameAndAvatar = false;
+    return isHideNicknameAndAvatar;
   };
 
   const receiveMessage = useCallback((receiveMsg) => {
@@ -109,16 +120,34 @@ export default function Room() {
           setUserList((users) => {
             return { ...users, [receiveMsg.sender]: res.data };
           });
-
           setMessages((message) => [
-            ...message,
+            ...message.map((m) => {
+              if (
+                m.uid === receiveMsg.sender &&
+                m.createdAt === receiveMsg.createdAt
+              ) {
+                return {
+                  uid: m.uid,
+                  nickname: m.nickname,
+                  avatar: m.avatar,
+                  message: m.message,
+                  createdAt: m.createdAt,
+                  type: 'message',
+                  isHideTime: true,
+                  isHideNicknameAndAvatar: m.isHideNicknameAndAvatar,
+                };
+              }
+              return m;
+            }),
             {
               uid: receiveMsg.sender,
               nickname: res.data.nickname,
               avatar: res.data.avatar,
               message: receiveMsg.message,
               createdAt: receiveMsg.createdAt,
-              prev,
+              type: 'message',
+              isHideTime: false,
+              isHideNicknameAndAvatar: isHide(message, receiveMsg),
             },
           ]);
         });
@@ -127,18 +156,36 @@ export default function Room() {
       }
     } else {
       setMessages((message) => [
-        ...message,
+        ...message.map((m) => {
+          if (
+            m.uid === receiveMsg.sender &&
+            m.createdAt === receiveMsg.createdAt
+          ) {
+            return {
+              uid: m.uid,
+              nickname: m.nickname,
+              avatar: m.avatar,
+              message: m.message,
+              createdAt: m.createdAt,
+              type: 'message',
+              isHideTime: true,
+              isHideNicknameAndAvatar: m.isHideNicknameAndAvatar,
+            };
+          }
+          return m;
+        }),
         {
           uid: receiveMsg.sender,
           nickname: userList[receiveMsg.sender].nickname,
           avatar: userList[receiveMsg.sender].avatar,
           message: receiveMsg.message,
           createdAt: receiveMsg.createdAt,
-          prev,
+          type: 'message',
+          isHideTime: false,
+          isHideNicknameAndAvatar: isHide(message, receiveMsg),
         },
       ]);
     }
-    setPrev(receiveMsg.createdAt);
   }, []);
 
   return (

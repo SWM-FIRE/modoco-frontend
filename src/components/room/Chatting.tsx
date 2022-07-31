@@ -22,7 +22,7 @@ export function Chat({ messages }) {
       room: roomId,
       sender: localStorage.getItem('uid'),
       message: newMessage,
-      createdAt: new Date(),
+      createdAt: moment(new Date()).format('LT'),
     });
     setNewMessage('');
   };
@@ -54,8 +54,10 @@ export function Chat({ messages }) {
               uid: message.uid,
             }}
             msg={message.message}
-            time={moment(message.createdAt).format('LT')}
-            prev={message.prev}
+            time={message.createdAt}
+            type={message.type}
+            isHideTime={message.isHideTime}
+            isHideNicknameAndAvatar={message.isHideNicknameAndAvatar}
           />
         ))}
       </ChattingList>
