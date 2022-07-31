@@ -7,7 +7,7 @@ import UserMediaStreamStore from '../../stores/userMediaStreamStore';
 
 export default function Theme() {
   const { userSpeaker, setUserSpeaker } = UserMediaStreamStore();
-  const [volume, setVolume] = useState(0.5);
+  const [volume, setVolume] = useState<number>(0.5);
   const setSpeaker = () => {
     setUserSpeaker();
   };
@@ -19,12 +19,11 @@ export default function Theme() {
       <Volume onClick={setSpeaker}>
         {userSpeaker && volume !== 0 ? <VolumeOn /> : <VolumeOff />}
       </Volume>
-      <VolumeControl>
+      <VolumeControl volume={volume * 100} speaker={userSpeaker}>
         <input
           type="range"
           min={0}
           max={1}
-          color="gray"
           step={0.02}
           value={volume}
           onChange={(event) => {
@@ -36,7 +35,7 @@ export default function Theme() {
   );
 }
 
-const VolumeControl = styled.div`
+const VolumeControl = styled.div<{ volume: number; speaker: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,21 +57,22 @@ const VolumeControl = styled.div`
       height: 16px;
       width: 16px;
       border-radius: 50%;
-      background: #ffffff;
+      background: ${(props) => (props.volume ? '#d9d9d9' : '#E5E7EB')};
       margin-top: -5px;
       cursor: pointer;
     }
 
     &::-webkit-slider-runnable-track {
       height: 0.6rem;
-      background: #bdbdbd;
+      background: ${(props) =>
+        props.volume
+          ? `linear-gradient(to right, #D9D9D9 ${props.volume}%, rgba(229, 231, 235, 0.5)
+ ${props.volume}% 100%)`
+          : '#E5E7EB'};
+      opacity: ${(props) => (props.volume && props.speaker ? '1' : '0.5')};
       border-radius: 3rem;
       transition: all 0.5s;
       cursor: pointer;
-    }
-
-    &:hover::-webkit-slider-runnable-track {
-      background: #ff6e40;
     }
 
     //FIREFOX
@@ -80,7 +80,7 @@ const VolumeControl = styled.div`
       height: 16px;
       width: 16px;
       border-radius: 50%;
-      background: #ffffff;
+      background: ${(props) => (props.volume ? '#d9d9d9' : '#E5E7EB')};
       margin-top: -0.5rem;
       box-shadow: 1px 1px 2px rgba(#000, 0.5);
       cursor: pointer;
@@ -88,13 +88,15 @@ const VolumeControl = styled.div`
 
     &::-moz-range-track {
       height: 0.6rem;
-      background: #bdbdbd;
+      background: ${(props) =>
+        props.volume
+          ? `linear-gradient(to right, #D9D9D9 ${props.volume}%, rgba(229, 231, 235, 0.5)
+ ${props.volume}% 100%)`
+          : '#E5E7EB'};
+      opacity: ${(props) => (props.volume && props.speaker ? '1' : '0.5')};
       border-radius: 3rem;
       transition: all 0.5s;
       cursor: pointer;
-    }
-    &:hover::-moz-range-track {
-      background: #ff6e40;
     }
   }
 `;
