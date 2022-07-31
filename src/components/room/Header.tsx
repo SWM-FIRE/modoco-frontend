@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import Timer from './Timer';
 import Settings from './Settings';
-import About from './About';
 import { ReactComponent as X } from '../../assets/svg/X.svg';
 import { emitLeaveChatRoom } from '../../adapters/chat/socketio';
+import Theme from './Theme';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -20,9 +20,11 @@ export default function Header() {
 
   return (
     <Component>
-      <About />
-      <Timer />
-      <Settings />
+      <Theme />
+      <Center>
+        <Timer />
+        <Settings />
+      </Center>
       <Button onClick={onClick}>
         나가기 <X />
       </Button>
@@ -30,10 +32,16 @@ export default function Header() {
   );
 }
 
+const Center = styled.div`
+  display: flex;
+`;
+
 const Component = styled.div`
+  padding-right: 8rem;
+  padding-left: 8rem;
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   /* background-color: rgba(30, 39, 69); */
   background-color: #29292e;
@@ -45,11 +53,8 @@ const Component = styled.div`
 `;
 
 const Button = styled.button`
-  position: absolute;
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  right: 8.1rem;
   border: 1px solid #94a3b8;
   border-radius: 5rem;
   cursor: pointer;
