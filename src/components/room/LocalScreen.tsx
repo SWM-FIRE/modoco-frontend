@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import controlModal from '../../stores/controlModal';
 import { useCreateMediaStream } from '../rtc/hooks/useCreateLocalStream';
-// import messageStore from '../../stores/messagesStore';
+import messageStore from '../../stores/messagesStore';
 
 export default function LocalScreen({ nickname, avatar, uid }) {
-  // const { messages } = messageStore();
-  // const [currentTime, setCurrentTime] = useState<Date>(new Date());
+  const { messages } = messageStore();
+  const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const { userMediaStream, createMediaStream } = useCreateMediaStream();
   useEffect(() => {
     createMediaStream();
@@ -27,27 +27,28 @@ export default function LocalScreen({ nickname, avatar, uid }) {
     }
   }, [videoRef, userMediaStream]);
 
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setCurrentTime(new Date());
-  //   }, 250);
-  //   return () => clearInterval(timer);
-  // }, []);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 250);
+    return () => clearInterval(timer);
+  }, []);
 
-  // const newMessages = messages.filter(
-  //   (message) =>
-  //     message.uid === uid &&
-  //     new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
-  // );
+  const newMessages = messages.filter(
+    (message) =>
+      message.uid === uid &&
+      new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
+  );
+
   return (
     <Container onClick={OpenModal}>
       <Video ref={videoRef} autoPlay playsInline muted />
       <ControlBar>
         <ChatContainer>
           <ChatInner>
-            {/* {newMessages.map((message) => (
+            {newMessages.map((message) => (
               <Chats key={message.createdAt}>{message.message}</Chats>
-            ))} */}
+            ))}
           </ChatInner>
         </ChatContainer>
         <AvatarPosition>
@@ -102,17 +103,17 @@ const ChatContainer = styled.div`
   margin-left: 1.2rem;
 `;
 
-// const Chats = styled.div`
-//   align-self: flex-start;
-//   padding: 1.6rem;
-//   background-color: rgba(53, 69, 122, 0.8);
-//   font-family: IBMPlexSansKRRegular;
-//   font-weight: 400;
-//   border-radius: 0.8rem;
-//   font-size: 15px;
-//   line-height: 22px;
-//   color: #ffffff;
-// `;
+const Chats = styled.div`
+  align-self: flex-start;
+  padding: 1.6rem;
+  background-color: rgba(53, 69, 122, 0.8);
+  font-family: IBMPlexSansKRRegular;
+  font-weight: 400;
+  border-radius: 0.8rem;
+  font-size: 15px;
+  line-height: 22px;
+  color: #ffffff;
+`;
 
 const NameContainer = styled.div`
   padding: 1%;
