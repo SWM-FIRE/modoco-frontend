@@ -6,7 +6,7 @@ import { ReactComponent as X } from '../../assets/svg/X.svg';
 import Theme from './Theme';
 import roomSocket from '../../adapters/roomSocket';
 import connectedUsersStore from '../../stores/connectedUsersStore';
-import { useCreateMediaStream } from '../rtc/hooks/useCreateLocalStream';
+import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 
 export default function Header() {
   const navigate = useNavigate();

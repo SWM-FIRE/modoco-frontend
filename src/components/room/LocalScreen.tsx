@@ -2,16 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import controlModal from '../../stores/controlModal';
-import { useCreateMediaStream } from '../rtc/hooks/useCreateLocalStream';
+import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 import messageStore from '../../stores/messagesStore';
 
 export default function LocalScreen({ nickname, avatar, uid }) {
   const { messages } = messageStore();
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
-  const { userMediaStream, createMediaStream } = useCreateMediaStream();
-  useEffect(() => {
-    createMediaStream();
-  }, []);
+  const { userMediaStream } = useCreateMediaStream();
   const { toggleModal, setNickname, setAvatar, setUid } = controlModal();
   const videoRef = useRef<HTMLVideoElement>(null);
   const OpenModal = () => {

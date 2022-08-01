@@ -20,6 +20,7 @@ export default function ScreenShare() {
             nickname={user.nickname}
             avatar={user.avatar}
             uid={user.uid}
+            stream={user.stream}
           />
         ))}
       </ScreenWrapper>
