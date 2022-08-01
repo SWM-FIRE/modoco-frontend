@@ -2,9 +2,11 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import roomSocket from './roomSocket';
+import messageStore from '../stores/messagesStore';
 
 export const roomConnection = (roomId) => {
-  const { appendUser, removeUser } = connectedUsersStore();
+  const { appendMessages } = messageStore();
+  const { connectedUsers, appendUser, removeUser } = connectedUsersStore();
   useEffect(() => {
     const newUID = localStorage.getItem('uid');
 
@@ -28,6 +30,19 @@ export const roomConnection = (roomId) => {
           console.log('new', res.data.nickname, 'joined');
         });
       console.log('new user joined', sid, uid);
+
+      const userInfo = connectedUsers.filter((user) => user.uid === uid)[0];
+      console.log(userInfo);
+      appendMessages({
+        uid,
+        nickname: userInfo.nickname,
+        avatar: userInfo.avatar,
+        message: '',
+        createdAt: '',
+        type: 'join',
+        isHideTime: false,
+        isHideNicknameAndAvatar: false,
+      });
     });
 
     roomSocket
@@ -47,5 +62,5 @@ export const roomConnection = (roomId) => {
     roomSocket.off('leftRoom').on('leftRoom', ({ sid }) => {
       removeUser(sid);
     });
-  }, []);
+  });
 };
