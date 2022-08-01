@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import RoomCards from '../components/main/RoomCards';
+import Scrolls from '../components/main/Scrolls';
 import Header from '../components/main/Header';
-import MainTitle from '../components/main/MainTitle';
+import Title from '../components/main/TitleContainer';
 import Modal from '../components/layout/Modal';
 import LoginModal from '../components/login/LoginModal';
 import UserStore from '../stores/userStore';
+import LandingPage from '../components/main/landingPage/LandingPage';
 
 export default function Main() {
   const [isModal, setIsModal] = useState(false);
@@ -32,8 +33,9 @@ export default function Main() {
     <>
       <Container>
         <Header modalHandler={openModalHandler} />
-        <MainTitle />
-        <RoomCards />
+        <Title />
+        <Scrolls />
+        <LandingPage />
       </Container>
       {isModal && (
         <Modal modalHandler={closeModalHandler}>

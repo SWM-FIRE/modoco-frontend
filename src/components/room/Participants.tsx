@@ -1,9 +1,13 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import SingleParticipant from './SingleParticipant';
 import connectedUsersStore from '../../stores/connectedUsersStore';
 
 export default function Participants() {
   const { connectedUsers } = connectedUsersStore();
+  useEffect(() => {
+    console.log('connectedUsers', connectedUsers);
+  }, []);
   return (
     <Component>
       <Title>참여자 목록</Title>
@@ -14,7 +18,7 @@ export default function Participants() {
         />
         {connectedUsers.map((user) => (
           <SingleParticipant
-            key={user.nickname}
+            key={user.uid}
             nickname={user.nickname}
             avatar={user.avatar}
           />

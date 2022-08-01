@@ -4,12 +4,14 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as MessageSend } from '../../assets/svg/MessageSend.svg';
 import ChattingItem from './ChattingItem';
-import { emitChatMessage } from '../../adapters/chat/socketio';
+import messageStore from '../../stores/messagesStore';
+import roomSocket from '../../adapters/roomSocket';
 
-export function Chat({ messages }) {
+export default function Chat() {
   const [newMessage, setNewMessage] = useState('');
   const { roomId } = useParams();
   const chatWindow = useRef(null);
+  const { messages } = messageStore();
 
   useEffect(() => {
     moveScrollToReceiveMessage();
@@ -18,7 +20,7 @@ export function Chat({ messages }) {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (newMessage.trim() === '') return;
-    emitChatMessage({
+    roomSocket.emit('chatMessage', {
       room: roomId,
       sender: localStorage.getItem('uid'),
       message: newMessage,
