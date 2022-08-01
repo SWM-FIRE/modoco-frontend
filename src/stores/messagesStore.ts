@@ -24,34 +24,4 @@ const MessageStore = create<Messages>((set) => ({
     set((state) => ({ messages: [...state.messages, by] })),
 }));
 
-// setMessages((message) => [
-//   ...message.map((m) => {
-//     if (
-//       m.uid === receiveMsg.sender &&
-//       m.createdAt === receiveMsg.createdAt
-//     ) {
-//       return {
-//         uid: m.uid,
-//         nickname: m.nickname,
-//         avatar: m.avatar,
-//         message: m.message,
-//         createdAt: m.createdAt,
-//         type: 'message',
-//         isHideTime: true,
-//         isHideNicknameAndAvatar: m.isHideNicknameAndAvatar,
-//       };
-//     }
-//     return m;
-//   }),
-//   {
-//     uid: receiveMsg.sender,
-//     nickname: res.data.nickname,
-//     avatar: res.data.avatar,
-//     message: receiveMsg.message,
-//     createdAt: receiveMsg.createdAt,
-//     type: 'message',
-//     isHideTime: false,
-//     isHideNicknameAndAvatar: isHide(message, receiveMsg),
-//   },
-// ]);
 export default MessageStore;
