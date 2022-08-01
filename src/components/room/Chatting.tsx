@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import moment from 'moment';
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as MessageSend } from '../../assets/svg/MessageSend.svg';
@@ -24,8 +23,9 @@ export default function Chat() {
       room: roomId,
       sender: localStorage.getItem('uid'),
       message: newMessage,
-      createdAt: moment(new Date()).format('LT'),
+      createdAt: new Date(),
     });
+
     setNewMessage('');
   };
 
