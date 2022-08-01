@@ -23,7 +23,8 @@ const onChatMessage = () => {
         ...messages.map((m) => {
           if (
             m.uid === receiveMsg.sender &&
-            m.createdAt === moment(receiveMsg.createdAt).format('LT')
+            moment(m.createdAt).format('LT') ===
+              moment(receiveMsg.createdAt).format('LT')
           ) {
             return {
               uid: m.uid,
@@ -43,7 +44,7 @@ const onChatMessage = () => {
           nickname: userInfo.nickname,
           avatar: userInfo.avatar,
           message: receiveMsg.message,
-          createdAt: moment(receiveMsg.createdAt).format('LT'),
+          createdAt: receiveMsg.createdAt,
           type: 'message',
           isHideTime: false,
           isHideNicknameAndAvatar: isHide(messages, receiveMsg),
@@ -60,7 +61,7 @@ const onChatMessage = () => {
 
       if (msg.length !== 0) {
         if (
-          msg[msg.length - 1].createdAt !==
+          moment(msg[msg.length - 1].createdAt).format('LT') !==
           moment(receiveMsg.createdAt).format('LT')
         ) {
           isHideNicknameAndAvatar = false;

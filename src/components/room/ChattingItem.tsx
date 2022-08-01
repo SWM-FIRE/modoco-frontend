@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+import moment from 'moment';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import messageInterface from '../../interface/message.interface';
 
@@ -36,7 +37,7 @@ export default function ChattingItem({
             )}
             <MessageBox isMe={isMe}>
               <Message isMe={isMe}>{msg}</Message>
-              {!isHideTime && <Time>{time}</Time>}
+              {!isHideTime && <Time>{moment(time).format('LT')}</Time>}
             </MessageBox>
           </MessageComponent>
         </Component>
