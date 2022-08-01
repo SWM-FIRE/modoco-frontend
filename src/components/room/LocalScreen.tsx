@@ -39,7 +39,6 @@ export default function LocalScreen({ nickname, avatar, uid }) {
       message.uid === uid &&
       new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
   );
-
   return (
     <Container onClick={OpenModal}>
       <Video ref={videoRef} autoPlay playsInline muted />
