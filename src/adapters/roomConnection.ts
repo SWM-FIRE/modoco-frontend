@@ -15,6 +15,7 @@ export const roomConnection = (roomId) => {
           uid: user.uid,
           avatar: res.data.avatar,
           socketId: user.sid,
+          stream: new MediaStream(),
         });
       } else {
         console.log('already connected');
@@ -27,16 +28,6 @@ export const roomConnection = (roomId) => {
     } else {
       console.log('[roomConnection] UID가 존재하지 않음');
     }
-
-    roomSocket.off('newUser').on('newUser', ({ sid, uid }) => {
-      axios
-        .get((process.env.REACT_APP_GET_USER_INFO as string) + uid)
-        .then((res) => {
-          setConnected({ sid, uid }, res);
-          console.log('new', res.data.nickname, 'joined');
-        });
-      console.log('new user joined', sid, uid);
-    });
 
     roomSocket
       .off('existingRoomUsers')

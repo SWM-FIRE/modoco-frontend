@@ -6,7 +6,7 @@ import { ReactComponent as MonitorOff } from '../../assets/svg/MonitorOff.svg';
 import { ReactComponent as VideoOn } from '../../assets/svg/VideoOn.svg';
 import { ReactComponent as VideoOff } from '../../assets/svg/VideoOff.svg';
 import UserMediaStreamStore from '../../stores/userMediaStreamStore';
-import { useCreateMediaStream } from '../rtc/hooks/useCreateLocalStream';
+import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 
 export default function Settings() {
   const { userMic, setUserMic, userVideo, userMediaStream, setUserVideo } =
