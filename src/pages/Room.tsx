@@ -8,9 +8,10 @@ import connectedUsersStore from '../stores/connectedUsersStore';
 import usePreventLeave from '../hooks/usePreventLeave';
 import { roomConnection } from '../adapters/roomConnection';
 import roomSocket from '../adapters/roomSocket';
+import usePeerConnection from '../hooks/usePeerConnection';
 import onChatMessage from '../adapters/receiveMessage';
 import { history } from '../hooks/useHistory';
-import { useCreateMediaStream } from '../components/rtc/hooks/useCreateLocalStream';
+import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 
 export default function Room() {
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ export default function Room() {
   const { stopMediaStream } = useCreateMediaStream();
   roomConnection(roomId);
   onChatMessage();
+  usePeerConnection();
   const { enablePrevent, disablePrevent } = usePreventLeave();
+
   useEffect(() => {
     if (!localStorage.getItem('uid') || !localStorage.getItem('nickname')) {
       alert('로그인 후 이용해주세요');
