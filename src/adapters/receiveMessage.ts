@@ -48,7 +48,7 @@ const onChatMessage = () => {
     roomSocket.off('chatMessage').on('chatMessage', (message) => {
       receiveMessage(message);
     });
-  }, [connectedUsers]);
+  }, [connectedUsers, messages]);
 };
 
 export default onChatMessage;

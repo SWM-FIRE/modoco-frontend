@@ -1,19 +1,10 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import SingleScreen from './SingleScreen';
 import LocalScreen from './LocalScreen';
 import connectedUsersStore from '../../stores/connectedUsersStore';
 
 export default function ScreenShare() {
-  const navigate = useNavigate();
   const { connectedUsers } = connectedUsersStore();
-  useEffect(() => {
-    if (!localStorage.getItem('uid') || !localStorage.getItem('nickname')) {
-      alert('로그인 후 이용해주세요');
-      navigate('/main');
-    }
-  }, []);
 
   return (
     <Container>
