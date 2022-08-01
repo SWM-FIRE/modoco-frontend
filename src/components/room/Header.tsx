@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Timer from './Timer';
 import Settings from './Settings';
 import { ReactComponent as X } from '../../assets/svg/X.svg';
-import { emitLeaveChatRoom } from '../../adapters/chat/socketio';
 import Theme from './Theme';
+import roomSocket from '../../adapters/roomSocket';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function Header() {
   const onClick = () => {
     const result = window.confirm('정말 모도코를 종료하시겠습니까?');
     if (result) {
-      emitLeaveChatRoom(roomId);
+      roomSocket.emit('leaveRoom', roomId);
       navigate('/');
     }
   };
