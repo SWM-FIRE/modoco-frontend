@@ -19,6 +19,7 @@ export const roomConnection = (roomId) => {
           uid: user.uid,
           avatar: res.data.avatar,
           socketId: user.sid,
+          stream: new MediaStream(),
         });
       } else {
         console.log('already connected');

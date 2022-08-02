@@ -1,4 +1,4 @@
-import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
+import UserMediaStreamStore from '../stores/userMediaStreamStore';
 
 export const useCreateMediaStream = () => {
   const { userMediaStream, setUserMediaStream } = UserMediaStreamStore();
@@ -11,7 +11,7 @@ export const useCreateMediaStream = () => {
   };
 
   const createMediaStream = async () => {
-    if (!userMediaStream?.active) {
+    if (!userMediaStream) {
       try {
         const stream = await navigator.mediaDevices.getDisplayMedia({
           video: true,

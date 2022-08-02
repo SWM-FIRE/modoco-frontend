@@ -4,7 +4,7 @@ import ModalPortal from '../atoms/ModalPotal';
 import { ReactComponent as LeftArrow } from '../../assets/svg/arrow-left.svg';
 import controlModal from '../../stores/controlModal';
 import MyAvatar from '../../assets/avatar/MyAvatar';
-import { useCreateMediaStream } from '../rtc/hooks/useCreateLocalStream';
+import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 
 export default function ScreenModal() {
   const videoRef = useRef<HTMLVideoElement>(null);

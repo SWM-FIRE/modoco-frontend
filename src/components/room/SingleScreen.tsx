@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import controlModal from '../../stores/controlModal';
 import messageStore from '../../stores/messagesStore';
 
-export default function SingleScreen({ nickname, avatar, uid }) {
+export default function SingleScreen({ nickname, avatar, uid, stream }) {
   const { messages } = messageStore();
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const { toggleModal, setNickname, setAvatar, setUid } = controlModal();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const OpenModal = () => {
     setNickname(nickname);
@@ -17,11 +18,19 @@ export default function SingleScreen({ nickname, avatar, uid }) {
   };
 
   useEffect(() => {
+    console.log('stream is ', stream);
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [stream]);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 250);
     return () => clearInterval(timer);
   }, []);
+
   const newMessages = messages.filter(
     (message) =>
       message.uid === uid &&
@@ -30,17 +39,20 @@ export default function SingleScreen({ nickname, avatar, uid }) {
 
   return (
     <Container onClick={OpenModal}>
-      <ChatContainer>
-        <ChatInner>
-          {newMessages.map((message) => (
-            <Chats key={message.createdAt}>{message.message}</Chats>
-          ))}
-        </ChatInner>
-      </ChatContainer>
-      <AvatarPosition>
-        <MyAvatar num={Number(avatar)} />
-        <NameContainer>{nickname}</NameContainer>
-      </AvatarPosition>
+      <Video ref={videoRef} autoPlay playsInline muted />
+      <ControlBar>
+        <ChatContainer>
+          <ChatInner>
+            {newMessages.map((message) => (
+              <Chats key={message.createdAt}>{message.message}</Chats>
+            ))}
+          </ChatInner>
+        </ChatContainer>
+        <AvatarPosition>
+          <MyAvatar num={Number(avatar)} />
+          <NameContainer>{nickname}</NameContainer>
+        </AvatarPosition>
+      </ControlBar>
     </Container>
   );
 }
@@ -52,6 +64,16 @@ const ChatInner = styled.div`
   position: absolute;
   bottom: 0;
   gap: 1rem;
+`;
+
+const ControlBar = styled.div`
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ChatContainer = styled.div`
@@ -113,4 +135,12 @@ const Container = styled.div`
   border-radius: 1rem;
   padding-bottom: 22%;
   position: relative;
+`;
+
+const Video = styled.video`
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  position: absolute;
 `;
