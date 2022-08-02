@@ -108,10 +108,7 @@ const usePeerConnection = () => {
         await peerConnection.setRemoteDescription(
           new RTCSessionDescription(offer),
         );
-        const answer = await peerConnection.createAnswer({
-          offerToReceiveAudio: true,
-          offerToReceiveVideo: true,
-        });
+        const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
         // send answer to other user
         console.log('[SOCKET] answer to user(', sid, ')');
