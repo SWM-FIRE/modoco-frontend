@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import './fonts/font.css';
 import Layout from './components/layout/Layout';
 import Room from './pages/Room';
+import Ready from './pages/Ready';
 import LandingPage from './pages/LandingPage';
 import Main from './pages/Main';
 
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route path="/main" element={<Layout />}>
             <Route index element={<Main />} />
+          </Route>
+          <Route path="/ready">
+            <Route path=":roomId" element={<Ready />} />
           </Route>
         </Routes>
       </BrowserRouter>

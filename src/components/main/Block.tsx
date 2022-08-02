@@ -5,6 +5,7 @@ import blockInterface from '../../interface/block.interface';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 
 export default function Block({
+  itemId,
   moderator,
   title,
   details,
@@ -13,7 +14,7 @@ export default function Block({
   const navigate = useNavigate();
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    navigate(`/room/${moderator.nickname}${title}`);
+    navigate(`/ready/${itemId}`);
   };
   return (
     <Container>
