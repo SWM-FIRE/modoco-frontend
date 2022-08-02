@@ -27,7 +27,14 @@ export default function Scrolls() {
               : null,
           )
           .map(
-            ({ moderator, title, details, tags, itemId }: blockInterface) => {
+            ({
+              moderator,
+              title,
+              details,
+              tags,
+              itemId,
+              theme,
+            }: blockInterface) => {
               return (
                 <Block
                   itemId={itemId}
@@ -38,7 +45,7 @@ export default function Scrolls() {
                   tags={tags}
                   current={0}
                   total={0}
-                  theme="바다"
+                  theme={theme}
                 />
               );
             },

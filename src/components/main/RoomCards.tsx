@@ -25,21 +25,32 @@ export default function RoomCards() {
             ? block
             : null,
         )
-        .map(({ moderator, title, details, tags, itemId }: blockInterface) => {
-          return (
-            <Block
-              itemId={itemId}
-              key={moderator.nickname}
-              moderator={moderator}
-              title={title}
-              details={details}
-              tags={tags}
-              current={0}
-              total={0}
-              theme="바다"
-            />
-          );
-        })}
+        .map(
+          ({
+            moderator,
+            title,
+            details,
+            tags,
+            itemId,
+            current,
+            total,
+            theme,
+          }: blockInterface) => {
+            return (
+              <Block
+                itemId={itemId}
+                key={moderator.nickname}
+                moderator={moderator}
+                title={title}
+                details={details}
+                tags={tags}
+                current={current}
+                total={total}
+                theme={theme}
+              />
+            );
+          },
+        )}
     </Container>
   );
 }
