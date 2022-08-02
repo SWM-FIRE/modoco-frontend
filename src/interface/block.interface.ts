@@ -8,4 +8,5 @@ export default interface blockInterface {
   tags: string[];
   current: number;
   total: number;
+  theme: string;
 }
