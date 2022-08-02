@@ -7,6 +7,7 @@ import UserStore from '../../stores/userStore';
 import Avater from './Avatar';
 import Nickname from './Nickname';
 import userInterface from '../../interface/user.interface';
+import { API } from '../../config';
 
 let type: string;
 
@@ -40,11 +41,9 @@ export default function UserInput({
   }, []);
 
   const userRequest = async (newUser: userInterface) => {
-    const API_URL: string = process.env
-      .REACT_APP_SEND_USER_INFORMATION_URL as string;
     const { data } = await axios({
       method: type,
-      url: API_URL,
+      url: API.USER,
       data: newUser,
     });
     return data;

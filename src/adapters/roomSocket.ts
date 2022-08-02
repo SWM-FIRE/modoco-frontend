@@ -1,5 +1,6 @@
 import { io } from 'socket.io-client';
+import { API } from '../config';
 
-const roomSocket = io(process.env.REACT_APP_SOCKET_ROOM_URL as string);
+const roomSocket = io(API.SOCKET as string);
 
 export default roomSocket;

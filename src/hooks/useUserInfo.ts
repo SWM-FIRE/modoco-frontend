@@ -1,10 +1,9 @@
-import { useQuery } from 'react-query';
 import axios from 'axios';
+import { useQuery } from 'react-query';
+import { API } from '../config';
 
 const getUser = async (senderUid) => {
-  const { data } = await axios.get(
-    (process.env.REACT_APP_GET_USER_INFO as string) + senderUid,
-  );
+  const { data } = await axios.get((API.USER as string) + senderUid);
   return data;
 };
 
