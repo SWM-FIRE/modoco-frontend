@@ -41,7 +41,7 @@ export default function Block({
           <Theme theme={theme} />
           <Bar />
           <Attend>
-            {total}중 {current}명 참여중
+            🔥 {total}중 {current}명 참여중
           </Attend>
         </Detail>
       </DetailContainer>
@@ -139,7 +139,7 @@ const Detail = styled.div`
 `;
 
 const Attend = styled.div`
-  color: white;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 1.4rem;
 `;
 
