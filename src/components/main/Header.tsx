@@ -28,8 +28,6 @@ export default function Header({ modalHandler }: { modalHandler: () => void }) {
 }
 
 const Login = styled.button`
-  position: absolute;
-  right: 5rem;
   width: 9.1rem;
   height: 4.8rem;
   border: 2px solid #494e5b;
@@ -43,13 +41,10 @@ const Login = styled.button`
 
 const Logo = styled.div`
   cursor: pointer;
-  font-size: 2.4rem;
-  position: absolute;
-  width: 9.2rem;
-  height: 2.2rem;
-  font-family: PretendardRegular, Arial;
+  font-size: 3.2rem;
+  font-family: IBMPlexSansKRRegular, Arial;
   color: white;
-  left: 4rem;
+  font-weight: 700;
 `;
 
 const AvatarContainer = styled.div`
@@ -60,9 +55,6 @@ const AvatarContainer = styled.div`
 `;
 
 const Profile = styled.div`
-  right: 4rem;
-  position: absolute;
-  height: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,7 +68,8 @@ const Container = styled.div`
   width: 100vw;
   height: 10rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-bottom: solid #2b2e41 0.1rem;
+  padding: 0 4.4rem;
 `;
