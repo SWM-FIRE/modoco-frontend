@@ -13,10 +13,23 @@ export const useCreateMediaStream = () => {
   const createMediaStream = async () => {
     if (!userMediaStream) {
       try {
-        const stream = await navigator.mediaDevices.getDisplayMedia({
+        const videoStream = await navigator.mediaDevices.getDisplayMedia({
           video: true,
-          audio: true,
         });
+        const audioStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            autoGainControl: false,
+            channelCount: 2,
+            echoCancellation: false,
+            latency: 0,
+            noiseSuppression: false,
+            sampleRate: 48000,
+            sampleSize: 16,
+          },
+        });
+        const [videoTrack] = videoStream.getVideoTracks();
+        const [audioTrack] = audioStream.getAudioTracks();
+        const stream = new MediaStream([videoTrack, audioTrack]);
         setUserMediaStream(stream);
       } catch (error) {
         console.log(error);

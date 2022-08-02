@@ -39,7 +39,7 @@ export default function SingleScreen({ nickname, avatar, uid, stream }) {
 
   return (
     <Container onClick={OpenModal}>
-      <Video ref={videoRef} autoPlay playsInline muted />
+      <Video ref={videoRef} autoPlay playsInline />
       <ControlBar>
         <ChatContainer>
           <ChatInner>

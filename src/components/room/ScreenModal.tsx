@@ -33,7 +33,7 @@ export default function ScreenModal() {
             <MyAvatar num={Number(avatar)} />
             <Nickname>{nickname}</Nickname>
           </ModalController>
-          <ModalVideo ref={videoRef} autoPlay playsInline muted />
+          <ModalVideo ref={videoRef} autoPlay playsInline />
         </ModalBox>
       </ModalBackground>
     </ModalPortal>
