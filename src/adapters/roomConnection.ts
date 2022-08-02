@@ -2,9 +2,13 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import roomSocket from './roomSocket';
+import messageStore from '../stores/messagesStore';
 
 export const roomConnection = (roomId) => {
-  const { connectedUsers, appendUser, removeUser } = connectedUsersStore();
+  const { connectedUsers, appendUser, removeUser, findUser } =
+    connectedUsersStore();
+  const { appendMessages } = messageStore();
+
   useEffect(() => {
     const newUID = localStorage.getItem('uid');
 
@@ -28,14 +32,27 @@ export const roomConnection = (roomId) => {
       console.log('[roomConnection] UID가 존재하지 않음');
     }
 
+    roomSocket.off('joinedRoom').on('joinedRoom', ({ room }) => {
+      console.log('[roomConnection] joinedRoom', room);
+    });
+
     roomSocket.off('newUser').on('newUser', ({ sid, uid }) => {
       axios
         .get((process.env.REACT_APP_GET_USER_INFO as string) + uid)
         .then((res) => {
           setConnected({ sid, uid }, res);
           console.log('new', res.data.nickname, 'joined');
+          appendMessages({
+            uid,
+            nickname: res.data.nickname,
+            avatar: res.data.avatar,
+            message: `${res.data.nickname}님이 입장하셨습니다.`,
+            createdAt: '',
+            type: 'join',
+            isHideTime: false,
+            isHideNicknameAndAvatar: false,
+          });
         });
-      console.log('new user joined', sid, uid);
     });
 
     roomSocket
@@ -54,6 +71,17 @@ export const roomConnection = (roomId) => {
       });
 
     roomSocket.off('leftRoom').on('leftRoom', ({ sid }) => {
+      const userInfo = findUser(sid);
+      appendMessages({
+        uid: userInfo.uid,
+        nickname: userInfo.nickname,
+        avatar: userInfo.avatar,
+        message: `${userInfo.nickname}님이 퇴장하셨습니다.`,
+        createdAt: '',
+        type: 'leave',
+        isHideTime: false,
+        isHideNicknameAndAvatar: false,
+      });
       removeUser(sid);
     });
   }, [connectedUsers]);

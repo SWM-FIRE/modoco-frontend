@@ -14,13 +14,13 @@ export default function ChattingItem({
 }: messageInterface) {
   const uid = localStorage.getItem('uid');
   const isMe = user.uid === uid;
-  const entrance = type === 'join';
+  const entrance = type === 'join' || type === 'leave';
 
   return (
     <div>
       {entrance ? (
         <EntranceComponent isMe={isMe}>
-          <Entrance>{user.nickname} 님이 입장했습니다.</Entrance>
+          <Entrance>{msg}</Entrance>
         </EntranceComponent>
       ) : (
         <Component isMe={isMe} isHide={isHideNicknameAndAvatar}>
