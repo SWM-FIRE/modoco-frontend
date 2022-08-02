@@ -5,14 +5,20 @@ import { ReactComponent as LeftArrow } from '../../assets/svg/arrow-left.svg';
 import controlModal from '../../stores/controlModal';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
+import connectedUsersStore from '../../stores/connectedUsersStore';
 
 export default function ScreenModal() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { connectedUsers } = connectedUsersStore();
   const { uid, nickname, avatar, toggleModal } = controlModal();
   const { userMediaStream } = useCreateMediaStream();
+  const newStream =
+    uid === localStorage.getItem('uid')
+      ? userMediaStream
+      : connectedUsers.filter((user) => user.uid === uid)[0].stream;
   useEffect(() => {
-    if (uid === localStorage.getItem('uid') && videoRef.current) {
-      videoRef.current.srcObject = userMediaStream;
+    if (videoRef.current) {
+      videoRef.current.srcObject = newStream;
     }
   }, [videoRef, userMediaStream]);
 

@@ -7,6 +7,8 @@ import Sidebar from '../components/room/Sidebar';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import usePreventLeave from '../hooks/usePreventLeave';
 import { roomConnection } from '../adapters/roomConnection';
+import controlModal from '../stores/controlModal';
+import ScreenShareModal from '../components/room/ScreenModal';
 import roomSocket from '../adapters/roomSocket';
 import usePeerConnection from '../hooks/usePeerConnection';
 import onChatMessage from '../adapters/receiveMessage';
@@ -16,6 +18,7 @@ import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 export default function Room() {
   const navigate = useNavigate();
   const { roomId } = useParams();
+  const { isOpen } = controlModal();
   const { setUsers } = connectedUsersStore();
   const { stopMediaStream } = useCreateMediaStream();
   roomConnection(roomId);
@@ -45,13 +48,16 @@ export default function Room() {
   }, [history]);
 
   return (
-    <Component>
-      <Header />
-      <Contents>
-        <ScreenShare />
-        <Sidebar />
-      </Contents>
-    </Component>
+    <>
+      <Component>
+        <Header />
+        <Contents>
+          <ScreenShare />
+          <Sidebar />
+        </Contents>
+      </Component>
+      {isOpen && <ScreenShareModal />}
+    </>
   );
 }
 
