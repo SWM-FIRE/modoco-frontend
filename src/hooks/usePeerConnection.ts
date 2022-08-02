@@ -5,6 +5,7 @@ import roomSocket from '../adapters/roomSocket';
 import { useCreateMediaStream } from './useCreateMediaStream';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import userPcStore from '../stores/userPcStore';
+import messageStore from '../stores/messagesStore';
 import { API } from '../config';
 
 const usePeerConnection = () => {
@@ -12,6 +13,7 @@ const usePeerConnection = () => {
   const { connectedUsers, appendUser, updateMediaStream } =
     connectedUsersStore();
   const { pcs, setPc } = userPcStore();
+  const { appendMessages } = messageStore();
 
   const RTCConfig = {
     iceServers: [
@@ -29,14 +31,9 @@ const usePeerConnection = () => {
 
   useEffect(() => {
     const createPeerConnection = (sid: string) => {
-      if (pcs[sid]) {
-        console.log('already connected pc');
-        return pcs[sid];
-      }
-
-      // if (!userMediaStream) {
-      //   console.log('error!!!!');
-      //   return null;
+      // if (pcs[sid]) {
+      //   console.log('already connected pc');
+      //   return pcs[sid];
       // }
 
       console.log('making peerConnection', sid);
@@ -160,6 +157,16 @@ const usePeerConnection = () => {
         } else {
           console.log('already connected');
         }
+        appendMessages({
+          uid,
+          nickname: res.data.nickname,
+          avatar: res.data.avatar,
+          message: `${res.data.nickname}님이 입장하셨습니다.`,
+          createdAt: '',
+          type: 'join',
+          isHideTime: false,
+          isHideNicknameAndAvatar: false,
+        });
         console.log('new', res.data.nickname, 'joined');
       });
       await createOffer(sid);
