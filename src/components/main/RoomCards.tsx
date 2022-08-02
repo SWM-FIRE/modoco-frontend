@@ -36,6 +36,7 @@ export default function RoomCards() {
               tags={tags}
               current={0}
               total={0}
+              theme="바다"
             />
           );
         })}
@@ -49,7 +50,6 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  /* margin: 10rem 10rem 14.4rem 10rem; */
   margin: 10rem auto;
   row-gap: 7.6rem;
 `;

@@ -38,6 +38,7 @@ export default function Scrolls() {
                   tags={tags}
                   current={0}
                   total={0}
+                  theme="바다"
                 />
               );
             },
