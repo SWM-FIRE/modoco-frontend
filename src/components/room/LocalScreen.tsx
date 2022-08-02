@@ -10,6 +10,7 @@ export default function LocalScreen({ nickname, avatar, uid }) {
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const { userMediaStream } = useCreateMediaStream();
   const { toggleModal, setNickname, setAvatar, setUid } = controlModal();
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const OpenModal = () => {
     setNickname(nickname);

@@ -51,6 +51,7 @@ const usePeerConnection = () => {
       };
 
       peerConnection.ontrack = (event: RTCTrackEvent) => {
+        console.log('remote track', event.streams);
         console.log('adding track', event.streams[0]);
         updateMediaStream({
           socketId: sid,
@@ -80,7 +81,10 @@ const usePeerConnection = () => {
       }
       const peerConnection = createPeerConnection(sid);
       if (peerConnection) {
-        const offer = await peerConnection.createOffer();
+        const offer = await peerConnection.createOffer({
+          offerToReceiveAudio: true,
+          offerToReceiveVideo: true,
+        });
         await peerConnection.setLocalDescription(
           new RTCSessionDescription(offer),
         );
@@ -104,7 +108,10 @@ const usePeerConnection = () => {
         await peerConnection.setRemoteDescription(
           new RTCSessionDescription(offer),
         );
-        const answer = await peerConnection.createAnswer();
+        const answer = await peerConnection.createAnswer({
+          offerToReceiveAudio: true,
+          offerToReceiveVideo: true,
+        });
         await peerConnection.setLocalDescription(answer);
         // send answer to other user
         console.log('[SOCKET] answer to user(', sid, ')');
