@@ -3,12 +3,14 @@ import axios from 'axios';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import roomSocket from './roomSocket';
 import messageStore from '../stores/messagesStore';
+import userPcStore from '../stores/userPcStore';
 import { API } from '../config';
 
 export const roomConnection = (roomId) => {
   const { connectedUsers, appendUser, removeUser, findUser } =
     connectedUsersStore();
   const { appendMessages } = messageStore();
+  const { pcs, setPc } = userPcStore();
 
   useEffect(() => {
     const newUID = localStorage.getItem('uid');
@@ -38,23 +40,6 @@ export const roomConnection = (roomId) => {
       console.log('[roomConnection] joinedRoom', room);
     });
 
-    roomSocket.off('newUser').on('newUser', ({ sid, uid }) => {
-      axios.get((API.USER as string) + uid).then((res) => {
-        setConnected({ sid, uid }, res);
-        console.log('new', res.data.nickname, 'joined');
-        appendMessages({
-          uid,
-          nickname: res.data.nickname,
-          avatar: res.data.avatar,
-          message: `${res.data.nickname}님이 입장하셨습니다.`,
-          createdAt: '',
-          type: 'join',
-          isHideTime: false,
-          isHideNicknameAndAvatar: false,
-        });
-      });
-    });
-
     roomSocket
       .off('existingRoomUsers')
       .on('existingRoomUsers', ({ users, current }) => {
@@ -80,6 +65,8 @@ export const roomConnection = (roomId) => {
         isHideTime: false,
         isHideNicknameAndAvatar: false,
       });
+      pcs[sid]?.close();
+      setPc({ sid, peerConnection: undefined });
       removeUser(sid);
     });
   }, [connectedUsers]);
