@@ -3,6 +3,7 @@ import axios from 'axios';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import roomSocket from './roomSocket';
 import messageStore from '../stores/messagesStore';
+import { API } from '../config';
 
 export const roomConnection = (roomId) => {
   const { connectedUsers, appendUser, removeUser, findUser } =
@@ -38,22 +39,20 @@ export const roomConnection = (roomId) => {
     });
 
     roomSocket.off('newUser').on('newUser', ({ sid, uid }) => {
-      axios
-        .get((process.env.REACT_APP_GET_USER_INFO as string) + uid)
-        .then((res) => {
-          setConnected({ sid, uid }, res);
-          console.log('new', res.data.nickname, 'joined');
-          appendMessages({
-            uid,
-            nickname: res.data.nickname,
-            avatar: res.data.avatar,
-            message: `${res.data.nickname}님이 입장하셨습니다.`,
-            createdAt: '',
-            type: 'join',
-            isHideTime: false,
-            isHideNicknameAndAvatar: false,
-          });
+      axios.get((API.USER as string) + uid).then((res) => {
+        setConnected({ sid, uid }, res);
+        console.log('new', res.data.nickname, 'joined');
+        appendMessages({
+          uid,
+          nickname: res.data.nickname,
+          avatar: res.data.avatar,
+          message: `${res.data.nickname}님이 입장하셨습니다.`,
+          createdAt: '',
+          type: 'join',
+          isHideTime: false,
+          isHideNicknameAndAvatar: false,
         });
+      });
     });
 
     roomSocket
@@ -62,11 +61,9 @@ export const roomConnection = (roomId) => {
         console.log('existing users', users);
         console.log('i am ', current.sid);
         users.map((user) => {
-          axios
-            .get((process.env.REACT_APP_GET_USER_INFO as string) + user.uid)
-            .then((res) => {
-              setConnected(user, res);
-            });
+          axios.get((API.USER as string) + user.uid).then((res) => {
+            setConnected(user, res);
+          });
           return user;
         });
       });

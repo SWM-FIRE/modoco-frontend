@@ -5,6 +5,7 @@ import roomSocket from '../adapters/roomSocket';
 import { useCreateMediaStream } from './useCreateMediaStream';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import userPcStore from '../stores/userPcStore';
+import { API } from '../config';
 
 const usePeerConnection = () => {
   const { userMediaStream, createMediaStream } = useCreateMediaStream();
@@ -147,22 +148,20 @@ const usePeerConnection = () => {
         console.log('no mediastream before createanswer');
         await createMediaStream();
       }
-      axios
-        .get((process.env.REACT_APP_GET_USER_INFO as string) + uid)
-        .then((res) => {
-          if (!connectedUsers.includes(uid)) {
-            appendUser({
-              nickname: res.data.nickname,
-              uid,
-              avatar: res.data.avatar,
-              socketId: sid,
-              stream: new MediaStream(),
-            });
-          } else {
-            console.log('already connected');
-          }
-          console.log('new', res.data.nickname, 'joined');
-        });
+      axios.get((API.USER as string) + uid).then((res) => {
+        if (!connectedUsers.includes(uid)) {
+          appendUser({
+            nickname: res.data.nickname,
+            uid,
+            avatar: res.data.avatar,
+            socketId: sid,
+            stream: new MediaStream(),
+          });
+        } else {
+          console.log('already connected');
+        }
+        console.log('new', res.data.nickname, 'joined');
+      });
       await createOffer(sid);
     };
 
