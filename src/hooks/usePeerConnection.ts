@@ -1,19 +1,16 @@
 /* eslint-disable no-undef */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import roomSocket from '../adapters/roomSocket';
 import { useCreateMediaStream } from './useCreateMediaStream';
 import connectedUsersStore from '../stores/connectedUsersStore';
+import userPcStore from '../stores/userPcStore';
 
 const usePeerConnection = () => {
-  const { userMediaStream: localStream, createMediaStream } =
-    useCreateMediaStream();
+  const { userMediaStream, createMediaStream } = useCreateMediaStream();
   const { connectedUsers, appendUser, updateMediaStream } =
     connectedUsersStore();
-
-  const [pcs, setPcs] = useState<{ [key: string]: RTCPeerConnection | null }>(
-    {},
-  );
+  const { pcs, setPc } = userPcStore();
 
   const RTCConfig = {
     iceServers: [
@@ -30,19 +27,26 @@ const usePeerConnection = () => {
   };
 
   useEffect(() => {
-    const createPeerConnection = (receiverSocketId: string) => {
-      const peerConnection = new RTCPeerConnection(RTCConfig);
-
-      if (pcs[receiverSocketId]) {
+    const createPeerConnection = (sid: string) => {
+      if (pcs[sid]) {
         console.log('already connected pc');
-        return pcs[receiverSocketId];
+        return pcs[sid];
       }
+
+      // if (!userMediaStream) {
+      //   console.log('error!!!!');
+      //   return null;
+      // }
+
+      console.log('making peerConnection', sid);
+
+      const peerConnection = new RTCPeerConnection(RTCConfig);
 
       peerConnection.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
         console.log('candidate exchange');
         if (event.candidate) {
           roomSocket.emit('ice-candidate', {
-            to: receiverSocketId,
+            to: sid,
             candidate: event.candidate,
           });
         }
@@ -51,7 +55,7 @@ const usePeerConnection = () => {
       peerConnection.ontrack = (event: RTCTrackEvent) => {
         console.log('adding track', event.streams[0]);
         updateMediaStream({
-          socketId: receiverSocketId,
+          socketId: sid,
           stream: event.streams[0],
         });
       };
@@ -60,29 +64,28 @@ const usePeerConnection = () => {
         console.log('ice gathering state changed', event);
       };
 
-      localStream?.getTracks().forEach((track) => {
-        peerConnection.addTrack(track, localStream);
+      userMediaStream?.getTracks().forEach((track) => {
+        peerConnection.addTrack(track, userMediaStream);
       });
 
-      setPcs((prevPcs) => ({
-        ...prevPcs,
-        [receiverSocketId]: peerConnection,
-      }));
+      setPc({ sid, peerConnection });
+      console.log('new peerConnection created', sid, peerConnection);
 
       return peerConnection;
     };
 
     const createOffer = async (sid: string) => {
-      console.log('creating offer', localStream);
-      if (!localStream) {
+      console.log('creating offer', userMediaStream);
+      if (!userMediaStream) {
         console.log('no mediastream before createoffer');
         await createMediaStream();
       }
-      const peerConnection = await createPeerConnection(sid);
-      // create offer
+      const peerConnection = createPeerConnection(sid);
       if (peerConnection) {
         const offer = await peerConnection.createOffer();
-        await peerConnection.setLocalDescription(offer); // triggers ice gathering
+        await peerConnection.setLocalDescription(
+          new RTCSessionDescription(offer),
+        );
         // send offer to new user
         console.log(`[SOCKET] call user(${sid}) with offer`);
         roomSocket.emit('call-user', { to: sid, offer });
@@ -94,17 +97,17 @@ const usePeerConnection = () => {
       sid: string,
       offer: RTCSessionDescriptionInit,
     ) => {
-      if (!localStream) {
+      if (!userMediaStream) {
         console.log('no mediastream before createanswer');
         await createMediaStream();
       }
-      const peerConnection = await createPeerConnection(sid);
+      const peerConnection = createPeerConnection(sid);
       if (peerConnection) {
-        await peerConnection.setRemoteDescription(offer);
-        // create answer
+        await peerConnection.setRemoteDescription(
+          new RTCSessionDescription(offer),
+        );
         const answer = await peerConnection.createAnswer();
-        await peerConnection.setLocalDescription(answer); // peer 2 case
-
+        await peerConnection.setLocalDescription(answer);
         // send answer to other user
         console.log('[SOCKET] answer to user(', sid, ')');
         roomSocket.emit('make-answer', { to: sid, answer });
@@ -112,7 +115,10 @@ const usePeerConnection = () => {
     };
 
     // handle offer from new user
-    const onCallMade = async (data: any) => {
+    const onCallMade = async (data: {
+      sid: string;
+      offer: RTCSessionDescriptionInit;
+    }) => {
       console.log(
         `[SOCKET:on"call-made"] received offer from other user(${data.sid})`,
       );
@@ -120,28 +126,24 @@ const usePeerConnection = () => {
     };
 
     // handle answer made from other user
-    const onAnswerMade = async (data: any) => {
+    const onAnswerMade = async (data: {
+      sid: string;
+      answer: RTCSessionDescriptionInit;
+    }) => {
       console.log(
         `[SOCKET:on"answer-made"] received answer from other user(${data.sid})(${data.answer})`,
       );
-      if (!pcs[data.sid].currentRemoteDescription) {
-        console.log('setting pcs to ', data.answer);
-        pcs[data.sid].setRemoteDescription(data.answer);
+      const peerConnection = pcs[data.sid];
+
+      if (peerConnection) {
+        peerConnection.setRemoteDescription(
+          new RTCSessionDescription(data.answer),
+        );
       }
     };
 
-    // handle ice-candidate from other user
-    const onIceCandidateRecieved = (data: any) => {
-      console.log(
-        `[SOCKET:on"ice-candidate"] received ice-candidate from other user(${data.sid}), candidate: ${data.candidate}`,
-      );
-      if (pcs[data.sid]) {
-        pcs[data.sid].addIceCandidate(data.candidate);
-      }
-    };
-
-    roomSocket.off('newUser').on('newUser', async ({ sid, uid }) => {
-      if (!localStream) {
+    const onNewUser = async ({ sid, uid }) => {
+      if (!userMediaStream) {
         console.log('no mediastream before createanswer');
         await createMediaStream();
       }
@@ -154,7 +156,7 @@ const usePeerConnection = () => {
               uid,
               avatar: res.data.avatar,
               socketId: sid,
-              stream: null,
+              stream: new MediaStream(),
             });
           } else {
             console.log('already connected');
@@ -162,12 +164,26 @@ const usePeerConnection = () => {
           console.log('new', res.data.nickname, 'joined');
         });
       await createOffer(sid);
-    });
+    };
 
+    // handle ice-candidate from other user
+    const onIceCandidateRecieved = (data: {
+      sid: string;
+      candidate: RTCIceCandidateInit;
+    }) => {
+      console.log(
+        `[SOCKET:on"ice-candidate"] received ice-candidate from other user(${data.sid}), candidate: ${data.candidate}`,
+      );
+      if (pcs[data.sid]) {
+        pcs[data.sid].addIceCandidate(new RTCIceCandidate(data.candidate));
+      }
+    };
+
+    roomSocket.off('newUser').on('newUser', onNewUser);
     roomSocket.off('call-made').on('call-made', onCallMade);
     roomSocket.off('answer-made').on('answer-made', onAnswerMade);
     roomSocket.off('ice-candidate').on('ice-candidate', onIceCandidateRecieved);
-  }, [localStream, pcs]);
+  }, [userMediaStream, pcs, connectedUsers]);
 };
 
 export default usePeerConnection;

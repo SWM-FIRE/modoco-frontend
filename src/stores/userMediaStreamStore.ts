@@ -13,7 +13,7 @@ interface MediaStreamInterface {
 
 const UserMediaStreamStore = create<MediaStreamInterface>((set) => ({
   userMediaStream: null,
-  setUserMediaStream: (by) => {
+  setUserMediaStream: async (by) => {
     set(() => ({ userMediaStream: by }));
   },
   userMic: true,

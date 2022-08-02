@@ -11,7 +11,7 @@ export const useCreateMediaStream = () => {
   };
 
   const createMediaStream = async () => {
-    if (!userMediaStream?.active) {
+    if (!userMediaStream) {
       try {
         const stream = await navigator.mediaDevices.getDisplayMedia({
           video: true,
