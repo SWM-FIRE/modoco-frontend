@@ -12,8 +12,9 @@ interface connectedUsers {
   setUsers: (_users: VideoUserInterface[]) => void;
   appendUser: (_user: VideoUserInterface) => void;
   removeUser: (_user: string) => void;
+  findUser: (_socketId: string) => VideoUserInterface;
 }
-const connectedUsersStore = create<connectedUsers>((set) => ({
+const connectedUsersStore = create<connectedUsers>((set, get) => ({
   connectedUsers: [],
   setUsers: (by) => set(() => ({ connectedUsers: by })),
   appendUser: (by) =>
@@ -24,6 +25,10 @@ const connectedUsersStore = create<connectedUsers>((set) => ({
         (user) => user.socketId !== by,
       ),
     })),
+  findUser: (by) => {
+    const user = get().connectedUsers.filter((user) => user.socketId === by)[0];
+    return user;
+  },
 }));
 
 export default connectedUsersStore;
