@@ -14,8 +14,6 @@ export default function CreateRoom() {
 }
 
 const Enter = styled.button`
-  position: absolute;
-  bottom: 6.4rem;
   width: 12.6rem;
   height: 4.8rem;
   font-size: 1.6rem;
@@ -27,13 +25,20 @@ const Enter = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.05, 1.05);
+    -ms-transform: scale(1.05, 1.05);
+    -webkit-transform: scale(1.05, 1.05);
+  }
 `;
 
 const DetailContainer = styled.div`
   position: relative;
   margin-top: 3.2rem;
   width: 29.3rem;
-  height: 14.7rem;
+  height: 9.6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,16 +53,21 @@ const Detail = styled.div`
 const Title = styled.div`
   color: #fcfcfd;
   font-size: 2.4rem;
+  font-weight: 600;
 `;
 
 const Container = styled.div`
   background-color: #23262f;
   margin-right: 2.4rem;
   border-radius: 2rem;
-  width: 34rem;
+  /* width: 34rem; */
+  width: 22.5%;
   height: 50rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   position: relative;
+  border: 1px dashed rgba(107, 114, 128, 1);
+  min-width: 29.4rem;
 `;
