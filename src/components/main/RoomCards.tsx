@@ -44,10 +44,12 @@ export default function RoomCards() {
 }
 
 const Container = styled.div`
-  width: calc(100% - 10rem);
+  /* width: calc(100% - 10rem); */
+  width: 80%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  margin: 10rem 10rem 14.4rem 10rem;
+  justify-content: flex-start;
+  /* margin: 10rem 10rem 14.4rem 10rem; */
+  margin: 10rem auto;
   row-gap: 7.6rem;
 `;
