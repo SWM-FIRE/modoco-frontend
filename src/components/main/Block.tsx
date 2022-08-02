@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import blockInterface from '../../interface/block.interface';
 import MyAvatar from '../../assets/avatar/MyAvatar';
+import Theme from './Theme';
+import { ReactComponent as Bar } from '../../assets/svg/Room/Bar.svg';
 
 export default function Block({
   itemId,
@@ -10,6 +12,9 @@ export default function Block({
   title,
   details,
   tags,
+  current,
+  total,
+  theme,
 }: blockInterface) {
   const navigate = useNavigate();
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -20,16 +25,25 @@ export default function Block({
     <Container>
       <AvatarContainer>
         <MyAvatar num={Number(moderator.avatar)} />
-        <Nickname>{moderator.nickname}</Nickname>
+        <Moderator>
+          방장<Nickname>{moderator.nickname}</Nickname>
+        </Moderator>
       </AvatarContainer>
       <DetailContainer>
         <Title>{title}</Title>
-        <Detail>{details}</Detail>
+        <Description>{details}</Description>
         <Tags>
           {tags.map((myTag) => (
             <Tag key={myTag}>#{myTag}</Tag>
           ))}
         </Tags>
+        <Detail>
+          <Theme theme={theme} />
+          <Bar />
+          <Attend>
+            {total}중 {current}명 참여중
+          </Attend>
+        </Detail>
       </DetailContainer>
       <Enter onClick={enterRoom}>입장하기 →</Enter>
     </Container>
@@ -37,17 +51,19 @@ export default function Block({
 }
 
 const Tags = styled.div`
-  position: absolute;
-  bottom: 0;
   display: flex;
   gap: 1rem;
   justify-content: center;
   align-items: center;
+  overflow-y: auto;
+  width: 100%;
+  white-space: nowrap;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Enter = styled.button`
-  position: absolute;
-  bottom: 6.4rem;
   width: 12.6rem;
   height: 4.8rem;
   font-size: 1.6rem;
@@ -73,29 +89,28 @@ const Tag = styled.div`
 `;
 
 const DetailContainer = styled.div`
-  position: relative;
-  margin-top: 3.2rem;
-  width: 29.3rem;
-  height: 14.7rem;
+  height: 18.8rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
+  gap: 2rem;
 `;
 
-const Detail = styled.div`
-  margin-top: 1.6rem;
+const Description = styled.div`
   color: #777e90;
   font-size: 1.4rem;
 `;
 
 const AvatarContainer = styled.div`
-  margin-top: 6.4rem;
   width: 8rem;
   height: 11.4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1.6rem;
 `;
 
 const Title = styled.div`
@@ -103,22 +118,41 @@ const Title = styled.div`
   font-size: 2.4rem;
 `;
 
-const Nickname = styled.div`
-  color: white;
-  text-align: center;
-  margin-top: 0.8rem;
+const Moderator = styled.span`
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   font-size: 1.2rem;
   font-family: IBMPlexMonoRegular;
+`;
+
+const Nickname = styled.span`
+  color: white;
+  text-align: center;
+`;
+
+const Detail = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+`;
+
+const Attend = styled.div`
+  color: white;
+  font-size: 1.4rem;
 `;
 
 const Container = styled.div`
   background-color: #23262f;
   margin-right: 2.4rem;
   border-radius: 2rem;
-  width: 34rem;
+  width: 22.5%;
   height: 50rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
+  justify-content: space-between;
+  padding: 4.3rem 1rem;
+  min-width: 29.4rem;
 `;

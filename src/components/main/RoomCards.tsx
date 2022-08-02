@@ -25,29 +25,42 @@ export default function RoomCards() {
             ? block
             : null,
         )
-        .map(({ moderator, title, details, tags, itemId }: blockInterface) => {
-          return (
-            <Block
-              itemId={itemId}
-              key={moderator.nickname}
-              moderator={moderator}
-              title={title}
-              details={details}
-              tags={tags}
-              current={0}
-              total={0}
-            />
-          );
-        })}
+        .map(
+          ({
+            moderator,
+            title,
+            details,
+            tags,
+            itemId,
+            current,
+            total,
+            theme,
+          }: blockInterface) => {
+            return (
+              <Block
+                itemId={itemId}
+                key={moderator.nickname}
+                moderator={moderator}
+                title={title}
+                details={details}
+                tags={tags}
+                current={current}
+                total={total}
+                theme={theme}
+              />
+            );
+          },
+        )}
     </Container>
   );
 }
 
 const Container = styled.div`
-  width: calc(100% - 10rem);
+  /* width: calc(100% - 10rem); */
+  width: 80%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  margin: 10rem 10rem 14.4rem 10rem;
+  justify-content: flex-start;
+  margin: 10rem auto;
   row-gap: 7.6rem;
 `;
