@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import { ReactComponent as Fire } from '../../assets/svg/Room/Fire.svg';
-import { ReactComponent as Astronaut } from '../../assets/svg/Room/Astronaut.svg';
+import { ReactComponent as Cosmos } from '../../assets/svg/Room/Cosmos.svg';
 import { ReactComponent as Camping } from '../../assets/svg/Room/Camping.svg';
-import { ReactComponent as Sea } from '../../assets/svg/Room/Sea.svg';
+import { ReactComponent as Ocean } from '../../assets/svg/Room/Ocean.svg';
 import { ReactComponent as Travel } from '../../assets/svg/Room/Travel.svg';
 
 export default function Theme({ theme }: { theme: string }) {
+  console.log(theme);
   switch (theme) {
     case 'fire':
       return (
@@ -14,10 +15,10 @@ export default function Theme({ theme }: { theme: string }) {
           <Name>모닥불</Name>
         </Component>
       );
-    case 'astronaut':
+    case 'cosmos':
       return (
         <Component>
-          <Astronaut />
+          <Cosmos />
           <Name>우주인</Name>
         </Component>
       );
@@ -28,10 +29,10 @@ export default function Theme({ theme }: { theme: string }) {
           <Name>캠핑</Name>
         </Component>
       );
-    case 'sea':
+    case 'ocean':
       return (
         <Component>
-          <Sea />
+          <Ocean />
           <Name>바다</Name>
         </Component>
       );
