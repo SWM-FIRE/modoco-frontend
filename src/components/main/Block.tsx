@@ -7,6 +7,7 @@ import Theme from './Theme';
 import { ReactComponent as Bar } from '../../assets/svg/Room/Bar.svg';
 
 export default function Block({
+  isMain,
   itemId,
   moderator,
   title,
@@ -22,7 +23,7 @@ export default function Block({
     navigate(`/ready/${itemId}`);
   };
   return (
-    <Container>
+    <Container main={isMain}>
       <AvatarContainer>
         <MyAvatar num={Number(moderator.avatar)} />
         <Moderator>
@@ -143,11 +144,11 @@ const Attend = styled.div`
   font-size: 1.4rem;
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ main: boolean }>`
   background-color: #23262f;
   margin-right: 2.4rem;
   border-radius: 2rem;
-  width: 22.5%;
+  width: ${(props) => (props.main ? '22.5%' : '22.5rem')};
   height: 50rem;
   display: flex;
   flex-direction: column;

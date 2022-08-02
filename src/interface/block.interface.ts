@@ -1,6 +1,7 @@
 import User from './user.interface';
 
 export default interface blockInterface {
+  isMain: boolean;
   itemId: number;
   moderator: User;
   title: string;

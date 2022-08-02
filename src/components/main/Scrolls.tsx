@@ -37,6 +37,7 @@ export default function Scrolls() {
             }: blockInterface) => {
               return (
                 <Block
+                  isMain={false}
                   itemId={itemId}
                   key={moderator.nickname}
                   moderator={moderator}

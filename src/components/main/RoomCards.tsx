@@ -38,6 +38,7 @@ export default function RoomCards() {
           }: blockInterface) => {
             return (
               <Block
+                isMain
                 itemId={itemId}
                 key={moderator.nickname}
                 moderator={moderator}
