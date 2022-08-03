@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components';
 
-const defaultTheme: DefaultTheme = {
+const defaultTheme = {
   shadow: {
     defaultShadow:
       'rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px',
@@ -24,4 +24,56 @@ const defaultTheme: DefaultTheme = {
   grayColor: '#727272',
 };
 
-export { defaultTheme };
+const themeFire: DefaultTheme = {
+  ...defaultTheme,
+  header: '#0D0E13',
+  main: '#0A0A14',
+  chatBackground: '#1E1E22',
+  otherChat: '#1F2331',
+  myChat: '#353741',
+};
+
+const themeOcean: DefaultTheme = {
+  ...defaultTheme,
+  header: '#265B60',
+  main: '#387A81',
+  chatBackground: '#1A464A',
+  otherChat: '#1E3A41',
+  myChat: '#4B6163',
+};
+
+const themeCamping: DefaultTheme = {
+  ...defaultTheme,
+  header: '#1E0E2B',
+  main: '#251236',
+  chatBackground: '#190B24',
+  otherChat: '#3F3046',
+  myChat: '#453A4B',
+};
+
+const themeTravel: DefaultTheme = {
+  ...defaultTheme,
+  header: '#5F96B6',
+  main: '#517C95',
+  chatBackground: '#466B80',
+  otherChat: '#2B4651',
+  myChat: '#3A5A6B',
+};
+
+const themeCosmos: DefaultTheme = {
+  ...defaultTheme,
+  header: '#010102',
+  main: '#000000',
+  chatBackground: '#06070A',
+  otherChat: '#1F2331',
+  myChat: '#353741',
+};
+
+export {
+  defaultTheme,
+  themeFire,
+  themeOcean,
+  themeCamping,
+  themeTravel,
+  themeCosmos,
+};

@@ -13,7 +13,7 @@ export default function Sidebar() {
 
 const Component = styled.div`
   position: absolute;
-  background-color: #29292e;
+  background-color: ${({ theme }) => theme.chatBackground};
   margin: 2rem 2rem 2rem 2rem;
   border-radius: 1rem;
   padding: 3rem 2rem;

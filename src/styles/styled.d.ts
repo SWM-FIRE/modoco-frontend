@@ -22,5 +22,10 @@ declare module 'styled-components' {
     };
     activated: string;
     grayColor: string;
+    header: string;
+    main: string;
+    chatBackground: string;
+    myChat: string;
+    otherChat: string;
   }
 }
