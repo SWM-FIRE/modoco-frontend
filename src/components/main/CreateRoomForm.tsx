@@ -1,23 +1,25 @@
 import styled from 'styled-components';
 import React, { useState, KeyboardEvent } from 'react';
+import axios from 'axios';
 import { ReactComponent as DeleteTag } from '../../assets/svg/deleteTag.svg';
 import { ReactComponent as Up } from '../../assets/svg/up.svg';
 import { ReactComponent as Down } from '../../assets/svg/down.svg';
+import { API } from '../../config';
 
 export default function CreateRoomForm() {
   const [newTag, setNewTag] = useState('');
   const [title, setTitle] = useState('');
-  const [detail, setDetail] = useState('');
-  // const [total, setTotal] = useState(1);
-  // const [theme, setTheme] = useState('fire');
+  const [details, setDetails] = useState('');
+  const [total, setTotal] = useState('');
+  const [theme, setTheme] = useState('');
   const [tags, setTags] = useState([]);
 
   const handleRoomNameChange = (e) => {
     setTitle(e.target.value);
   };
 
-  const handleRoomDescriptionChange = (e) => {
-    setDetail(e.target.value);
+  const handleDetailsChange = (e) => {
+    setDetails(e.target.value);
   };
 
   const handleTagChange = (e) => {
@@ -34,18 +36,41 @@ export default function CreateRoomForm() {
     }
   };
 
+  const handleTotalChange = (e) => {
+    setTotal(e.target.value);
+  };
+
+  const handleThemeChange = (e) => {
+    setTheme(e.target.value);
+  };
+
   const onAddTag = () => {
     setTags([...tags, newTag.trim()]);
     setNewTag('');
   };
 
   const onDeleteTag = (e, index) => {
-    console.log(e, index);
     setTags(tags.filter((_, i) => i !== index));
   };
 
-  const onSubmit = (e) => {
-    console.log(e);
+  const onSubmit = () => {
+    axios
+      .post(API.ROOM, {
+        moderator: {
+          uid: localStorage.getItem('uid'),
+        },
+        title,
+        details,
+        tags,
+        total: Number(total),
+        theme,
+      })
+      .then((res) => {
+        console.log('[success]', res);
+      })
+      .catch((err) => {
+        console.log('[error] ', err);
+      });
   };
 
   return (
@@ -66,8 +91,8 @@ export default function CreateRoomForm() {
         <Input
           id="description"
           type="text"
-          value={detail}
-          onChange={handleRoomDescriptionChange}
+          value={details}
+          onChange={handleDetailsChange}
           placeholder="설명을 입력해주세요."
         />
       </Section>
@@ -99,6 +124,8 @@ export default function CreateRoomForm() {
             id="total"
             placeholder="최대 인원 수를 선택해주세요."
             required
+            value={total}
+            onChange={handleTotalChange}
           >
             <option value="" disabled selected>
               최대 인원 수를 선택해주세요.
@@ -117,15 +144,21 @@ export default function CreateRoomForm() {
       <Section>
         <Label htmlFor="theme">테마 *</Label>
         <div style={{ width: '100%', display: 'flex' }}>
-          <Select id="theme" placeholder="테마를 선택해주세요." required>
+          <Select
+            id="theme"
+            placeholder="테마를 선택해주세요."
+            required
+            value={theme}
+            onChange={handleThemeChange}
+          >
             <option value="" disabled selected>
               원하는 방 테마를 선택해주세요.
             </option>
-            <option value="theme1">모닥불</option>
-            <option value="theme2">바다</option>
-            <option value="theme3">캠핑</option>
-            <option value="theme4">여행</option>
-            <option value="theme5">우주인</option>
+            <option value="fire">모닥불</option>
+            <option value="ocean">바다</option>
+            <option value="camping">캠핑</option>
+            <option value="travel">여행</option>
+            <option value="cosmos">우주인</option>
           </Select>
           <SelectIcon>
             <Up />
@@ -138,7 +171,7 @@ export default function CreateRoomForm() {
   );
 }
 
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -197,6 +230,9 @@ const TagComponent = styled.div`
 const TagButton = styled.button`
   cursor: pointer;
   margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Tag = styled.div`
