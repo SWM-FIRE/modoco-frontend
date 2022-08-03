@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import RoomCards from '../components/main/RoomCards';
 import Header from '../components/main/Header';
 import MainTitle from '../components/main/MainTitle';
 import Modal from '../components/layout/Modal';
 import LoginModal from '../components/login/LoginModal';
+import useSetSelf from '../hooks/useSetSelf';
 import UserStore from '../stores/userStore';
 import ModalStore from '../stores/createRoomModalStore';
 import CreateRoomModal from '../components/main/CreateRoomModal';
@@ -24,10 +25,10 @@ export default function Main() {
     }
   }, []);
 
+  useSetSelf();
   const closeModalHandler = () => {
     setIsModal(false);
   };
-
   const openModalHandler = () => {
     setIsModal(true);
   };
