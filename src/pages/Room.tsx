@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Header from '../components/room/Header';
 import ScreenShare from '../components/room/ScreenShare';
 import Sidebar from '../components/room/Sidebar';
@@ -16,7 +16,6 @@ import { history } from '../hooks/useHistory';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 
 export default function Room() {
-  const navigate = useNavigate();
   const { roomId } = useParams();
   const { isOpen } = controlModal();
   const { setUsers } = connectedUsersStore();
@@ -27,12 +26,6 @@ export default function Room() {
   const { enablePrevent, disablePrevent } = usePreventLeave();
 
   useEffect(() => {
-    if (!localStorage.getItem('uid') || !localStorage.getItem('nickname')) {
-      alert('로그인 후 이용해주세요');
-      roomSocket.emit('leaveRoom', roomId);
-      stopMediaStream();
-      navigate('/main');
-    }
     enablePrevent();
     const unlistenHistoryEvent = history.listen(({ action }) => {
       if (action === 'POP') {

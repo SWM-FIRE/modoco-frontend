@@ -193,7 +193,7 @@ const usePeerConnection = () => {
     roomSocket.off('call-made').on('call-made', onCallMade);
     roomSocket.off('answer-made').on('answer-made', onAnswerMade);
     roomSocket.off('ice-candidate').on('ice-candidate', onIceCandidateRecieved);
-  }, [userMediaStream, pcs, connectedUsers]);
+  }, [userMediaStream, pcs]);
 };
 
 export default usePeerConnection;
