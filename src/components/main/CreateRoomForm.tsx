@@ -5,7 +5,12 @@ export default function CreateRoomForm() {
     <Form>
       <Section>
         <Label htmlFor="name">방 이름*</Label>
-        <Input id="name" type="text" placeholder="방 이름을 입력해주세요." />
+        <Input
+          id="name"
+          type="text"
+          placeholder="방 이름을 입력해주세요."
+          required
+        />
       </Section>
       <Section>
         <Label htmlFor="description">설명*</Label>
@@ -13,10 +18,11 @@ export default function CreateRoomForm() {
           id="description"
           type="text"
           placeholder="설명을 입력해주세요."
+          required
         />
       </Section>
       <Section>
-        <Label htmlFor="tag">태그*</Label>
+        <Label htmlFor="tag">태그</Label>
         <Input
           id="tag"
           type="text"
@@ -26,7 +32,10 @@ export default function CreateRoomForm() {
       </Section>
       <Section>
         <Label htmlFor="max">최대 인원 수*</Label>
-        <Select id="max" placeholder="최대 인원 수를 선택해주세요.">
+        <Select id="max" placeholder="최대 인원 수를 선택해주세요." required>
+          <option value="" disabled selected>
+            최대 인원 수를 선택해주세요.
+          </option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -35,7 +44,10 @@ export default function CreateRoomForm() {
       </Section>
       <Section>
         <Label htmlFor="theme">테마*</Label>
-        <Select id="theme" placeholder="테마를 선택해주세요.">
+        <Select id="theme" placeholder="테마를 선택해주세요." required>
+          <option value="" disabled selected>
+            원하는 방 테마를 선택해주세요.
+          </option>
           <option value="theme1">모닥불</option>
           <option value="theme2">바다</option>
           <option value="theme3">캠핑</option>
@@ -63,7 +75,7 @@ const Section = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 2.9rem;
   width: 100%;
 `;
 
@@ -98,6 +110,13 @@ const Select = styled.select`
   background-color: #080909;
   border-radius: 0.6rem;
   padding: 0 1.6rem;
+
+  :required:invalid {
+    color: #909090;
+  }
+  option[value=''][disabled] {
+    display: none;
+  }
 `;
 
 const Submit = styled.button`
