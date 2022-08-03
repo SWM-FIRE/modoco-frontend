@@ -116,8 +116,8 @@ const Message = styled.div<userInterface>`
   overflow: hidden;
   border-radius: ${({ isMe }) =>
     isMe ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
-  background-color: ${({ isMe }) =>
-    isMe ? 'rgb(53, 55, 65)' : 'rgb(31, 35, 49)'};
+  background-color: ${({ isMe, theme }) =>
+    isMe ? theme.myChat : theme.otherChat};
 `;
 
 const Time = styled.div`
