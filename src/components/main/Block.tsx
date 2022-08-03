@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import UserStore from '../../stores/userStore';
 import blockInterface from '../../interface/block.interface';
 import MyAvatar from '../../assets/avatar/MyAvatar';
-import Theme from './Theme';
+import ThemeImage from '../atoms/ThemeImages';
 import { ReactComponent as Bar } from '../../assets/svg/Room/Bar.svg';
 
 export default function Block({
@@ -18,8 +19,13 @@ export default function Block({
   theme,
 }: blockInterface) {
   const navigate = useNavigate();
+  const { nickname } = UserStore();
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    if (!nickname) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
     navigate(`/ready/${itemId}`);
   };
   return (
@@ -39,10 +45,13 @@ export default function Block({
           ))}
         </Tags>
         <Detail>
-          <Theme theme={theme} />
+          <ThemeImage theme={theme} />
           <Bar />
           <Attend>
-            {total}중 {current}명 참여중
+            <div style={{ marginTop: '-0.3rem' }}>🔥</div>
+            <div>{total}중</div>
+            <div>{current}명</div>
+            <div>참여중</div>
           </Attend>
         </Detail>
       </DetailContainer>
@@ -135,13 +144,20 @@ const Nickname = styled.span`
 
 const Detail = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 0.4rem;
+  height: 2rem;
+  font-size: 1.4rem;
+  font-family: IBMPlexMonoRegular;
 `;
 
 const Attend = styled.div`
-  color: white;
-  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 0.3rem;
 `;
 
 const Container = styled.div<{ main: boolean }>`

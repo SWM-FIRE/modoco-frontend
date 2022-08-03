@@ -36,7 +36,7 @@ export const roomConnection = (roomId) => {
       console.log('[roomConnection] UID가 존재하지 않음');
     }
 
-    roomSocket.off('joinedRoom').on('joinedRoom', ({ room }) => {
+    roomSocket.off('joinedRoom').on('joinedRoom', (room) => {
       console.log('[roomConnection] joinedRoom', room);
     });
 

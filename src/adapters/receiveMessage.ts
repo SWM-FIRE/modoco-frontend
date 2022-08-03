@@ -20,8 +20,9 @@ const onChatMessage = () => {
         : connectedUsers.filter((user) => user.uid === receiveMsg.sender)[0];
 
       setMessages([
-        ...messages.map((m) => {
+        ...messages.map((m, index) => {
           if (
+            index === messages.length - 1 &&
             m.uid === receiveMsg.sender &&
             moment(m.createdAt).format('LT') ===
               moment(receiveMsg.createdAt).format('LT')

@@ -1,62 +1,75 @@
+import { useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as Fire } from '../../assets/svg/Room/Fire.svg';
-import { ReactComponent as Cosmos } from '../../assets/svg/Room/Cosmos.svg';
-import { ReactComponent as Camping } from '../../assets/svg/Room/Camping.svg';
-import { ReactComponent as Ocean } from '../../assets/svg/Room/Ocean.svg';
-import { ReactComponent as Travel } from '../../assets/svg/Room/Travel.svg';
+import Lottie from 'lottie-web';
+import fireJson from '../../assets/theme/fire.json';
+import oceanJson from '../../assets/theme/ocean.json';
+import campingJson from '../../assets/theme/camping.json';
+import travelJson from '../../assets/theme/travel.json';
+import cosmosJson from '../../assets/theme/cosmos.json';
 
 export default function Theme({ theme }: { theme: string }) {
-  console.log(theme);
+  let themeName;
+  let themeJson;
+  const themeRef = useRef<HTMLDivElement>(null);
+
   switch (theme) {
     case 'fire':
-      return (
-        <Component>
-          <Fire />
-          <Name>모닥불</Name>
-        </Component>
-      );
-    case 'cosmos':
-      return (
-        <Component>
-          <Cosmos />
-          <Name>우주인</Name>
-        </Component>
-      );
-    case 'camping':
-      return (
-        <Component>
-          <Camping />
-          <Name>캠핑</Name>
-        </Component>
-      );
+      themeName = '모닥불';
+      themeJson = fireJson;
+      break;
     case 'ocean':
-      return (
-        <Component>
-          <Ocean />
-          <Name>바다</Name>
-        </Component>
-      );
+      themeName = '바다';
+      themeJson = oceanJson;
+      break;
+    case 'camping':
+      themeName = '캠핑';
+      themeJson = campingJson;
+      break;
+    case 'cosmos':
+      themeName = '우주인';
+      themeJson = cosmosJson;
+      break;
     case 'travel':
-      return (
-        <Component>
-          <Travel />
-          <Name>여행</Name>
-        </Component>
-      );
+      themeName = '여행';
+      themeJson = travelJson;
+      break;
     default:
-      return (
-        <Component>
-          <Fire />
-          <Name>모닥불</Name>
-        </Component>
-      );
+      themeName = '모닥불';
+      themeJson = fireJson;
   }
+
+  useEffect(() => {
+    Lottie.loadAnimation({
+      container: themeRef.current,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: themeJson,
+    });
+  }, []);
+  return (
+    <Component>
+      <ThemeImage>
+        <div ref={themeRef} />
+      </ThemeImage>
+      <Name>{themeName}</Name>
+    </Component>
+  );
 }
 
 const Component = styled.div`
   display: flex;
   align-items: center;
   gap: 0.4rem;
+`;
+
+const ThemeImage = styled.div`
+  width: 2rem;
+  height: 2rem;
+  div {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const Name = styled.span`
