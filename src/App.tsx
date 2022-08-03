@@ -7,6 +7,7 @@ import Room from './pages/Room';
 import Ready from './pages/Ready';
 import LandingPage from './pages/LandingPage';
 import Main from './pages/Main';
+import Test from './pages/Test';
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/ready">
             <Route path=":roomId" element={<Ready />} />
           </Route>
+          <Route path="/test" element={<Test />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
