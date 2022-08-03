@@ -87,7 +87,7 @@ const Component = styled.div`
   height: calc(100% - 17.8rem);
   font-family: IBMPlexSansKRRegular;
   font-size: 1.3rem;
-  color: #6b7280;
+  color: #9ca3af;
 `;
 
 const Title = styled.div`

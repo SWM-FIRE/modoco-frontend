@@ -33,7 +33,7 @@ const Component = styled.div`
   font-size: 1.3rem;
   border-bottom: 1px solid rgba(55, 65, 81, 1);
   padding-bottom: 2.2rem;
-  color: #6b7280;
+  color: #9ca3af;
 `;
 
 const Title = styled.div``;
