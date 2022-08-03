@@ -22,7 +22,6 @@ export default function Block({
     event.preventDefault();
     navigate(`/ready/${itemId}`);
   };
-  console.log(theme);
   return (
     <Container main={isMain}>
       <AvatarContainer>

@@ -32,12 +32,35 @@ export default function UserInput({
   };
 
   useEffect(() => {
-    if (!localStorage.getItem('uid')) {
+    /**
+     * @brief 유저 정보 수정
+     * validUID인 경우 -> 유저 정보 수정
+     * invalidUID인 경우 -> 유저 정보 생성
+     */
+    if (localStorage.getItem('uid')) {
+      const myUid = localStorage.getItem('uid');
+      setUid(myUid);
+      console.log('my uid', myUid);
+      axios.get((API.USER as string) + myUid).then((res) => {
+        console.log('axios good');
+        if (res.data.uid) {
+          // valid uid
+          console.log('valid uid', res.data.uid);
+          type = 'put';
+        } else {
+          console.log('will post');
+          // invalid uid
+          type = 'post';
+        }
+      });
+    } else {
+      console.log('uid is null');
+      // no uid
       const newUID = uuidv4();
       setUid(newUID);
       localStorage.setItem('uid', newUID);
       type = 'post';
-    } else type = 'put';
+    }
   }, []);
 
   const userRequest = async (newUser: userInterface) => {
