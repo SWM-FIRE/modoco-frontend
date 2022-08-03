@@ -34,6 +34,8 @@ export default function Scrolls() {
               tags,
               itemId,
               theme,
+              current,
+              total,
             }: blockInterface) => {
               return (
                 <Block
@@ -44,8 +46,8 @@ export default function Scrolls() {
                   title={title}
                   details={details}
                   tags={tags}
-                  current={0}
-                  total={0}
+                  current={current}
+                  total={total}
                   theme={theme}
                 />
               );
