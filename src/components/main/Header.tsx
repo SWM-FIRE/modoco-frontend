@@ -10,6 +10,7 @@ export default function Header({ modalHandler }: { modalHandler: () => void }) {
   const clickLogo = () => {
     navigate('/#/');
   };
+
   return (
     <Container>
       <Logo onClick={clickLogo}>modoco</Logo>
