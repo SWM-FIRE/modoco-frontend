@@ -48,13 +48,13 @@ const Close = styled.div`
 
 const ModalBackground = styled.div`
   position: fixed;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.7);
   justify-content: center;
   align-items: center;
-  top: 0;
   display: flex;
+  top: 0;
   z-index: 999;
 `;
 
@@ -62,11 +62,12 @@ const ModalBox = styled.div`
   position: fixed;
   background-color: #23262f;
   border-radius: 2rem;
-  display: flex;
   width: 60.8rem;
+  height: 90%;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 16rem;
   padding: 3.2rem;
+  /* overflow: auto; */
 `;
