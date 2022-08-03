@@ -1,14 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import modal from '../../stores/createRoomModalStore';
 
 export default function CreateRoom() {
+  const { openModal } = modal();
+
   return (
     <Container>
       <DetailContainer>
         <Title>새로 방 생성</Title>
         <Detail>우리모두 모여서 도란도란 코딩해요.</Detail>
       </DetailContainer>
-      <Enter>방 만들기 →</Enter>
+      <Enter onClick={openModal}>방 만들기 →</Enter>
     </Container>
   );
 }

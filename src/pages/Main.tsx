@@ -6,10 +6,14 @@ import MainTitle from '../components/main/MainTitle';
 import Modal from '../components/layout/Modal';
 import LoginModal from '../components/login/LoginModal';
 import UserStore from '../stores/userStore';
+import ModalStore from '../stores/createRoomModalStore';
+import CreateRoomModal from '../components/main/CreateRoomModal';
+import CreateRoomForm from '../components/main/CreateRoomForm';
 
 export default function Main() {
   const [isModal, setIsModal] = useState(false);
   const { setNickname, uid, setUid, setAvatar } = UserStore();
+  const { isOpenCreateRoomModal } = ModalStore();
 
   useEffect(() => {
     if (localStorage.getItem('uid')) {
@@ -39,6 +43,11 @@ export default function Main() {
         <Modal modalHandler={closeModalHandler}>
           <LoginModal modalHandler={closeModalHandler} />
         </Modal>
+      )}
+      {isOpenCreateRoomModal && (
+        <CreateRoomModal>
+          <CreateRoomForm />
+        </CreateRoomModal>
       )}
     </>
   );
