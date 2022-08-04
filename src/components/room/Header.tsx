@@ -64,7 +64,7 @@ const Component = styled.div`
 const Button = styled.button`
   display: inline-flex;
   align-items: center;
-  border: 1px solid #94a3b8;
+  border: 1px solid #e5e7eb;
   border-radius: 5rem;
   cursor: pointer;
   color: #f9fafb;
