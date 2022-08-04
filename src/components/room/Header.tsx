@@ -9,7 +9,7 @@ import connectedUsersStore from '../../stores/connectedUsersStore';
 import messageStore from '../../stores/messagesStore';
 import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 
-export default function Header() {
+export default function Header({ theme }) {
   const navigate = useNavigate();
   const { roomId } = useParams();
   const { setUsers } = connectedUsersStore();
@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <Component>
-      <Theme />
+      <Theme theme={theme} />
       <Center>
         <Timer />
         <Settings />

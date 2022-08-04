@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import MovingTheme from './MovingTheme';
 import { ReactComponent as VolumeOn } from '../../assets/svg/VolumeOn.svg';
 import { ReactComponent as VolumeOff } from '../../assets/svg/VolumeOff.svg';
-import Fire from '../../assets/theme/fire.gif';
 import UserMediaStreamStore from '../../stores/userMediaStreamStore';
 
-export default function Theme() {
+export default function Theme({ theme }) {
   const { userSpeaker, setUserSpeaker } = UserMediaStreamStore();
   const [volume, setVolume] = useState<number>(0.5);
   const setSpeaker = () => {
@@ -13,9 +13,7 @@ export default function Theme() {
   };
   return (
     <Container>
-      <ThemeImage>
-        <img src={Fire} alt="fire" />
-      </ThemeImage>
+      <MovingTheme theme={theme} size="3.2" />
       <Volume onClick={setSpeaker}>
         {userSpeaker && volume !== 0 ? <VolumeOn /> : <VolumeOff />}
       </Volume>
@@ -109,14 +107,4 @@ const Volume = styled.button`
 const Container = styled.div`
   display: flex;
   height: 3.2rem;
-`;
-
-const ThemeImage = styled.div`
-  width: 3.2rem;
-  height: 100%;
-  img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
 `;

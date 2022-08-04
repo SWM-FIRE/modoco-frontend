@@ -40,7 +40,7 @@ export default function RoomCards() {
               <Block
                 isMain
                 itemId={itemId}
-                key={moderator.nickname}
+                key={itemId}
                 moderator={moderator}
                 title={title}
                 details={details}
