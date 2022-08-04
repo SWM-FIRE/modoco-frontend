@@ -1,13 +1,6 @@
 import styled, { ThemeProvider } from 'styled-components';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  themeOcean,
-  themeCamping,
-  themeCosmos,
-  themeFire,
-  themeTravel,
-} from '../styles/theme';
 import Header from '../components/room/Header';
 import ScreenShare from '../components/room/ScreenShare';
 import Sidebar from '../components/room/Sidebar';
@@ -21,6 +14,7 @@ import roomSocket from '../adapters/roomSocket';
 import usePeerConnection from '../hooks/usePeerConnection';
 import onChatMessage from '../adapters/receiveMessage';
 import { history } from '../hooks/useHistory';
+import { getTheme } from '../styles/getTheme';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 
 export default function Room() {
@@ -29,26 +23,7 @@ export default function Room() {
   const { setUsers } = connectedUsersStore();
   const { stopMediaStream } = useCreateMediaStream();
   const { data } = useRoom(roomId);
-  let theme;
-  switch (data.theme) {
-    case 'ocean':
-      theme = themeOcean;
-      break;
-    case 'fire':
-      theme = themeFire;
-      break;
-    case 'camping':
-      theme = themeCamping;
-      break;
-    case 'cosmos':
-      theme = themeCosmos;
-      break;
-    case 'travel':
-      theme = themeTravel;
-      break;
-    default:
-      theme = themeFire;
-  }
+  const theme = getTheme(data?.theme);
   roomConnection(roomId);
   onChatMessage();
   usePeerConnection();
@@ -72,7 +47,7 @@ export default function Room() {
   return (
     <ThemeProvider theme={theme}>
       <Component>
-        <Header />
+        <Header theme={data?.theme} />
         <Contents>
           <ScreenShare />
           <Sidebar />
