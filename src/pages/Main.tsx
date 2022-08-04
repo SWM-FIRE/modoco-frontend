@@ -1,31 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import UserStore from '../stores/userStore';
 import RoomCards from '../components/main/RoomCards';
 import Header from '../components/main/Header';
 import MainTitle from '../components/main/MainTitle';
 import Modal from '../components/layout/Modal';
 import LoginModal from '../components/login/LoginModal';
 import useSetSelf from '../hooks/useSetSelf';
-import UserStore from '../stores/userStore';
 import ModalStore from '../stores/createRoomModalStore';
 import CreateRoomModal from '../components/main/CreateRoomModal';
 import CreateRoomForm from '../components/main/CreateRoomForm';
 
 export default function Main() {
   const [isModal, setIsModal] = useState(false);
-  const { setNickname, uid, setUid, setAvatar } = UserStore();
   const { isOpenCreateRoomModal } = ModalStore();
-
-  useEffect(() => {
-    if (localStorage.getItem('uid')) {
-      console.log('existing user', uid);
-      setNickname(localStorage.getItem('nickname'));
-      setUid(localStorage.getItem('uid'));
-      setAvatar(localStorage.getItem('avatar'));
-    }
-  }, []);
+  const { nickname } = UserStore();
+  const navigate = useNavigate();
 
   useSetSelf();
+  useEffect(() => {
+    if (!nickname) {
+      navigate('/');
+    }
+  });
   const closeModalHandler = () => {
     setIsModal(false);
   };

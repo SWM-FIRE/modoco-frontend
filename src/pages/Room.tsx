@@ -22,7 +22,7 @@ export default function Room() {
   const { isOpen } = controlModal();
   const { setUsers } = connectedUsersStore();
   const { stopMediaStream } = useCreateMediaStream();
-  const { data } = useRoom(roomId);
+  const { isLoading, error, data } = useRoom(roomId);
   roomConnection(roomId);
   onChatMessage();
   usePeerConnection();
@@ -42,6 +42,11 @@ export default function Room() {
     });
     return disablePrevent && unlistenHistoryEvent;
   }, [history]);
+
+  if (isLoading)
+    return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
+
+  if (error) return <div>An error has occurred: </div>;
 
   return (
     <ThemeProvider theme={getTheme(data?.theme)}>
