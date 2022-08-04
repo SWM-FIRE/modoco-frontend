@@ -57,13 +57,21 @@ export default function SingleScreen({ nickname, avatar, uid, stream }) {
   );
 }
 
-const ChatInner = styled.div`
+const Container = styled.div`
+  background-color: #4a4a4a;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  bottom: 0;
-  gap: 1rem;
+  justify-content: center;
+  @media (max-width: 900px) {
+    width: 90%;
+    height: 0;
+    padding-bottom: 60%;
+  }
+  width: 48%;
+  height: 0;
+  border-radius: 1rem;
+  padding-bottom: 28%;
+  position: relative;
 `;
 
 const ControlBar = styled.div`
@@ -74,6 +82,15 @@ const ControlBar = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const ChatInner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  gap: 1rem;
 `;
 
 const ChatContainer = styled.div`
@@ -108,33 +125,17 @@ const NameContainer = styled.div`
 `;
 
 const AvatarPosition = styled.div`
-  bottom: calc(-5% - 4rem);
+  bottom: calc(-5% - 3rem);
   height: calc(10% + 6rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 100%;
+  position: absolute;
   svg {
     height: 100%;
   }
-  position: absolute;
-`;
-
-const Container = styled.div`
-  cursor: pointer;
-  background-color: #4a4a4a;
-  display: flex;
-  justify-content: center;
-  @media (max-width: 900px) {
-    width: 60%;
-    height: 0;
-    padding-bottom: 38%;
-  }
-  width: 36%;
-  height: 0;
-  border-radius: 1rem;
-  padding-bottom: 22%;
-  position: relative;
 `;
 
 const Video = styled.video`
