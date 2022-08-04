@@ -77,7 +77,6 @@ const Entrance = styled.div`
 const Component = styled.li<componentInterface>`
   display: flex;
   flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
-  width: 100%;
   gap: 1.6rem;
   margin-top: ${({ isHide }) => (isHide ? '1rem' : '2rem')};
 `;
@@ -94,6 +93,7 @@ const AvatarComponent = styled.div<hideInterface>`
 const MessageComponent = styled.div<userInterface>`
   display: flex;
   flex-direction: column;
+  width: 100%;
   align-items: ${({ isMe }) => (isMe ? 'flex-end' : 'flex-start')};
 `;
 
@@ -102,18 +102,17 @@ const Nickname = styled.div<userInterface>``;
 const MessageBox = styled.div<userInterface>`
   display: flex;
   flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
-  justify-content: center;
   align-items: flex-end;
   margin-top: 0.4rem;
-  overflow: hidden;
+  width: 100%;
   gap: 0.3rem;
+  word-break: break-all;
 `;
 
 const Message = styled.div<userInterface>`
   color: rgb(255, 255, 255);
   font-size: 1.5rem;
   padding: 1.6rem;
-  overflow: hidden;
   border-radius: ${({ isMe }) =>
     isMe ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
   background-color: ${({ isMe, theme }) =>
