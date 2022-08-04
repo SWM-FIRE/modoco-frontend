@@ -1,10 +1,9 @@
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { API } from '../config';
 
 const getRoom = async (roomId) => {
-  const { data } = await axios.get(
-    `https://xn--hq1br4kwqt.com/api/v1/rooms/${roomId}`,
-  );
+  const { data } = await axios.get(`${API.ROOM}${roomId}`);
   return data;
 };
 
