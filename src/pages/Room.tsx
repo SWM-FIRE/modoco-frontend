@@ -23,7 +23,6 @@ export default function Room() {
   const { setUsers } = connectedUsersStore();
   const { stopMediaStream } = useCreateMediaStream();
   const { data } = useRoom(roomId);
-  const theme = getTheme(data?.theme);
   roomConnection(roomId);
   onChatMessage();
   usePeerConnection();
@@ -45,11 +44,11 @@ export default function Room() {
   }, [history]);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={getTheme(data?.theme)}>
       <Component>
         <Header theme={data?.theme} />
         <Contents>
-          <ScreenShare />
+          <ScreenShare theme={data?.theme} />
           <Sidebar />
         </Contents>
       </Component>

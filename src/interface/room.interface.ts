@@ -1,8 +1,12 @@
+import User from './user.interface';
+
 export default interface roomInterface {
-  name: string;
-  total: number;
-  current: number;
+  itemId: number;
+  moderator: User;
+  title: string;
+  details?: number;
   id: string;
-  image: string;
-  tags: [];
+  current: string;
+  total: string;
+  theme: string;
 }

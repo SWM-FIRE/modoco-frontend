@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../assets/avatar/MyAvatar';
+import UserStore from '../../stores/userStore';
 import controlModal from '../../stores/controlModal';
 import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 import messageStore from '../../stores/messagesStore';
 
-export default function LocalScreen({ nickname, avatar, uid }) {
+export default function LocalScreen() {
+  const { nickname, avatar, uid } = UserStore();
   const { messages } = messageStore();
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const { userMediaStream } = useCreateMediaStream();
@@ -58,17 +60,19 @@ export default function LocalScreen({ nickname, avatar, uid }) {
 }
 
 const Container = styled.div`
-  position: relative;
+  background-color: #4a4a4a;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
   @media (max-width: 900px) {
-    width: 60%;
+    width: 90%;
     height: 0;
-    padding-bottom: 38%;
+    padding-bottom: 60%;
   }
-  width: 36%;
+  width: 48%;
   height: 0;
-  padding-bottom: 22%;
   border-radius: 1rem;
+  padding-bottom: 28%;
   position: relative;
 `;
 
@@ -123,16 +127,17 @@ const NameContainer = styled.div`
 `;
 
 const AvatarPosition = styled.div`
-  bottom: calc(-5% - 4rem);
+  bottom: calc(-5% - 3rem);
   height: calc(10% + 6rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 100%;
+  position: absolute;
   svg {
     height: 100%;
   }
-  position: absolute;
 `;
 
 const Video = styled.video`

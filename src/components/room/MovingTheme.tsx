@@ -66,12 +66,12 @@ export default function MovingTheme({
 
 const File = styled.div`
   position: absolute;
+  height: 100%;
   width: 100%;
 `;
 
 const Image = styled.div<{ size: string }>`
   width: ${(props) => `${props.size}rem`}; // change image size
   height: ${(props) => `${props.size}rem`};
-  border: 0px;
   position: relative;
 `;
