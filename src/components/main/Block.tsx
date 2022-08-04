@@ -6,7 +6,6 @@ import blockInterface from '../../interface/block.interface';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import ThemeImage from '../atoms/ThemeImages';
 import { ReactComponent as Bar } from '../../assets/svg/Room/Bar.svg';
-import useRoom from '../../hooks/useRoom';
 
 export default function Block({
   isMain,
@@ -21,7 +20,6 @@ export default function Block({
 }: blockInterface) {
   const navigate = useNavigate();
   const { nickname } = UserStore();
-  const { data } = useRoom(itemId);
 
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -29,9 +27,8 @@ export default function Block({
       alert('로그인이 필요합니다.');
       return;
     }
-
-    if (data.current === data.total) {
-      alert('방이 이미 초과되었습니다.');
+    if (current === total) {
+      alert(`해당 방이 꽉 찼습니다.`);
       return;
     }
 

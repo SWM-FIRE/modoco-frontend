@@ -53,7 +53,8 @@ export default function CreateRoomForm() {
     setTags(tags.filter((_, i) => i !== index));
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     axios
       .post(API.ROOM, {
         moderator: {

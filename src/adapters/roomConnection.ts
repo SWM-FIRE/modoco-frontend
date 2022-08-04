@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import roomSocket from './roomSocket';
 import messageStore from '../stores/messagesStore';
@@ -7,6 +8,7 @@ import userPcStore from '../stores/userPcStore';
 import { API } from '../config';
 
 export const roomConnection = (roomId) => {
+  const navigate = useNavigate();
   const { connectedUsers, appendUser, removeUser, findUser } =
     connectedUsersStore();
   const { appendMessages } = messageStore();
@@ -38,6 +40,12 @@ export const roomConnection = (roomId) => {
 
     roomSocket.off('joinedRoom').on('joinedRoom', (room) => {
       console.log('[roomConnection] joinedRoom', room);
+    });
+
+    roomSocket.off('roomFull').on('roomFull', (room) => {
+      alert(`해당 방이 꽉 찼습니다.`);
+      console.log(room);
+      navigate('/main');
     });
 
     roomSocket
