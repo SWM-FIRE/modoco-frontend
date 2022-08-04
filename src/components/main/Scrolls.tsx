@@ -41,7 +41,7 @@ export default function Scrolls() {
                 <Block
                   isMain={false}
                   itemId={itemId}
-                  key={moderator.nickname}
+                  key={itemId}
                   moderator={moderator}
                   title={title}
                   details={details}
