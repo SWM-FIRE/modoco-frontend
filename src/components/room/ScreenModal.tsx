@@ -24,18 +24,16 @@ export default function ScreenModal() {
 
   return (
     <ModalPortal>
-      <ModalBackground>
-        <ModalBox>
-          <ModalController>
-            <ArrowBox onClick={toggleModal}>
-              <LeftArrow />
-            </ArrowBox>
-            <MyAvatar num={Number(avatar)} />
-            <Nickname>{nickname}</Nickname>
-          </ModalController>
-          <ModalVideo ref={videoRef} autoPlay playsInline />
-        </ModalBox>
-      </ModalBackground>
+      <ModalBox>
+        <ModalController>
+          <ArrowBox onClick={toggleModal}>
+            <LeftArrow />
+          </ArrowBox>
+          <MyAvatar num={Number(avatar)} />
+          <Nickname>{nickname}</Nickname>
+        </ModalController>
+        <ModalVideo ref={videoRef} autoPlay playsInline />
+      </ModalBox>
     </ModalPortal>
   );
 }
@@ -69,27 +67,17 @@ const ArrowBox = styled.div`
   cursor: pointer;
 `;
 
-const ModalBackground = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  top: -7rem;
-  display: flex;
-  z-index: 999;
-`;
-
 const ModalBox = styled.div`
-  position: absolute;
-  top: 18rem;
-  left: 3rem;
+  position: fixed;
+  top: 12rem;
+  left: 4rem;
   width: calc(100% - 50rem);
-  height: calc(100% - 22rem);
+  height: calc(100% - 14rem);
   background-color: #0d0e13;
   padding-left: 1.43rem;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   overflow: auto;
+  z-index: 999;
 `;
