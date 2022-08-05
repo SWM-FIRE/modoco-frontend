@@ -24,6 +24,7 @@ export default function Screen({ video: videoRef }) {
       createMediaStream();
     }
   };
+
   return (
     <Container>
       <MyScreen ref={videoRef} autoPlay playsInline muted />

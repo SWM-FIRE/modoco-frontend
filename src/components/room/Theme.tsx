@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import MovingTheme from './MovingTheme';
+import MovingTheme from './screenShare/MovingTheme';
 import { ReactComponent as VolumeOn } from '../../assets/svg/VolumeOn.svg';
 import { ReactComponent as VolumeOff } from '../../assets/svg/VolumeOff.svg';
 import UserMediaStreamStore from '../../stores/userMediaStreamStore';

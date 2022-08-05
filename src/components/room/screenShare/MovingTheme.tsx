@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { useEffect, useRef } from 'react';
 import Lottie from 'lottie-web';
-import FireJson from '../../assets/theme/fire.json';
-import OceanJson from '../../assets/theme/ocean.json';
-import CosmosJson from '../../assets/theme/cosmos.json';
-import TraveelJson from '../../assets/theme/travel.json';
-import CampingJson from '../../assets/theme/camping.json';
+import FireJson from '../../../assets/theme/fire.json';
+import OceanJson from '../../../assets/theme/ocean.json';
+import CosmosJson from '../../../assets/theme/cosmos.json';
+import TravelJson from '../../../assets/theme/travel.json';
+import CampingJson from '../../../assets/theme/camping.json';
 
 export default function MovingTheme({
   theme,
@@ -36,7 +36,7 @@ export default function MovingTheme({
       viewBoxSize = '250 50 1100 1100';
       break;
     case 'travel':
-      myTheme = TraveelJson;
+      myTheme = TravelJson;
       viewBoxSize = '250 50 1100 1100';
       break;
     default:

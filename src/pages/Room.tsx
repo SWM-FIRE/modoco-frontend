@@ -5,12 +5,12 @@ import onChatMessage from '../adapters/receiveMessage';
 import { roomConnection } from '../adapters/roomConnection';
 import useRoom from '../hooks/useRoom';
 import usePeerConnection from '../hooks/usePeerConnection';
+import usePopHistory from '../hooks/usePopHistory';
 import controlModal from '../stores/controlModal';
-import Header from '../components/room/Header';
-import ScreenShare from '../components/room/ScreenShare';
-import Sidebar from '../components/room/Sidebar';
+import Header from '../components/room/header/Header';
+import ScreenShare from '../components/room/screenShare/ScreenShare';
+import Sidebar from '../components/room/sideBar/Sidebar';
 import ScreenShareModal from '../components/room/ScreenModal';
-import goBack from '../components/room/goBack';
 
 export default function Room() {
   const { roomId } = useParams();
@@ -19,7 +19,7 @@ export default function Room() {
   roomConnection(roomId);
   onChatMessage();
   usePeerConnection();
-  goBack(roomId);
+  usePopHistory(roomId);
 
   if (isLoading)
     return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;

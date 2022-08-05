@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import Timer from './Timer';
 import Settings from './Settings';
-import { ReactComponent as X } from '../../assets/svg/X.svg';
-import Theme from './Theme';
-import roomSocket from '../../adapters/roomSocket';
-import connectedUsersStore from '../../stores/connectedUsersStore';
-import messageStore from '../../stores/messagesStore';
-import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
+import { ReactComponent as X } from '../../../assets/svg/X.svg';
+import Theme from '../Theme';
+import roomSocket from '../../../adapters/roomSocket';
+import connectedUsersStore from '../../../stores/connectedUsersStore';
+import messageStore from '../../../stores/messagesStore';
+import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 
 export default function Header({ theme }) {
   const navigate = useNavigate();

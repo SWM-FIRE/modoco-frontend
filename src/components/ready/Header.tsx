@@ -17,6 +17,7 @@ export default function Header() {
     }
     navigate(`/`);
   };
+
   return (
     <Container>
       <LeftArrowPosition onClick={backToMain}>

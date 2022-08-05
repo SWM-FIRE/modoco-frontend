@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import MyAvatar from '../../assets/avatar/MyAvatar';
+import MyAvatar from '../../../assets/avatar/MyAvatar';
 // import { ReactComponent as MicOff } from '../../assets/svg/SmallMicOff.svg';
-import { ReactComponent as MicOn } from '../../assets/svg/SmallMicOn.svg';
+import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
 
 export default function SingleParticipant({
   nickname,

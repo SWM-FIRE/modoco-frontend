@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import SingleCard from './SingleCard';
+import Card from './card/Card';
 
 export default function RoomDetail({ roomNo: roomId }) {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function RoomDetail({ roomNo: roomId }) {
 
   return (
     <Container>
-      <SingleCard room={roomId} />
+      <Card room={roomId} />
       <EnterButton onClick={enterRoom}>입장하기 →</EnterButton>
     </Container>
   );

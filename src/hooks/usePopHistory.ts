@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import roomSocket from '../../adapters/roomSocket';
-import { history } from '../../hooks/useHistory';
-import connectedUsersStore from '../../stores/connectedUsersStore';
-import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
-import usePreventLeave from '../../hooks/usePreventLeave';
-import messageStore from '../../stores/messagesStore';
+import roomSocket from '../adapters/roomSocket';
+import { history } from './useHistory';
+import connectedUsersStore from '../stores/connectedUsersStore';
+import { useCreateMediaStream } from './useCreateMediaStream';
+import usePreventLeave from './usePreventLeave';
+import messageStore from '../stores/messagesStore';
 
-export default function goBack(roomId: string) {
+export default function usePopHistory(roomId: string) {
   const { setUsers } = connectedUsersStore();
   const { stopMediaStream } = useCreateMediaStream();
   const { enablePrevent, disablePrevent } = usePreventLeave();
@@ -14,7 +14,7 @@ export default function goBack(roomId: string) {
 
   useEffect(() => {
     enablePrevent();
-    const unlistenHistoryEvent = history.listen(({ action }) => {
+    const unListenHistory = history.listen(({ action }) => {
       if (action === 'POP') {
         console.log('popping');
         setTimeout(() => {
@@ -25,6 +25,6 @@ export default function goBack(roomId: string) {
         }, 100);
       }
     });
-    return disablePrevent && unlistenHistoryEvent;
+    return disablePrevent && unListenHistory;
   }, [history]);
 }

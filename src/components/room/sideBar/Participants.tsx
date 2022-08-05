@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import SingleParticipant from './SingleParticipant';
-import connectedUsersStore from '../../stores/connectedUsersStore';
+import connectedUsersStore from '../../../stores/connectedUsersStore';
 
 export default function Participants() {
   const { connectedUsers } = connectedUsersStore();
