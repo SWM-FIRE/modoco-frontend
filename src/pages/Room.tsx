@@ -5,6 +5,7 @@ import Header from '../components/room/Header';
 import ScreenShare from '../components/room/ScreenShare';
 import Sidebar from '../components/room/Sidebar';
 import connectedUsersStore from '../stores/connectedUsersStore';
+import messageStore from '../stores/messagesStore';
 import usePreventLeave from '../hooks/usePreventLeave';
 import useRoom from '../hooks/useRoom';
 import { roomConnection } from '../adapters/roomConnection';
@@ -23,6 +24,7 @@ export default function Room() {
   const { setUsers } = connectedUsersStore();
   const { stopMediaStream } = useCreateMediaStream();
   const { isLoading, error, data } = useRoom(roomId);
+  const { setMessages } = messageStore();
   roomConnection(roomId);
   onChatMessage();
   usePeerConnection();
@@ -36,6 +38,7 @@ export default function Room() {
         setTimeout(() => {
           roomSocket.emit('leaveRoom', roomId);
           stopMediaStream();
+          setMessages([]);
           setUsers([]);
         }, 100);
       }
