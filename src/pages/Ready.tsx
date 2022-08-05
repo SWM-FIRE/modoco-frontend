@@ -25,6 +25,7 @@ export default function ReadyPage() {
     event.preventDefault();
     setUserMic();
   };
+
   const setMediaStream = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (userMediaStream) {
@@ -33,6 +34,15 @@ export default function ReadyPage() {
       createMediaStream();
     }
   };
+
+  const backToMain = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (userMediaStream) {
+      stopMediaStream();
+    }
+    navigate(`/`);
+  };
+
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     navigate(`/room/${roomId}`);
@@ -47,7 +57,7 @@ export default function ReadyPage() {
   return (
     <Container>
       <Header>
-        <LeftArrowPosition>
+        <LeftArrowPosition onClick={backToMain}>
           <LeftArrow />
         </LeftArrowPosition>
       </Header>
@@ -130,7 +140,8 @@ const Main = styled.div`
   justify-content: space-between;
 `;
 
-const LeftArrowPosition = styled.div`
+const LeftArrowPosition = styled.button`
+  cursor: pointer;
   position: absolute;
   left: 8rem;
 `;
