@@ -110,14 +110,14 @@ const NewMessage = styled.form`
   margin-top: 3rem;
   border-radius: 1rem;
   padding: 1.5rem 2rem;
-  background-color: #1b1b1e;
+  background-color: ${({ theme }) => theme.input};
 `;
 
 const Input = styled.input`
   width: calc(100% - 2.7rem);
   height: 100%;
   font-size: 1.3rem;
-  background-color: #1b1b1e;
+  background-color: ${({ theme }) => theme.input};
   font-family: IBMPlexSansKRRegular;
   color: rgba(255, 255, 255, 1);
 
