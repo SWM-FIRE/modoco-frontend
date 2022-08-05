@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
 import moment from 'moment';
-import MyAvatar from '../../assets/avatar/MyAvatar';
-import messageInterface from '../../interface/message.interface';
+import MyAvatar from '../../../assets/avatar/MyAvatar';
+import messageInterface from '../../../interface/message.interface';
 
 export default function ChattingItem({
   user,

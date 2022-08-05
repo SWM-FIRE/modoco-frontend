@@ -7,7 +7,7 @@ import messageStore from '../stores/messagesStore';
 import userPcStore from '../stores/userPcStore';
 import { API } from '../config';
 
-export const roomConnection = (roomId) => {
+export const roomConnection = (roomId: string) => {
   const navigate = useNavigate();
   const { connectedUsers, appendUser, removeUser, findUser } =
     connectedUsersStore();
