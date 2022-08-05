@@ -52,7 +52,6 @@ const Component = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: rgba(30, 39, 69); */
   background-color: ${({ theme }) => theme.header};
   width: 100%;
   height: 10rem;
