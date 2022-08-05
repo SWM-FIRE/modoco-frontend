@@ -1,19 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import MyAvatar from '../../assets/avatar/MyAvatar';
-import UserStore from '../../stores/userStore';
-import controlModal from '../../stores/controlModal';
-import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
-import messageStore from '../../stores/messagesStore';
+import MyAvatar from '../../../assets/avatar/MyAvatar';
+import controlModal from '../../../stores/controlModal';
+import messageStore from '../../../stores/messagesStore';
 
-export default function LocalScreen() {
-  const { nickname, avatar, uid } = UserStore();
+export default function SingleScreen({ nickname, avatar, uid, stream }) {
   const { messages } = messageStore();
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
-  const { userMediaStream } = useCreateMediaStream();
   const { toggleModal, setNickname, setAvatar, setUid } = controlModal();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const videoRef = useRef<HTMLVideoElement>(null);
   const OpenModal = () => {
     setNickname(nickname);
     setAvatar(avatar);
@@ -22,10 +18,11 @@ export default function LocalScreen() {
   };
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.srcObject = userMediaStream;
+    console.log('stream is ', stream);
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
     }
-  }, [videoRef, userMediaStream]);
+  }, [stream]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -39,9 +36,10 @@ export default function LocalScreen() {
       message.uid === uid &&
       new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
   );
+
   return (
     <Container onClick={OpenModal}>
-      <Video ref={videoRef} autoPlay playsInline muted />
+      <Video ref={videoRef} autoPlay playsInline />
       <ControlBar>
         <ChatContainer>
           <ChatInner>

@@ -1,47 +1,25 @@
 import styled, { ThemeProvider } from 'styled-components';
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../components/room/Header';
-import ScreenShare from '../components/room/ScreenShare';
-import Sidebar from '../components/room/Sidebar';
-import connectedUsersStore from '../stores/connectedUsersStore';
-import usePreventLeave from '../hooks/usePreventLeave';
-import useRoom from '../hooks/useRoom';
-import { roomConnection } from '../adapters/roomConnection';
-import controlModal from '../stores/controlModal';
-import ScreenShareModal from '../components/room/ScreenModal';
-import roomSocket from '../adapters/roomSocket';
-import usePeerConnection from '../hooks/usePeerConnection';
-import onChatMessage from '../adapters/receiveMessage';
-import { history } from '../hooks/useHistory';
 import { getTheme } from '../styles/getTheme';
-import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
+import onChatMessage from '../adapters/receiveMessage';
+import { roomConnection } from '../adapters/roomConnection';
+import useRoom from '../hooks/useRoom';
+import usePeerConnection from '../hooks/usePeerConnection';
+import usePopHistory from '../hooks/usePopHistory';
+import controlModal from '../stores/controlModal';
+import Header from '../components/room/header/Header';
+import ScreenShare from '../components/room/screenShare/ScreenShare';
+import Sidebar from '../components/room/sideBar/Sidebar';
+import ScreenShareModal from '../components/room/ScreenModal';
 
 export default function Room() {
   const { roomId } = useParams();
   const { isOpen } = controlModal();
-  const { setUsers } = connectedUsersStore();
-  const { stopMediaStream } = useCreateMediaStream();
   const { isLoading, error, data } = useRoom(roomId);
   roomConnection(roomId);
   onChatMessage();
   usePeerConnection();
-  const { enablePrevent, disablePrevent } = usePreventLeave();
-
-  useEffect(() => {
-    enablePrevent();
-    const unlistenHistoryEvent = history.listen(({ action }) => {
-      if (action === 'POP') {
-        console.log('popping');
-        setTimeout(() => {
-          roomSocket.emit('leaveRoom', roomId);
-          stopMediaStream();
-          setUsers([]);
-        }, 100);
-      }
-    });
-    return disablePrevent && unlistenHistoryEvent;
-  }, [history]);
+  usePopHistory(roomId);
 
   if (isLoading)
     return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;

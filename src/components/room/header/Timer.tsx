@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as Divide } from '../../assets/svg/Divide.svg';
+import { ReactComponent as Divide } from '../../../assets/svg/Divide.svg';
 
 export default function Timer() {
   const [time, setTime] = useState(0);
