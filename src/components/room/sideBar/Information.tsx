@@ -39,6 +39,7 @@ const Component = styled.div`
   color: #f9fafb;
   font-size: 1.8rem;
   gap: 0.8rem;
+  font-family: IBMPlexSansKRRegular;
 `;
 
 const ControlSidebar = styled.div`
