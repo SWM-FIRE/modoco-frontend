@@ -1,52 +1,21 @@
 import React, { useRef, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as MicOff } from '../assets/svg/MicOff.svg';
-import { ReactComponent as MicOn } from '../assets/svg/MicOn.svg';
-import { ReactComponent as MonitorOn } from '../assets/svg/MonitorOn.svg';
-import { ReactComponent as MonitorOff } from '../assets/svg/MonitorOff.svg';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
-import { ReactComponent as LeftArrow } from '../assets/svg/arrow-left.svg';
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
-import SingleCard from '../components/ready/SingleCard';
+import Header from '../components/ready/Header';
+import RoomDetail from '../components/ready/RoomDetail';
+import Screen from '../components/ready/Screen';
 
 export default function ReadyPage() {
-  const navigate = useNavigate();
-  const { userMic, setUserMic, userMediaStream } = UserMediaStreamStore();
+  const { userMediaStream } = UserMediaStreamStore();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { stopMediaStream, createMediaStream } = useCreateMediaStream();
+  const { createMediaStream } = useCreateMediaStream();
   const { roomId } = useParams();
 
   useEffect(() => {
     createMediaStream();
   }, []);
-
-  const setMic = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    setUserMic();
-  };
-
-  const setMediaStream = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (userMediaStream) {
-      stopMediaStream();
-    } else {
-      createMediaStream();
-    }
-  };
-
-  const backToMain = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (userMediaStream) {
-      stopMediaStream();
-    }
-    navigate(`/`);
-  };
-
-  const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    navigate(`/room/${roomId}`);
-  };
 
   useEffect(() => {
     if (videoRef.current) {
@@ -56,64 +25,15 @@ export default function ReadyPage() {
 
   return (
     <Container>
-      <Header>
-        <LeftArrowPosition onClick={backToMain}>
-          <LeftArrow />
-        </LeftArrowPosition>
-      </Header>
+      <Header />
       <Message>코딩방 입장 전 화면과 오디오 상태를 체크하는 곳입니다</Message>
       <Main>
-        <Screen>
-          <MyScreen ref={videoRef} autoPlay playsInline muted />
-          <Buttons>
-            <Button onClick={setMediaStream}>
-              {userMediaStream ? <MonitorOn /> : <MonitorOff />}
-            </Button>
-            <Button onClick={setMic}>{userMic ? <MicOn /> : <MicOff />}</Button>
-          </Buttons>
-        </Screen>
-        <RoomDetail>
-          <SingleCard room={roomId} />
-          <EnterButton onClick={enterRoom}>입장하기 →</EnterButton>
-        </RoomDetail>
+        <Screen video={videoRef} />
+        <RoomDetail roomNo={roomId} />
       </Main>
     </Container>
   );
 }
-
-const EnterButton = styled.button`
-  font-family: IBMPlexSansKRRegular;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f3f4f6;
-  border-radius: 5rem;
-  width: 100%;
-  height: 5.5rem;
-  cursor: pointer;
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  margin-top: 3rem;
-  align-items: center;
-  justify-content: center;
-  gap: 4rem;
-`;
-
-const Button = styled.button`
-  cursor: pointer;
-  width: 6.4rem;
-  height: 6.4rem;
-  border-radius: 5rem;
-  border: 0.15rem solid rgba(255, 255, 255, 0.4);
-`;
-
-const MyScreen = styled.video`
-  width: 100%;
-  height: 40.4rem;
-`;
 
 const Message = styled.div`
   font-family: IBMPlexSansKRRegular;
@@ -122,34 +42,12 @@ const Message = styled.div`
   font-size: 2rem;
 `;
 
-const Screen = styled.div`
-  width: 62.4rem;
-  height: 100%;
-`;
-
-const RoomDetail = styled.div`
-  width: 40.6rem;
-  height: 42.7rem;
-`;
-
 const Main = styled.div`
   display: flex;
   width: 106rem;
   height: 56.8rem;
   margin-top: 1rem;
   justify-content: space-between;
-`;
-
-const LeftArrowPosition = styled.button`
-  cursor: pointer;
-  position: absolute;
-  left: 8rem;
-`;
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  height: 10rem;
 `;
 
 const Container = styled.div`
