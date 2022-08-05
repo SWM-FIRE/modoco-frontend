@@ -31,6 +31,7 @@ const themeFire: DefaultTheme = {
   chatBackground: '#1E1E22',
   otherChat: '#1F2331',
   myChat: '#353741',
+  input: '#313540',
 };
 
 const themeOcean: DefaultTheme = {
@@ -40,6 +41,7 @@ const themeOcean: DefaultTheme = {
   chatBackground: '#1A464A',
   otherChat: '#1E3A41',
   myChat: '#4B6163',
+  input: '#1E3A41',
 };
 
 const themeCamping: DefaultTheme = {
@@ -49,6 +51,7 @@ const themeCamping: DefaultTheme = {
   chatBackground: '#190B24',
   otherChat: '#3F3046',
   myChat: '#453A4B',
+  input: '#413148',
 };
 
 const themeTravel: DefaultTheme = {
@@ -58,6 +61,7 @@ const themeTravel: DefaultTheme = {
   chatBackground: '#466B80',
   otherChat: '#2B4651',
   myChat: '#3A5A6B',
+  input: '#3A5A6B',
 };
 
 const themeCosmos: DefaultTheme = {
@@ -67,6 +71,7 @@ const themeCosmos: DefaultTheme = {
   chatBackground: '#06070A',
   otherChat: '#1F2331',
   myChat: '#353741',
+  input: '#313540',
 };
 
 export {

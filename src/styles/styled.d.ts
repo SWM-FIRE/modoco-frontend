@@ -27,5 +27,6 @@ declare module 'styled-components' {
     chatBackground: string;
     myChat: string;
     otherChat: string;
+    input: string;
   }
 }

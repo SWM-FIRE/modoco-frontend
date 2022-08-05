@@ -34,14 +34,17 @@ const Component = styled.div`
   border-bottom: 1px solid rgba(55, 65, 81, 1);
   padding-bottom: 2.2rem;
   color: #9ca3af;
+  max-height: 12.8rem;
+  /* flex-shrink: 1; */
 `;
 
 const Title = styled.div``;
 
 const UserList = styled.div`
-  margin-top: 2.4rem;
+  margin-top: 0.8rem;
   margin-right: 1.9rem;
   display: flex;
   justify-content: flex-start;
-  gap: 2.4rem;
+  align-items: flex-start;
+  gap: 3.3rem;
 `;

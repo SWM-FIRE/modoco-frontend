@@ -28,26 +28,25 @@ const AvatarContainer = styled.div`
 `;
 
 const MicContainer = styled.div`
-  svg {
-    width: 100%;
-  }
   width: 2.6rem;
   height: 2.6rem;
   border-radius: 100%;
   background-color: #1f2937;
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: -0.3rem;
+  right: -1.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0.3rem;
 `;
 
 const Container = styled.div`
   /* background-color: gray; */
-  width: 6.8rem;
+  width: 4.3rem;
   svg {
     width: 100%;
+    height: 100%;
   }
   display: flex;
   flex-direction: column;
@@ -56,10 +55,9 @@ const Container = styled.div`
   gap: 0.4rem;
 `;
 
-const NameContainer = styled.div`
+const NameContainer = styled.span`
   font-family: IBMPlexSansKRRegular;
   font-weight: 500;
   font-size: 1.5rem;
-  line-height: 2.2rem;
   color: #f9fafb;
 `;
