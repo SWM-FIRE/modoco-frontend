@@ -63,7 +63,6 @@ const Container = styled.div`
   background-color: #23262f;
   margin-right: 2.4rem;
   border-radius: 2rem;
-  /* width: 34rem; */
   width: 22.5%;
   height: 50rem;
   display: flex;

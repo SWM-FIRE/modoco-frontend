@@ -69,5 +69,4 @@ const ModalBox = styled.div`
   justify-content: center;
   align-items: center;
   padding: 3.2rem;
-  /* overflow: auto; */
 `;
