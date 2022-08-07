@@ -1,31 +1,35 @@
 import styled from 'styled-components';
 import React, { useState, KeyboardEvent } from 'react';
 import axios from 'axios';
-import { ReactComponent as DeleteTag } from '../../assets/svg/deleteTag.svg';
-import { ReactComponent as Up } from '../../assets/svg/up.svg';
-import { ReactComponent as Down } from '../../assets/svg/down.svg';
-import { API } from '../../config';
+import { ReactComponent as DeleteTag } from '../../../assets/svg/deleteTag.svg';
+import { ReactComponent as Up } from '../../../assets/svg/up.svg';
+import { ReactComponent as Down } from '../../../assets/svg/down.svg';
+import { API } from '../../../config';
+import Theme from '../../../theme.json';
 
 export default function CreateRoomForm() {
-  const [newTag, setNewTag] = useState('');
-  const [title, setTitle] = useState('');
-  const [details, setDetails] = useState('');
-  const [total, setTotal] = useState('');
-  const [theme, setTheme] = useState('');
-  const [tags, setTags] = useState([]);
+  const [inputs, setInputs] = useState({
+    title: '',
+    details: '',
+    total: '',
+    theme: '',
+    newTag: '',
+    tags: [],
+  });
+  const { title, details, total, theme, newTag, tags } = inputs;
 
-  const handleRoomNameChange = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handleDetailsChange = (e) => {
-    setDetails(e.target.value);
-  };
-
-  const handleTagChange = (e) => {
-    setNewTag(() => e.target.value);
-    if (newTag.includes(' ')) {
-      setNewTag((prev) => prev.trim().replace(/ /g, '-'));
+  const handleOnChange = (e) => {
+    setInputs({
+      ...inputs,
+      [e.target.name]: e.target.value,
+    });
+    if (e.target.name === 'newTag' && newTag.includes(' ')) {
+      setInputs((prev) => {
+        return {
+          ...prev,
+          newTag: prev.newTag.trim().replace(/ /g, '-'),
+        };
+      });
     }
   };
 
@@ -36,21 +40,24 @@ export default function CreateRoomForm() {
     }
   };
 
-  const handleTotalChange = (e) => {
-    setTotal(e.target.value);
-  };
-
-  const handleThemeChange = (e) => {
-    setTheme(e.target.value);
-  };
-
   const onAddTag = () => {
-    setTags([...tags, newTag.trim()]);
-    setNewTag('');
+    setInputs({
+      ...inputs,
+      tags: [...tags, newTag.trim()],
+    });
+    setInputs((prev) => {
+      return {
+        ...prev,
+        newTag: '',
+      };
+    });
   };
 
   const onDeleteTag = (e, index) => {
-    setTags(tags.filter((_, i) => i !== index));
+    setInputs({
+      ...inputs,
+      tags: tags.filter((tag, i) => i !== index),
+    });
   };
 
   const onSubmit = () => {
@@ -76,23 +83,25 @@ export default function CreateRoomForm() {
   return (
     <Form>
       <Section>
-        <Label htmlFor="name">방 이름 *</Label>
+        <Label htmlFor="title">방 이름 *</Label>
         <Input
-          id="name"
+          id="title"
+          name="title"
           type="text"
           value={title}
-          onChange={handleRoomNameChange}
+          onChange={handleOnChange}
           placeholder="방 이름을 입력해주세요."
           required
         />
       </Section>
       <Section>
-        <Label htmlFor="description">설명</Label>
+        <Label htmlFor="details">설명</Label>
         <Input
-          id="description"
+          id="details"
+          name="details"
           type="text"
           value={details}
-          onChange={handleDetailsChange}
+          onChange={handleOnChange}
           placeholder="설명을 입력해주세요."
         />
       </Section>
@@ -100,9 +109,10 @@ export default function CreateRoomForm() {
         <Label htmlFor="tag">태그</Label>
         <Input
           id="tag"
+          name="newTag"
           type="text"
           value={newTag}
-          onChange={handleTagChange}
+          onChange={handleOnChange}
           onKeyPress={handleKeyPress}
           placeholder="태그 입력후 Enter를 눌러주세요."
         />
@@ -122,15 +132,15 @@ export default function CreateRoomForm() {
         <div style={{ width: '100%', display: 'flex' }}>
           <Select
             id="total"
+            name="total"
             placeholder="최대 인원 수를 선택해주세요."
             required
             value={total}
-            onChange={handleTotalChange}
+            onChange={handleOnChange}
           >
             <option value="" disabled selected>
               최대 인원 수를 선택해주세요.
             </option>
-            <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -146,19 +156,20 @@ export default function CreateRoomForm() {
         <div style={{ width: '100%', display: 'flex' }}>
           <Select
             id="theme"
+            name="theme"
             placeholder="테마를 선택해주세요."
             required
             value={theme}
-            onChange={handleThemeChange}
+            onChange={handleOnChange}
           >
             <option value="" disabled selected>
               원하는 방 테마를 선택해주세요.
             </option>
-            <option value="fire">모닥불</option>
-            <option value="ocean">바다</option>
-            <option value="camping">캠핑</option>
-            <option value="travel">여행</option>
-            <option value="cosmos">우주인</option>
+            {Theme.map((theme) => (
+              <option value={theme.value} key={theme.value}>
+                {theme.name}
+              </option>
+            ))}
           </Select>
           <SelectIcon>
             <Up />

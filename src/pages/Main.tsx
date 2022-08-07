@@ -9,8 +9,8 @@ import Header from '../components/main/Header';
 import MainTitle from '../components/main/MainTitle';
 import Modal from '../components/layout/Modal';
 import LoginModal from '../components/login/LoginModal';
-import CreateRoomModal from '../components/main/CreateRoomModal';
-import CreateRoomForm from '../components/main/CreateRoomForm';
+import CreateRoomModal from '../components/main/CreateRoomModal/CreateRoomModal';
+import CreateRoomForm from '../components/main/CreateRoomModal/CreateRoomForm';
 
 export default function Main() {
   const [isModal, setIsModal] = useState(false);
