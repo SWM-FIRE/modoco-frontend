@@ -1,84 +1,15 @@
 import styled from 'styled-components';
-import React, { useState, KeyboardEvent } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { ReactComponent as DeleteTag } from '../../../assets/svg/deleteTag.svg';
 import { ReactComponent as Up } from '../../../assets/svg/up.svg';
 import { ReactComponent as Down } from '../../../assets/svg/down.svg';
-import { API } from '../../../config';
 import Theme from '../../../theme.json';
+import useCreateRoom from '../../../hooks/useCreateRoom';
 
 export default function CreateRoomForm() {
-  const [inputs, setInputs] = useState({
-    title: '',
-    details: '',
-    total: '',
-    theme: '',
-    newTag: '',
-    tags: [],
-  });
+  const { inputs, onChange, onKeyPress, onDeleteTag, onSubmit } =
+    useCreateRoom();
   const { title, details, total, theme, newTag, tags } = inputs;
-
-  const handleOnChange = (e) => {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value,
-    });
-    if (e.target.name === 'newTag' && newTag.includes(' ')) {
-      setInputs((prev) => {
-        return {
-          ...prev,
-          newTag: prev.newTag.trim().replace(/ /g, '-'),
-        };
-      });
-    }
-  };
-
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      onAddTag();
-    }
-  };
-
-  const onAddTag = () => {
-    setInputs({
-      ...inputs,
-      tags: [...tags, newTag.trim()],
-    });
-    setInputs((prev) => {
-      return {
-        ...prev,
-        newTag: '',
-      };
-    });
-  };
-
-  const onDeleteTag = (e, index) => {
-    setInputs({
-      ...inputs,
-      tags: tags.filter((tag, i) => i !== index),
-    });
-  };
-
-  const onSubmit = () => {
-    axios
-      .post(API.ROOM, {
-        moderator: {
-          uid: localStorage.getItem('uid'),
-        },
-        title,
-        details,
-        tags,
-        total: Number(total),
-        theme,
-      })
-      .then((res) => {
-        console.log('[success]', res);
-      })
-      .catch((err) => {
-        console.log('[error] ', err);
-      });
-  };
 
   return (
     <Form>
@@ -89,7 +20,7 @@ export default function CreateRoomForm() {
           name="title"
           type="text"
           value={title}
-          onChange={handleOnChange}
+          onChange={onChange}
           placeholder="방 이름을 입력해주세요."
           required
         />
@@ -101,7 +32,7 @@ export default function CreateRoomForm() {
           name="details"
           type="text"
           value={details}
-          onChange={handleOnChange}
+          onChange={onChange}
           placeholder="설명을 입력해주세요."
         />
       </Section>
@@ -112,8 +43,8 @@ export default function CreateRoomForm() {
           name="newTag"
           type="text"
           value={newTag}
-          onChange={handleOnChange}
-          onKeyPress={handleKeyPress}
+          onChange={onChange}
+          onKeyPress={onKeyPress}
           placeholder="태그 입력후 Enter를 눌러주세요."
         />
         <Tags>
@@ -136,7 +67,7 @@ export default function CreateRoomForm() {
             placeholder="최대 인원 수를 선택해주세요."
             required
             value={total}
-            onChange={handleOnChange}
+            onChange={onChange}
           >
             <option value="" disabled selected>
               최대 인원 수를 선택해주세요.
@@ -160,7 +91,7 @@ export default function CreateRoomForm() {
             placeholder="테마를 선택해주세요."
             required
             value={theme}
-            onChange={handleOnChange}
+            onChange={onChange}
           >
             <option value="" disabled selected>
               원하는 방 테마를 선택해주세요.
