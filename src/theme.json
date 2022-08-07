@@ -1,0 +1,22 @@
+[
+  {
+    "value": "fire",
+    "name": "모닥불"
+  },
+  {
+    "value": "ocean",
+    "name": "바다"
+  },
+  {
+    "value": "camping",
+    "name": "캠핑"
+  },
+  {
+    "value": "travel",
+    "name": "여행"
+  },
+  {
+    "value": "cosmos",
+    "name": "우주인"
+  }
+]

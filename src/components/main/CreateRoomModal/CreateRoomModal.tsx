@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as X } from '../../assets/svg/X.svg';
-import modal from '../../stores/createRoomModalStore';
+import { ReactComponent as X } from '../../../assets/svg/X.svg';
+import modal from '../../../stores/createRoomModalStore';
 
 export default function ScreenModal({ children }) {
   const { closeModal } = modal();
