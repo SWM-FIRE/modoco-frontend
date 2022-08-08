@@ -2,9 +2,11 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import UserStore from '../../stores/userStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
+import LoginModalStore from '../../stores/loginModalStore';
 
-export default function Header({ modalHandler }: { modalHandler: () => void }) {
+export default function Header() {
   const { nickname, avatar } = UserStore();
+  const { openModal } = LoginModalStore();
   const navigate = useNavigate();
 
   const clickLogo = () => {
@@ -15,14 +17,14 @@ export default function Header({ modalHandler }: { modalHandler: () => void }) {
     <Container>
       <Logo onClick={clickLogo}>modoco</Logo>
       {nickname ? (
-        <Profile onClick={modalHandler}>
+        <Profile onClick={openModal}>
           <AvatarContainer>
             <MyAvatar num={Number(avatar)} />
           </AvatarContainer>
           {nickname}
         </Profile>
       ) : (
-        <Login onClick={modalHandler}>로그인</Login>
+        <Login onClick={openModal}>로그인</Login>
       )}
     </Container>
   );
