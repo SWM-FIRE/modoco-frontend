@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import Block from './Block';
 import useRooms from '../../hooks/useRooms';
-import TagStore from '../../stores/tagStore';
 import CreateRoom from './CreateRoom';
 import { filterData } from './filterData';
+import tagStore from '../../stores/tagStore';
 
 export default function RoomCards() {
-  const { tag } = TagStore();
+  const { tag } = tagStore();
   const { isLoading, error, data } = useRooms();
+
   if (isLoading)
     return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
 

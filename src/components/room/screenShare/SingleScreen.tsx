@@ -62,11 +62,6 @@ const Container = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
-  @media (max-width: 900px) {
-    width: 90%;
-    height: 0;
-    padding-bottom: 60%;
-  }
   width: 48%;
   height: 0;
   border-radius: 1rem;
