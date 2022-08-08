@@ -31,20 +31,20 @@ export default function Room() {
 
   if (error) return <div>An error has occurred: </div>;
 
-  const onCotrolSidebarClick = () => {
+  const onControlSidebarClick = () => {
     openSidebar();
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Component>
-        <Header theme={theme} />
+        <Header theme={data?.theme} />
         <Contents>
-          <ScreenShare theme={theme} />
+          <ScreenShare theme={data?.theme} />
           {!isOpenSidebar && (
             <ControlSidebar
               backgroundColor={theme.chatBackground}
-              onClick={onCotrolSidebarClick}
+              onClick={onControlSidebarClick}
             >
               <LeftTwoArrows />
               <Chatting />

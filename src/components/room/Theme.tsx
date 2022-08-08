@@ -1,18 +1,31 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import MovingTheme from './screenShare/MovingTheme';
 import { ReactComponent as VolumeOn } from '../../assets/svg/VolumeOn.svg';
 import { ReactComponent as VolumeOff } from '../../assets/svg/VolumeOff.svg';
 import UserMediaStreamStore from '../../stores/userMediaStreamStore';
+import ThemeSound from './header/ThemeSound';
 
 export default function Theme({ theme }) {
   const { userSpeaker, setUserSpeaker } = UserMediaStreamStore();
   const [volume, setVolume] = useState<number>(0.5);
+  const volumeRef = useRef<HTMLAudioElement>(null);
   const setSpeaker = () => {
     setUserSpeaker();
   };
+  useEffect(() => {
+    if (!userSpeaker) {
+      volumeRef.current.volume = 0;
+      return;
+    }
+    if (volumeRef.current) {
+      volumeRef.current.volume = volume;
+    }
+  }, [volume, userSpeaker]);
+
   return (
     <Container>
+      <ThemeSound volumeRef={volumeRef} theme={theme} />
       <MovingTheme theme={theme} size="3.2" />
       <Volume onClick={setSpeaker}>
         {userSpeaker && volume !== 0 ? <VolumeOn /> : <VolumeOff />}
