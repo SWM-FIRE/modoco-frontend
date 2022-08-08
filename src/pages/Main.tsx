@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import useSetSelf from '../hooks/useSetSelf';
@@ -7,14 +7,14 @@ import ModalStore from '../stores/createRoomModalStore';
 import RoomCards from '../components/main/RoomCards';
 import Header from '../components/main/Header';
 import MainTitle from '../components/main/MainTitle';
+import Modal from '../components/layout/Modal';
 import LoginModal from '../components/login/LoginModal';
 import CreateRoomModal from '../components/main/CreateRoomModal/CreateRoomModal';
 import CreateRoomForm from '../components/main/CreateRoomModal/CreateRoomForm';
-import LoginModalStore from '../stores/loginModalStore';
 
 export default function Main() {
+  const [isModal, setIsModal] = useState(false);
   const { isOpenCreateRoomModal } = ModalStore();
-  const { isOpenLoginModal } = LoginModalStore();
   const { nickname } = UserStore();
   const navigate = useNavigate();
 
@@ -24,15 +24,25 @@ export default function Main() {
       navigate('/');
     }
   });
+  const closeModalHandler = () => {
+    setIsModal(false);
+  };
+  const openModalHandler = () => {
+    setIsModal(true);
+  };
 
   return (
     <>
       <Container>
-        <Header />
+        <Header modalHandler={openModalHandler} />
         <MainTitle />
         <RoomCards />
       </Container>
-      {isOpenLoginModal && <LoginModal />}
+      {isModal && (
+        <Modal modalHandler={closeModalHandler}>
+          <LoginModal modalHandler={closeModalHandler} />
+        </Modal>
+      )}
       {isOpenCreateRoomModal && (
         <CreateRoomModal>
           <CreateRoomForm />

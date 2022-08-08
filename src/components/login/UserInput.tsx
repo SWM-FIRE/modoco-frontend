@@ -1,55 +1,121 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useMutation } from 'react-query';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
+import UserStore from '../../stores/userStore';
+import Avater from './Avatar';
+import Nickname from './Nickname';
+import userInterface from '../../interface/user.interface';
+import { API } from '../../config';
 
-export default function UserInput() {
+let type: string;
+
+/**
+ * @brief 유저 정보(아바타, 닉네임) 수정
+ * @param modalHandler - modal을 닫는 함수
+ */
+export default function UserInput({
+  modalHandler,
+}: {
+  modalHandler: () => void;
+}) {
+  const { nickname, uid, avatar, setNickname, setUid, setAvatar } = UserStore();
+  const [newNickname, setNewNickname] = useState(nickname);
+  const [newAvatar, setNewAvatar] = useState(avatar);
+
+  const getNewNickname = (newNickname) => {
+    setNewNickname(newNickname);
+  };
+  const getNewAvatar = (newAvatar) => {
+    setNewAvatar(newAvatar);
+  };
+
+  useEffect(() => {
+    /**
+     * @brief 유저 정보 수정
+     * validUID인 경우 -> 유저 정보 수정
+     * invalidUID인 경우 -> 유저 정보 생성
+     */
+    if (localStorage.getItem('uid')) {
+      const myUid = localStorage.getItem('uid');
+      setUid(myUid);
+      console.log('my uid', myUid);
+      axios.get((API.USER as string) + myUid).then((res) => {
+        console.log('axios good');
+        if (res.data.uid) {
+          // valid uid
+          console.log('valid uid', res.data.uid);
+          type = 'put';
+        } else {
+          console.log('will post');
+          // invalid uid
+          type = 'post';
+        }
+      });
+    } else {
+      console.log('uid is null');
+      // no uid
+      const newUID = uuidv4();
+      setUid(newUID);
+      localStorage.setItem('uid', newUID);
+      type = 'post';
+    }
+  }, []);
+
+  const userRequest = async (newUser: userInterface) => {
+    const { data } = await axios({
+      method: type,
+      url: API.USER,
+      data: newUser,
+    });
+    return data;
+  };
+
+  const { mutate } = useMutation(userRequest, {
+    onSuccess: () => {
+      modalHandler();
+    },
+  });
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (newNickname === null) {
+      return false;
+    }
+    setNickname(newNickname);
+    setAvatar(newAvatar);
+    localStorage.setItem('nickname', newNickname);
+    localStorage.setItem('avatar', newAvatar);
+    mutate({ uid, nickname: newNickname, avatar: newAvatar });
+    return true;
+  };
+
   return (
-    <Form>
-      <Input placeholder="이메일" required />
-      <Input type="password" placeholder="비밀번호" required />
-      <Button>로그인</Button>
+    <Form onSubmit={onSubmit}>
+      <Settings>
+        <Avater getData={getNewAvatar} newAvatar={newAvatar} />
+        <Nickname getData={getNewNickname} newNickname={newNickname} />
+      </Settings>
     </Form>
   );
 }
 
 const Form = styled.form`
+  margin-top: 4rem;
+  z-index: 1001;
+  input,
+  button {
+    font-family: PretendardRegular;
+    font-weight: 600;
+    height: 6rem;
+    border-radius: 0.8rem;
+    font-size: 1.5rem;
+  }
+`;
+
+const Settings = styled.div`
+  gap: 3rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-
-  input:first-child {
-    border-radius: 1rem 1rem 0 0;
-    margin-top: 1rem;
-  }
-
-  input:nth-child(2) {
-    border-radius: 0 0 1rem 1rem;
-  }
-
-  input:focus {
-    border: 1px solid lightblue;
-  }
-`;
-
-const Input = styled.input`
-  font-size: 1.5rem;
-  width: 100%;
-  height: 4.9rem;
-  background: transparent;
-  outline: none;
-  color: white;
-  font-family: IBMPlexSansKRRegular;
-  background-color: #191f28;
-  padding-left: 1.6rem;
-`;
-
-const Button = styled.button`
-  font-family: IBMPlexSansKRRegular;
-  font-size: 1.5rem;
-
-  background-color: #f3f4f6;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 2.6rem;
-  height: 5.5rem;
-  border-radius: 1rem;
+  align-items: flex-end;
 `;

@@ -5,7 +5,7 @@ export default function ModalTitle() {
   return (
     <Message>
       <TitleLogo>
-        모여서 도란도란 코딩, <span>Modoco</span>
+        모여서 도란도란 코딩,<span>Modoco</span>
       </TitleLogo>
       <TitleStart>시작하기</TitleStart>
     </Message>
@@ -23,16 +23,13 @@ const Message = styled.div`
 `;
 
 const TitleLogo = styled.div`
-  font-size: 1.8rem;
-  font-family: IBMPlexSansKRRegular;
-  font-weight: 400;
-  span {
-    font-weight: 600;
-  }
+  font-size: 18px;
+  font-family: IBMPlexMonoRegular;
 `;
 
 const TitleStart = styled.div`
-  font-family: IBMPlexSansKRRegular;
+  font-family: PretendardRegular;
+  font-weight: 500;
   font-size: 4rem;
-  margin-top: 1.6rem;
+  margin-top: 2rem;
 `;
