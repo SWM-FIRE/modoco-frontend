@@ -21,6 +21,7 @@ export default function Modal() {
             <MainFire />
           </Logo>
           <UserInput />
+          <SignUp href="/signUp">아직 회원이 아니신가요?</SignUp>
         </ModalBox>
       </ModalBackground>
     </ModalPortal>
@@ -68,4 +69,11 @@ const Logo = styled.div`
     width: 10.8rem;
     height: 10.8rem;
   }
+`;
+
+const SignUp = styled.a`
+  margin-top: 1.4rem;
+  color: #f3f4f6;
+  font-size: 1.4rem;
+  cursor: pointer;
 `;
