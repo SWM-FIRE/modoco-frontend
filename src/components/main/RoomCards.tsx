@@ -2,56 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 import Block from './Block';
 import useRooms from '../../hooks/useRooms';
-import blockInterface from '../../interface/block.interface';
-import TagStore from '../../stores/tagStore';
 import CreateRoom from './CreateRoom';
+import { filterData } from './filterData';
+import tagStore from '../../stores/tagStore';
 
 export default function RoomCards() {
-  const { tag } = TagStore();
+  const { tag } = tagStore();
   const { isLoading, error, data } = useRooms();
+
   if (isLoading)
     return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
 
   if (error) return <div>An error has occurred: </div>;
 
+  const newData = filterData(data, tag);
+
   return (
     <Container>
       <CreateRoom />
-      {data
-        .filter((block) =>
-          block.tags.some((blockTag) =>
-            blockTag.toLowerCase().includes(tag.toLowerCase()),
-          )
-            ? block
-            : null,
-        )
-        .map(
-          ({
-            moderator,
-            title,
-            details,
-            tags,
-            itemId,
-            current,
-            total,
-            theme,
-          }: blockInterface) => {
-            return (
-              <Block
-                isMain
-                itemId={itemId}
-                key={itemId}
-                moderator={moderator}
-                title={title}
-                details={details}
-                tags={tags}
-                current={current}
-                total={total}
-                theme={theme}
-              />
-            );
-          },
-        )}
+      {newData.map((data) => {
+        return <Block key={data.itemId} isMain data={data} />;
+      })}
     </Container>
   );
 }

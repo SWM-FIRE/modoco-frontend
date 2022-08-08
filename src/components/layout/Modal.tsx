@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ModalPortal from '../atoms/ModalPotal';
+import ModalPortal from '../atoms/ModalPortal';
 import vectors from '../atoms/Vectors';
 
 type Props = {

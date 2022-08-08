@@ -6,3 +6,4 @@ declare module '*.svg' {
   export default src;
 }
 declare module '*.gif';
+declare module '*.mp3';

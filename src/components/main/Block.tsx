@@ -2,22 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import UserStore from '../../stores/userStore';
-import blockInterface from '../../interface/block.interface';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import ThemeImage from '../atoms/ThemeImages';
 import { ReactComponent as Bar } from '../../assets/svg/Room/Bar.svg';
 
-export default function Block({
-  isMain,
-  itemId,
-  moderator,
-  title,
-  details,
-  tags,
-  current,
-  total,
-  theme,
-}: blockInterface) {
+export default function Block({ isMain, data }) {
   const navigate = useNavigate();
   const { nickname } = UserStore();
 
@@ -27,36 +16,36 @@ export default function Block({
       alert('로그인이 필요합니다.');
       return;
     }
-    if (current === total) {
+    if (data.current === data.total) {
       alert(`해당 방이 꽉 찼습니다.`);
       return;
     }
 
-    navigate(`/ready/${itemId}`);
+    navigate(`/ready/${data.itemId}`);
   };
   return (
     <Container main={isMain}>
       <AvatarContainer>
-        <MyAvatar num={Number(moderator.avatar)} />
+        <MyAvatar num={Number(data.moderator.avatar)} />
         <Moderator>
-          방장<Nickname>{moderator.nickname}</Nickname>
+          방장<Nickname>{data.moderator.nickname}</Nickname>
         </Moderator>
       </AvatarContainer>
       <DetailContainer>
-        <Title>{title}</Title>
-        <Description>{details}</Description>
+        <Title>{data.title}</Title>
+        <Description>{data.details}</Description>
         <Tags>
-          {tags.map((myTag) => (
+          {data.tags.map((myTag) => (
             <Tag key={myTag}>#{myTag}</Tag>
           ))}
         </Tags>
         <Detail>
-          <ThemeImage theme={theme} />
+          <ThemeImage theme={data.theme} />
           <Bar />
           <Attend>
             <div style={{ marginTop: '-0.3rem' }}>🔥</div>
-            <div>{total}중</div>
-            <div>{current}명</div>
+            <div>{data.total}중</div>
+            <div>{data.current}명</div>
             <div>참여중</div>
           </Attend>
         </Detail>

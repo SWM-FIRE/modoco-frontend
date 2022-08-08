@@ -31,20 +31,20 @@ export default function Room() {
 
   if (error) return <div>An error has occurred: </div>;
 
-  const onCotrolSidebarClick = () => {
+  const onControlSidebarClick = () => {
     openSidebar();
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Component>
-        <Header theme={theme} />
-        <Contents>
-          <ScreenShare theme={theme} />
+        <Header theme={data?.theme} />
+        <Contents isOpen={isOpenSidebar}>
+          <ScreenShare theme={data?.theme} />
           {!isOpenSidebar && (
             <ControlSidebar
               backgroundColor={theme.chatBackground}
-              onClick={onCotrolSidebarClick}
+              onClick={onControlSidebarClick}
             >
               <LeftTwoArrows />
               <Chatting />
@@ -58,22 +58,23 @@ export default function Room() {
   );
 }
 
-interface ControlSidebarProps {
-  backgroundColor: string;
-}
-
 const Component = styled.div`
   height: 100vh;
 `;
 
-const Contents = styled.div`
+const Contents = styled.div<{ isOpen: boolean }>`
   background-color: ${({ theme }) => theme.main};
   height: calc(100% - 10rem);
   display: flex;
+  justify-content: ${(props) => (props.isOpen ? 'flex-start' : 'center')};
+  @media (max-width: 1440px) {
+    justify-content: center;
+  }
   position: relative;
 `;
 
-const ControlSidebar = styled.div<ControlSidebarProps>`
+const ControlSidebar = styled.div<{ backgroundColor: string }>`
+  z-index: 999;
   position: absolute;
   right: 0;
   top: 1.6rem;
@@ -86,4 +87,5 @@ const ControlSidebar = styled.div<ControlSidebarProps>`
   gap: 0.9rem;
   background-color: ${({ backgroundColor }) => backgroundColor};
   cursor: pointer;
+  box-shadow: 0px 4px 59px rgba(50, 50, 71, 0.3);
 `;

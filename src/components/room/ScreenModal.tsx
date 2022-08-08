@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import ModalPortal from '../atoms/ModalPotal';
+import ModalPortal from '../atoms/ModalPortal';
 import { ReactComponent as LeftArrow } from '../../assets/svg/arrow-left.svg';
 import controlModal from '../../stores/controlModal';
 import MyAvatar from '../../assets/avatar/MyAvatar';
