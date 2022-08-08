@@ -4,55 +4,25 @@ import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import { LeftArrow, RightArrow } from './Arrow';
 import Block from './Block';
 import useRooms from '../../hooks/useRooms';
-import blockInterface from '../../interface/block.interface';
+import { filterData } from './filterData';
 import TagStore from '../../stores/tagStore';
 
 export default function Scrolls() {
-  const { tag } = TagStore();
   const { isLoading, error, data } = useRooms();
+  const { tag } = TagStore();
   if (isLoading)
     return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
 
   if (error) return <div>An error has occurred: </div>;
 
+  const newData = filterData(data, tag);
+
   return (
     <Container>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-        {data
-          .filter((block) =>
-            block.tags.some((blockTag) =>
-              blockTag.toLowerCase().includes(tag.toLowerCase()),
-            )
-              ? block
-              : null,
-          )
-          .map(
-            ({
-              moderator,
-              title,
-              details,
-              tags,
-              itemId,
-              theme,
-              current,
-              total,
-            }: blockInterface) => {
-              return (
-                <Block
-                  isMain={false}
-                  itemId={itemId}
-                  key={itemId}
-                  moderator={moderator}
-                  title={title}
-                  details={details}
-                  tags={tags}
-                  current={current}
-                  total={total}
-                  theme={theme}
-                />
-              );
-            },
-          )}
+        {newData.map((data) => {
+          return <Block key={data.itemId} isMain={false} data={data} />;
+        })}
       </ScrollMenu>
     </Container>
   );
