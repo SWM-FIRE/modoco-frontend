@@ -1,18 +1,18 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Scrolls from '../components/main/Scrolls';
 import Header from '../components/main/Header';
 import Title from '../components/main/TitleContainer';
+import Modal from '../components/layout/Modal';
 import LoginModal from '../components/login/LoginModal';
 import useSetSelf from '../hooks/useSetSelf';
 import UserStore from '../stores/userStore';
 import LandingPage from '../components/main/landingPage/LandingPage';
-import LoginModalStore from '../stores/loginModalStore';
 
 export default function Main() {
+  const [isModal, setIsModal] = useState(false);
   const { nickname } = UserStore();
-  const { isOpenLoginModal } = LoginModalStore();
   const navigate = useNavigate();
   useSetSelf();
   useEffect(() => {
@@ -21,15 +21,26 @@ export default function Main() {
     }
   });
 
+  const closeModalHandler = () => {
+    setIsModal(false);
+  };
+  const openModalHandler = () => {
+    setIsModal(true);
+  };
+
   return (
     <>
       <Container>
-        <Header />
+        <Header modalHandler={openModalHandler} />
         <Title />
         <Scrolls />
         <LandingPage />
       </Container>
-      {isOpenLoginModal && <LoginModal />}
+      {isModal && (
+        <Modal modalHandler={closeModalHandler}>
+          <LoginModal modalHandler={closeModalHandler} />
+        </Modal>
+      )}
     </>
   );
 }
