@@ -14,8 +14,10 @@ import { ReactComponent as Chatting } from '../assets/svg/Room/Chatting.svg';
 import Sidebar from '../components/room/sideBar/Sidebar';
 import ScreenShareModal from '../components/room/ScreenModal';
 import controlSidebar from '../stores/controlSidebar';
+import useSetSelf from '../hooks/useSetSelf';
 
 export default function Room() {
+  useSetSelf();
   const { roomId } = useParams();
   const { isOpen } = controlModal();
   const { isOpenSidebar, openSidebar } = controlSidebar();

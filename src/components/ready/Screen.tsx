@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 import userMediaStreamStore from '../../stores/userMediaStreamStore';
@@ -8,20 +8,26 @@ import { ReactComponent as MonitorOn } from '../../assets/svg/MonitorOn.svg';
 import { ReactComponent as MonitorOff } from '../../assets/svg/MonitorOff.svg';
 
 export default function Screen({ video: videoRef }) {
-  const { userMediaStream, userMic, setUserMic } = userMediaStreamStore();
-  const { stopMediaStream, createMediaStream } = useCreateMediaStream();
+  const { userMic, userVideo } = userMediaStreamStore();
+  const { createAll, stopDisplayStream, createDisplayStream, toggleMic } =
+    useCreateMediaStream();
+
+  useEffect(() => {
+    createAll();
+  }, []);
 
   const setMic = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    setUserMic();
+    toggleMic();
   };
 
   const setMediaStream = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (userMediaStream) {
-      stopMediaStream();
+    if (userVideo) {
+      console.log('removing display');
+      stopDisplayStream();
     } else {
-      createMediaStream();
+      createDisplayStream();
     }
   };
 
@@ -30,7 +36,7 @@ export default function Screen({ video: videoRef }) {
       <MyScreen ref={videoRef} autoPlay playsInline muted />
       <Buttons>
         <Button onClick={setMediaStream}>
-          {userMediaStream ? <MonitorOn /> : <MonitorOff />}
+          {userVideo ? <MonitorOn /> : <MonitorOff />}
         </Button>
         <Button onClick={setMic}>{userMic ? <MicOn /> : <MicOff />}</Button>
       </Buttons>

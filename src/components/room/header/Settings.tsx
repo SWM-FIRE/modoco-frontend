@@ -1,38 +1,43 @@
+import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as MicOff } from '../../../assets/svg/MicOff.svg';
 import { ReactComponent as MicOn } from '../../../assets/svg/MicOn.svg';
 import { ReactComponent as MonitorOn } from '../../../assets/svg/MonitorOn.svg';
 import { ReactComponent as MonitorOff } from '../../../assets/svg/MonitorOff.svg';
-import { ReactComponent as VideoOn } from '../../../assets/svg/VideoOn.svg';
 import { ReactComponent as VideoOff } from '../../../assets/svg/VideoOff.svg';
 import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 
 export default function Settings() {
-  const { userMic, setUserMic, userVideo, userMediaStream, setUserVideo } =
-    UserMediaStreamStore();
-  const { createMediaStream, stopMediaStream } = useCreateMediaStream();
-  const setMediaStream = () => {
-    if (userMediaStream) {
-      stopMediaStream();
+  const { userMic, userVideo } = UserMediaStreamStore();
+  const { createDisplayStream, stopDisplayStream, toggleMic } =
+    useCreateMediaStream();
+
+  const setMic = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    toggleMic();
+  };
+
+  const setMediaStream = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (userVideo) {
+      console.log('removing display');
+      stopDisplayStream();
     } else {
-      createMediaStream();
+      createDisplayStream();
     }
   };
-  const setMic = () => {
-    setUserMic();
-  };
   const setVideo = () => {
-    setUserVideo();
+    console.log('setVideo');
   };
   return (
     <Component>
       <Button onClick={setMediaStream}>
-        {userMediaStream ? <MonitorOn /> : <MonitorOff />}
+        {userVideo ? <MonitorOn /> : <MonitorOff />}
       </Button>
       <Button onClick={setMic}>{userMic ? <MicOn /> : <MicOff />}</Button>
       <Button onClick={setVideo}>
-        {userVideo ? <VideoOn /> : <VideoOff />}
+        <VideoOff />
       </Button>
     </Component>
   );
