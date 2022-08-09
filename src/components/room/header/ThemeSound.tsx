@@ -1,6 +1,4 @@
 export default function ThemeSound({ theme, volumeRef }) {
-  console.log('sound theme', theme);
-
   let myTheme: string;
   switch (theme) {
     case 'fire':

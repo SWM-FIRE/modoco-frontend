@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
 import Header from '../components/ready/Header';
 import RoomDetail from '../components/ready/RoomDetail';
@@ -10,12 +9,7 @@ import Screen from '../components/ready/Screen';
 export default function ReadyPage() {
   const { userMediaStream } = UserMediaStreamStore();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { createMediaStream } = useCreateMediaStream();
   const { roomId } = useParams();
-
-  useEffect(() => {
-    createMediaStream();
-  }, []);
 
   useEffect(() => {
     if (videoRef.current) {
