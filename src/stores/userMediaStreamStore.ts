@@ -4,9 +4,9 @@ interface MediaStreamInterface {
   userMediaStream: MediaStream | null;
   setUserMediaStream: (_by: MediaStream | null) => void;
   userMic: boolean;
-  setUserMic: () => void;
+  setUserMic: (_by: boolean) => void;
   userVideo: boolean;
-  setUserVideo: () => void;
+  setUserVideo: (_by: boolean) => void;
   userSpeaker: boolean;
   setUserSpeaker: () => void;
 }
@@ -17,12 +17,12 @@ const UserMediaStreamStore = create<MediaStreamInterface>((set) => ({
     set(() => ({ userMediaStream: by }));
   },
   userMic: true,
-  setUserMic: () => {
-    set((state) => ({ userMic: !state.userMic }));
+  setUserMic: (by) => {
+    set(() => ({ userMic: by }));
   },
   userVideo: false,
-  setUserVideo: () => {
-    set((state) => ({ userVideo: !state.userVideo }));
+  setUserVideo: (by) => {
+    set(() => ({ userVideo: by }));
   },
   userSpeaker: true,
   setUserSpeaker: () => {

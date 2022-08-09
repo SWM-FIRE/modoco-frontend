@@ -2,14 +2,14 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import roomSocket from '../adapters/roomSocket';
-import { useCreateMediaStream } from './useCreateMediaStream';
+import UserMediaStreamStore from '../stores/userMediaStreamStore';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import userPcStore from '../stores/userPcStore';
 import messageStore from '../stores/messagesStore';
 import { API } from '../config';
 
 const usePeerConnection = () => {
-  const { userMediaStream, createMediaStream } = useCreateMediaStream();
+  const { userMediaStream } = UserMediaStreamStore();
   const { connectedUsers, appendUser, updateMediaStream } =
     connectedUsersStore();
   const { pcs, setPc } = userPcStore();
@@ -35,6 +35,10 @@ const usePeerConnection = () => {
       //   console.log('already connected pc');
       //   return pcs[sid];
       // }
+
+      if (!userMediaStream) {
+        console.log('error no localStream');
+      }
 
       console.log('making peerConnection', sid);
 
@@ -75,10 +79,6 @@ const usePeerConnection = () => {
 
     const createOffer = async (sid: string) => {
       console.log('creating offer', userMediaStream);
-      if (!userMediaStream) {
-        console.log('no mediastream before createoffer');
-        await createMediaStream();
-      }
       const peerConnection = createPeerConnection(sid);
       if (peerConnection) {
         const offer = await peerConnection.createOffer({
@@ -99,10 +99,6 @@ const usePeerConnection = () => {
       sid: string,
       offer: RTCSessionDescriptionInit,
     ) => {
-      if (!userMediaStream) {
-        console.log('no mediastream before createanswer');
-        await createMediaStream();
-      }
       const peerConnection = createPeerConnection(sid);
       if (peerConnection) {
         await peerConnection.setRemoteDescription(
@@ -145,10 +141,6 @@ const usePeerConnection = () => {
     };
 
     const onNewUser = async ({ sid, uid }) => {
-      if (!userMediaStream) {
-        console.log('no mediastream before createanswer');
-        await createMediaStream();
-      }
       axios.get((API.USER as string) + uid).then((res) => {
         if (!connectedUsers.includes(uid)) {
           appendUser({
