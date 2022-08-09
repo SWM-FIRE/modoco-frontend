@@ -1,12 +1,32 @@
+import { useRef } from 'react';
 import styled from 'styled-components';
 
-export default function Nickname() {
+export default function Nickname({ nickname, onChange }) {
+  const errorMsg = useRef(null);
+  const onBlur = () => {
+    if (!nickname) {
+      errorMsg.current.style.display = 'block';
+      errorMsg.current.innerText = '필수 정보 입니다.';
+    } else if (nickname.size < 1 || nickname.size > 10) {
+      errorMsg.current.style.display = 'block';
+      errorMsg.current.innerText = '1~10자 이내로 입력해주세요.';
+    } else {
+      errorMsg.current.style.display = 'none';
+    }
+  };
   return (
     <Section>
       <Label htmlFor="nickname">닉네임 *</Label>
-      <Input id="nickname" type="text" placeholder="닉네임을 입력해주세요." />
-      <Error>필수 정보 입니다.</Error>
-      <Error>10자 이내로 입력해주세요.</Error>
+      <Input
+        id="nickname"
+        type="text"
+        name="nickname"
+        value={nickname}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder="닉네임을 입력해주세요."
+      />
+      <Error ref={errorMsg} />
     </Section>
   );
 }

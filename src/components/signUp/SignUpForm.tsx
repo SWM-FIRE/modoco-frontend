@@ -3,16 +3,31 @@ import Avatar from './Avatar';
 import Email from './Email';
 import Nickname from './Nickname';
 import Password from './Password';
+import useSignUp from '../../hooks/useSignUp';
 
 export default function SignUpForm() {
+  const {
+    inputs,
+    onChange,
+    onSubmit,
+    onChangeAvatar,
+    isValidEmail,
+    isValidPassword,
+  } = useSignUp();
+  const { avatar, nickname, email, password, passwordCheck } = inputs;
   return (
     <Container>
       <Title>회원가입</Title>
-      <Form>
-        <Avatar />
-        <Nickname />
-        <Email />
-        <Password />
+      <Form onSubmit={onSubmit}>
+        <Avatar avatar={avatar} onChangeAvatar={onChangeAvatar} />
+        <Nickname nickname={nickname} onChange={onChange} />
+        <Email email={email} onChange={onChange} isValidEmail={isValidEmail} />
+        <Password
+          password={password}
+          passwordCheck={passwordCheck}
+          onChange={onChange}
+          isValidPassword={isValidPassword}
+        />
         <Submit>회원가입</Submit>
       </Form>
     </Container>
