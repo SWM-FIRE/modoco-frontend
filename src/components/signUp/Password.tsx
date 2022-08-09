@@ -1,6 +1,39 @@
+import { useRef } from 'react';
 import styled from 'styled-components';
 
-export default function Password() {
+export default function Password({
+  password,
+  passwordCheck,
+  onChange,
+  isValidPassword,
+}) {
+  const errorMsgPW = useRef(null);
+  const errorMsgPWCheck = useRef(null);
+  const onBlurPw = () => {
+    if (!password) {
+      errorMsgPW.current.style.display = 'block';
+      errorMsgPW.current.innerText = '필수 정보 입니다.';
+    } else if (!isValidPassword) {
+      errorMsgPW.current.style.display = 'block';
+      errorMsgPW.current.innerText =
+        '8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.';
+    } else {
+      errorMsgPW.current.style.display = 'none';
+    }
+  };
+
+  const onBlurPwCheck = () => {
+    if (!passwordCheck) {
+      errorMsgPWCheck.current.style.display = 'block';
+      errorMsgPWCheck.current.innerText = '필수 정보 입니다.';
+    } else if (password !== passwordCheck) {
+      errorMsgPWCheck.current.style.display = 'block';
+      errorMsgPWCheck.current.innerText = '비밀번호가 일치하지 않습니다.';
+    } else {
+      errorMsgPWCheck.current.style.display = 'none';
+    }
+  };
+
   return (
     <>
       <Section>
@@ -8,19 +41,26 @@ export default function Password() {
         <Input
           type="password"
           id="password"
+          name="password"
+          value={password}
+          onChange={onChange}
+          onBlur={onBlurPw}
           placeholder="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."
         />
-        <Error>8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</Error>
+        <Error ref={errorMsgPW} />
       </Section>
       <Section>
         <Label htmlFor="passwordCheck">비밀번호 확인 *</Label>
         <Input
           type="password"
           id="passwordCheck"
+          name="passwordCheck"
+          value={passwordCheck}
+          onChange={onChange}
+          onBlur={onBlurPwCheck}
           placeholder="비밀번호를 다시 입력해주세요."
         />
-        <Error>필수 정보 입니다.</Error>
-        <Error>비밀번호가 일치하지 않습니다.</Error>
+        <Error ref={errorMsgPWCheck} />
       </Section>
     </>
   );

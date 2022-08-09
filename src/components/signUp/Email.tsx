@@ -1,21 +1,47 @@
+import { useRef } from 'react';
 import styled from 'styled-components';
 
-export default function Email() {
+export default function Email({ email, onChange, isValidEmail }) {
+  const errorMsg = useRef(null);
+  const onBlur = () => {
+    if (!isValidEmail || !email) {
+      errorMsg.current.style.display = 'block';
+      if (!email) errorMsg.current.innerText = '필수 정보 입니다.';
+      else if (!isValidEmail)
+        errorMsg.current.innerText = '이메일 형식이 올바르지 않습니다.';
+    } else {
+      errorMsg.current.style.display = 'none';
+    }
+  };
   return (
-    <Section>
+    <Section isValidEmail={isValidEmail}>
       <Label htmlFor="email">이메일 *</Label>
-      <Input type="text" id="email" placeholder="이메일을 입력해주세요." />
-      <Error>필수 정보 입니다.</Error>
-      <Error>이메일 형식을 확인해주세요.</Error>
+      <Input
+        type="text"
+        id="email"
+        name="email"
+        value={email}
+        onChange={onChange}
+        placeholder="이메일을 입력해주세요."
+        onBlur={onBlur}
+      />
+      <Error ref={errorMsg} />
     </Section>
   );
 }
 
-const Section = styled.p`
+interface sectionInterface {
+  isValidEmail: boolean;
+}
+
+const Section = styled.p<sectionInterface>`
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-top: 3rem;
+  #regx {
+    display: ${(props) => (props.isValidEmail ? 'none' : 'block')};
+  }
 `;
 
 const Label = styled.label`
@@ -37,4 +63,5 @@ const Input = styled.input`
 const Error = styled.span`
   color: #ed8e8e;
   margin-top: 0.5rem;
+  display: none;
 `;

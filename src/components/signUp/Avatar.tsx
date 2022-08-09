@@ -1,17 +1,13 @@
 import styled from 'styled-components';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 
-export default function Avatar() {
-  const onClick = () => {
-    // const randomNumber = Math.floor(Math.random() * 30) + 1; // 1~30 사이 정수 생성
-  };
-
+export default function Avatar({ avatar, onChangeAvatar }) {
   return (
     <Section>
       <Label>프로필 이미지</Label>
       <ProfileComponent>
-        <MyAvatar num={1} />
-        <SetupButton type="button" onClick={onClick}>
+        <MyAvatar num={avatar} />
+        <SetupButton type="button" onClick={onChangeAvatar}>
           아바타 재생성
         </SetupButton>
       </ProfileComponent>
