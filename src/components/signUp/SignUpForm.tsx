@@ -13,6 +13,7 @@ export default function SignUpForm() {
     onChangeAvatar,
     isValidEmail,
     isValidPassword,
+    isDisable,
   } = useSignUp();
   const { avatar, nickname, email, password, passwordCheck } = inputs;
   return (
@@ -28,7 +29,7 @@ export default function SignUpForm() {
           onChange={onChange}
           isValidPassword={isValidPassword}
         />
-        <Submit>회원가입</Submit>
+        <Submit disabled={isDisable()}>회원가입</Submit>
       </Form>
     </Container>
   );
@@ -71,4 +72,8 @@ const Submit = styled.button`
   font-family: IBMPlexSansKRRegular;
   cursor: pointer;
   margin-top: 5rem;
+  :disabled {
+    cursor: default;
+    background-color: #a9afb8;
+  }
 `;
