@@ -5,17 +5,33 @@ import connectedUsersStore from '../stores/connectedUsersStore';
 import roomSocket from './roomSocket';
 import messageStore from '../stores/messagesStore';
 import userPcStore from '../stores/userPcStore';
+import UserMediaStreamStore from '../stores/userMediaStreamStore';
+import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import { API } from '../config';
 
 export const roomConnection = (roomId: string) => {
   const navigate = useNavigate();
   const { connectedUsers, appendUser, removeUser, findUser } =
     connectedUsersStore();
+  const { userMediaStream } = UserMediaStreamStore();
   const { appendMessages } = messageStore();
   const { pcs, setPc } = userPcStore();
+  const { createAll } = useCreateMediaStream();
 
   useEffect(() => {
     const newUID = localStorage.getItem('uid');
+
+    const joinSuccess = async () => {
+      if (newUID) {
+        if (!userMediaStream) {
+          await createAll();
+        }
+        const payload = { room: roomId, uid: newUID };
+        roomSocket.emit('joinRoom', payload);
+      } else {
+        console.log('[roomConnection] UID가 존재하지 않음');
+      }
+    };
 
     const setConnected = (user, res) => {
       if (!connectedUsers.includes(user.uid)) {
@@ -31,12 +47,7 @@ export const roomConnection = (roomId: string) => {
       }
     };
 
-    const payload = { room: roomId, uid: newUID };
-    if (newUID) {
-      roomSocket.emit('joinRoom', payload);
-    } else {
-      console.log('[roomConnection] UID가 존재하지 않음');
-    }
+    joinSuccess();
 
     roomSocket.off('joinedRoom').on('joinedRoom', (room) => {
       console.log('[roomConnection] joinedRoom', room);
@@ -77,5 +88,5 @@ export const roomConnection = (roomId: string) => {
       setPc({ sid, peerConnection: undefined });
       removeUser(sid);
     });
-  }, [connectedUsers]);
+  }, []);
 };
