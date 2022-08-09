@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
+import userPcStore from '../stores/userPcStore';
 
 export const useCreateMediaStream = () => {
   const {
@@ -14,6 +15,7 @@ export const useCreateMediaStream = () => {
   const myStream: { localStream: MediaStream | null } = {
     localStream: userMediaStream,
   };
+  const { pcs } = userPcStore();
 
   const stopMediaStream = () => {
     if (userMediaStream) {
@@ -36,6 +38,7 @@ export const useCreateMediaStream = () => {
   const stopDisplayStream = () => {
     if (userVideo) {
       myStream.localStream.getVideoTracks().forEach((track) => track.stop());
+      // removeDisplayTrack(sid, myStream.localStream);
       console.log('blah blah');
       myStream.localStream.removeTrack(
         myStream.localStream.getVideoTracks()[0],
@@ -87,9 +90,15 @@ export const useCreateMediaStream = () => {
         myStream.localStream.addTrack(track);
       });
       setUserVideo(true);
-      console.log('set display');
       console.log('myStream', myStream.localStream.getVideoTracks());
       setUserMediaStream(myStream.localStream);
+
+      Object.keys(pcs).forEach((pc) => {
+        const sender = pcs[pc]
+          .getSenders()
+          .find((s) => s.track.kind === 'video');
+        sender.replaceTrack(videoStream.getVideoTracks()[0]);
+      });
     } catch (error) {
       console.log('failed to get display stream', error);
     }
