@@ -1,31 +1,25 @@
-import campingOST from '../../../assets/sound/camping.mp3';
-import cosmosOST from '../../../assets/sound/cosmos.mp3';
-import fireOST from '../../../assets/sound/fire.mp3';
-import oceanOST from '../../../assets/sound/ocean.mp3';
-import travelOST from '../../../assets/sound/travel.mp3';
-
 export default function ThemeSound({ theme, volumeRef }) {
   console.log('sound theme', theme);
 
-  let myTheme;
+  let myTheme: string;
   switch (theme) {
     case 'fire':
-      myTheme = fireOST;
+      myTheme = 'https://static.modocode.com/fire.mp3';
       break;
     case 'ocean':
-      myTheme = oceanOST;
+      myTheme = 'https://static.modocode.com/ocean.mp3';
       break;
     case 'camping':
-      myTheme = campingOST;
+      myTheme = 'https://static.modocode.com/camping.mp3';
       break;
     case 'cosmos':
-      myTheme = cosmosOST;
+      myTheme = 'https://static.modocode.com/cosmos.mp3';
       break;
     case 'travel':
-      myTheme = travelOST;
+      myTheme = 'https://static.modocode.com/travel.mp3';
       break;
     default:
-      myTheme = fireOST;
+      myTheme = 'https://static.modocode.com/fire.mp3';
       break;
   }
 
