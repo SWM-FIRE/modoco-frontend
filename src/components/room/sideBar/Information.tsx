@@ -13,13 +13,13 @@ export default function Information() {
   const { data } = useRoom(roomId);
   const { closeSidebar } = controlSidebar();
 
-  const onControlSidebarClick = () => {
+  const onCotrolSidebarClick = () => {
     closeSidebar();
   };
 
   return (
     <Component>
-      <ControlSidebar onClick={onControlSidebarClick}>
+      <ControlSidebar onClick={onCotrolSidebarClick}>
         <RightTwoArrows />
         <Chatting />
       </ControlSidebar>
@@ -47,7 +47,6 @@ const ControlSidebar = styled.div`
   align-items: center;
   gap: 0.9rem;
   cursor: pointer;
-  z-index: 999;
 `;
 
 const RoomTitle = styled.div`

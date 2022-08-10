@@ -64,12 +64,24 @@ const FlexRow = styled.div`
   height: 0;
   gap: 3rem;
   padding-bottom: 28%;
+  @media (max-width: 900px) {
+    width: 90%;
+    align-items: center;
+    height: 0;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 110%;
+  }
 `;
 
 const Theme = styled.div`
   height: 10rem;
   width: 10rem;
   min-height: 10rem;
+  @media (max-width: 900px) {
+    display: none;
+  }
 `;
 
 const ScreenWrapper = styled.div`
@@ -79,6 +91,9 @@ const ScreenWrapper = styled.div`
   overflow: auto;
   width: 100%;
   height: 100%;
+  @media (max-width: 900px) {
+    gap: 2rem;
+  }
 `;
 
 const Container = styled.div`
@@ -86,7 +101,4 @@ const Container = styled.div`
   overflow: auto;
   width: calc(95% - 46.5rem);
   height: calc(100% - 5rem);
-  @media (max-width: 1440px) {
-    width: calc(95% - 10rem);
-  }
 `;

@@ -111,7 +111,6 @@ const NewMessage = styled.form`
   border-radius: 1rem;
   padding: 1.5rem 2rem;
   background-color: ${({ theme }) => theme.input};
-  z-index: 999;
 `;
 
 const Input = styled.input`

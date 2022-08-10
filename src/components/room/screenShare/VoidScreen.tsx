@@ -37,6 +37,11 @@ const Container = styled.div`
   background-color: #4a4a4a;
   display: flex;
   justify-content: center;
+  @media (max-width: 900px) {
+    width: 90%;
+    height: 0;
+    padding-bottom: 60%;
+  }
   width: 48%;
   height: 0;
   border-radius: 1rem;
