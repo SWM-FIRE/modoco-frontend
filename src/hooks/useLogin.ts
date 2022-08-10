@@ -30,7 +30,8 @@ export default function useLogin() {
         password,
       })
       .then((res) => {
-        console.log('[success]', res);
+        console.log('[success]', res.data.access_token);
+        localStorage.setItem('access_token', res.data.access_token);
         navigate(`/main`);
       })
       .catch((err) => {
