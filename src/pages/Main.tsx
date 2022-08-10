@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import useSetSelf from '../hooks/useSetSelf';
+// import { useNavigate } from 'react-router-dom';
+// import useSetSelf from '../hooks/useSetSelf';
 import UserStore from '../stores/userStore';
 import ModalStore from '../stores/createRoomModalStore';
 import RoomCards from '../components/main/RoomCards';
@@ -16,12 +16,13 @@ export default function Main() {
   const { isOpenCreateRoomModal } = ModalStore();
   const { isOpenLoginModal } = LoginModalStore();
   const { nickname } = UserStore();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useSetSelf();
+  // useSetSelf();
   useEffect(() => {
     if (!nickname) {
-      navigate('/');
+      console.log('no nickname');
+      // navigate('/');
     }
   });
 
