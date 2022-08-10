@@ -2,11 +2,11 @@
   font-family: GmarketSansBold;
   src: local('GmarketSansTTFBold'), local('GmarketSansTTFBold');
   font-style: normal;
-  src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff2')
+  src: url('https://static.modocode.com/fonts/GmarketSansBold.woff2')
       format('woff2'),
-    url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff')
-      format('woff'),
-    url('./GmarketSansBold.ttf') format('truetype');
+    url('https://static.modocode.com/fonts/GmarketSansBold.woff') format('woff'),
+    url('https://static.modocode.com/fonts/GmarketSansBold.ttf')
+      format('truetype');
 }
 @font-face {
   font-family: GmarketSansMedium;
@@ -16,57 +16,63 @@
       format('woff2'),
     url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.woff')
       format('woff'),
-    url('./GmarketSansTTFMedium.ttf') format('truetype');
+    url('https://static.modocode.com/fonts/GmarketSansMedium.ttf')
+      format('truetype');
 }
 @font-face {
   font-family: IBMPlexSansKRRegular;
   src: local('IBMPlexSansKRRegular'), local('IBMPlexSansKRRegular');
   font-style: normal;
-  src: url('./IBMPlexSansKR-Regular.woff2') format('woff2'),
-    url('./IBMPlexSansKR-Regular.woff') format('woff'),
-    url('./IBMPlexSansKR-Regular.otf') format('opentype'),
-    url('./IBMPlexSansKR-Regular.ttf') format('truetype');
+  src: url('https://static.modocode.com/fonts/IBMPlexSansKR.woff2')
+      format('woff2'),
+    url('https://static.modocode.com/fonts/IBMPlexSansKR.woff') format('woff'),
+    url('https://static.modocode.com/fonts/IBMPlexSansKR.otf')
+      format('opentype'),
+    url('https://static.modocode.com/fonts/IBMPlexSansKR.ttf')
+      format('truetype');
 }
 @font-face {
   font-family: IBMPlexMonoRegular;
   src: local('IBMPlexMonoRegular'), local('IBMPlexMonoRegular');
   font-style: normal;
-  src: url('./IBMPlexMono-Regular.woff2') format('woff2'),
-    url('./IBMPlexMono-Regular.woff') format('woff'),
-    url('./IBMPlexMono-Regular.otf') format('opentype'),
-    url('./IBMPlexMono-Regular.ttf') format('truetype');
+  src: url('https://static.modocode.com/fonts/IBMPlexMono.woff2')
+      format('woff2'),
+    url('https://static.modocode.com/fonts/IBMPlexMono.woff') format('woff'),
+    url('https://static.modocode.com/fonts/IBMPlexMono.otf') format('opentype'),
+    url('https://static.modocode.com/fonts/IBMPlexMono.ttf') format('truetype');
 }
 @font-face {
   font-family: JostRegular;
   src: local('JostRegular'), local('JostRegular');
   font-style: normal;
-  src: url('./jost-v14-latin-regular.woff2') format('woff2'),
-    url('./jost-v14-latin-regular.woff') format('woff'),
-    url('./jost-v14-latin-regular.ttf') format('truetype');
+  src: url('https://static.modocode.com/fonts/jost.woff2') format('woff2'),
+    url('https://static.modocode.com/fonts/jost.woff') format('woff'),
+    url('https://static.modocode.com/fonts/jost.ttf') format('truetype');
 }
 @font-face {
   font-family: PoppinsRegular;
   src: local('PoppinsRegular'), local('PoppinsRegular');
   font-style: normal;
-  src: url('./poppins-v20-latin-regular.woff2') format('woff2'),
-    url('./poppins-v20-latin-regular.woff') format('woff'),
-    url('./poppins-v20-latin-regular.ttf') format('truetype');
+  src: url('https://static.modocode.com/fonts/poppins.woff2') format('woff2'),
+    url('https://static.modocode.com/fonts/poppins.woff') format('woff'),
+    url('https://static.modocode.com/fonts/poppins.ttf') format('truetype');
 }
 @font-face {
   font-family: PretendardRegular;
   src: local('PretendardRegular'), local('PretendardRegular');
   font-style: normal;
-  src: url('../fonts/Pretendard-Regular.woff2') format('woff2'),
-    url('../fonts/Pretendard-Regular.woff') format('woff'),
-    url('../fonts/Pretendard-Regular.otf') format('opentype'),
-    url('../fonts/Pretendard-Regular.ttf') format('truetype');
+  src: url('https://static.modocode.com/fonts/Pretendard.woff2') format('woff2'),
+    url('https://static.modocode.com/fonts/Pretendard.woff') format('woff'),
+    url('https://static.modocode.com/fonts/Pretendard.otf') format('opentype'),
+    url('https://static.modocode.com/fonts/Pretendard.ttf') format('truetype');
 }
 @font-face {
   font-family: SFProDisplayRegular;
   src: local('SFProDisplayRegular'), local('SFProDisplayRegular');
   font-style: normal;
-  src: url('./SF\ Pro\ Display\ Regular.woff2') format('woff2'),
-    url('./SF\ Pro\ Display\ Regular.woff') format('woff'),
-    url('./SF\ Pro\ Display\ Regular.otf') format('opentype'),
-    url('./SF\ Pro\ Display\ Regular.ttf') format('truetype');
+  src: url('https://static.modocode.com/fonts/SFProDisplay.woff2')
+      format('woff2'),
+    url('https://static.modocode.com/fonts/SFProDisplay.woff') format('woff'),
+    url('https://static.modocode.com/fonts/SFProDisplay.otf') format('opentype'),
+    url('https://static.modocode.com/fonts/SFProDisplay.ttf') format('truetype');
 }

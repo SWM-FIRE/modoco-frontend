@@ -8,6 +8,7 @@ import Ready from './pages/Ready';
 import LandingPage from './pages/LandingPage';
 import Main from './pages/Main';
 import Test from './pages/Test';
+import SignUp from './pages/SignUp';
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route path="/ready">
             <Route path=":roomId" element={<Ready />} />
+          </Route>
+          <Route path="/signUp" element={<Layout />}>
+            <Route index element={<SignUp />} />
           </Route>
           <Route path="/test" element={<Test />} />
         </Routes>

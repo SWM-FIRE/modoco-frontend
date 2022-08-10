@@ -2,14 +2,17 @@ import styled from 'styled-components';
 import Participants from './Participants';
 import Chatting from './Chatting';
 import Information from './Information';
+import ModalPortal from '../../atoms/ModalPortal';
 
 export default function Sidebar() {
   return (
-    <Component>
-      <Information />
-      <Participants />
-      <Chatting />
-    </Component>
+    <ModalPortal>
+      <Component>
+        <Information />
+        <Participants />
+        <Chatting />
+      </Component>
+    </ModalPortal>
   );
 }
 
@@ -21,6 +24,8 @@ const Component = styled.div`
   padding: 2.4rem 2rem;
   width: 40rem;
   right: 0;
-  top: 0;
+  top: 10rem;
   height: calc(100vh - 14rem);
+  z-index: 999;
+  box-shadow: 0px 4px 59px rgba(50, 50, 71, 0.3);
 `;

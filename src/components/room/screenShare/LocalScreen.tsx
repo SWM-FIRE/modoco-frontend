@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import UserStore from '../../../stores/userStore';
 import controlModal from '../../../stores/controlModal';
-import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
+import userMediaStreamStore from '../../../stores/userMediaStreamStore';
 import messageStore from '../../../stores/messagesStore';
 
 export default function LocalScreen() {
   const { nickname, avatar, uid } = UserStore();
   const { messages } = messageStore();
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
-  const { userMediaStream } = useCreateMediaStream();
+  const { userMediaStream } = userMediaStreamStore();
   const { toggleModal, setNickname, setAvatar, setUid } = controlModal();
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -39,6 +39,7 @@ export default function LocalScreen() {
       message.uid === uid &&
       new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
   );
+
   return (
     <Container onClick={OpenModal}>
       <Video ref={videoRef} autoPlay playsInline muted />
@@ -64,11 +65,6 @@ const Container = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
-  @media (max-width: 900px) {
-    width: 90%;
-    height: 0;
-    padding-bottom: 60%;
-  }
   width: 48%;
   height: 0;
   border-radius: 1rem;

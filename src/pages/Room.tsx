@@ -14,8 +14,10 @@ import { ReactComponent as Chatting } from '../assets/svg/Room/Chatting.svg';
 import Sidebar from '../components/room/sideBar/Sidebar';
 import ScreenShareModal from '../components/room/ScreenModal';
 import controlSidebar from '../stores/controlSidebar';
+import useSetSelf from '../hooks/useSetSelf';
 
 export default function Room() {
+  useSetSelf();
   const { roomId } = useParams();
   const { isOpen } = controlModal();
   const { isOpenSidebar, openSidebar } = controlSidebar();
@@ -39,7 +41,7 @@ export default function Room() {
     <ThemeProvider theme={theme}>
       <Component>
         <Header theme={data?.theme} />
-        <Contents>
+        <Contents isOpen={isOpenSidebar}>
           <ScreenShare theme={data?.theme} />
           {!isOpenSidebar && (
             <ControlSidebar
@@ -58,22 +60,23 @@ export default function Room() {
   );
 }
 
-interface ControlSidebarProps {
-  backgroundColor: string;
-}
-
 const Component = styled.div`
   height: 100vh;
 `;
 
-const Contents = styled.div`
+const Contents = styled.div<{ isOpen: boolean }>`
   background-color: ${({ theme }) => theme.main};
   height: calc(100% - 10rem);
   display: flex;
+  justify-content: ${(props) => (props.isOpen ? 'flex-start' : 'center')};
+  @media (max-width: 1440px) {
+    justify-content: center;
+  }
   position: relative;
 `;
 
-const ControlSidebar = styled.div<ControlSidebarProps>`
+const ControlSidebar = styled.div<{ backgroundColor: string }>`
+  z-index: 999;
   position: absolute;
   right: 0;
   top: 1.6rem;
@@ -86,4 +89,5 @@ const ControlSidebar = styled.div<ControlSidebarProps>`
   gap: 0.9rem;
   background-color: ${({ backgroundColor }) => backgroundColor};
   cursor: pointer;
+  box-shadow: 0px 4px 59px rgba(50, 50, 71, 0.3);
 `;
