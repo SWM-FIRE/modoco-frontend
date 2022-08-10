@@ -70,5 +70,5 @@ const Button = styled.button`
   font-family: IBMPlexSansKRRegular;
   padding: 1rem 2rem;
   font-size: 1.7rem;
-  min-width: 11.7rem;
+  width: 11.7rem;
 `;
