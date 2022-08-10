@@ -22,7 +22,7 @@ const queryClient = new QueryClient();
 
 function App() {
   const history = createBrowserHistory();
-  const { setNickname, setToken, setAvatar } = userStore();
+  const { setNickname, setAvatar } = userStore();
 
   history.listen(({ location }) => {
     const user = localStorage.getItem('access_token');
@@ -35,7 +35,6 @@ function App() {
         console.log('??');
         localStorage.removeItem('access_token');
         setNickname('');
-        setToken('');
         setAvatar(0);
       }
     }
