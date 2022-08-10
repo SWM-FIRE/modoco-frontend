@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API } from '../config';
-import userStore from '../stores/userStore';
+import LoginModalStore from '../stores/loginModalStore';
 
 export default function useLogin() {
   const navigate = useNavigate();
-  const { setNickname, setAvatar } = userStore();
+  const { closeModal, openModal } = LoginModalStore();
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
@@ -27,7 +27,8 @@ export default function useLogin() {
     return false;
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     axios
       .post(API.SESSION, {
         email,
@@ -44,14 +45,14 @@ export default function useLogin() {
           })
           .then((res) => {
             console.log('[me]', res.data);
-            setNickname(res.data.nickname);
-            setAvatar(res.data.avatar);
             navigate(`/main`);
+            closeModal();
           });
       })
       .catch((err) => {
         console.log('[error]', err.response.data.message);
         setIsError(true);
+        openModal();
       });
   };
 
