@@ -4,19 +4,22 @@ import { API } from '../config';
 import UserStore from '../stores/userStore';
 
 export default function useSetSelf() {
-  const { setNickname, setUid, setAvatar } = UserStore();
+  const { setNickname, setAvatar } = UserStore();
 
   useEffect(() => {
-    if (localStorage.getItem('uid')) {
-      const myUid = localStorage.getItem('uid');
-      axios.get((API.USER as string) + myUid).then((res) => {
-        if (res.data.uid) {
-          console.log('existing user', res.data);
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      axios
+        .get(API.ME, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log('[me]', res.data);
           setNickname(res.data.nickname);
           setAvatar(res.data.avatar);
-          setUid(myUid);
-        }
-      });
+        });
     }
   }, []);
 }

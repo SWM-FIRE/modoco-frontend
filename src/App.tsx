@@ -16,13 +16,11 @@ import Main from './pages/Main';
 import Test from './pages/Test';
 import Error from './pages/Error';
 import SignUp from './pages/SignUp';
-import userStore from './stores/userStore';
 
 const queryClient = new QueryClient();
 
 function App() {
   const history = createBrowserHistory();
-  const { setNickname, setAvatar } = userStore();
 
   history.listen(({ location }) => {
     const user = localStorage.getItem('access_token');
@@ -34,8 +32,6 @@ function App() {
       if (decodedJwt.exp * 1000 < Date.now()) {
         console.log('??');
         localStorage.removeItem('access_token');
-        setNickname('');
-        setAvatar(0);
       }
     }
   });
