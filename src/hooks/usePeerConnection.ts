@@ -29,57 +29,59 @@ const usePeerConnection = () => {
     ],
   };
 
-  useEffect(() => {
-    const createPeerConnection = (sid: string) => {
-      // if (pcs[sid]) {
-      //   console.log('already connected pc');
-      //   return pcs[sid];
-      // }
+  const createPeerConnection = (sid: string) => {
+    // if (pcs[sid]) {
+    //   console.log('already connected pc');
+    //   return pcs[sid];
+    // }
 
-      if (!userMediaStream) {
-        console.log('error no localStream');
-      }
+    if (!userMediaStream) {
+      console.log('error no localStream');
+    }
 
-      console.log('making peerConnection', sid);
+    console.log('making peerConnection', sid);
 
-      const peerConnection = new RTCPeerConnection(RTCConfig);
+    const peerConnection = new RTCPeerConnection(RTCConfig);
 
-      peerConnection.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
-        console.log('candidate exchange');
-        if (event.candidate) {
-          roomSocket.emit('ice-candidate', {
-            to: sid,
-            candidate: event.candidate,
-          });
-        }
-      };
-
-      peerConnection.ontrack = (event: RTCTrackEvent) => {
-        console.log('remote track', event.streams);
-        console.log('adding track', event.streams[0]);
-        updateMediaStream({
-          socketId: sid,
-          stream: event.streams[0],
+    peerConnection.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
+      console.log('candidate exchange');
+      if (event.candidate) {
+        roomSocket.emit('ice-candidate', {
+          to: sid,
+          candidate: event.candidate,
         });
-      };
+      }
+    };
 
-      peerConnection.onicegatheringstatechange = (event: Event) => {
-        console.log('ice gathering state changed', event);
-      };
+    peerConnection.ontrack = (event: RTCTrackEvent) => {
+      console.log('remote track', event.streams);
+      console.log('adding track', event.streams[0]);
+      updateMediaStream({
+        socketId: sid,
+        stream: event.streams[0],
+      });
+    };
 
+    peerConnection.onicegatheringstatechange = (event: Event) => {
+      console.log('ice gathering state changed', event);
+    };
+
+    const setMyStream = () => {
       userMediaStream?.getTracks().forEach((track) => {
         peerConnection.addTrack(track, userMediaStream);
       });
-
-      setPc({ sid, peerConnection });
-      console.log('new peerConnection created', sid, peerConnection);
-
-      return peerConnection;
     };
+    setMyStream();
+    setPc({ sid, peerConnection });
+    console.log('new peerConnection created', sid, peerConnection);
 
+    return { peerConnection };
+  };
+
+  useEffect(() => {
     const createOffer = async (sid: string) => {
       console.log('creating offer', userMediaStream);
-      const peerConnection = createPeerConnection(sid);
+      const { peerConnection } = createPeerConnection(sid);
       if (peerConnection) {
         const offer = await peerConnection.createOffer({
           offerToReceiveAudio: true,
@@ -99,7 +101,7 @@ const usePeerConnection = () => {
       sid: string,
       offer: RTCSessionDescriptionInit,
     ) => {
-      const peerConnection = createPeerConnection(sid);
+      const { peerConnection } = createPeerConnection(sid);
       if (peerConnection) {
         await peerConnection.setRemoteDescription(
           new RTCSessionDescription(offer),
@@ -169,7 +171,7 @@ const usePeerConnection = () => {
     };
 
     // handle ice-candidate from other user
-    const onIceCandidateRecieved = (data: {
+    const onIceCandidateReceived = (data: {
       sid: string;
       candidate: RTCIceCandidateInit;
     }) => {
@@ -184,7 +186,7 @@ const usePeerConnection = () => {
     roomSocket.off('newUser').on('newUser', onNewUser);
     roomSocket.off('call-made').on('call-made', onCallMade);
     roomSocket.off('answer-made').on('answer-made', onAnswerMade);
-    roomSocket.off('ice-candidate').on('ice-candidate', onIceCandidateRecieved);
+    roomSocket.off('ice-candidate').on('ice-candidate', onIceCandidateReceived);
   }, [userMediaStream, pcs]);
 };
 
