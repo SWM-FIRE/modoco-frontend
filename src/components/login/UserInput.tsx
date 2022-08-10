@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import useLogin from '../../hooks/useLogin';
 
 export default function UserInput() {
-  const { inputs, onChange, onSubmit, isDisable } = useLogin();
+  const { inputs, onChange, onSubmit, isDisable, isError } = useLogin();
   const { email, password } = inputs;
   const errorMsg = useRef(null);
 
@@ -12,7 +12,6 @@ export default function UserInput() {
       errorMsg.current.style.display = 'block';
       errorMsg.current.innerText = '이메일을 입력해주세요.';
     } else if (!password) {
-      errorMsg.current.style.display = 'block';
       errorMsg.current.innerText = '비밀번호를 입력해주세요.';
     } else {
       errorMsg.current.style.display = 'none';
@@ -37,6 +36,11 @@ export default function UserInput() {
         onBlur={onBlur}
       />
       <Error ref={errorMsg} />
+      {isError && (
+        <Error style={{ display: 'block' }}>
+          이메일과 비밀번호를 확인해주세요
+        </Error>
+      )}
       <Button disabled={isDisable()}>로그인</Button>
     </Form>
   );

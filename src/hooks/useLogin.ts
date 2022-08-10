@@ -6,14 +6,16 @@ import userStore from '../stores/userStore';
 
 export default function useLogin() {
   const navigate = useNavigate();
-  const { setNickname, setAvatar, setToken } = userStore();
+  const { setNickname, setAvatar } = userStore();
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
   });
   const { email, password } = inputs;
+  const [isError, setIsError] = useState(false);
 
   const onChange = (e) => {
+    setIsError(false);
     setInputs({
       ...inputs,
       [e.target.name]: e.target.value,
@@ -34,8 +36,6 @@ export default function useLogin() {
       .then((res) => {
         console.log('[success]', res.data);
         localStorage.setItem('access_token', res.data.access_token);
-        console.log('[token]', localStorage.getItem('access_token'));
-        setToken(res.data.access_token);
         axios
           .get(API.ME, {
             headers: {
@@ -50,8 +50,8 @@ export default function useLogin() {
           });
       })
       .catch((err) => {
-        console.log('[error] ', err);
-        console.log('[error messgae]', err.response.data.message);
+        console.log('[error]', err.response.data.message);
+        setIsError(true);
       });
   };
 
@@ -60,5 +60,6 @@ export default function useLogin() {
     onChange,
     onSubmit,
     isDisable,
+    isError,
   };
 }
