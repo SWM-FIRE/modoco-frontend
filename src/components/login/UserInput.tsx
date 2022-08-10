@@ -77,13 +77,16 @@ const Input = styled.input`
 const Button = styled.button`
   font-family: IBMPlexSansKRRegular;
   font-size: 1.5rem;
-
   background-color: #f3f4f6;
   cursor: pointer;
   width: 100%;
   margin-top: 2.6rem;
   height: 5.5rem;
   border-radius: 1rem;
+  :disabled {
+    cursor: default;
+    background-color: #a9afb8;
+  }
 `;
 
 const Error = styled.span`
