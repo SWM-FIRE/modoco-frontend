@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API } from '../config';
 
 export default function useSignUp() {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     avatar: 1,
     nickname: '',
@@ -43,7 +45,7 @@ export default function useSignUp() {
     });
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
     axios
       .post(API.USER, {
         avatar,
@@ -53,6 +55,7 @@ export default function useSignUp() {
       })
       .then((res) => {
         console.log('[success]', res);
+        navigate(`/`);
       })
       .catch((err) => {
         console.log('[error] ', err);
