@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import useLogin from '../../hooks/useLogin';
 
 export default function UserInput() {
-  const { inputs, onChange, onSubmit } = useLogin();
+  const { inputs, onChange, onSubmit, isDisable } = useLogin();
   const { email, password } = inputs;
   const errorMsg = useRef(null);
 
@@ -37,7 +37,7 @@ export default function UserInput() {
         onBlur={onBlur}
       />
       <Error ref={errorMsg} />
-      <Button>로그인</Button>
+      <Button disabled={isDisable()}>로그인</Button>
     </Form>
   );
 }

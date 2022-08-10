@@ -18,6 +18,11 @@ export default function useLogin() {
     });
   };
 
+  const isDisable = () => {
+    if (email === '' || password === '') return true;
+    return false;
+  };
+
   const onSubmit = () => {
     axios
       .post(API.SESSION, {
@@ -37,5 +42,6 @@ export default function useLogin() {
     inputs,
     onChange,
     onSubmit,
+    isDisable,
   };
 }
