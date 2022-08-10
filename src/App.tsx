@@ -4,7 +4,6 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createBrowserHistory } from 'history';
 import jwtDecode from 'jwt-decode';
@@ -21,7 +20,6 @@ import userStore from './stores/userStore';
 const queryClient = new QueryClient();
 
 function App() {
-  // const navigation = useNavigate();
   const history = createBrowserHistory();
   const { setNickname, setToken, setAvatar } = userStore();
 
