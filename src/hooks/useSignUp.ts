@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API } from '../config';
 
 export default function useSignUp() {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     avatar: 1,
     nickname: '',
@@ -10,7 +12,7 @@ export default function useSignUp() {
     password: '',
     passwordCheck: '',
   });
-  const { avatar, nickname, email, password } = inputs;
+  const { avatar, nickname, email, password, passwordCheck } = inputs;
 
   const emailReg =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -27,6 +29,15 @@ export default function useSignUp() {
     });
   };
 
+  const isDisable = () => {
+    if (nickname === '' || email === '' || password === '') return true;
+    if (!isValidEmail || !isValidPassword) {
+      return true;
+    }
+    if (password !== passwordCheck) return true;
+    return false;
+  };
+
   const onChangeAvatar = () => {
     setInputs({
       ...inputs,
@@ -34,15 +45,17 @@ export default function useSignUp() {
     });
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
     axios
-      .post(API.ROOM, {
+      .post(API.USER, {
         avatar,
         nickname,
+        email,
         password,
       })
       .then((res) => {
         console.log('[success]', res);
+        navigate(`/`);
       })
       .catch((err) => {
         console.log('[error] ', err);
@@ -56,5 +69,6 @@ export default function useSignUp() {
     onChangeAvatar,
     isValidEmail,
     isValidPassword,
+    isDisable,
   };
 }
