@@ -45,7 +45,7 @@ export default function useSignUp() {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = () => {
     axios
       .post(API.USER, {
         avatar,
