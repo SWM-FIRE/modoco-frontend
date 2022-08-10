@@ -14,6 +14,7 @@ import Ready from './pages/Ready';
 import LandingPage from './pages/LandingPage';
 import Main from './pages/Main';
 import Test from './pages/Test';
+import Error from './pages/Error';
 import SignUp from './pages/SignUp';
 import userStore from './stores/userStore';
 
@@ -59,6 +60,7 @@ function App() {
             <Route index element={<SignUp />} />
           </Route>
           <Route path="/test" element={<Test />} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </HistoryRouter>
     </QueryClientProvider>
