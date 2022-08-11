@@ -5,7 +5,9 @@ import { API } from '../config';
 import UserStore from '../stores/userStore';
 
 export default function useSetSelf() {
-  const { setNickname, setAvatar, setUid, setClear } = UserStore();
+  const { setNickname, setAvatar, setUid, setClear } = UserStore(
+    (state) => state,
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
