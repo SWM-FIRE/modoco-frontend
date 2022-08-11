@@ -7,7 +7,9 @@ export default function RoomDetail({ roomNo: roomId }) {
   const navigate = useNavigate();
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    navigate(`/room/${roomId}`);
+    if (localStorage.getItem('access_token')) {
+      navigate(`/room/${roomId}`);
+    }
   };
 
   return (
