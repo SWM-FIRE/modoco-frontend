@@ -27,10 +27,10 @@ function App() {
     if (user) {
       const decodedJwt: any = jwtDecode(user);
       console.log('[decodedJwt]', decodedJwt);
-      if (decodedJwt.exp * 1000 < Date.now()) {
-        localStorage.removeItem('access_token');
-        alert('로그인 시간이 만료되었습니다.');
-      }
+      // if (decodedJwt.exp * 1000 < Date.now()) {
+      //   localStorage.removeItem('access_token');
+      //   alert('로그인 시간이 만료되었습니다.');
+      // }
     }
   });
   return (
