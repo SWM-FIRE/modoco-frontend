@@ -28,7 +28,7 @@ const Component = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 2.7rem;
-  height: 18rem;
+  height: 19rem;
   width: 32rem;
   background-color: #23262f;
   border-radius: 2rem;

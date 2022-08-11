@@ -22,7 +22,7 @@ export default function SingleScreen({ nickname, avatar, uid, stream }) {
     if (videoRef.current && stream) {
       videoRef.current.srcObject = stream;
     }
-  }, [stream]);
+  }, [stream, videoRef]);
 
   useEffect(() => {
     const timer = setInterval(() => {

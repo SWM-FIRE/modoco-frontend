@@ -8,6 +8,7 @@ import roomSocket from '../../../adapters/roomSocket';
 import connectedUsersStore from '../../../stores/connectedUsersStore';
 import messageStore from '../../../stores/messagesStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
+import userPcStore from '../../../stores/userPcStore';
 
 export default function Header({ theme }) {
   const navigate = useNavigate();
@@ -15,12 +16,14 @@ export default function Header({ theme }) {
   const { setUsers } = connectedUsersStore();
   const { stopMediaStream } = useCreateMediaStream();
   const { setMessages } = messageStore();
+  const { emptyPc } = userPcStore();
 
   const onClick = () => {
     const result = window.confirm('정말 모도코를 종료하시겠습니까?');
     if (result) {
-      setUsers([]);
       roomSocket.emit('leaveRoom', roomId);
+      setUsers([]);
+      emptyPc();
       setMessages([]);
       stopMediaStream();
       navigate('/');

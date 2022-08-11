@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 import userMediaStreamStore from '../../stores/userMediaStreamStore';
@@ -9,12 +9,8 @@ import { ReactComponent as MonitorOff } from '../../assets/svg/MonitorOff.svg';
 
 export default function Screen({ video: videoRef }) {
   const { userMic, userVideo } = userMediaStreamStore();
-  const { createAll, stopDisplayStream, createDisplayStream, toggleMic } =
+  const { stopDisplayStream, createDisplayStream, toggleMic } =
     useCreateMediaStream();
-
-  useEffect(() => {
-    createAll();
-  }, []);
 
   const setMic = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
