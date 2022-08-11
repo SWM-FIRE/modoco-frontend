@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import userStore from '../stores/userStore';
 import { API } from '../config';
 
 export default function useCreateRoom() {
@@ -12,6 +13,7 @@ export default function useCreateRoom() {
     tags: [],
   });
   const { title, details, total, theme, newTag, tags } = inputs;
+  const { uid } = userStore();
 
   const onChange = (e) => {
     setInputs({
@@ -60,9 +62,7 @@ export default function useCreateRoom() {
       .post(
         API.ROOM,
         {
-          moderator: {
-            uid: localStorage.getItem('uid'),
-          },
+          moderator: { uid },
           title,
           details,
           tags,
