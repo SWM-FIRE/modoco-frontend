@@ -2,13 +2,13 @@ import create from 'zustand';
 
 interface Modal {
   isOpenLoginModal: boolean;
-  closeModal: () => void;
-  openModal: () => void;
+  closeLoginModal: () => void;
+  openLoginModal: () => void;
 }
 const LoginModalStore = create<Modal>((set) => ({
   isOpenLoginModal: false,
-  closeModal: () => set(() => ({ isOpenLoginModal: false })),
-  openModal: () => set(() => ({ isOpenLoginModal: true })),
+  closeLoginModal: () => set(() => ({ isOpenLoginModal: false })),
+  openLoginModal: () => set(() => ({ isOpenLoginModal: true })),
 }));
 
 export default LoginModalStore;

@@ -8,12 +8,12 @@ import UserInput from './UserInput';
 import LoginModalStore from '../../stores/loginModalStore';
 
 export default function Modal() {
-  const { closeModal } = LoginModalStore();
+  const { closeLoginModal } = LoginModalStore();
   return (
     <ModalPortal>
-      <ModalBackground onClick={closeModal}>
+      <ModalBackground onClick={closeLoginModal}>
         <ModalBox onClick={(e) => e.stopPropagation()}>
-          <Close onClick={closeModal}>
+          <Close onClick={closeLoginModal}>
             <X />
           </Close>
           <ModalTitle />

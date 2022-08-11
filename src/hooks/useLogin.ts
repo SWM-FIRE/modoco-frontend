@@ -6,7 +6,7 @@ import LoginModalStore from '../stores/loginModalStore';
 
 export default function useLogin() {
   const navigate = useNavigate();
-  const { closeModal, openModal } = LoginModalStore();
+  const { closeLoginModal, openLoginModal } = LoginModalStore();
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
@@ -46,13 +46,13 @@ export default function useLogin() {
           .then((res) => {
             console.log('[me]', res.data);
             navigate(`/main`);
-            closeModal();
+            closeLoginModal();
           });
       })
       .catch((err) => {
         console.log('[error]', err.response.data.message);
         setIsError(true);
-        openModal();
+        openLoginModal();
       });
   };
 

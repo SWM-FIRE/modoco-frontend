@@ -3,10 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import UserStore from '../../stores/userStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import LoginModalStore from '../../stores/loginModalStore';
+import LogoutModalStore from '../../stores/logoutModalStore';
+import LogoutModal from '../logout/LogoutModal';
+import { ReactComponent as TopArrow } from '../../assets/svg/topArrow.svg';
 
 export default function Header() {
   const { nickname, avatar } = UserStore();
-  const { openModal } = LoginModalStore();
+  const { openLoginModal } = LoginModalStore();
+  const { isOpenLogoutModal, toggleLogoutModal } = LogoutModalStore();
   const navigate = useNavigate();
 
   const clickLogo = () => {
@@ -17,15 +21,18 @@ export default function Header() {
     <Container>
       <Logo onClick={clickLogo}>modoco</Logo>
       {nickname ? (
-        <Profile onClick={openModal}>
+        <Profile onClick={toggleLogoutModal}>
           <AvatarContainer>
             <MyAvatar num={Number(avatar)} />
           </AvatarContainer>
-          {nickname}
+          <SvgComponent>
+            <TopArrow />
+          </SvgComponent>
         </Profile>
       ) : (
-        <Login onClick={openModal}>로그인</Login>
+        <Login onClick={openLoginModal}>로그인</Login>
       )}
+      {isOpenLogoutModal && <LogoutModal />}
     </Container>
   );
 }
@@ -52,8 +59,11 @@ const Logo = styled.div`
 
 const AvatarContainer = styled.div`
   height: 4rem;
+  width: 4rem;
+  margin-left: 0.3rem;
   svg {
     height: 100%;
+    width: 100%;
   }
 `;
 
@@ -64,7 +74,15 @@ const Profile = styled.div`
   font-family: IBMPlexSansKRRegular;
   font-size: 1.5rem;
   color: white;
+  border: 1px solid #4b5563;
+  border-radius: 5rem;
   cursor: pointer;
+`;
+
+const SvgComponent = styled.div`
+  margin: 1.9rem;
+  display: flex;
+  align-items: center;
 `;
 
 const Container = styled.div`
@@ -75,4 +93,5 @@ const Container = styled.div`
   align-items: center;
   border-bottom: solid #2b2e41 0.1rem;
   padding: 0 4.4rem;
+  position: relative;
 `;
