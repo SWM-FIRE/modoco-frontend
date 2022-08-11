@@ -5,6 +5,11 @@ import UserStore from '../../stores/userStore';
 
 export default function LogoutModal() {
   const { nickname, avatar } = UserStore();
+  const onClick = () => {
+    localStorage.removeItem('access_token');
+    window.location.reload();
+  };
+
   return (
     <Component>
       <UserInformation>
@@ -13,7 +18,7 @@ export default function LogoutModal() {
         </AvatarComponent>
         <Nickname>{nickname}</Nickname>
       </UserInformation>
-      <Logout>로그아웃</Logout>
+      <Logout onClick={onClick}>로그아웃</Logout>
     </Component>
   );
 }
