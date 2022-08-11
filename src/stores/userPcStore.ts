@@ -10,6 +10,7 @@ interface PC {
     sid: string;
     peerConnection: RTCPeerConnection;
   }) => void;
+  emptyPc: () => void;
 }
 const userPcStore = create<PC>((set) => ({
   pcs: {},
@@ -20,6 +21,9 @@ const userPcStore = create<PC>((set) => ({
         [by.sid]: by.peerConnection,
       },
     }));
+  },
+  emptyPc: () => {
+    set(() => ({}));
   },
 }));
 
