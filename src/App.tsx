@@ -22,16 +22,14 @@ const queryClient = new QueryClient();
 function App() {
   const history = createBrowserHistory();
 
-  history.listen(({ location }) => {
+  history.listen(() => {
     const user = localStorage.getItem('access_token');
-
     if (user) {
       const decodedJwt: any = jwtDecode(user);
       console.log('[decodedJwt]', decodedJwt);
-      console.log(location.pathname);
       if (decodedJwt.exp * 1000 < Date.now()) {
-        console.log('??');
         localStorage.removeItem('access_token');
+        alert('로그인 시간이 만료되었습니다.');
       }
     }
   });

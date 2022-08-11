@@ -15,15 +15,15 @@ import LoginModalStore from '../stores/loginModalStore';
 export default function Main() {
   const { isOpenCreateRoomModal } = ModalStore();
   const { isOpenLoginModal } = LoginModalStore();
-  // const { nickname } = UserStore();
   const navigate = useNavigate();
 
   useSetSelf();
   useEffect(() => {
     if (!localStorage.getItem('access_token')) {
       navigate('/');
+      alert('로그인 시간이 만료되었습니다.');
     }
-  });
+  }, []);
 
   return (
     <>

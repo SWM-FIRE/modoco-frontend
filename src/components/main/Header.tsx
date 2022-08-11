@@ -8,7 +8,8 @@ import LogoutModal from '../logout/LogoutModal';
 import { ReactComponent as TopArrow } from '../../assets/svg/topArrow.svg';
 
 export default function Header() {
-  const { nickname, avatar } = UserStore();
+  const { nickname, avatar } = UserStore((state) => state);
+
   const { openLoginModal } = LoginModalStore();
   const { isOpenLogoutModal, toggleLogoutModal } = LogoutModalStore();
   const navigate = useNavigate();

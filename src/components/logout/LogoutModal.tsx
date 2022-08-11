@@ -4,7 +4,7 @@ import MyAvatar from '../../assets/avatar/MyAvatar';
 import UserStore from '../../stores/userStore';
 
 export default function LogoutModal() {
-  const { nickname, avatar } = UserStore();
+  const { nickname, avatar } = UserStore((state) => state);
   const onClick = () => {
     localStorage.removeItem('access_token');
     window.location.reload();

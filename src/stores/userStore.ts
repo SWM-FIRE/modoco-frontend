@@ -7,6 +7,7 @@ interface User {
   setNickname: (_by: string) => void;
   setUid: (_by: string) => void;
   setAvatar: (_by: number) => void;
+  setClear: () => void;
 }
 const UserStore = create<User>((set) => ({
   nickname: '',
@@ -20,6 +21,13 @@ const UserStore = create<User>((set) => ({
   },
   setAvatar: (by) => {
     set(() => ({ avatar: by }));
+  },
+  setClear: () => {
+    set(() => ({
+      nickname: '',
+      uid: '',
+      avatar: 1,
+    }));
   },
 }));
 

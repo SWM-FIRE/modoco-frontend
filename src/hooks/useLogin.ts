@@ -35,19 +35,9 @@ export default function useLogin() {
         password,
       })
       .then((res) => {
-        console.log('[success]', res.data);
         localStorage.setItem('access_token', res.data.access_token);
-        axios
-          .get(API.ME, {
-            headers: {
-              Authorization: `Bearer ${res.data.access_token}`,
-            },
-          })
-          .then((res) => {
-            console.log('[me]', res.data);
-            navigate(`/main`);
-            closeLoginModal();
-          });
+        navigate(`/main`);
+        closeLoginModal();
       })
       .catch((err) => {
         console.log('[error]', err.response.data.message);
