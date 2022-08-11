@@ -57,16 +57,24 @@ export default function useCreateRoom() {
 
   const onSubmit = () => {
     axios
-      .post(API.ROOM, {
-        moderator: {
-          uid: localStorage.getItem('uid'),
+      .post(
+        API.ROOM,
+        {
+          moderator: {
+            uid: localStorage.getItem('uid'),
+          },
+          title,
+          details,
+          tags,
+          total: Number(total),
+          theme,
         },
-        title,
-        details,
-        tags,
-        total: Number(total),
-        theme,
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        },
+      )
       .then((res) => {
         console.log('[success]', res);
       })

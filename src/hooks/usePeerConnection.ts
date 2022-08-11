@@ -143,30 +143,36 @@ const usePeerConnection = () => {
     };
 
     const onNewUser = async ({ sid, uid }) => {
-      axios.get((API.USER as string) + uid).then((res) => {
-        if (!connectedUsers.includes(uid)) {
-          appendUser({
-            nickname: res.data.nickname,
+      axios
+        .get((API.USER as string) + uid, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        })
+        .then((res) => {
+          if (!connectedUsers.includes(uid)) {
+            appendUser({
+              nickname: res.data.nickname,
+              uid,
+              avatar: res.data.avatar,
+              socketId: sid,
+              stream: new MediaStream(),
+            });
+          } else {
+            console.log('already connected');
+          }
+          appendMessages({
             uid,
+            nickname: res.data.nickname,
             avatar: res.data.avatar,
-            socketId: sid,
-            stream: new MediaStream(),
+            message: `${res.data.nickname}님이 입장하셨습니다.`,
+            createdAt: '',
+            type: 'join',
+            isHideTime: false,
+            isHideNicknameAndAvatar: false,
           });
-        } else {
-          console.log('already connected');
-        }
-        appendMessages({
-          uid,
-          nickname: res.data.nickname,
-          avatar: res.data.avatar,
-          message: `${res.data.nickname}님이 입장하셨습니다.`,
-          createdAt: '',
-          type: 'join',
-          isHideTime: false,
-          isHideNicknameAndAvatar: false,
+          console.log('new', res.data.nickname, 'joined');
         });
-        console.log('new', res.data.nickname, 'joined');
-      });
       await createOffer(sid);
     };
 
