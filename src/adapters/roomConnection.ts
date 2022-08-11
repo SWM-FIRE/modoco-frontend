@@ -30,6 +30,7 @@ export const roomConnection = (roomId: string) => {
         roomSocket.emit('joinRoom', payload);
       } else {
         console.log('[roomConnection] UID가 존재하지 않음');
+        navigate('/');
       }
     };
 
@@ -90,8 +91,8 @@ export const roomConnection = (roomId: string) => {
         isHideTime: false,
         isHideNicknameAndAvatar: false,
       });
-      pcs[sid]?.close();
-      setPc({ sid, peerConnection: undefined });
+      pcs[sid].close();
+      setPc({ sid, peerConnection: null });
       removeUser(sid);
     });
   }, []);

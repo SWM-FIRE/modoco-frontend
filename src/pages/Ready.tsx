@@ -1,16 +1,32 @@
 import React, { useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
 import Header from '../components/ready/Header';
 import RoomDetail from '../components/ready/RoomDetail';
 import Screen from '../components/ready/Screen';
+import userStore from '../stores/userStore';
 
 export default function ReadyPage() {
+  const navigate = useNavigate();
+  const { createAll } = useCreateMediaStream();
   const { userMediaStream } = UserMediaStreamStore();
   const videoRef = useRef<HTMLVideoElement>(null);
   const { roomId } = useParams();
+  const { uid } = userStore();
 
+  useEffect(() => {
+    if (!uid) {
+      navigate('/');
+    } else {
+      createAll();
+    }
+  }, []);
+
+  if (!uid) {
+    navigate('/');
+  }
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.srcObject = userMediaStream;
