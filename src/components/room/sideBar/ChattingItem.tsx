@@ -3,6 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import messageInterface from '../../../interface/message.interface';
+import userStore from '../../../stores/userStore';
 
 export default function ChattingItem({
   user,
@@ -12,7 +13,7 @@ export default function ChattingItem({
   isHideTime,
   isHideNicknameAndAvatar,
 }: messageInterface) {
-  const uid = localStorage.getItem('uid');
+  const { uid } = userStore();
   const isMe = user.uid === uid;
   const entrance = type === 'join' || type === 'leave';
 

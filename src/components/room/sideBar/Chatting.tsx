@@ -5,12 +5,14 @@ import { ReactComponent as MessageSend } from '../../../assets/svg/MessageSend.s
 import ChattingItem from './ChattingItem';
 import messageStore from '../../../stores/messagesStore';
 import roomSocket from '../../../adapters/roomSocket';
+import userStore from '../../../stores/userStore';
 
 export default function Chat() {
   const [newMessage, setNewMessage] = useState('');
   const { roomId } = useParams();
   const chatWindow = useRef(null);
   const { messages } = messageStore();
+  const { uid } = userStore();
 
   useEffect(() => {
     moveScrollToReceiveMessage();
@@ -21,7 +23,7 @@ export default function Chat() {
     if (newMessage.trim() === '') return;
     roomSocket.emit('chatMessage', {
       room: roomId,
-      sender: localStorage.getItem('uid'),
+      sender: uid,
       message: newMessage,
       createdAt: new Date(),
     });
