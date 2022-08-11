@@ -4,7 +4,7 @@ import { API } from '../config';
 import UserStore from '../stores/userStore';
 
 export default function useSetSelf() {
-  const { setNickname, setAvatar } = UserStore();
+  const { setNickname, setAvatar, setUid } = UserStore();
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -19,6 +19,7 @@ export default function useSetSelf() {
           console.log('[me]', res.data);
           setNickname(res.data.nickname);
           setAvatar(res.data.avatar);
+          setUid(res.data.uid);
         });
     }
   }, []);

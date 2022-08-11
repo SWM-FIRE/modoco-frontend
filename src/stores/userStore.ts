@@ -12,7 +12,6 @@ const UserStore = create<User>((set) => ({
   nickname: '',
   uid: '',
   avatar: 1,
-  token: '',
   setNickname: (by) => {
     set(() => ({ nickname: by }));
   },
