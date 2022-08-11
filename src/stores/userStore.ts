@@ -9,7 +9,7 @@ interface User {
   setAvatar: (_by: number) => void;
   setClear: () => void;
 }
-const UserStore = create<User>((set) => ({
+const userStore = create<User>((set) => ({
   nickname: '',
   uid: '',
   avatar: 1,
@@ -31,4 +31,4 @@ const UserStore = create<User>((set) => ({
   },
 }));
 
-export default UserStore;
+export default userStore;
