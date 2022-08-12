@@ -1,6 +1,6 @@
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Scrolls from '../components/main/Scrolls';
 import Header from '../components/main/Header';
 import Title from '../components/main/TitleContainer';
@@ -9,15 +9,15 @@ import useSetSelf from '../hooks/useSetSelf';
 import LandingPage from '../components/main/landingPage/LandingPage';
 import LoginModalStore from '../stores/loginModalStore';
 
-export default function Main() {
+export default function Landing() {
   const { isOpenLoginModal } = LoginModalStore();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   useSetSelf();
-  // useEffect(() => {
-  //   if (localStorage.getItem('access_token')) {
-  //     navigate('/main');
-  //   }
-  // });
+  useEffect(() => {
+    if (localStorage.getItem('access_token')) {
+      navigate('/main');
+    }
+  });
 
   return (
     <>
