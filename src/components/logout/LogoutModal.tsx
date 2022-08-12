@@ -1,13 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import UserStore from '../../stores/userStore';
+import LogoutModalStore from '../../stores/logoutModalStore';
 
 export default function LogoutModal() {
+  const navigate = useNavigate();
+  const { toggleLogoutModal } = LogoutModalStore();
+
   const { nickname, avatar } = UserStore((state) => state);
   const onClick = () => {
     localStorage.removeItem('access_token');
-    window.location.reload();
+    navigate(`/`);
+    toggleLogoutModal();
+    alert('로그아웃 되었습니다.');
   };
 
   return (
