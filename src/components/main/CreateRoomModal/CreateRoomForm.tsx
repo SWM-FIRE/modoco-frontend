@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 import React from 'react';
-import useCreateRoom from '../../../hooks/useCreateRoom';
 import Title from './Title';
 import Details from './Details';
 import TagsComponent from './Tag';
 import Theme from './Theme';
 import Total from './Total';
 
-export default function CreateRoomForm() {
-  const { inputs, onChange, onKeyPress, onDeleteTag, onSubmit } =
-    useCreateRoom();
+export default function CreateRoomForm({
+  inputs,
+  onChange,
+  onKeyPress,
+  onDeleteTag,
+  mutate,
+}) {
   const { title, details, total, theme, newTag, tags } = inputs;
 
   return (
@@ -35,7 +38,13 @@ export default function CreateRoomForm() {
       <Section>
         <Theme theme={theme} onChange={onChange} />
       </Section>
-      <Submit onClick={onSubmit}>방 생성하기</Submit>
+      <Submit
+        onClick={() => {
+          mutate();
+        }}
+      >
+        방 생성하기
+      </Submit>
     </Form>
   );
 }

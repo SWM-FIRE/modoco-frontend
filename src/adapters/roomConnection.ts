@@ -16,7 +16,7 @@ export const roomConnection = (roomId: string) => {
     connectedUsersStore();
   const { userMediaStream } = UserMediaStreamStore();
   const { appendMessages } = messageStore();
-  const { pcs, setPc } = userPcStore();
+  const { setPc } = userPcStore();
   const { createAll } = useCreateMediaStream();
   const { uid } = userStore();
 
@@ -31,20 +31,6 @@ export const roomConnection = (roomId: string) => {
       } else {
         console.log('[roomConnection] UID가 존재하지 않음');
         navigate('/');
-      }
-    };
-
-    const setConnected = (user, res) => {
-      if (!connectedUsers.includes(user.uid)) {
-        appendUser({
-          nickname: res.data.nickname,
-          uid: user.uid,
-          avatar: res.data.avatar,
-          socketId: user.sid,
-          stream: new MediaStream(),
-        });
-      } else {
-        console.log('already connected');
       }
     };
 
@@ -73,14 +59,31 @@ export const roomConnection = (roomId: string) => {
               },
             })
             .then((res) => {
-              setConnected(user, res);
+              if (!connectedUsers.includes(user.uid)) {
+                appendUser({
+                  nickname: res.data.nickname,
+                  uid: user.uid,
+                  avatar: res.data.avatar,
+                  socketId: user.sid,
+                });
+                console.log('appendUser', user.uid, res);
+              } else {
+                console.log('already connected');
+              }
             });
           return user;
         });
       });
 
     roomSocket.off('leftRoom').on('leftRoom', ({ sid }) => {
+      if (roomSocket.id === sid) {
+        console.log('i left room');
+        return;
+      }
       const userInfo = findUser(sid);
+      console.log(userInfo.nickname, 'left room');
+      setPc({ sid, peerConnection: null });
+      removeUser(sid);
       appendMessages({
         uid: userInfo.uid,
         nickname: userInfo.nickname,
@@ -91,9 +94,6 @@ export const roomConnection = (roomId: string) => {
         isHideTime: false,
         isHideNicknameAndAvatar: false,
       });
-      pcs[sid].close();
-      setPc({ sid, peerConnection: null });
-      removeUser(sid);
     });
   }, []);
 };

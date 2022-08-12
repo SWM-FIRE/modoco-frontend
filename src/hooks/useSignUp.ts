@@ -45,7 +45,8 @@ export default function useSignUp() {
     });
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     axios
       .post(API.USER, {
         avatar,
@@ -56,9 +57,18 @@ export default function useSignUp() {
       .then((res) => {
         console.log('[success]', res);
         navigate(`/`);
+        alert('회원가입 성공');
       })
       .catch((err) => {
         console.log('[error] ', err);
+        if (err.response.data.message === 'User already exists')
+          alert('이미 존재하는 이메일입니다.');
+        setInputs({
+          ...inputs,
+          email: '',
+          password: '',
+          passwordCheck: '',
+        });
       });
   };
 

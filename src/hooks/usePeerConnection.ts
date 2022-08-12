@@ -10,8 +10,7 @@ import { API } from '../config';
 
 const usePeerConnection = () => {
   const { userMediaStream } = UserMediaStreamStore();
-  const { connectedUsers, appendUser, updateMediaStream } =
-    connectedUsersStore();
+  const { connectedUsers, appendUser, setUserStream } = connectedUsersStore();
   const { pcs, setPc } = userPcStore();
   const { appendMessages } = messageStore();
 
@@ -57,22 +56,22 @@ const usePeerConnection = () => {
       peerConnection.ontrack = (event: RTCTrackEvent) => {
         console.log('remote track', event.streams);
         console.log('adding track', event.streams[0]);
-        updateMediaStream({
-          socketId: sid,
-          stream: event.streams[0],
+        console.log({
+          type: 'checked connected users',
+          connectedUsers,
         });
+        //
+        setUserStream({ sid, stream: event.streams[0] });
       };
 
       peerConnection.onicegatheringstatechange = (event: Event) => {
         console.log('ice gathering state changed', event);
       };
 
-      const setMyStream = () => {
-        userMediaStream?.getTracks().forEach((track) => {
-          peerConnection.addTrack(track, userMediaStream);
-        });
-      };
-      setMyStream();
+      userMediaStream?.getTracks().forEach((track) => {
+        peerConnection.addTrack(track, userMediaStream);
+      });
+
       setPc({ sid, peerConnection });
       console.log('new peerConnection created', sid, peerConnection);
 
@@ -156,8 +155,8 @@ const usePeerConnection = () => {
               uid,
               avatar: res.data.avatar,
               socketId: sid,
-              stream: new MediaStream(),
             });
+            console.log('append user', res, uid);
           } else {
             console.log('already connected');
           }

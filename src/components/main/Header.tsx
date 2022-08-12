@@ -95,4 +95,5 @@ const Container = styled.div`
   border-bottom: solid #2b2e41 0.1rem;
   padding: 0 4.4rem;
   position: relative;
+  background-color: #18181b;
 `;
