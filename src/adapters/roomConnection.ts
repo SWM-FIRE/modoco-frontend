@@ -16,7 +16,7 @@ export const roomConnection = (roomId: string) => {
     connectedUsersStore();
   const { userMediaStream } = UserMediaStreamStore();
   const { appendMessages } = messageStore();
-  const { pcs, setPc } = userPcStore();
+  const { setPc } = userPcStore();
   const { createAll } = useCreateMediaStream();
   const { uid } = userStore();
 
@@ -80,7 +80,14 @@ export const roomConnection = (roomId: string) => {
       });
 
     roomSocket.off('leftRoom').on('leftRoom', ({ sid }) => {
+      if (roomSocket.id === sid) {
+        console.log('i left room');
+        return;
+      }
       const userInfo = findUser(sid);
+      console.log(userInfo.nickname, 'left room');
+      setPc({ sid, peerConnection: null });
+      removeUser(sid);
       appendMessages({
         uid: userInfo.uid,
         nickname: userInfo.nickname,
@@ -91,9 +98,6 @@ export const roomConnection = (roomId: string) => {
         isHideTime: false,
         isHideNicknameAndAvatar: false,
       });
-      pcs[sid].close();
-      setPc({ sid, peerConnection: null });
-      removeUser(sid);
     });
   }, []);
 };
