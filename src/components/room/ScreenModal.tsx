@@ -8,6 +8,7 @@ import userStore from '../../stores/userStore';
 import userMediaStreamStore from '../../stores/userMediaStreamStore';
 import connectedUsersStore from '../../stores/connectedUsersStore';
 import findStream from './findStream';
+import controlSidebar from '../../stores/controlSidebar';
 
 export default function ScreenModal() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -15,6 +16,7 @@ export default function ScreenModal() {
   const { sid, uid, nickname, avatar, toggleModal } = controlModal();
   const { userMediaStream } = userMediaStreamStore();
   const { connectedUsers, userStream } = connectedUsersStore();
+  const { isOpenSidebar } = controlSidebar();
 
   const newStream =
     myUid === uid
@@ -28,7 +30,7 @@ export default function ScreenModal() {
 
   return (
     <ModalPortal>
-      <ModalBox>
+      <ModalBox isOpen={isOpenSidebar}>
         <ModalController>
           <ArrowBox onClick={toggleModal}>
             <LeftArrow />
@@ -71,11 +73,12 @@ const ArrowBox = styled.div`
   cursor: pointer;
 `;
 
-const ModalBox = styled.div`
+const ModalBox = styled.div<{ isOpen: boolean }>`
   position: fixed;
   top: 12rem;
   left: 4rem;
-  width: calc(100% - 50rem);
+  width: ${(props) =>
+    props.isOpen ? 'calc(100% - 45rem)' : 'calc(90% - 5rem)'};
   height: calc(100% - 14rem);
   background-color: #0d0e13;
   padding-left: 1.43rem;

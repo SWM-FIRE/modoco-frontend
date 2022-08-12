@@ -15,7 +15,7 @@ export default function SingleScreen({ connectedUser, stream }) {
     setNickname(connectedUser.nickname);
     setAvatar(connectedUser.avatar);
     setUid(connectedUser.uid);
-    setSid(connectedUser.sid);
+    setSid(connectedUser.socketId);
     toggleModal();
   };
 
