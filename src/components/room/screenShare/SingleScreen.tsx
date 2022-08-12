@@ -4,16 +4,18 @@ import MyAvatar from '../../../assets/avatar/MyAvatar';
 import controlModal from '../../../stores/controlModal';
 import messageStore from '../../../stores/messagesStore';
 
-export default function SingleScreen({ nickname, avatar, uid, stream }) {
+export default function SingleScreen({ connectedUser, stream }) {
   const { messages } = messageStore();
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
-  const { toggleModal, setNickname, setAvatar, setUid } = controlModal();
+  const { toggleModal, setNickname, setAvatar, setUid, setSid } =
+    controlModal();
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const OpenModal = () => {
-    setNickname(nickname);
-    setAvatar(avatar);
-    setUid(uid);
+    setNickname(connectedUser.nickname);
+    setAvatar(connectedUser.avatar);
+    setUid(connectedUser.uid);
+    setSid(connectedUser.sid);
     toggleModal();
   };
 
@@ -33,7 +35,7 @@ export default function SingleScreen({ nickname, avatar, uid, stream }) {
 
   const newMessages = messages.filter(
     (message) =>
-      message.uid === uid &&
+      message.uid === connectedUser.uid &&
       new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
   );
 
@@ -49,8 +51,8 @@ export default function SingleScreen({ nickname, avatar, uid, stream }) {
           </ChatInner>
         </ChatContainer>
         <AvatarPosition>
-          <MyAvatar num={Number(avatar)} />
-          <NameContainer>{nickname}</NameContainer>
+          <MyAvatar num={Number(connectedUser.avatar)} />
+          <NameContainer>{connectedUser.nickname}</NameContainer>
         </AvatarPosition>
       </ControlBar>
     </Container>

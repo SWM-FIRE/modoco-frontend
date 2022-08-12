@@ -7,17 +7,19 @@ import MyAvatar from '../../assets/avatar/MyAvatar';
 import userStore from '../../stores/userStore';
 import userMediaStreamStore from '../../stores/userMediaStreamStore';
 import connectedUsersStore from '../../stores/connectedUsersStore';
+import findStream from './findStream';
 
 export default function ScreenModal() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { connectedUsers } = connectedUsersStore();
   const { uid: myUid } = userStore();
-  const { uid, nickname, avatar, toggleModal } = controlModal();
+  const { sid, uid, nickname, avatar, toggleModal } = controlModal();
   const { userMediaStream } = userMediaStreamStore();
+  const { connectedUsers, userStream } = connectedUsersStore();
+
   const newStream =
     myUid === uid
       ? userMediaStream
-      : connectedUsers.filter((user) => user.uid === uid)[0].stream;
+      : findStream({ sid, connectedUsers, userStream });
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.srcObject = newStream;

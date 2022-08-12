@@ -34,20 +34,6 @@ export const roomConnection = (roomId: string) => {
       }
     };
 
-    const setConnected = (user, res) => {
-      if (!connectedUsers.includes(user.uid)) {
-        appendUser({
-          nickname: res.data.nickname,
-          uid: user.uid,
-          avatar: res.data.avatar,
-          socketId: user.sid,
-          stream: new MediaStream(),
-        });
-      } else {
-        console.log('already connected');
-      }
-    };
-
     joinSuccess();
 
     roomSocket.off('joinedRoom').on('joinedRoom', (room) => {
@@ -73,7 +59,17 @@ export const roomConnection = (roomId: string) => {
               },
             })
             .then((res) => {
-              setConnected(user, res);
+              if (!connectedUsers.includes(user.uid)) {
+                appendUser({
+                  nickname: res.data.nickname,
+                  uid: user.uid,
+                  avatar: res.data.avatar,
+                  socketId: user.sid,
+                });
+                console.log('appendUser', user.uid, res);
+              } else {
+                console.log('already connected');
+              }
             });
           return user;
         });

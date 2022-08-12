@@ -4,9 +4,10 @@ import LocalScreen from './LocalScreen';
 import connectedUsersStore from '../../../stores/connectedUsersStore';
 import VoidScreen from './VoidScreen';
 import MovingTheme from './MovingTheme';
+import findStream from '../findStream';
 
 export default function ScreenShare({ theme }) {
-  const { connectedUsers } = connectedUsersStore();
+  const { connectedUsers, userStream } = connectedUsersStore();
 
   return (
     <Container>
@@ -16,10 +17,12 @@ export default function ScreenShare({ theme }) {
           {connectedUsers[0] ? (
             <SingleScreen
               key={connectedUsers[0].uid}
-              nickname={connectedUsers[0].nickname}
-              avatar={connectedUsers[0].avatar}
-              uid={connectedUsers[0].uid}
-              stream={connectedUsers[0].stream}
+              connectedUser={connectedUsers[0]}
+              stream={findStream({
+                sid: connectedUsers[0].socketId,
+                connectedUsers,
+                userStream,
+              })}
             />
           ) : (
             <VoidScreen />
@@ -31,22 +34,26 @@ export default function ScreenShare({ theme }) {
         <FlexRow>
           {connectedUsers[1] ? (
             <SingleScreen
-              key={connectedUsers[0].uid}
-              nickname={connectedUsers[0].nickname}
-              avatar={connectedUsers[0].avatar}
-              uid={connectedUsers[0].uid}
-              stream={connectedUsers[0].stream}
+              key={connectedUsers[1].uid}
+              connectedUser={connectedUsers[1]}
+              stream={findStream({
+                sid: connectedUsers[1].socketId,
+                connectedUsers,
+                userStream,
+              })}
             />
           ) : (
             <VoidScreen />
           )}
           {connectedUsers[2] ? (
             <SingleScreen
-              key={connectedUsers[0].uid}
-              nickname={connectedUsers[0].nickname}
-              avatar={connectedUsers[0].avatar}
-              uid={connectedUsers[0].uid}
-              stream={connectedUsers[0].stream}
+              key={connectedUsers[2].uid}
+              connectedUser={connectedUsers[2]}
+              stream={findStream({
+                sid: connectedUsers[2].socketId,
+                connectedUsers,
+                userStream,
+              })}
             />
           ) : (
             <VoidScreen />
