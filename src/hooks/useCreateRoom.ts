@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useMutation } from 'react-query';
 import userStore from '../stores/userStore';
 import { API } from '../config';
 
@@ -13,7 +14,7 @@ export default function useCreateRoom() {
     tags: [],
   });
   const { title, details, total, theme, newTag, tags } = inputs;
-  const { uid } = userStore();
+  const { uid } = userStore((state) => state);
 
   const onChange = (e) => {
     setInputs({
@@ -57,9 +58,9 @@ export default function useCreateRoom() {
     });
   };
 
-  const onSubmit = () => {
-    axios
-      .post(
+  const useRoomCreator = () => {
+    const mutation = useMutation(() =>
+      axios.post(
         API.ROOM,
         {
           moderator: { uid },
@@ -74,13 +75,14 @@ export default function useCreateRoom() {
             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
           },
         },
-      )
-      .then((res) => {
-        console.log('[success]', res);
-      })
-      .catch((err) => {
-        console.log('[error] ', err);
-      });
+      ),
+    );
+    return mutation;
+  };
+
+  const onSubmit = () => {
+    const { mutate } = useRoomCreator();
+    mutate();
   };
 
   return {
@@ -89,5 +91,6 @@ export default function useCreateRoom() {
     onKeyPress,
     onDeleteTag,
     onSubmit,
+    useRoomCreator,
   };
 }
