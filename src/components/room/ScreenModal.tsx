@@ -4,16 +4,18 @@ import ModalPortal from '../atoms/ModalPortal';
 import { ReactComponent as LeftArrow } from '../../assets/svg/arrow-left.svg';
 import controlModal from '../../stores/controlModal';
 import MyAvatar from '../../assets/avatar/MyAvatar';
+import userStore from '../../stores/userStore';
 import userMediaStreamStore from '../../stores/userMediaStreamStore';
 import connectedUsersStore from '../../stores/connectedUsersStore';
 
 export default function ScreenModal() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { connectedUsers } = connectedUsersStore();
+  const { uid: myUid } = userStore();
   const { uid, nickname, avatar, toggleModal } = controlModal();
   const { userMediaStream } = userMediaStreamStore();
   const newStream =
-    uid === localStorage.getItem('uid')
+    myUid === uid
       ? userMediaStream
       : connectedUsers.filter((user) => user.uid === uid)[0].stream;
   useEffect(() => {

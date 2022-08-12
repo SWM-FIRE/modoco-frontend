@@ -1,15 +1,24 @@
 import React, { useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import useSetSelf from '../hooks/useSetSelf';
+import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
 import Header from '../components/ready/Header';
 import RoomDetail from '../components/ready/RoomDetail';
 import Screen from '../components/ready/Screen';
 
 export default function ReadyPage() {
+  const { createAll } = useCreateMediaStream();
   const { userMediaStream } = UserMediaStreamStore();
   const videoRef = useRef<HTMLVideoElement>(null);
   const { roomId } = useParams();
+  useSetSelf();
+  useEffect(() => {
+    if (localStorage.getItem('access_token')) {
+      createAll();
+    }
+  }, []);
 
   useEffect(() => {
     if (videoRef.current) {

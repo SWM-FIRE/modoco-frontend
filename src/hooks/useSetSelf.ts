@@ -1,22 +1,37 @@
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { API } from '../config';
 import UserStore from '../stores/userStore';
 
 export default function useSetSelf() {
-  const { setNickname, setUid, setAvatar } = UserStore();
+  const { setNickname, setAvatar, setUid, setClear } = UserStore(
+    (state) => state,
+  );
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem('uid')) {
-      const myUid = localStorage.getItem('uid');
-      axios.get((API.USER as string) + myUid).then((res) => {
-        if (res.data.uid) {
-          console.log('existing user', res.data);
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      axios
+        .get(API.ME, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
           setNickname(res.data.nickname);
           setAvatar(res.data.avatar);
-          setUid(myUid);
-        }
-      });
+          setUid(res.data.uid);
+        })
+        .catch(() => {
+          localStorage.removeItem('access_token');
+          alert('로그인 시간이 만료되었습니다.');
+          navigate(`/`);
+          setClear();
+        });
+    } else {
+      setClear();
     }
   }, []);
 }

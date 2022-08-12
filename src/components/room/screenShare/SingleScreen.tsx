@@ -19,10 +19,10 @@ export default function SingleScreen({ nickname, avatar, uid, stream }) {
 
   useEffect(() => {
     console.log('stream is ', stream);
-    if (videoRef.current && stream) {
+    if (videoRef.current) {
       videoRef.current.srcObject = stream;
     }
-  }, [stream]);
+  }, [stream, videoRef]);
 
   useEffect(() => {
     const timer = setInterval(() => {

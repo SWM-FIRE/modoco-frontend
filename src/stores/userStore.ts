@@ -1,17 +1,18 @@
 import create from 'zustand';
 
 interface User {
-  avatar: string;
+  avatar: number;
   nickname: string;
   uid: string;
   setNickname: (_by: string) => void;
   setUid: (_by: string) => void;
-  setAvatar: (_by: string) => void;
+  setAvatar: (_by: number) => void;
+  setClear: () => void;
 }
-const UserStore = create<User>((set) => ({
+const userStore = create<User>((set) => ({
   nickname: '',
   uid: '',
-  avatar: '1',
+  avatar: 1,
   setNickname: (by) => {
     set(() => ({ nickname: by }));
   },
@@ -21,6 +22,13 @@ const UserStore = create<User>((set) => ({
   setAvatar: (by) => {
     set(() => ({ avatar: by }));
   },
+  setClear: () => {
+    set(() => ({
+      nickname: '',
+      uid: '',
+      avatar: 1,
+    }));
+  },
 }));
 
-export default UserStore;
+export default userStore;

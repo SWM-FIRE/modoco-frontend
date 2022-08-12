@@ -1,8 +1,5 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import useSetSelf from '../hooks/useSetSelf';
-import UserStore from '../stores/userStore';
 import ModalStore from '../stores/createRoomModalStore';
 import RoomCards from '../components/main/RoomCards';
 import Header from '../components/main/Header';
@@ -15,15 +12,8 @@ import LoginModalStore from '../stores/loginModalStore';
 export default function Main() {
   const { isOpenCreateRoomModal } = ModalStore();
   const { isOpenLoginModal } = LoginModalStore();
-  const { nickname } = UserStore();
-  const navigate = useNavigate();
 
   useSetSelf();
-  useEffect(() => {
-    if (!nickname) {
-      navigate('/');
-    }
-  });
 
   return (
     <>

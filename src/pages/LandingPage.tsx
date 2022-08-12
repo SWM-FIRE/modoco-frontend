@@ -6,17 +6,15 @@ import Header from '../components/main/Header';
 import Title from '../components/main/TitleContainer';
 import LoginModal from '../components/login/LoginModal';
 import useSetSelf from '../hooks/useSetSelf';
-import UserStore from '../stores/userStore';
 import LandingPage from '../components/main/landingPage/LandingPage';
 import LoginModalStore from '../stores/loginModalStore';
 
-export default function Main() {
-  const { nickname } = UserStore();
+export default function Landing() {
   const { isOpenLoginModal } = LoginModalStore();
   const navigate = useNavigate();
   useSetSelf();
   useEffect(() => {
-    if (nickname) {
+    if (localStorage.getItem('access_token')) {
       navigate('/main');
     }
   });

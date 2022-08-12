@@ -3,19 +3,21 @@ import moment from 'moment';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import messageStore from '../stores/messagesStore';
 import roomSocket from './roomSocket';
+import userStore from '../stores/userStore';
 
 const onChatMessage = () => {
   const { connectedUsers } = connectedUsersStore();
   const { messages, setMessages } = messageStore();
+  const { uid, nickname, avatar } = userStore();
 
   useEffect(() => {
     const receiveMessage = (receiveMsg) => {
-      const isMe = receiveMsg.sender === localStorage.getItem('uid');
+      const isMe = receiveMsg.sender === uid;
       const userInfo = isMe
         ? {
             uid: receiveMsg.sender,
-            nickname: localStorage.getItem('nickname'),
-            avatar: localStorage.getItem('avatar'),
+            nickname,
+            avatar: avatar.toString(),
           }
         : connectedUsers.filter((user) => user.uid === receiveMsg.sender)[0];
 

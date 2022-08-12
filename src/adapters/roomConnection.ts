@@ -5,6 +5,7 @@ import connectedUsersStore from '../stores/connectedUsersStore';
 import roomSocket from './roomSocket';
 import messageStore from '../stores/messagesStore';
 import userPcStore from '../stores/userPcStore';
+import userStore from '../stores/userStore';
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import { API } from '../config';
@@ -17,19 +18,19 @@ export const roomConnection = (roomId: string) => {
   const { appendMessages } = messageStore();
   const { pcs, setPc } = userPcStore();
   const { createAll } = useCreateMediaStream();
+  const { uid } = userStore();
 
   useEffect(() => {
-    const newUID = localStorage.getItem('uid');
-
     const joinSuccess = async () => {
-      if (newUID) {
+      if (uid) {
         if (!userMediaStream) {
           await createAll();
         }
-        const payload = { room: roomId, uid: newUID };
+        const payload = { room: roomId, uid };
         roomSocket.emit('joinRoom', payload);
       } else {
         console.log('[roomConnection] UID가 존재하지 않음');
+        navigate('/');
       }
     };
 
@@ -65,9 +66,15 @@ export const roomConnection = (roomId: string) => {
         console.log('existing users', users);
         console.log('i am ', current.sid);
         users.map((user) => {
-          axios.get((API.USER as string) + user.uid).then((res) => {
-            setConnected(user, res);
-          });
+          axios
+            .get((API.USER as string) + user.uid, {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+              },
+            })
+            .then((res) => {
+              setConnected(user, res);
+            });
           return user;
         });
       });
@@ -84,8 +91,8 @@ export const roomConnection = (roomId: string) => {
         isHideTime: false,
         isHideNicknameAndAvatar: false,
       });
-      pcs[sid]?.close();
-      setPc({ sid, peerConnection: undefined });
+      pcs[sid].close();
+      setPc({ sid, peerConnection: null });
       removeUser(sid);
     });
   }, []);

@@ -1,11 +1,47 @@
+import React, { useRef } from 'react';
 import styled from 'styled-components';
+import useLogin from '../../hooks/useLogin';
 
 export default function UserInput() {
+  const { inputs, onChange, onSubmit, isDisable, isError } = useLogin();
+  const { email, password } = inputs;
+  const errorMsg = useRef(null);
+
+  const onBlur = () => {
+    if (!email) {
+      errorMsg.current.style.display = 'block';
+      errorMsg.current.innerText = '이메일을 입력해주세요.';
+    } else if (!password) {
+      errorMsg.current.innerText = '비밀번호를 입력해주세요.';
+    } else {
+      errorMsg.current.style.display = 'none';
+    }
+  };
+
   return (
-    <Form>
-      <Input placeholder="이메일" required />
-      <Input type="password" placeholder="비밀번호" required />
-      <Button>로그인</Button>
+    <Form onSubmit={onSubmit}>
+      <Input
+        placeholder="이메일"
+        name="email"
+        value={email}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
+      <Input
+        type="password"
+        name="password"
+        placeholder="비밀번호"
+        value={password}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
+      <Error ref={errorMsg} />
+      {isError && (
+        <Error style={{ display: 'block' }}>
+          이메일과 비밀번호를 확인해주세요
+        </Error>
+      )}
+      <Button disabled={isDisable()}>로그인</Button>
     </Form>
   );
 }
@@ -13,7 +49,7 @@ export default function UserInput() {
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
 
   input:first-child {
@@ -45,11 +81,20 @@ const Input = styled.input`
 const Button = styled.button`
   font-family: IBMPlexSansKRRegular;
   font-size: 1.5rem;
-
   background-color: #f3f4f6;
   cursor: pointer;
   width: 100%;
   margin-top: 2.6rem;
   height: 5.5rem;
   border-radius: 1rem;
+  :disabled {
+    cursor: default;
+    background-color: #a9afb8;
+  }
+`;
+
+const Error = styled.span`
+  color: #ed8e8e;
+  margin-top: 0.7rem;
+  display: none;
 `;

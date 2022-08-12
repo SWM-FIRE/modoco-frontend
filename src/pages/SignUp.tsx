@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Header from '../components/signUp/Header';
+import Header from '../components/main/Header';
 import SignUpForm from '../components/signUp/SignUpForm';
 
 export default function SignUp() {
