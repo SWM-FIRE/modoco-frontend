@@ -6,7 +6,6 @@ import Header from '../components/main/Header';
 import MainTitle from '../components/main/MainTitle';
 import LoginModal from '../components/login/LoginModal';
 import CreateRoomModal from '../components/main/CreateRoomModal/CreateRoomModal';
-import CreateRoomForm from '../components/main/CreateRoomModal/CreateRoomForm';
 import LoginModalStore from '../stores/loginModalStore';
 
 export default function Main() {
@@ -23,11 +22,7 @@ export default function Main() {
         <RoomCards />
       </Container>
       {isOpenLoginModal && <LoginModal />}
-      {isOpenCreateRoomModal && (
-        <CreateRoomModal>
-          <CreateRoomForm />
-        </CreateRoomModal>
-      )}
+      {isOpenCreateRoomModal && <CreateRoomModal />}
     </>
   );
 }
