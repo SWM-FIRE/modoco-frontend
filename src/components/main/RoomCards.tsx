@@ -41,10 +41,11 @@ const LoadingContainer = styled.div`
 
 const Container = styled.div`
   /* width: calc(100% - 10rem); */
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin: 10rem auto;
+  padding-right: 10%;
+  margin: 10rem 0 0 20%;
   row-gap: 7.6rem;
 `;
