@@ -79,7 +79,7 @@ const ModalBox = styled.div<{ isOpen: boolean }>`
   left: 4rem;
   width: ${(props) =>
     props.isOpen ? 'calc(100% - 45rem)' : 'calc(90% - 5rem)'};
-  height: calc(100% - 14rem);
+  max-height: calc(100% - 14rem);
   background-color: #0d0e13;
   padding-left: 1.43rem;
   border-radius: 1rem;
