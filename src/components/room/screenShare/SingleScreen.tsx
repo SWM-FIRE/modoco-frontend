@@ -3,19 +3,21 @@ import styled from 'styled-components';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import controlModal from '../../../stores/controlModal';
 import messageStore from '../../../stores/messagesStore';
+import userStore from '../../../stores/userStore';
 
 export default function SingleScreen({ connectedUser, stream }) {
   const { messages } = messageStore();
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
   const { toggleModal, setNickname, setAvatar, setUid, setSid } =
     controlModal();
+  const { uid } = userStore();
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const OpenModal = () => {
     setNickname(connectedUser.nickname);
     setAvatar(connectedUser.avatar);
     setUid(connectedUser.uid);
-    setSid(connectedUser.socketId);
+    if (uid !== connectedUser.uid) setSid(connectedUser.socketId);
     toggleModal();
   };
 
@@ -40,7 +42,11 @@ export default function SingleScreen({ connectedUser, stream }) {
 
   return (
     <Container onClick={OpenModal}>
-      <Video ref={videoRef} autoPlay playsInline />
+      {uid === connectedUser.uid ? (
+        <Video ref={videoRef} autoPlay playsInline muted />
+      ) : (
+        <Video ref={videoRef} autoPlay playsInline />
+      )}
       <ControlBar>
         <ChatContainer>
           <ChatInner>
@@ -50,9 +56,7 @@ export default function SingleScreen({ connectedUser, stream }) {
           </ChatInner>
         </ChatContainer>
         <AvatarPosition>
-          <AvatarSize>
-            <MyAvatar num={Number(connectedUser.avatar)} />
-          </AvatarSize>
+          <MyAvatar num={Number(connectedUser.avatar)} />
           <NameContainer>{connectedUser.nickname}</NameContainer>
         </AvatarPosition>
       </ControlBar>
@@ -122,7 +126,7 @@ const NameContainer = styled.div`
 const AvatarPosition = styled.div`
   width: 100%;
   position: absolute;
-  bottom: calc(-5% - 8rem);
+  bottom: calc(-5% - 6rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -136,11 +140,4 @@ const Video = styled.video`
   height: 100%;
   border-radius: 1rem;
   position: absolute;
-`;
-
-const AvatarSize = styled.div`
-  height: calc(10% + 6rem);
-  svg {
-    height: 100%;
-  }
 `;

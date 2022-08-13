@@ -1,19 +1,29 @@
 import styled from 'styled-components';
 import SingleScreen from './SingleScreen';
-import LocalScreen from './LocalScreen';
 import connectedUsersStore from '../../../stores/connectedUsersStore';
 import VoidScreen from './VoidScreen';
 import MovingTheme from './MovingTheme';
 import findStream from '../findStream';
+import userStore from '../../../stores/userStore';
+import userMediaStreamStore from '../../../stores/userMediaStreamStore';
 
 export default function ScreenShare({ theme }) {
   const { connectedUsers, userStream } = connectedUsersStore();
+  const { nickname, avatar, uid } = userStore();
+  const { userMediaStream } = userMediaStreamStore();
 
   return (
     <Container>
       <ScreenWrapper>
         <FlexRow>
-          <LocalScreen />
+          <SingleScreen
+            connectedUser={{
+              nickname,
+              uid,
+              avatar,
+            }}
+            stream={userMediaStream}
+          />
           {connectedUsers[0] ? (
             <SingleScreen
               key={connectedUsers[0].uid}
