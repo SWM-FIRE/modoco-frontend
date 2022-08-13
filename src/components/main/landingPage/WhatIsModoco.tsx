@@ -4,7 +4,9 @@ import { ReactComponent as DevelopingSocialNetwork } from '../../../assets/svg/D
 export default function WhatIsModoco() {
   return (
     <Container>
-      <DevelopingSocialNetwork />
+      <SvgContainer>
+        <DevelopingSocialNetwork />
+      </SvgContainer>
       <ModocoContainer>
         <ModocoTitle>모도코란?</ModocoTitle>
         <Explain>
@@ -27,6 +29,9 @@ const Explain = styled.div`
 
 const ModocoContainer = styled.div`
   color: #fcfcf9;
+  @media (max-width: 1440px) {
+    margin-right: 20%;
+  }
   display: flex;
   flex-direction: column;
   width: 36.9rem;
@@ -34,6 +39,10 @@ const ModocoContainer = styled.div`
 
 const Container = styled.div`
   display: flex;
+  @media (max-width: 1440px) {
+    flex-direction: column-reverse;
+    gap: 0rem;
+  }
   justify-content: center;
   align-items: center;
   gap: 12.7rem;
@@ -44,4 +53,10 @@ const ModocoTitle = styled.div`
   font-size: 5.2rem;
   font-weight: 600;
   font-family: IBMPlexSansKRRegular;
+`;
+
+const SvgContainer = styled.div`
+  @media (max-width: 1440px) {
+    margin-left: 20%;
+  }
 `;

@@ -6,11 +6,12 @@ export default function Footer() {
       <FooterWrapper>
         <Upper>
           <Title>Modoco</Title>
-          <Company>(주)모도코</Company>
+          <Company>(주)모도코 | Team : FIRE</Company>
           <Detail>
-            사업자 등록번호 : 123-44-56789 | 대표 : 홍길동 <br />
-            서울 200-1561532호 | CS : 02-1111-1111 | 서울특별시 청담동 59-12
-            바티빌딩 3층
+            {/* 사업자 등록번호 : 123-44-56789 | 대표 : 홍길동 <br /> */}
+            서울특별시 강남구 테헤란로 311 59-12 아남타워 7층
+            <br />
+            Contact : 010-6449-3924 | yeonggi@kakao.com
           </Detail>
         </Upper>
         <Lower>
