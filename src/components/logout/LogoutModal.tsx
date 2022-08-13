@@ -11,22 +11,29 @@ export default function LogoutModal() {
   const { toggleLogoutModal } = LogoutModalStore();
 
   const { nickname, avatar } = UserStore((state) => state);
-  const onClick = () => {
+  const onLogOut = () => {
     localStorage.removeItem('access_token');
     navigate(`/`);
     toggleLogoutModal();
     toast.success('로그아웃 되었습니다');
   };
+  const onProfile = () => {
+    navigate(`/profile`);
+    toggleLogoutModal();
+  };
 
   return (
     <Component>
       <UserInformation>
-        <AvatarComponent>
-          <MyAvatar num={avatar} />
-        </AvatarComponent>
-        <Nickname>{nickname}</Nickname>
+        <AboutMe>
+          <AvatarComponent>
+            <MyAvatar num={avatar} />
+          </AvatarComponent>
+          <Nickname>{nickname}</Nickname>
+        </AboutMe>
+        <Button onClick={onProfile}>마이페이지</Button>
       </UserInformation>
-      <Logout onClick={onClick}>로그아웃</Logout>
+      <Button onClick={onLogOut}>로그아웃</Button>
     </Component>
   );
 }
@@ -36,7 +43,6 @@ const Component = styled.div`
   flex-direction: column;
   justify-content: space-between;
   gap: 2.7rem;
-  height: 19rem;
   width: 32rem;
   background-color: #23262f;
   border-radius: 2rem;
@@ -56,10 +62,16 @@ const AvatarComponent = styled.div`
   }
 `;
 
-const UserInformation = styled.div`
+const AboutMe = styled.div`
   display: flex;
   align-items: center;
   gap: 1.2rem;
+  margin-bottom: 1.2rem;
+`;
+
+const UserInformation = styled.div`
+  border-bottom: 1px solid #4b5563;
+  padding-bottom: 2.8rem;
 `;
 
 const Nickname = styled.span`
@@ -68,10 +80,10 @@ const Nickname = styled.span`
   font-family: IBMPlexSansKRRegular;
 `;
 
-const Logout = styled.button`
+const Button = styled.button`
   color: #f9fafb;
-  font-size: 1.5rem;
   width: 100%;
+  font-size: 1.5rem;
   height: 4.3rem;
   border: 1px solid #f9fafb;
   border-radius: 2rem;

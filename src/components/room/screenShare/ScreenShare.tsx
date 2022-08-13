@@ -86,6 +86,9 @@ const ScreenWrapper = styled.div`
   overflow: auto;
   width: 100%;
   height: 100%;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Container = styled.div`

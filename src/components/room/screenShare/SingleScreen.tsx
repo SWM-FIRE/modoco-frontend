@@ -20,7 +20,6 @@ export default function SingleScreen({ connectedUser, stream }) {
   };
 
   useEffect(() => {
-    console.log('stream is ', stream);
     if (videoRef.current && stream) {
       videoRef.current.srcObject = stream;
     }

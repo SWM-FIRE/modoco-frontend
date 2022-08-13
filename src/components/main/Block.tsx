@@ -140,7 +140,7 @@ const Container = styled.div<{ main: boolean }>`
   background-color: #23262f;
   margin-right: 2.4rem;
   border-radius: 2rem;
-  width: ${(props) => (props.main ? '22.5%' : '22.5rem')};
+  width: ${(props) => (props.main ? '20%' : '22.5rem')};
   height: 50rem;
   display: flex;
   flex-direction: column;

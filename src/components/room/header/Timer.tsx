@@ -1,14 +1,22 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Divide } from '../../../assets/svg/Divide.svg';
+import userStore from '../../../stores/userStore';
+import roomSocket from '../../../adapters/roomSocket';
 
 export default function Timer() {
-  const [time, setTime] = useState(0);
+  const { time: initTime } = userStore();
+  const [time, setTime] = useState(initTime);
+
   function timer() {
     const start = Date.now();
     const callback = () => {
       const ts = Date.now();
-      if ((ts - start) % 1000 >= -10 || (ts - start) % 1000 <= 10) {
+      if ((ts - start) % 60000 >= -10 && (ts - start) % 60000 <= 10) {
+        roomSocket.emit('recordTime', ts);
+        setTime(() => (ts - start) / 1000);
+        requestAnimationFrame(callback);
+      } else if ((ts - start) % 1000 > 0 && (ts - start) % 1000 <= 10) {
         setTime(() => (ts - start) / 1000);
         requestAnimationFrame(callback);
       } else {
@@ -17,6 +25,7 @@ export default function Timer() {
     };
     requestAnimationFrame(callback);
   }
+
   useEffect(() => {
     timer();
   }, []);

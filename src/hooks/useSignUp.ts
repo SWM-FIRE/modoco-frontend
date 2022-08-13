@@ -56,12 +56,12 @@ export default function useSignUp() {
         password,
       })
       .then((res) => {
-        console.log('[success]', res);
+        console.debug('[success]', res);
         navigate(`/`);
         toast.success('회원가입이 완료되었습니다');
       })
       .catch((err) => {
-        console.log('[error] ', err);
+        console.debug('[error] ', err);
         if (err.response.data.message === 'User already exists')
           toast.error('이미 존재하는 이메일입니다');
         setInputs({
