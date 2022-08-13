@@ -87,7 +87,7 @@ export default function useCreateRoom() {
           window.location.reload();
         },
         onError: () => {
-          toast.error('양식을 확인해주세요');
+          toast.error('필수 입력란을 확인해주세요');
         },
       },
     );
