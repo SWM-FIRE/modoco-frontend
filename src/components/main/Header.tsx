@@ -11,7 +11,7 @@ import { ReactComponent as BottomArrow } from '../../assets/svg/bottomArrow.svg'
 export default function Header() {
   const { nickname, avatar } = UserStore((state) => state);
 
-  const { openLoginModal } = LoginModalStore();
+  const { openLoginModal } = LoginModalStore((state) => state);
   const { isOpenLogoutModal, toggleLogoutModal } = LogoutModalStore();
   const navigate = useNavigate();
 
