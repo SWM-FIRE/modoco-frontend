@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 import { useMutation } from 'react-query';
 import userStore from '../stores/userStore';
 import { API } from '../config';
+import modal from '../stores/createRoomModalStore';
 
 export default function useCreateRoom() {
+  const { closeModal } = modal();
   const [inputs, setInputs] = useState({
     title: '',
     details: '',
@@ -59,23 +62,34 @@ export default function useCreateRoom() {
   };
 
   const useRoomCreator = () => {
-    const mutation = useMutation(() =>
-      axios.post(
-        API.ROOM,
-        {
-          moderator: { uid },
-          title,
-          details,
-          tags,
-          total: Number(total),
-          theme,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    const mutation = useMutation(
+      () =>
+        axios.post(
+          API.ROOM,
+          {
+            moderator: { uid },
+            title,
+            details,
+            tags,
+            total: Number(total),
+            theme,
           },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            },
+          },
+        ),
+
+      {
+        onSuccess: () => {
+          closeModal();
+          window.location.reload();
         },
-      ),
+        onError: () => {
+          toast.error('양식을 확인해주세요');
+        },
+      },
     );
     return mutation;
   };
