@@ -51,7 +51,9 @@ export default function SingleScreen({ connectedUser, stream }) {
           </ChatInner>
         </ChatContainer>
         <AvatarPosition>
-          <MyAvatar num={Number(connectedUser.avatar)} />
+          <AvatarSize>
+            <MyAvatar num={Number(connectedUser.avatar)} />
+          </AvatarSize>
           <NameContainer>{connectedUser.nickname}</NameContainer>
         </AvatarPosition>
       </ControlBar>
@@ -113,26 +115,20 @@ const Chats = styled.div`
 
 const NameContainer = styled.div`
   padding: 1%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 1.6rem;
   font-family: IBMPlexSansKRRegular;
   color: #f9fafb;
 `;
 
 const AvatarPosition = styled.div`
-  bottom: calc(-5% - 3rem);
-  height: calc(10% + 6rem);
+  width: 100%;
+  position: absolute;
+  bottom: calc(-5% - 8rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 100%;
-  position: absolute;
-  svg {
-    height: 100%;
-  }
 `;
 
 const Video = styled.video`
@@ -141,4 +137,11 @@ const Video = styled.video`
   height: 100%;
   border-radius: 1rem;
   position: absolute;
+`;
+
+const AvatarSize = styled.div`
+  height: calc(10% + 6rem);
+  svg {
+    height: 100%;
+  }
 `;

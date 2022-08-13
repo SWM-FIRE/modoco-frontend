@@ -50,12 +50,13 @@ export default function MovingTheme({
       renderer: 'svg',
       loop: true,
       autoplay: true,
-      animationData: myTheme,
+      animationData: JSON.parse(JSON.stringify(myTheme)),
       rendererSettings: {
         viewBoxOnly: true,
         viewBoxSize,
       },
     });
+    Lottie.setQuality('low');
   }, []);
   return (
     <Image size={size}>
