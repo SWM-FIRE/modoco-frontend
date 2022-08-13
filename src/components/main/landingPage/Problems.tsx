@@ -20,10 +20,8 @@ export default function Problems() {
 }
 
 const ImageContainer = styled.div`
-  @media screen and (max-width: 1200px) {
-    svg {
-      display: none;
-    }
+  @media (max-width: 1440px) {
+    margin-left: 30%;
   }
 `;
 
@@ -31,6 +29,10 @@ const ProblemsContainer = styled.div`
   display: flex;
   gap: 8.3rem;
   margin-top: 6rem;
+  @media (max-width: 1440px) {
+    flex-direction: column;
+    gap: 2rem;
+  }
 `;
 
 const ProblemTitle = styled.div`
@@ -41,6 +43,9 @@ const ProblemTitle = styled.div`
 
 const Container = styled.div`
   margin-top: 30rem;
+  @media (max-width: 1440px) {
+    margin-top: 13rem;
+  }
   margin-left: 15%;
   color: #fcfcf9;
 `;
