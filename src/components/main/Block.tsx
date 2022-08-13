@@ -39,14 +39,20 @@ export default function Block({ isMain, data }) {
             <Tag key={myTag}>#{myTag}</Tag>
           ))}
         </Tags>
-        <Detail>
+        <PositionRoom>
           <RoomDetail data={data} />
-        </Detail>
+        </PositionRoom>
       </DetailContainer>
       <Enter onClick={enterRoom}>입장하기 →</Enter>
     </Container>
   );
 }
+
+const PositionRoom = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Tags = styled.div`
   display: flex;
@@ -128,16 +134,6 @@ const Moderator = styled.span`
 const Nickname = styled.span`
   color: white;
   text-align: center;
-`;
-
-const Detail = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.4rem;
-  height: 2rem;
-  font-size: 1.4rem;
-  font-family: IBMPlexMonoRegular;
 `;
 
 const Container = styled.div<{ main: boolean }>`
