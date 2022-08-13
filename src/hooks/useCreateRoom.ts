@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import axios from 'axios';
-import toast from 'react-hot-toast';
 import { useMutation } from 'react-query';
 import userStore from '../stores/userStore';
 import { API } from '../config';
@@ -86,15 +85,13 @@ export default function useCreateRoom() {
           closeModal();
           window.location.reload();
         },
-        onError: () => {
-          toast.error('필수 입력란을 확인해주세요');
-        },
       },
     );
     return mutation;
   };
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     const { mutate } = useRoomCreator();
     mutate();
   };
