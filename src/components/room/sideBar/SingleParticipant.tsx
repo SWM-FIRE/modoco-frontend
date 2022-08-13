@@ -10,7 +10,6 @@ export default function SingleParticipant({
   nickname: string;
   avatar: string;
 }) {
-  console.log(nickname);
   return (
     <Container>
       <AvatarContainer>

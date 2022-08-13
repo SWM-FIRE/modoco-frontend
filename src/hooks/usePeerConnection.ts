@@ -36,15 +36,12 @@ const usePeerConnection = () => {
       // }
 
       if (!userMediaStream) {
-        console.log('error no localStream');
+        console.debug('error no localStream');
       }
-
-      console.log('making peerConnection', sid);
 
       const peerConnection = new RTCPeerConnection(RTCConfig);
 
       peerConnection.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
-        console.log('candidate exchange');
         if (event.candidate) {
           roomSocket.emit('ice-candidate', {
             to: sid,
@@ -54,18 +51,13 @@ const usePeerConnection = () => {
       };
 
       peerConnection.ontrack = (event: RTCTrackEvent) => {
-        console.log('remote track', event.streams);
-        console.log('adding track', event.streams[0]);
-        console.log({
-          type: 'checked connected users',
-          connectedUsers,
-        });
+        console.debug('adding track', event.streams[0]);
         //
         setUserStream({ sid, stream: event.streams[0] });
       };
 
       peerConnection.onicegatheringstatechange = (event: Event) => {
-        console.log('ice gathering state changed', event);
+        console.debug('ice gathering state changed', event);
       };
 
       userMediaStream?.getTracks().forEach((track) => {
@@ -73,13 +65,12 @@ const usePeerConnection = () => {
       });
 
       setPc({ sid, peerConnection });
-      console.log('new peerConnection created', sid, peerConnection);
 
       return peerConnection;
     };
 
     const createOffer = async (sid: string) => {
-      console.log('creating offer', userMediaStream);
+      console.debug('creating offer', userMediaStream);
       const peerConnection = createPeerConnection(sid);
       if (peerConnection) {
         const offer = await peerConnection.createOffer({
@@ -89,8 +80,7 @@ const usePeerConnection = () => {
         await peerConnection.setLocalDescription(
           new RTCSessionDescription(offer),
         );
-        // send offer to new user
-        console.log(`[SOCKET] call user(${sid}) with offer`, offer);
+        console.debug(`[SOCKET] call user(${sid}) with offer`, offer);
         roomSocket.emit('call-user', { to: sid, offer });
       }
     };
@@ -108,7 +98,7 @@ const usePeerConnection = () => {
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
         // send answer to other user
-        console.log('[SOCKET] answer to user(', sid, ')');
+        console.debug('[SOCKET] answer to user(', sid, ')');
         roomSocket.emit('make-answer', { to: sid, answer });
       }
     };
@@ -118,7 +108,7 @@ const usePeerConnection = () => {
       sid: string;
       offer: RTCSessionDescriptionInit;
     }) => {
-      console.log(
+      console.debug(
         `[SOCKET:on"call-made"] received offer from other user(${data.sid})`,
       );
       await createAnswer(data.sid, data.offer);
@@ -129,7 +119,7 @@ const usePeerConnection = () => {
       sid: string;
       answer: RTCSessionDescriptionInit;
     }) => {
-      console.log(
+      console.debug(
         `[SOCKET:on"answer-made"] received answer from other user(${data.sid})(${data.answer})`,
       );
       const peerConnection = pcs[data.sid];
@@ -156,7 +146,6 @@ const usePeerConnection = () => {
               avatar: res.data.avatar,
               socketId: sid,
             });
-            console.log('append user', res, uid);
           } else {
             console.log('already connected');
           }
@@ -170,7 +159,7 @@ const usePeerConnection = () => {
             isHideTime: false,
             isHideNicknameAndAvatar: false,
           });
-          console.log('new', res.data.nickname, 'joined');
+          // console.log('new', res.data.nickname, 'joined');
         });
       await createOffer(sid);
     };
@@ -180,7 +169,7 @@ const usePeerConnection = () => {
       sid: string;
       candidate: RTCIceCandidateInit;
     }) => {
-      console.log(
+      console.debug(
         `[SOCKET:on"ice-candidate"] received ice-candidate from other user(${data.sid}), candidate: ${data.candidate}`,
       );
       if (pcs[data.sid]) {

@@ -23,6 +23,7 @@ export default function useSetSelf() {
           setNickname(res.data.nickname);
           setAvatar(res.data.avatar);
           setUid(res.data.uid);
+          setTimeout(res.data.time);
         })
         .catch(() => {
           localStorage.removeItem('access_token');
