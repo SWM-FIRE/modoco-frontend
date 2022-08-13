@@ -1,4 +1,5 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import UserStore from '../../stores/userStore';
@@ -12,11 +13,11 @@ export default function Block({ isMain, data }) {
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (!nickname) {
-      alert('로그인이 필요합니다.');
+      toast.error('로그인이 필요합니다');
       return;
     }
     if (data.current === data.total) {
-      alert(`해당 방이 꽉 찼습니다.`);
+      toast.error('방이 이미 가득 찼습니다');
       return;
     }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import UserStore from '../../stores/userStore';
 import LogoutModalStore from '../../stores/logoutModalStore';
@@ -14,7 +15,7 @@ export default function LogoutModal() {
     localStorage.removeItem('access_token');
     navigate(`/`);
     toggleLogoutModal();
-    alert('로그아웃 되었습니다.');
+    toast.success('로그아웃 되었습니다');
   };
 
   return (
