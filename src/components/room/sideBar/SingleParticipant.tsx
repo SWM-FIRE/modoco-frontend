@@ -10,7 +10,6 @@ export default function SingleParticipant({
   nickname: string;
   avatar: string;
 }) {
-  const testNickname = '세글자이상의적당한';
   console.log(nickname);
   return (
     <Container>
@@ -20,9 +19,7 @@ export default function SingleParticipant({
           <MicOn />
         </MicContainer>
       </AvatarContainer>
-      <NameContainer nicknameLength={testNickname.length}>
-        {testNickname}
-      </NameContainer>
+      <NameContainer nicknameLength={nickname.length}>{nickname}</NameContainer>
     </Container>
   );
 }
