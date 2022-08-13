@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { API } from '../config';
 import LoginModalStore from '../stores/loginModalStore';
@@ -8,7 +9,7 @@ export default function useLogin() {
   const navigate = useNavigate();
   const { closeLoginModal, openLoginModal } = LoginModalStore();
   const [inputs, setInputs] = useState({
-    email: '',
+    email: localStorage.getItem('email') ?? '',
     password: '',
   });
   const { email, password } = inputs;
@@ -36,6 +37,8 @@ export default function useLogin() {
       })
       .then((res) => {
         localStorage.setItem('access_token', res.data.access_token);
+        localStorage.setItem('email', inputs.email);
+        toast.success('로그인 되었습니다.');
         navigate(`/main`);
         closeLoginModal();
       })

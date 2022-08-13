@@ -5,13 +5,18 @@ import useRooms from '../../hooks/useRooms';
 import CreateRoom from './CreateRoom';
 import { filterData } from './filterData';
 import tagStore from '../../stores/tagStore';
+import Loading from '../atoms/Loading';
 
 export default function RoomCards() {
   const { tag } = tagStore();
   const { isLoading, error, data } = useRooms();
 
   if (isLoading)
-    return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
+    return (
+      <LoadingContainer>
+        <Loading />
+      </LoadingContainer>
+    );
 
   if (error) return <div>An error has occurred: </div>;
 
@@ -26,6 +31,13 @@ export default function RoomCards() {
     </Container>
   );
 }
+
+const LoadingContainer = styled.div`
+  margin-top: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Container = styled.div`
   /* width: calc(100% - 10rem); */

@@ -5,13 +5,18 @@ import { LeftArrow, RightArrow } from './Arrow';
 import Block from './Block';
 import useRooms from '../../hooks/useRooms';
 import { filterData } from './filterData';
+import Loading from '../atoms/Loading';
 import TagStore from '../../stores/tagStore';
 
 export default function Scrolls() {
   const { isLoading, error, data } = useRooms();
   const { tag } = TagStore();
   if (isLoading)
-    return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
+    return (
+      <LoadingContainer>
+        <Loading />
+      </LoadingContainer>
+    );
 
   if (error) return <div>An error has occurred: </div>;
 
@@ -27,6 +32,13 @@ export default function Scrolls() {
     </Container>
   );
 }
+
+const LoadingContainer = styled.div`
+  margin-top: 3.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Container = styled.div`
   margin-top: 3.6rem;

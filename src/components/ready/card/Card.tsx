@@ -2,13 +2,13 @@ import styled from 'styled-components';
 import useRoom from '../../../hooks/useRoom';
 import Header from './Header';
 import Title from './Title';
+import Loading from '../../atoms/Loading';
 import Tags from './Tags';
 
 export default function Card({ room }) {
   const { isLoading, error, data } = useRoom(room);
 
-  if (isLoading)
-    return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>An error has occurred: </div>;
 
   return (
