@@ -6,6 +6,7 @@ import LoginModalStore from '../../stores/loginModalStore';
 import LogoutModalStore from '../../stores/logoutModalStore';
 import LogoutModal from '../logout/LogoutModal';
 import { ReactComponent as TopArrow } from '../../assets/svg/topArrow.svg';
+import { ReactComponent as BottomArrow } from '../../assets/svg/bottomArrow.svg';
 
 export default function Header() {
   const { nickname, avatar } = UserStore((state) => state);
@@ -27,7 +28,7 @@ export default function Header() {
             <MyAvatar num={Number(avatar)} />
           </AvatarContainer>
           <SvgComponent>
-            <TopArrow />
+            {isOpenLogoutModal ? <TopArrow /> : <BottomArrow />}
           </SvgComponent>
         </Profile>
       ) : (
