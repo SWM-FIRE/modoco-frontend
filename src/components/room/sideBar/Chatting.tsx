@@ -49,10 +49,9 @@ export default function Chat() {
     <Component>
       <Title>채팅</Title>
       <ChattingList ref={chatWindow}>
-        {messages.map((message, id) => (
+        {messages.map((message) => (
           <ChattingItem
-            // eslint-disable-next-line react/no-array-index-key
-            key={id}
+            key={Symbol(message.uid).toString()}
             user={{
               nickname: message.nickname,
               avatar: message.avatar,

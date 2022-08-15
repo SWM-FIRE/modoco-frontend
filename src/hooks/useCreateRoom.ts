@@ -37,7 +37,9 @@ export default function useCreateRoom() {
   const onKeyPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      onAddTag();
+      if (newTag !== '') {
+        onAddTag();
+      }
     }
   };
 
