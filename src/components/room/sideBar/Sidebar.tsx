@@ -1,10 +1,11 @@
+import React from 'react';
 import styled from 'styled-components';
 import Participants from './Participants';
 import Chatting from './Chatting';
 import Information from './Information';
 import ModalPortal from '../../atoms/ModalPortal';
 
-export default function Sidebar() {
+export default function SidebarMemo() {
   return (
     <ModalPortal>
       <Component>
@@ -15,6 +16,8 @@ export default function Sidebar() {
     </ModalPortal>
   );
 }
+
+export const Sidebar = React.memo(SidebarMemo);
 
 const Component = styled.div`
   position: absolute;

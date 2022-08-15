@@ -16,7 +16,11 @@ export default function Chat() {
   const newSocket = roomSocket.socket;
 
   useEffect(() => {
-    moveScrollToReceiveMessage();
+    moveScrollToReceiveMessage('auto');
+  }, []);
+
+  useEffect(() => {
+    moveScrollToReceiveMessage('smooth');
   }, [messages]);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -36,11 +40,11 @@ export default function Chat() {
     setNewMessage(event.target.value);
   };
 
-  const moveScrollToReceiveMessage = useCallback(() => {
+  const moveScrollToReceiveMessage = useCallback((behavior: string) => {
     if (chatWindow.current) {
       chatWindow.current.scrollTo({
         top: chatWindow.current.scrollHeight,
-        behavior: 'smooth',
+        behavior,
       });
     }
   }, []);
