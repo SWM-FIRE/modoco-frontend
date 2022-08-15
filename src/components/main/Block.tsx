@@ -36,7 +36,7 @@ export default function Block({ isMain, data }) {
         <Description>{data.details}</Description>
         <Tags>
           {data.tags.map((myTag) => (
-            <Tag key={myTag}>#{myTag}</Tag>
+            <Tag key={Symbol(myTag).toString()}>#{myTag}</Tag>
           ))}
         </Tags>
         <PositionRoom>

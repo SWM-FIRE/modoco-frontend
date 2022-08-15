@@ -32,22 +32,23 @@ export const roomConnection = (roomId: string) => {
       } else {
         console.log('[roomConnection] UID가 존재하지 않음');
         navigate('/');
+        window.location.reload();
       }
     };
 
     joinSuccess();
 
-    newSocket.off('joinedRoom').on('joinedRoom', (room) => {
+    newSocket?.off('joinedRoom').on('joinedRoom', (room) => {
       console.log('[roomConnection] joinedRoom', room);
     });
 
-    newSocket.off('roomFull').on('roomFull', () => {
+    newSocket?.off('roomFull').on('roomFull', () => {
       alert(`해당 방이 꽉 찼습니다.`);
       navigate('/main');
     });
 
     newSocket
-      .off('existingRoomUsers')
+      ?.off('existingRoomUsers')
       .on('existingRoomUsers', ({ users, current }) => {
         console.log('i am ', current.sid);
         users.map((user) => {
@@ -74,7 +75,7 @@ export const roomConnection = (roomId: string) => {
         });
       });
 
-    newSocket.off('leftRoom').on('leftRoom', ({ sid }) => {
+    newSocket?.off('leftRoom').on('leftRoom', ({ sid }) => {
       if (newSocket.id === sid) {
         console.log('i left room');
         return;

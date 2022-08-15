@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import toast from 'react-hot-toast';
 import { ReactComponent as MicOff } from '../../../assets/svg/MicOff.svg';
 import { ReactComponent as MicOn } from '../../../assets/svg/MicOn.svg';
 import { ReactComponent as MonitorOn } from '../../../assets/svg/MonitorOn.svg';
@@ -29,6 +30,7 @@ export default function Settings() {
   };
   const setVideo = () => {
     console.log('setVideo');
+    toast.error('준비중입니닷!');
   };
   return (
     <Component>

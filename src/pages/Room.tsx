@@ -1,4 +1,5 @@
 import styled, { ThemeProvider } from 'styled-components';
+import { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { getTheme } from '../styles/getTheme';
 import onChatMessage from '../adapters/receiveMessage';
@@ -27,7 +28,7 @@ export default function Room() {
   usePopHistory(roomId);
 
   if (isLoading)
-    return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
+    return <div style={{ color: 'white', fontSize: '1rem' }}>loading....</div>;
 
   if (error) return <div>An error has occurred: </div>;
 
@@ -37,6 +38,7 @@ export default function Room() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Toaster />
       <Component>
         <Header theme={data?.theme} />
         <Contents isOpen={isOpenSidebar}>
