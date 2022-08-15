@@ -114,6 +114,7 @@ const AvatarContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
   gap: 1.6rem;
 `;
 
