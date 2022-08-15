@@ -27,6 +27,7 @@ export default function Header({ theme }) {
       setMessages([]);
       stopMediaStream();
       navigate('/');
+      window.location.reload();
     }
   };
 

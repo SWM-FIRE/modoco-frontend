@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import useSetSelf from '../hooks/useSetSelf';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
 import Header from '../components/ready/Header';
@@ -13,10 +12,14 @@ export default function ReadyPage() {
   const { userMediaStream } = UserMediaStreamStore();
   const videoRef = useRef<HTMLVideoElement>(null);
   const { roomId } = useParams();
-  useSetSelf();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (localStorage.getItem('access_token')) {
+    if (localStorage.getItem('access_token') && !userMediaStream) {
       createAll();
+    } else {
+      navigate('/');
+      window.location.reload();
     }
   }, []);
 
