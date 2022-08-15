@@ -27,7 +27,7 @@ export default function Room() {
   usePopHistory(roomId);
 
   if (isLoading)
-    return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
+    return <div style={{ color: 'white', fontSize: '1rem' }}>loading....</div>;
 
   if (error) return <div>An error has occurred: </div>;
 
