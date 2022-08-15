@@ -15,8 +15,10 @@ export default function useSignUp() {
   });
   const { avatar, nickname, email, password, passwordCheck } = inputs;
 
-  const emailReg =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  const emailReg = /^.*@[0-9a-zA-Z가-힣]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
+  // const emailReg =
+  // /^[0-9a-zA-Z가-힣]([-_.]?[0-9a-zA-Z가-힣])*@[0-9a-zA-Z가-힣]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   const passwordReg =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~@$!%*^#?&])[A-Za-z\d~@$!%*^#?&]{8,16}$/;
 
