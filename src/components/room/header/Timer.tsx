@@ -1,33 +1,39 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import roomSocket from '../../../adapters/roomSocket';
 import { ReactComponent as Divide } from '../../../assets/svg/Divide.svg';
 import userStore from '../../../stores/userStore';
-import roomSocket from '../../../adapters/roomSocket';
 
 export default function Timer() {
   const { time: initTime } = userStore();
   const [time, setTime] = useState(initTime);
+  const newSocket = roomSocket.socket;
+  let tmpTime = initTime;
+  let dts = 0;
+  let dtm = 0;
+  let tick = Date.now();
 
-  function timer() {
-    const start = Date.now();
-    const callback = () => {
-      const ts = Date.now();
-      if ((ts - start) % 60000 >= -10 && (ts - start) % 60000 <= 10) {
-        roomSocket.emit('recordTime', ts);
-        setTime(() => (ts - start) / 1000);
-        requestAnimationFrame(callback);
-      } else if ((ts - start) % 1000 > 0 && (ts - start) % 1000 <= 10) {
-        setTime(() => (ts - start) / 1000);
-        requestAnimationFrame(callback);
-      } else {
-        requestAnimationFrame(callback);
-      }
-    };
-    requestAnimationFrame(callback);
-  }
+  const callback = () => {
+    dts += Date.now() - tick;
+    dtm += Date.now() - tick;
+    tick = Date.now();
+    if (dtm >= 60000) {
+      console.log('update DB');
+      newSocket.emit('recordTime', { dtm });
+      dtm = 0;
+    }
+    if (dts >= 1000) {
+      tmpTime += Math.floor(dts / 1000);
+      setTime(tmpTime);
+      dts = 0;
+      requestAnimationFrame(callback);
+    } else {
+      requestAnimationFrame(callback);
+    }
+  };
 
   useEffect(() => {
-    timer();
+    requestAnimationFrame(callback);
   }, []);
 
   const TimerHour =

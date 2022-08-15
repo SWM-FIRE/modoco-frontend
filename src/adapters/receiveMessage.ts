@@ -9,6 +9,7 @@ const onChatMessage = () => {
   const { connectedUsers } = connectedUsersStore();
   const { messages, setMessages } = messageStore();
   const { uid, nickname, avatar } = userStore();
+  const newSocket = roomSocket.socket;
 
   useEffect(() => {
     const receiveMessage = (receiveMsg) => {
@@ -55,7 +56,7 @@ const onChatMessage = () => {
       ]);
     };
 
-    roomSocket.off('chatMessage').on('chatMessage', (message) => {
+    newSocket.off('chatMessage').on('chatMessage', (message) => {
       receiveMessage(message);
     });
 

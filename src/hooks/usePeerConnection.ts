@@ -13,6 +13,7 @@ const usePeerConnection = () => {
   const { connectedUsers, appendUser, setUserStream } = connectedUsersStore();
   const { pcs, setPc } = userPcStore();
   const { appendMessages } = messageStore();
+  const newSocket = roomSocket.socket;
 
   const RTCConfig = {
     iceServers: [
@@ -43,7 +44,7 @@ const usePeerConnection = () => {
 
       peerConnection.onicecandidate = (event: RTCPeerConnectionIceEvent) => {
         if (event.candidate) {
-          roomSocket.emit('ice-candidate', {
+          newSocket.emit('ice-candidate', {
             to: sid,
             candidate: event.candidate,
           });
@@ -81,7 +82,7 @@ const usePeerConnection = () => {
           new RTCSessionDescription(offer),
         );
         console.debug(`[SOCKET] call user(${sid}) with offer`, offer);
-        roomSocket.emit('call-user', { to: sid, offer });
+        newSocket.emit('call-user', { to: sid, offer });
       }
     };
 
@@ -99,7 +100,7 @@ const usePeerConnection = () => {
         await peerConnection.setLocalDescription(answer);
         // send answer to other user
         console.debug('[SOCKET] answer to user(', sid, ')');
-        roomSocket.emit('make-answer', { to: sid, answer });
+        newSocket.emit('make-answer', { to: sid, answer });
       }
     };
 
@@ -177,10 +178,10 @@ const usePeerConnection = () => {
       }
     };
 
-    roomSocket.off('newUser').on('newUser', onNewUser);
-    roomSocket.off('call-made').on('call-made', onCallMade);
-    roomSocket.off('answer-made').on('answer-made', onAnswerMade);
-    roomSocket.off('ice-candidate').on('ice-candidate', onIceCandidateReceived);
+    newSocket.off('newUser').on('newUser', onNewUser);
+    newSocket.off('call-made').on('call-made', onCallMade);
+    newSocket.off('answer-made').on('answer-made', onAnswerMade);
+    newSocket.off('ice-candidate').on('ice-candidate', onIceCandidateReceived);
   }, [userMediaStream, pcs]);
 };
 

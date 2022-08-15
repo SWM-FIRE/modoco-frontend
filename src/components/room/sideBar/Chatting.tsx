@@ -13,6 +13,7 @@ export default function Chat() {
   const chatWindow = useRef(null);
   const { messages } = messageStore();
   const { uid } = userStore();
+  const newSocket = roomSocket.socket;
 
   useEffect(() => {
     moveScrollToReceiveMessage();
@@ -21,7 +22,7 @@ export default function Chat() {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (newMessage.trim() === '') return;
-    roomSocket.emit('chatMessage', {
+    newSocket.emit('chatMessage', {
       room: roomId,
       sender: uid,
       message: newMessage,
@@ -48,10 +49,9 @@ export default function Chat() {
     <Component>
       <Title>채팅</Title>
       <ChattingList ref={chatWindow}>
-        {messages.map((message, id) => (
+        {messages.map((message) => (
           <ChattingItem
-            // eslint-disable-next-line react/no-array-index-key
-            key={id}
+            key={Symbol(message.uid).toString()}
             user={{
               nickname: message.nickname,
               avatar: message.avatar,

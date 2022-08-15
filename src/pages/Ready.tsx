@@ -1,22 +1,31 @@
 import React, { useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import useSetSelf from '../hooks/useSetSelf';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
 import Header from '../components/ready/Header';
 import RoomDetail from '../components/ready/RoomDetail';
 import Screen from '../components/ready/Screen';
+import userStore from '../stores/userStore';
+import roomSocket, { generateSocket } from '../adapters/roomSocket';
 
 export default function ReadyPage() {
   const { createAll } = useCreateMediaStream();
+  const { uid } = userStore();
   const { userMediaStream } = UserMediaStreamStore();
   const videoRef = useRef<HTMLVideoElement>(null);
   const { roomId } = useParams();
-  useSetSelf();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (localStorage.getItem('access_token')) {
+    if (uid && localStorage.getItem('access_token') && !userMediaStream) {
       createAll();
+    } else {
+      navigate('/');
+      window.location.reload();
+    }
+    if (!roomSocket.socket) {
+      generateSocket();
     }
   }, []);
 
