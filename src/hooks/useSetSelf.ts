@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { API } from '../config';
 import UserStore from '../stores/userStore';
 
@@ -41,9 +42,9 @@ export default function useSetSelf() {
         })
         .catch(() => {
           localStorage.removeItem('access_token');
-          alert('로그인 시간이 만료되었습니다.');
           navigate(`/`);
           setClear();
+          toast.error('로그인 시간이 만료되었습니다.');
         });
     } else {
       setClear();
