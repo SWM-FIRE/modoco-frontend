@@ -1,10 +1,10 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import UserStore from '../../stores/userStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
-import ThemeImage from '../atoms/ThemeImages';
-import { ReactComponent as Bar } from '../../assets/svg/Room/Bar.svg';
+import RoomDetail from '../atoms/RoomDetail';
 
 export default function Block({ isMain, data }) {
   const navigate = useNavigate();
@@ -13,11 +13,11 @@ export default function Block({ isMain, data }) {
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (!nickname) {
-      alert('로그인이 필요합니다.');
+      toast.error('로그인이 필요합니다');
       return;
     }
     if (data.current === data.total) {
-      alert(`해당 방이 꽉 찼습니다.`);
+      toast.error('방이 이미 가득 찼습니다');
       return;
     }
 
@@ -39,21 +39,20 @@ export default function Block({ isMain, data }) {
             <Tag key={myTag}>#{myTag}</Tag>
           ))}
         </Tags>
-        <Detail>
-          <ThemeImage theme={data.theme} />
-          <Bar />
-          <Attend>
-            <div style={{ marginTop: '-0.3rem' }}>🔥</div>
-            <div>{data.total}중</div>
-            <div>{data.current}명</div>
-            <div>참여중</div>
-          </Attend>
-        </Detail>
+        <PositionRoom>
+          <RoomDetail data={data} />
+        </PositionRoom>
       </DetailContainer>
       <Enter onClick={enterRoom}>입장하기 →</Enter>
     </Container>
   );
 }
+
+const PositionRoom = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Tags = styled.div`
   display: flex;
@@ -137,29 +136,11 @@ const Nickname = styled.span`
   text-align: center;
 `;
 
-const Detail = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.4rem;
-  height: 2rem;
-  font-size: 1.4rem;
-  font-family: IBMPlexMonoRegular;
-`;
-
-const Attend = styled.div`
-  color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  align-items: center;
-  height: 100%;
-  gap: 0.3rem;
-`;
-
 const Container = styled.div<{ main: boolean }>`
   background-color: #23262f;
   margin-right: 2.4rem;
   border-radius: 2rem;
-  width: ${(props) => (props.main ? '22.5%' : '22.5rem')};
+  width: ${(props) => (props.main ? '20%' : '22.5rem')};
   height: 50rem;
   display: flex;
   flex-direction: column;

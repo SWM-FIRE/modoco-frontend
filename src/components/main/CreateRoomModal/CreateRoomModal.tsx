@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// import toast from 'react-hot-toast';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
 import modal from '../../../stores/createRoomModalStore';
 import useCreateRoom from '../../../hooks/useCreateRoom';
@@ -10,14 +11,11 @@ export default function CreateRoomModal() {
   const { inputs, onChange, onKeyPress, onDeleteTag, useRoomCreator } =
     useCreateRoom();
 
-  const { isLoading, mutate, isSuccess } = useRoomCreator();
+  const { isLoading, mutate } = useRoomCreator();
 
   if (isLoading)
     return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
-  if (isSuccess) {
-    alert('방이 생성되었습니다.');
-    closeModal();
-  }
+
   return (
     <ModalBackground onClick={closeModal}>
       <ModalBox onClick={(e) => e.stopPropagation()}>

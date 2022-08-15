@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
 html,
 body {
+  background-color: #18181b;
   font-size: 62.5%;
   padding: 0;
   margin: 0;
@@ -121,9 +122,10 @@ i {
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
+    background: #18181b;
   }
 ::-webkit-scrollbar-track {
-    background: var(--lightestgrey);
+    background: #18181b;
   }
 ::-webkit-scrollbar-thumb {
     background: #888;

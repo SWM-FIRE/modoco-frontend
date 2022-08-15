@@ -18,7 +18,7 @@ export default function SingleParticipant({
           <MicOn />
         </MicContainer>
       </AvatarContainer>
-      <NameContainer>{nickname}</NameContainer>
+      <NameContainer nicknameLength={nickname.length}>{nickname}</NameContainer>
     </Container>
   );
 }
@@ -42,7 +42,6 @@ const MicContainer = styled.div`
 `;
 
 const Container = styled.div`
-  /* background-color: gray; */
   width: 4.3rem;
   svg {
     width: 100%;
@@ -55,9 +54,15 @@ const Container = styled.div`
   gap: 0.4rem;
 `;
 
-const NameContainer = styled.span`
+const NameContainer = styled.div<{ nicknameLength: number }>`
   font-family: IBMPlexSansKRRegular;
   font-weight: 500;
-  font-size: 1.5rem;
+  word-break: break-all;
+  font-size: 1.6rem;
+  font-size: calc(
+    1.6rem -
+      ${(props) =>
+        props.nicknameLength < 4 ? 0 : props.nicknameLength * 0.05}rem
+  );
   color: #f9fafb;
 `;

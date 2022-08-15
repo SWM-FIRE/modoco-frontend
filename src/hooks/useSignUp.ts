@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API } from '../config';
@@ -55,14 +56,14 @@ export default function useSignUp() {
         password,
       })
       .then((res) => {
-        console.log('[success]', res);
+        console.debug('[success]', res);
         navigate(`/`);
-        alert('회원가입 성공');
+        toast.success('회원가입이 완료되었습니다');
       })
       .catch((err) => {
-        console.log('[error] ', err);
+        console.debug('[error] ', err);
         if (err.response.data.message === 'User already exists')
-          alert('이미 존재하는 이메일입니다.');
+          toast.error('이미 존재하는 이메일입니다');
         setInputs({
           ...inputs,
           email: '',

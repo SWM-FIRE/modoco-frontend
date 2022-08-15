@@ -2,13 +2,14 @@ import styled from 'styled-components';
 import useRoom from '../../../hooks/useRoom';
 import Header from './Header';
 import Title from './Title';
+import Loading from '../../atoms/Loading';
 import Tags from './Tags';
+import RoomDetail from '../../atoms/RoomDetail';
 
 export default function Card({ room }) {
   const { isLoading, error, data } = useRoom(room);
 
-  if (isLoading)
-    return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>An error has occurred: </div>;
 
   return (
@@ -17,17 +18,25 @@ export default function Card({ room }) {
       <Detail>
         <Title data={data} />
         <Tags data={data} />
+        <PositionRoom>
+          <RoomDetail data={data} />
+        </PositionRoom>
       </Detail>
     </Container>
   );
 }
+
+const PositionRoom = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+`;
 
 const Detail = styled.div`
   margin-top: 4rem;
 `;
 
 const Container = styled.div`
-  height: 33.6rem;
   width: 100%;
   padding: 3.2rem 2rem;
 `;

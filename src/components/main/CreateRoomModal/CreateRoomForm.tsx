@@ -16,7 +16,7 @@ export default function CreateRoomForm({
   const { title, details, total, theme, newTag, tags } = inputs;
 
   return (
-    <Form>
+    <Form onSubmit={mutate}>
       <Section>
         <Title title={title} onChange={onChange} />
       </Section>
@@ -38,13 +38,7 @@ export default function CreateRoomForm({
       <Section>
         <Theme theme={theme} onChange={onChange} />
       </Section>
-      <Submit
-        onClick={() => {
-          mutate();
-        }}
-      >
-        방 생성하기
-      </Submit>
+      <Submit>방 생성하기</Submit>
     </Form>
   );
 }

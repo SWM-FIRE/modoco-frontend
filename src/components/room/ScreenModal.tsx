@@ -38,7 +38,11 @@ export default function ScreenModal() {
           <MyAvatar num={Number(avatar)} />
           <Nickname>{nickname}</Nickname>
         </ModalController>
-        <ModalVideo ref={videoRef} autoPlay playsInline />
+        {myUid === uid ? (
+          <ModalVideo ref={videoRef} autoPlay playsInline muted />
+        ) : (
+          <ModalVideo ref={videoRef} autoPlay playsInline />
+        )}
       </ModalBox>
     </ModalPortal>
   );
@@ -79,7 +83,7 @@ const ModalBox = styled.div<{ isOpen: boolean }>`
   left: 4rem;
   width: ${(props) =>
     props.isOpen ? 'calc(100% - 45rem)' : 'calc(90% - 5rem)'};
-  height: calc(100% - 14rem);
+  max-height: calc(100% - 14rem);
   background-color: #0d0e13;
   padding-left: 1.43rem;
   border-radius: 1rem;
@@ -87,4 +91,5 @@ const ModalBox = styled.div<{ isOpen: boolean }>`
   flex-direction: column;
   overflow: auto;
   z-index: 999;
+  padding-bottom: 2rem;
 `;

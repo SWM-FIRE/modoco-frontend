@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Toaster } from 'react-hot-toast';
 import useSetSelf from '../hooks/useSetSelf';
 import ModalStore from '../stores/createRoomModalStore';
 import RoomCards from '../components/main/RoomCards';
@@ -17,6 +18,7 @@ export default function Main() {
   return (
     <>
       <Container>
+        <Toaster />
         <Header />
         <MainTitle />
         <RoomCards />

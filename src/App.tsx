@@ -12,6 +12,7 @@ import Layout from './components/layout/Layout';
 import Room from './pages/Room';
 import Ready from './pages/Ready';
 import LandingPage from './pages/LandingPage';
+import MyPage from './pages/MyPage';
 import Main from './pages/Main';
 import Test from './pages/Test';
 import Error from './pages/Error';
@@ -25,7 +26,7 @@ function App() {
   history.listen(() => {
     const user = localStorage.getItem('access_token');
     if (user) {
-      const decodedJwt: any = jwtDecode(user);
+      const decodedJwt = jwtDecode(user);
       console.log('[decodedJwt]', decodedJwt);
       // if (decodedJwt.exp * 1000 < Date.now()) {
       //   localStorage.removeItem('access_token');
@@ -45,6 +46,9 @@ function App() {
           </Route>
           <Route path="/main" element={<Layout />}>
             <Route index element={<Main />} />
+          </Route>
+          <Route path="/profile" element={<Layout />}>
+            <Route index element={<MyPage />} />
           </Route>
           <Route path="/ready">
             <Route path=":roomId" element={<Ready />} />

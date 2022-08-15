@@ -40,16 +40,14 @@ export const roomConnection = (roomId: string) => {
       console.log('[roomConnection] joinedRoom', room);
     });
 
-    roomSocket.off('roomFull').on('roomFull', (room) => {
+    roomSocket.off('roomFull').on('roomFull', () => {
       alert(`해당 방이 꽉 찼습니다.`);
-      console.log(room);
       navigate('/main');
     });
 
     roomSocket
       .off('existingRoomUsers')
       .on('existingRoomUsers', ({ users, current }) => {
-        console.log('existing users', users);
         console.log('i am ', current.sid);
         users.map((user) => {
           axios
