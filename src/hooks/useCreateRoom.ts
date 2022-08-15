@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useMutation } from 'react-query';
+import toast from 'react-hot-toast';
 import userStore from '../stores/userStore';
 import { API } from '../config';
 import modal from '../stores/createRoomModalStore';
@@ -83,15 +84,17 @@ export default function useCreateRoom() {
       {
         onSuccess: () => {
           closeModal();
-          window.location.reload();
+          toast.success('방이 생성되었습니다.');
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         },
       },
     );
     return mutation;
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     const { mutate } = useRoomCreator();
     mutate();
   };
