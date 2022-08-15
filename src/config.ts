@@ -3,13 +3,16 @@ const API_VER = '/api/v1';
 const USER = '/users/';
 const ROOM = '/rooms/';
 const SESSION = '/session/';
-const SOCKET = '/socket/room';
+const SOCKET = '/socket/room/';
 const ME = 'me/';
+const RECORDS = '/records/';
 
 export const API = {
+  BASE_URL: `${BASE_URL}`,
   SOCKET: `${BASE_URL}${SOCKET}`,
   ROOM: `${BASE_URL}${API_VER}${ROOM}`,
   USER: `${BASE_URL}${API_VER}${USER}`,
   SESSION: `${BASE_URL}${API_VER}${SESSION}`,
   ME: `${BASE_URL}${API_VER}${USER}${ME}`,
+  RECORDS: `${BASE_URL}${API_VER}${RECORDS}`,
 };
