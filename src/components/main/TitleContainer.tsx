@@ -1,13 +1,13 @@
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import toast from 'react-hot-toast';
 import vectors from '../atoms/Vectors';
 import Search from './Search';
 import PositionInterface from '../../interface/position.interface';
 
 export default function TitleContainer() {
-  const navigate = useNavigate();
-  const randomEnter = () => {
-    navigate(`/room/random`);
+  const randomEnter = (e) => {
+    e.preventDefault();
+    toast.error('준비중입니다.');
   };
 
   return (
