@@ -19,6 +19,7 @@ export const roomConnection = (roomId: string) => {
   const { setPc } = userPcStore();
   const { createAll } = useCreateMediaStream();
   const { uid } = userStore();
+  const newSocket = roomSocket.socket;
 
   useEffect(() => {
     const joinSuccess = async () => {
@@ -27,7 +28,7 @@ export const roomConnection = (roomId: string) => {
           await createAll();
         }
         const payload = { room: roomId, uid };
-        roomSocket.emit('joinRoom', payload);
+        newSocket.emit('joinRoom', payload);
       } else {
         console.log('[roomConnection] UID가 존재하지 않음');
         navigate('/');
@@ -36,16 +37,16 @@ export const roomConnection = (roomId: string) => {
 
     joinSuccess();
 
-    roomSocket.off('joinedRoom').on('joinedRoom', (room) => {
+    newSocket.off('joinedRoom').on('joinedRoom', (room) => {
       console.log('[roomConnection] joinedRoom', room);
     });
 
-    roomSocket.off('roomFull').on('roomFull', () => {
+    newSocket.off('roomFull').on('roomFull', () => {
       alert(`해당 방이 꽉 찼습니다.`);
       navigate('/main');
     });
 
-    roomSocket
+    newSocket
       .off('existingRoomUsers')
       .on('existingRoomUsers', ({ users, current }) => {
         console.log('i am ', current.sid);
@@ -73,8 +74,8 @@ export const roomConnection = (roomId: string) => {
         });
       });
 
-    roomSocket.off('leftRoom').on('leftRoom', ({ sid }) => {
-      if (roomSocket.id === sid) {
+    newSocket.off('leftRoom').on('leftRoom', ({ sid }) => {
+      if (newSocket.id === sid) {
         console.log('i left room');
         return;
       }

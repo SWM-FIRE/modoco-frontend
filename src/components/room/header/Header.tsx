@@ -17,11 +17,12 @@ export default function Header({ theme }) {
   const { stopMediaStream } = useCreateMediaStream();
   const { setMessages } = messageStore();
   const { emptyPc } = userPcStore();
+  const newSocket = roomSocket.socket;
 
   const onClick = () => {
     const result = window.confirm('정말 모도코를 종료하시겠습니까?');
     if (result) {
-      roomSocket.emit('leaveRoom', roomId);
+      newSocket.emit('leaveRoom', roomId);
       setUsers([]);
       emptyPc();
       setMessages([]);

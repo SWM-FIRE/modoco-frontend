@@ -6,6 +6,7 @@ import UserMediaStreamStore from '../stores/userMediaStreamStore';
 import Header from '../components/ready/Header';
 import RoomDetail from '../components/ready/RoomDetail';
 import Screen from '../components/ready/Screen';
+import roomSocket, { generateSocket } from '../adapters/roomSocket';
 
 export default function ReadyPage() {
   const { createAll } = useCreateMediaStream();
@@ -15,6 +16,9 @@ export default function ReadyPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!roomSocket.socket) {
+      generateSocket();
+    }
     if (localStorage.getItem('access_token') && !userMediaStream) {
       createAll();
     } else {

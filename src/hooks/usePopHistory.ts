@@ -19,7 +19,7 @@ export default function usePopHistory(roomId: string) {
     const unListenHistory = history.listen(({ action }) => {
       if (action === 'POP') {
         setTimeout(() => {
-          roomSocket.emit('leaveRoom', roomId);
+          roomSocket.socket.emit('leaveRoom', roomId);
           stopMediaStream();
           setMessages([]);
           setUsers([]);

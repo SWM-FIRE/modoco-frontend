@@ -7,6 +7,7 @@ import userStore from '../../../stores/userStore';
 export default function Timer() {
   const { time: initTime } = userStore();
   const [time, setTime] = useState(initTime);
+  const newSocket = roomSocket.socket;
   let tmpTime = initTime;
   let dts = 0;
   let dtm = 0;
@@ -18,7 +19,7 @@ export default function Timer() {
     tick = Date.now();
     if (dtm >= 60000) {
       console.log('update DB');
-      roomSocket.emit('recordTime', { dtm });
+      newSocket.emit('recordTime', { dtm });
       dtm = 0;
     }
     if (dts >= 1000) {

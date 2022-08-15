@@ -13,6 +13,7 @@ export default function Chat() {
   const chatWindow = useRef(null);
   const { messages } = messageStore();
   const { uid } = userStore();
+  const newSocket = roomSocket.socket;
 
   useEffect(() => {
     moveScrollToReceiveMessage();
@@ -21,7 +22,7 @@ export default function Chat() {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (newMessage.trim() === '') return;
-    roomSocket.emit('chatMessage', {
+    newSocket.emit('chatMessage', {
       room: roomId,
       sender: uid,
       message: newMessage,
