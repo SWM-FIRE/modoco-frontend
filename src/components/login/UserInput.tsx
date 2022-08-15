@@ -24,12 +24,14 @@ export default function UserInput() {
         placeholder="이메일"
         name="email"
         value={email}
+        autoComplete="on"
         onChange={onChange}
         onBlur={onBlur}
       />
       <Input
         type="password"
         name="password"
+        autoComplete="on"
         placeholder="비밀번호"
         value={password}
         onChange={onChange}

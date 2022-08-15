@@ -38,7 +38,9 @@ export default function useSetSelf() {
           },
         })
         .then((res) => {
-          setTime(Number(res.data[0].duration) * 60);
+          if (res.data.length !== 0) {
+            setTime(Number(res.data[0].duration) * 60);
+          }
         })
         .catch(() => {
           localStorage.removeItem('access_token');
