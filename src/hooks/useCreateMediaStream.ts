@@ -82,7 +82,10 @@ export const useCreateMediaStream = () => {
   const createDisplayStream = async () => {
     try {
       const videoStream = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
+        video: {
+          width: { ideal: 2560, max: 2560 },
+          height: { ideal: 1440, max: 1440 },
+        },
       });
       videoStream.getVideoTracks().forEach((track) => {
         myStream.localStream.addTrack(track);
