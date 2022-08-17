@@ -60,7 +60,7 @@ export const useCreateMediaStream = () => {
           audio: {
             autoGainControl: false,
             channelCount: 2,
-            echoCancellation: false,
+            echoCancellation: true,
             latency: 0,
             noiseSuppression: false,
             sampleRate: 48000,
@@ -83,8 +83,8 @@ export const useCreateMediaStream = () => {
     try {
       const videoStream = await navigator.mediaDevices.getDisplayMedia({
         video: {
-          width: { ideal: 2560, max: 2560 },
-          height: { ideal: 1440, max: 1440 },
+          width: { ideal: 1280, max: 1280 },
+          height: { ideal: 720, max: 720 },
         },
       });
       videoStream.getVideoTracks().forEach((track) => {
