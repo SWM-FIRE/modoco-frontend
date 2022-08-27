@@ -8,8 +8,8 @@ import travelJson from '../../assets/theme/travel.json';
 import cosmosJson from '../../assets/theme/cosmos.json';
 
 export default function Theme({ theme }: { theme: string }) {
-  let themeName;
-  let themeJson;
+  let themeName: string;
+  let themeJson: Record<string, unknown>;
   const themeRef = useRef<HTMLDivElement>(null);
 
   switch (theme) {

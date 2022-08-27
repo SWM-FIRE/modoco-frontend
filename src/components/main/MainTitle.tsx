@@ -1,11 +1,12 @@
+import React from 'react';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 import Search from './Search';
 import { ReactComponent as MainFire } from '../../assets/svg/MainFire.svg';
 
 export default function TitleContainer() {
-  const randomEnter = (e) => {
-    e.preventDefault();
+  const randomEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     toast.error('준비중입니다.');
   };
 

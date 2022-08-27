@@ -64,6 +64,18 @@
 
 ## 아키텍쳐 ⚒
 
+### Full Architecture
+
+![full arch](https://user-images.githubusercontent.com/66371206/185145423-00937aee-eb35-46e7-85e0-a5aa5e372794.png)
+
+### WebRTC Flow
+
+![WebRTC Sequence Diagram](https://user-images.githubusercontent.com/66371206/185143244-142999a6-9f58-4e56-90ef-598782d7f420.png)
+
+### Room UML Diagram
+
+![front-uml](https://user-images.githubusercontent.com/66371206/185362989-de738d7f-dbce-43d1-9a73-b2cb75eb804b.png)
+
 ## 기술적 도전 🚀
 
 ### WebRTC
