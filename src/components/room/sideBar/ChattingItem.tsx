@@ -114,6 +114,7 @@ const Message = styled.div<userInterface>`
   color: rgb(255, 255, 255);
   font-size: 1.5rem;
   padding: 1.6rem;
+  max-width: 32rem;
   border-radius: ${({ isMe }) =>
     isMe ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
   background-color: ${({ isMe, theme }) =>
