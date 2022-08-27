@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import SearchIcon from '../../assets/svg/Search';
-import tagStore from '../../stores/tagStore';
+import searchInputStore from '../../stores/searchInputStore';
 
 export default function Search() {
-  const { setTag } = tagStore();
+  const { searchInput, setSearchInput } = searchInputStore();
 
-  const changeTag = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTag(event.target.value);
+  const changeSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(event.target.value);
   };
 
   return (
@@ -15,7 +15,11 @@ export default function Search() {
       <SearchIconContainer>
         <SearchIcon />
       </SearchIconContainer>
-      <Input placeholder="태그를 입력해보세요" onChange={changeTag} />
+      <Input
+        placeholder="방 이름 혹은 태그를 입력해보세요"
+        onChange={changeSearchInput}
+        value={searchInput}
+      />
     </SearchContainer>
   );
 }

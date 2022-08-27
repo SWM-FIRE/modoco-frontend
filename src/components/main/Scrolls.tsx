@@ -6,11 +6,11 @@ import Block from './Block';
 import useRooms from '../../hooks/useRooms';
 import { filterData } from './filterData';
 import Loading from '../atoms/Loading';
-import TagStore from '../../stores/tagStore';
+import TagStore from '../../stores/searchInputStore';
 
 export default function Scrolls() {
   const { isLoading, error, data } = useRooms();
-  const { tag } = TagStore();
+  const { searchInput } = TagStore();
   if (isLoading)
     return (
       <LoadingContainer>
@@ -20,7 +20,7 @@ export default function Scrolls() {
 
   if (error) return <div>An error has occurred: </div>;
 
-  const newData = filterData(data, tag);
+  const newData = filterData(data, searchInput);
 
   return (
     <Container>

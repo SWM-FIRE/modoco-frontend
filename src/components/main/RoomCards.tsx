@@ -4,11 +4,11 @@ import Block from './Block';
 import useRooms from '../../hooks/useRooms';
 import CreateRoom from './CreateRoom';
 import { filterData } from './filterData';
-import tagStore from '../../stores/tagStore';
+import searchInputStore from '../../stores/searchInputStore';
 import Loading from '../atoms/Loading';
 
 export default function RoomCards() {
-  const { tag } = tagStore();
+  const { searchInput } = searchInputStore();
   const { isLoading, error, data } = useRooms();
 
   if (isLoading)
@@ -20,7 +20,7 @@ export default function RoomCards() {
 
   if (error) return <div>An error has occurred: </div>;
 
-  const newData = filterData(data, tag);
+  const newData = filterData(data, searchInput);
 
   return (
     <Container>
