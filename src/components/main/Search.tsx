@@ -12,9 +12,9 @@ export default function Search() {
 
   return (
     <SearchContainer>
-      <SearhIconContainer>
+      <SearchIconContainer>
         <SearchIcon />
-      </SearhIconContainer>
+      </SearchIconContainer>
       <Input placeholder="태그를 입력해보세요" onChange={changeTag} />
     </SearchContainer>
   );
@@ -29,7 +29,7 @@ const Input = styled.input`
   font-family: IBMPlexSansKRRegular;
 `;
 
-const SearhIconContainer = styled.div`
+const SearchIconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
