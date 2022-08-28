@@ -42,10 +42,16 @@ export default function Chat() {
 
   const moveScrollToReceiveMessage = useCallback((behavior: string) => {
     if (chatWindow.current) {
-      chatWindow.current.scrollTo({
-        top: chatWindow.current.scrollHeight,
-        behavior,
-      });
+      const isBottom =
+        chatWindow.current.clientHeight + chatWindow.current.scrollTop >=
+        chatWindow.current.scrollHeight - 100;
+
+      if (isBottom || messages[messages.length - 1].uid === uid) {
+        chatWindow.current.scrollTo({
+          top: chatWindow.current.scrollHeight,
+          behavior,
+        });
+      }
     }
   }, []);
 
@@ -55,7 +61,7 @@ export default function Chat() {
       <ChattingList ref={chatWindow}>
         {messages.map((message) => (
           <ChattingItem
-            key={Symbol(message.uid).toString()}
+            key={message.uid + message.createdAt}
             user={{
               nickname: message.nickname,
               avatar: message.avatar,
