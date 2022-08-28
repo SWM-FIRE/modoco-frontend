@@ -10,7 +10,6 @@ export default function useSetSelf() {
     (state) => state,
   );
   const navigate = useNavigate();
-
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (token) {
@@ -38,27 +37,10 @@ export default function useSetSelf() {
         })
         .catch(() => {
           localStorage.removeItem('access_token');
-          toast('로그인 시간이 만료되었습니다.');
+          toast.error('로그인 시간이 만료되었습니다.');
           navigate(`/`);
           setClear();
         });
-      // axios
-      //   .get(API.RECORDS, {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   })
-      //   .then((res) => {
-      //     if (res.data.length !== 0) {
-      //       setTime(Number(res.data[0].duration) * 60);
-      //     }
-      //   })
-      //   .catch(() => {
-      //     localStorage.removeItem('access_token');
-      //     navigate(`/`);
-      //     setClear();
-      //     toast.error('로그인 시간이 만료되었습니다.');
-      //   });
     } else {
       setClear();
     }
