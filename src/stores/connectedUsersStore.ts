@@ -44,7 +44,7 @@ const connectedUsersStore = create<connectedUsers>((set, get) => ({
       ),
     })),
   findUser: (by) => {
-    const user = get().connectedUsers.filter((user) => user.socketId === by)[0];
+    const user = get().connectedUsers.find((user) => user.socketId === by);
     return user;
   },
 }));
