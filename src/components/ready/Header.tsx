@@ -29,12 +29,13 @@ export default function Header() {
 
 const LeftArrowPosition = styled.button`
   cursor: pointer;
-  position: absolute;
   left: 8rem;
 `;
 
 const Container = styled.div`
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   height: 10rem;
+  width: 90%;
 `;

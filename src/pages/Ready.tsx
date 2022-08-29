@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
+import SettingModal from '../components/ready/modal/SettingModal';
 import Header from '../components/ready/Header';
 import RoomDetail from '../components/ready/RoomDetail';
 import Screen from '../components/ready/Screen';
@@ -16,6 +17,7 @@ export default function ReadyPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { roomId } = useParams();
   const navigate = useNavigate();
+  const [isSetting, setIsSetting] = useState(false);
 
   useEffect(() => {
     if (uid && localStorage.getItem('access_token') && !userMediaStream) {
@@ -36,23 +38,20 @@ export default function ReadyPage() {
   }, [videoRef, userMediaStream]);
 
   return (
-    <Container>
-      <Header />
-      <Message>코딩방 입장 전 화면과 오디오 상태를 체크하는 곳입니다</Message>
-      <Main>
-        <Screen video={videoRef} />
-        <RoomDetail roomNo={roomId} />
-      </Main>
-    </Container>
+    <>
+      {isSetting ? (
+        <SettingModal setSetting={setIsSetting} stream={userMediaStream} />
+      ) : null}
+      <Container>
+        <Header />
+        <Main>
+          <Screen videoRef={videoRef} setSetting={setIsSetting} />
+          <RoomDetail roomNo={roomId} />
+        </Main>
+      </Container>
+    </>
   );
 }
-
-const Message = styled.div`
-  font-family: IBMPlexSansKRRegular;
-  color: #9ca3af;
-  font-weight: 400;
-  font-size: 2rem;
-`;
 
 const Main = styled.div`
   display: flex;
