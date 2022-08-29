@@ -4,11 +4,13 @@ import connectedUsersStore from '../stores/connectedUsersStore';
 import messageStore from '../stores/messagesStore';
 import roomSocket from './roomSocket';
 import userStore from '../stores/userStore';
+import receiveNewMessageStore from '../stores/receiveNewMessageStore';
 
 const onChatMessage = () => {
   const { connectedUsers } = connectedUsersStore();
-  const { messages, setMessages } = messageStore();
-  const { uid, nickname, avatar } = userStore();
+  const { setIsReceiveNewMessage } = receiveNewMessageStore((state) => state);
+  const { messages, setMessages } = messageStore((state) => state);
+  const { uid, nickname, avatar } = userStore((state) => state);
   const newSocket = roomSocket.socket;
 
   useEffect(() => {
@@ -57,6 +59,7 @@ const onChatMessage = () => {
     };
 
     newSocket.off('chatMessage').on('chatMessage', (message) => {
+      setIsReceiveNewMessage(true);
       receiveMessage(message);
     });
 
