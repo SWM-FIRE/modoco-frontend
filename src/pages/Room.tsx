@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
@@ -17,11 +18,13 @@ import Sidebar from '../components/room/sideBar/Sidebar';
 import ScreenShareModal from '../components/room/ScreenModal';
 import receiveNewMessageStore from '../stores/receiveNewMessageStore';
 import controlSidebar from '../stores/controlSidebar';
+import ChattingAlarm from '../components/room/sideBar/ChattingAlarm';
 
 export default function Room() {
   const { roomId } = useParams();
   const { isOpen } = controlModal();
-  const { isReceiveNewMessage } = receiveNewMessageStore();
+  const volumeRef = useRef<HTMLAudioElement>(null);
+  const { isReceiveNewMessage, isAlarmToggle } = receiveNewMessageStore();
   const { isOpenSidebar, openSidebar } = controlSidebar();
   const { isLoading, error, data } = useRoom(roomId);
   const theme = getTheme(data?.theme);
@@ -52,7 +55,17 @@ export default function Room() {
               onClick={onControlSidebarClick}
             >
               <LeftTwoArrows />
-              {isReceiveNewMessage ? <NewChatting /> : <Chatting />}
+              {isReceiveNewMessage ? (
+                <>
+                  <ChattingAlarm
+                    volumeRef={volumeRef}
+                    isAlarmToggle={isAlarmToggle}
+                  />
+                  <NewChatting />
+                </>
+              ) : (
+                <Chatting />
+              )}
             </ControlSidebar>
           )}
           {isOpenSidebar && <Sidebar />}

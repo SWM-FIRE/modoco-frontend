@@ -49,7 +49,7 @@ export default function Chat() {
       if (chatWindow.current) {
         const isBottom =
           chatWindow.current.clientHeight + chatWindow.current.scrollTop >=
-            chatWindow.current.scrollHeight - 100 || isFirstView;
+            chatWindow.current.scrollHeight - 1000 || isFirstView;
         if (isBottom) {
           chatWindow.current.scrollTo({
             top: chatWindow.current.scrollHeight,

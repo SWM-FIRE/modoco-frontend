@@ -8,7 +8,9 @@ import receiveNewMessageStore from '../stores/receiveNewMessageStore';
 
 const onChatMessage = () => {
   const { connectedUsers } = connectedUsersStore();
-  const { setIsReceiveNewMessage } = receiveNewMessageStore((state) => state);
+  const { setIsReceiveNewMessage, setIsAlarmToggle } = receiveNewMessageStore(
+    (state) => state,
+  );
   const { messages, setMessages } = messageStore((state) => state);
   const { uid, nickname, avatar } = userStore((state) => state);
   const newSocket = roomSocket.socket;
@@ -60,6 +62,7 @@ const onChatMessage = () => {
 
     newSocket.off('chatMessage').on('chatMessage', (message) => {
       setIsReceiveNewMessage(true);
+      setIsAlarmToggle();
       receiveMessage(message);
     });
 
