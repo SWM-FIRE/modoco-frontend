@@ -14,6 +14,10 @@ export default function SettingModal({
     event.preventDefault();
     setSetting(false);
   };
+  const closeModalBackground = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setSetting(false);
+  };
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -24,7 +28,7 @@ export default function SettingModal({
   }, [videoRef, stream]);
 
   return (
-    <Container onClick={closeModal}>
+    <Container onClick={closeModalBackground}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
         <ModalTitle>
           기기설정
@@ -88,7 +92,7 @@ const ModalBox = styled.div`
   background-color: #23262f;
 `;
 
-const Container = styled.button`
+const Container = styled.div`
   position: fixed;
   width: 100vw;
   height: 100vh;
