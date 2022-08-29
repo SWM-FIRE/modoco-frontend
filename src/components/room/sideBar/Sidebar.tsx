@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Participants from './Participants';
 import Chatting from './Chatting';
 import Information from './Information';
 import ModalPortal from '../../atoms/ModalPortal';
+import receiveNewMessageStore from '../../../stores/receiveNewMessageStore';
 
 export default function SidebarMemo() {
+  const { setIsReceiveNewMessage } = receiveNewMessageStore();
+  useEffect(() => {
+    setIsReceiveNewMessage(false);
+  }, []);
   return (
     <ModalPortal>
       <Component>

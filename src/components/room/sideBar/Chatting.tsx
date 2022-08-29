@@ -6,21 +6,25 @@ import ChattingItem from './ChattingItem';
 import messageStore from '../../../stores/messagesStore';
 import roomSocket from '../../../adapters/roomSocket';
 import userStore from '../../../stores/userStore';
+import receiveNewMessageStore from '../../../stores/receiveNewMessageStore';
 
 export default function Chat() {
   const [newMessage, setNewMessage] = useState('');
+  const { setIsReceiveNewMessage } = receiveNewMessageStore((state) => state);
   const { roomId } = useParams();
   const chatWindow = useRef(null);
-  const { messages } = messageStore();
-  const { uid } = userStore();
+  const { messages } = messageStore((state) => state);
+  const { uid } = userStore((state) => state);
   const newSocket = roomSocket.socket;
 
   useEffect(() => {
-    moveScrollToReceiveMessage('auto');
+    moveScrollToReceiveMessage('auto', true);
+    setIsReceiveNewMessage(false);
   }, []);
 
   useEffect(() => {
-    moveScrollToReceiveMessage('smooth');
+    moveScrollToReceiveMessage('smooth', false);
+    setIsReceiveNewMessage(false);
   }, [messages]);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -40,20 +44,22 @@ export default function Chat() {
     setNewMessage(event.target.value);
   };
 
-  const moveScrollToReceiveMessage = useCallback((behavior: string) => {
-    if (chatWindow.current) {
-      const isBottom =
-        chatWindow.current.clientHeight + chatWindow.current.scrollTop >=
-        chatWindow.current.scrollHeight - 100;
-
-      if (isBottom || messages[messages.length - 1].uid === uid) {
-        chatWindow.current.scrollTo({
-          top: chatWindow.current.scrollHeight,
-          behavior,
-        });
+  const moveScrollToReceiveMessage = useCallback(
+    (behavior: string, isFirstView: boolean) => {
+      if (chatWindow.current) {
+        const isBottom =
+          chatWindow.current.clientHeight + chatWindow.current.scrollTop >=
+            chatWindow.current.scrollHeight - 100 || isFirstView;
+        if (isBottom) {
+          chatWindow.current.scrollTo({
+            top: chatWindow.current.scrollHeight,
+            behavior,
+          });
+        }
       }
-    }
-  }, []);
+    },
+    [],
+  );
 
   return (
     <Component>
