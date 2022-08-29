@@ -57,7 +57,9 @@ export default function SingleScreen({ connectedUser, stream }) {
         </ChatContainer>
         <AvatarPosition>
           <MyAvatar num={Number(connectedUser.avatar)} />
-          <NameContainer>{connectedUser.nickname}</NameContainer>
+          <NameContainer isMe={uid === connectedUser.uid}>
+            {connectedUser.nickname}
+          </NameContainer>
         </AvatarPosition>
       </ControlBar>
     </Container>
@@ -116,11 +118,11 @@ const Chats = styled.div`
   color: #ffffff;
 `;
 
-const NameContainer = styled.div`
+const NameContainer = styled.div<{ isMe: boolean }>`
   padding: 1%;
   font-size: 1.6rem;
   font-family: IBMPlexSansKRRegular;
-  color: #f9fafb;
+  color: ${(props) => (props.isMe ? '#A7F3D0' : '#f9fafb')};
 `;
 
 const AvatarPosition = styled.div`

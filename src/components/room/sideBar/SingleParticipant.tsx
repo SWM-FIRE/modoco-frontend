@@ -4,9 +4,11 @@ import MyAvatar from '../../../assets/avatar/MyAvatar';
 import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
 
 export default function SingleParticipant({
+  isMe,
   nickname,
   avatar,
 }: {
+  isMe: boolean;
   nickname: string;
   avatar: string;
 }) {
@@ -18,7 +20,9 @@ export default function SingleParticipant({
           <MicOn />
         </MicContainer>
       </AvatarContainer>
-      <NameContainer nicknameLength={nickname.length}>{nickname}</NameContainer>
+      <NameContainer isMe={isMe} nicknameLength={nickname.length}>
+        {nickname}
+      </NameContainer>
     </Container>
   );
 }
@@ -54,7 +58,7 @@ const Container = styled.div`
   gap: 0.4rem;
 `;
 
-const NameContainer = styled.div<{ nicknameLength: number }>`
+const NameContainer = styled.div<{ nicknameLength: number; isMe: boolean }>`
   font-family: IBMPlexSansKRRegular;
   font-weight: 500;
   word-break: break-all;
@@ -64,5 +68,5 @@ const NameContainer = styled.div<{ nicknameLength: number }>`
       ${(props) =>
         props.nicknameLength < 4 ? 0 : props.nicknameLength * 0.05}rem
   );
-  color: #f9fafb;
+  color: ${(props) => (props.isMe ? '#A7F3D0' : '#f9fafb')};
 `;

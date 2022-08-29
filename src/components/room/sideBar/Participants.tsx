@@ -14,10 +14,15 @@ export default function Participants() {
     <Component>
       <Title>참여자 목록</Title>
       <UserList>
-        <SingleParticipant nickname={nickname} avatar={avatar.toString()} />
+        <SingleParticipant
+          isMe
+          nickname={nickname}
+          avatar={avatar.toString()}
+        />
         {connectedUsers.map((user) => (
           <SingleParticipant
             key={user.uid}
+            isMe={false}
             nickname={user.nickname}
             avatar={user.avatar}
           />
