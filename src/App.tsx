@@ -8,7 +8,6 @@ import Ready from './pages/Ready';
 import LandingPage from './pages/LandingPage';
 import MyPage from './pages/MyPage';
 import Main from './pages/Main';
-import Test from './pages/Test';
 import Error from './pages/Error';
 import SignUp from './pages/SignUp';
 
@@ -37,7 +36,6 @@ function App() {
           <Route path="/signUp" element={<Layout />}>
             <Route index element={<SignUp />} />
           </Route>
-          <Route path="/test" element={<Test />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
