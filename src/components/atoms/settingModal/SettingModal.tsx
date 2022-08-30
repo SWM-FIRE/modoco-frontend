@@ -78,7 +78,7 @@ const MyScreen = styled.div`
   position: relative;
   width: 56.8rem;
   height: 36.8rem;
-  @media (max-width: 1080px) {
+  @media (max-width: 1200px) {
     width: 41.9rem;
     height: 27.3rem;
   }
@@ -96,8 +96,9 @@ const Main = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: 1080px) {
+  @media (max-width: 1200px) {
     flex-direction: column;
+    gap: 1rem;
   }
 `;
 
@@ -118,7 +119,7 @@ const ModalTitle = styled.div`
 const ModalBox = styled.div`
   width: calc(80rem + 10%);
   height: 52.8rem;
-  @media (max-width: 1080px) {
+  @media (max-width: 1200px) {
     width: 90%;
     height: 81.6rem;
   }

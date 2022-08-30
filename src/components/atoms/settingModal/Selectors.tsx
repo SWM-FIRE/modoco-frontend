@@ -25,7 +25,7 @@ export default function Selectors() {
 const SelectorContainer = styled.div`
   height: 100%;
   width: 26.5rem;
-  @media (max-width: 1080px) {
+  @media (max-width: 1200px) {
     width: 41.9rem;
   }
   display: flex;
@@ -36,7 +36,7 @@ const SelectorContainer = styled.div`
 const Container = styled.div`
   width: calc(100% - 56.8rem);
   height: 36.8rem;
-  @media (max-width: 1080px) {
+  @media (max-width: 1200px) {
     width: 100%;
   }
   display: flex;

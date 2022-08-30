@@ -48,7 +48,7 @@ const Bar = styled.div<{ volume: number; no: number }>`
 const Container = styled.div`
   position: absolute;
   left: 5%;
-  bottom: 2.8rem;
+  bottom: 7%;
   gap: 2rem;
   display: flex;
   flex-direction: column;
