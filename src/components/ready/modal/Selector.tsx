@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
 import { ReactComponent as CameraSetting } from '../../../assets/svg/videoSetting.svg';
 import { ReactComponent as MicSetting } from '../../../assets/svg/micSetting.svg';
 import { ReactComponent as SpeakerSetting } from '../../../assets/svg/headphoneSetting.svg';
@@ -14,30 +15,68 @@ export default function Selector({
 }) {
   let theme: string;
   let Icon: React.FC;
+  let myDevice: MediaDeviceInfo | null;
+  let setMyDevice: React.Dispatch<React.SetStateAction<MediaDeviceInfo>>;
   const [showDropDown, setDropDown] = useState<boolean>(false);
+  const {
+    userAudioInputDevice,
+    userAudioOutputDevice,
+    userVideoInputDevice,
+    setUserAudioInputDevice,
+    setUserAudioOutputDevice,
+    setUserVideoInputDevice,
+  } = UserMediaStreamStore();
 
   switch (select) {
     case 'camera':
       theme = '카메라';
       Icon = CameraSetting;
+      myDevice = userVideoInputDevice;
+      setMyDevice = setUserVideoInputDevice;
       break;
     case 'mic':
       theme = '마이크';
       Icon = MicSetting;
+      myDevice = userAudioInputDevice;
+      setMyDevice = setUserAudioInputDevice;
       break;
     case 'speaker':
       theme = '스피커';
       Icon = SpeakerSetting;
+      myDevice = userAudioOutputDevice;
+      setMyDevice = setUserAudioOutputDevice;
       break;
     default:
       theme = '카메라';
       Icon = CameraSetting;
+      myDevice = userVideoInputDevice;
+      setMyDevice = setUserVideoInputDevice;
       break;
   }
 
   const dropDown = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     setDropDown(!showDropDown);
+  };
+
+  const setDevice = (
+    device: MediaDeviceInfo,
+    event: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    event.preventDefault();
+    setMyDevice(device);
+    setDropDown(false);
+  };
+
+  const defaultDevice = (device: MediaDeviceInfo[]) => {
+    if (device.length === 0) {
+      return '선택해주세요';
+    }
+    const defaultDV = device.find((d) => d.deviceId === 'default');
+    if (!defaultDV) {
+      return '선택해주세요';
+    }
+    return defaultDV.label;
   };
 
   return (
@@ -47,13 +86,20 @@ export default function Selector({
         {theme}
       </SelectorTitle>
       <CameraDropDown onClick={dropDown}>
-        <Text>{device[0]?.label}</Text>
+        <Text>
+          {myDevice !== null ? myDevice?.label : defaultDevice(device)}
+        </Text>
         <BottomArrow />
         {showDropDown && (
           <DropDownPosition>
             <DropDown>
               {device.map((device) => (
-                <DropDownItem key={device.deviceId}>
+                <DropDownItem
+                  key={device.deviceId}
+                  onClick={(event) => {
+                    setDevice(device, event);
+                  }}
+                >
                   <Text>{device.label}</Text>
                 </DropDownItem>
               ))}

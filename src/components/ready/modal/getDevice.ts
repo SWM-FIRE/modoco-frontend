@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+// import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
 
 const getDevice = async (
   setAudioInput: Dispatch<SetStateAction<MediaDeviceInfo[]>>,
@@ -12,6 +13,7 @@ const getDevice = async (
     setVideoInput(devices.filter((device) => device.kind === 'videoinput'));
     return devices;
   } catch (error) {
+    console.log(error, 'error getting devices');
     return 'error';
   }
 };
