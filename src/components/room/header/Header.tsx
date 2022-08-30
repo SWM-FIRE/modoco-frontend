@@ -10,7 +10,7 @@ import messageStore from '../../../stores/messagesStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import userPcStore from '../../../stores/userPcStore';
 
-export default function Header({ theme }) {
+export default function Header({ theme, setSetting }) {
   const navigate = useNavigate();
   const { roomId } = useParams();
   const { setUsers } = connectedUsersStore();
@@ -37,7 +37,7 @@ export default function Header({ theme }) {
       <Theme theme={theme} />
       <Center>
         <Timer />
-        <Settings />
+        <Settings setSetting={setSetting} />
       </Center>
       <Button onClick={onClick}>
         나가기 <X />
