@@ -45,23 +45,19 @@ export const useCreateMediaStream = () => {
       setUserMic(true);
       console.log('userMic 켰어용', myStream.localStream.getAudioTracks()[0]);
     }
+    Object.keys(pcs).forEach((pc) => {
+      const sender = pcs[pc].getSenders().find((s) => s.track.kind === 'audio');
+      console.log('sender: ', sender);
+      sender.replaceTrack(myStream.localStream.getAudioTracks()[0]);
+    });
   };
 
   const stopDisplayStream = () => {
     if (userVideo) {
-      myStream.localStream.getVideoTracks().forEach((track) => track.stop());
-
-      // removeDisplayTrack(sid, myStream.localStream);
-      myStream.localStream.removeTrack(
-        myStream.localStream.getVideoTracks()[0],
-      );
+      myStream.localStream
+        .getVideoTracks()
+        .forEach((track) => (track.enabled = false));
       setUserVideo(false);
-      const newStream = myStream.localStream;
-      console.log(
-        'removing display stream',
-        myStream.localStream.getVideoTracks(),
-      );
-      setUserMediaStream(newStream);
     } else {
       console.log('myStream doesnt exist', myStream);
     }
@@ -94,6 +90,11 @@ export const useCreateMediaStream = () => {
   };
 
   const createDisplayStream = async () => {
+    if (myStream.localStream.getVideoTracks().length !== 0) {
+      myStream.localStream.removeTrack(
+        myStream.localStream.getVideoTracks()[0],
+      );
+    }
     try {
       const videoStream = await navigator.mediaDevices.getDisplayMedia({
         video: {
