@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import controlModal from '../../../stores/controlModal';
 import messageStore from '../../../stores/messagesStore';
@@ -60,7 +60,9 @@ export default function SingleScreen({ connectedUser, stream }) {
           </ChatInner>
         </ChatContainer>
         <AvatarPosition>
+          <TalkingShadow />
           <MyAvatar num={Number(connectedUser.avatar)} />
+          {/* </TalkingShadow> */}
           <NameContainer isMe={uid === connectedUser.uid}>
             {connectedUser.nickname}
           </NameContainer>
@@ -146,4 +148,26 @@ const Video = styled.video`
   height: 100%;
   border-radius: 1rem;
   position: absolute;
+`;
+
+const boxFade = keyframes`
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const TalkingShadow = styled.div`
+  position: absolute;
+  width: 8rem;
+  height: 8rem;
+  top: 0;
+  border-radius: 50%;
+  box-shadow: #84cc16 0px 2px 10px 0px, #84cc16 0px 2px 16px 0px;
+  animation: ${boxFade} 2s 1s infinite linear alternate;
 `;

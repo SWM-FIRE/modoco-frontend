@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
@@ -14,14 +14,19 @@ import Header from '../components/room/header/Header';
 import ScreenShare from '../components/room/screenShare/ScreenShare';
 import { ReactComponent as LeftTwoArrows } from '../assets/svg/Room/LeftTwoArrows.svg';
 import { ReactComponent as Chatting } from '../assets/svg/Room/Chatting.svg';
+import { ReactComponent as NewChatting } from '../assets/svg/Room/NewChatting.svg';
 import Sidebar from '../components/room/sideBar/Sidebar';
 import ScreenShareModal from '../components/room/ScreenModal';
+import receiveNewMessageStore from '../stores/receiveNewMessageStore';
 import controlSidebar from '../stores/controlSidebar';
+import ChattingAlarm from '../components/room/sideBar/ChattingAlarm';
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
 
 export default function Room() {
   const { roomId } = useParams();
   const { isOpen } = controlModal();
+  const volumeRef = useRef<HTMLAudioElement>(null);
+  const { isReceiveNewMessage, isAlarmToggle } = receiveNewMessageStore();
   const { isOpenSidebar, openSidebar } = controlSidebar();
   const { isLoading, error, data } = useRoom(roomId);
   const theme = getTheme(data?.theme);
@@ -57,7 +62,17 @@ export default function Room() {
               onClick={onControlSidebarClick}
             >
               <LeftTwoArrows />
-              <Chatting />
+              {isReceiveNewMessage ? (
+                <>
+                  <ChattingAlarm
+                    volumeRef={volumeRef}
+                    isAlarmToggle={isAlarmToggle}
+                  />
+                  <NewChatting />
+                </>
+              ) : (
+                <Chatting />
+              )}
             </ControlSidebar>
           )}
           {isOpenSidebar && <Sidebar />}
