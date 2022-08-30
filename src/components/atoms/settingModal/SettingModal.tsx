@@ -1,19 +1,25 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import audioFrequency from './audioFrequency';
 import Selectors from './Selectors';
+import VolumeBar from './VolumeBar';
 import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
 
 export default function SettingModal({
+  setting,
   setSetting,
   stream,
 }: {
+  setting: boolean;
   setSetting: React.Dispatch<React.SetStateAction<boolean>>;
   stream: MediaStream;
 }) {
   const { userAudioInputDevice } = UserMediaStreamStore();
   const { replaceAudioStream } = useCreateMediaStream();
+  const { getAudio } = audioFrequency(stream);
+  const [vol, setVol] = useState<number>(0);
 
   useEffect(() => {
     replaceAudioStream();
@@ -31,6 +37,17 @@ export default function SettingModal({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    let myInterval;
+    if (setting) {
+      myInterval = setInterval(() => {
+        const vol = getAudio();
+        setVol(Math.floor((vol / 256) * 150));
+      }, 30);
+    }
+    return () => clearInterval(myInterval);
+  }, []);
+
+  useEffect(() => {
     if (videoRef.current) {
       videoRef.current.srcObject = stream;
     }
@@ -46,7 +63,10 @@ export default function SettingModal({
           </ExitButton>
         </ModalTitle>
         <Main>
-          <Screen ref={videoRef} autoPlay playsInline muted />
+          <MyScreen>
+            <Screen ref={videoRef} autoPlay playsInline muted />
+            <VolumeBar volume={vol} />
+          </MyScreen>
           <Selectors />
         </Main>
       </ModalBox>
@@ -54,7 +74,8 @@ export default function SettingModal({
   );
 }
 
-const Screen = styled.video`
+const MyScreen = styled.div`
+  position: relative;
   width: 56.8rem;
   height: 36.8rem;
   @media (max-width: 1080px) {
@@ -62,6 +83,11 @@ const Screen = styled.video`
     height: 27.3rem;
   }
   border-radius: 0.5rem;
+`;
+
+const Screen = styled.video`
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
 `;
 
