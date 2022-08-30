@@ -128,7 +128,6 @@ const DropDown = styled.div`
     0% {
       transform: translateY(-100%);
     }
-
     100% {
       transform: translateY(0);
     }

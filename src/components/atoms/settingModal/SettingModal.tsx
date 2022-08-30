@@ -103,6 +103,7 @@ const ModalBox = styled.div`
 
 const Container = styled.div`
   position: fixed;
+  z-index: 2;
   width: 100vw;
   height: 100vh;
   display: flex;
