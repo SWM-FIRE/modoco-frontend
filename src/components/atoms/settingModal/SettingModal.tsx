@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import audioFrequency from './audioFrequency';
 import Selectors from './Selectors';
+import VolumeBar from './VolumeBar';
 import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
@@ -64,7 +65,7 @@ export default function SettingModal({
         <Main>
           <MyScreen>
             <Screen ref={videoRef} autoPlay playsInline muted />
-            <Bars volume={vol} />
+            <VolumeBar volume={vol} />
           </MyScreen>
           <Selectors />
         </Main>
@@ -72,18 +73,6 @@ export default function SettingModal({
     </Container>
   );
 }
-
-const Bars = styled.div<{ volume: number }>`
-  position: absolute;
-  left: 1rem;
-  bottom: 1rem;
-  height: 90%;
-  width: 5%;
-  /* background-color: white; */
-  background: ${(props) =>
-    `linear-gradient(to top, green ${props.volume}%, white
- ${props.volume}% 100%)`};
-`;
 
 const MyScreen = styled.div`
   position: relative;
