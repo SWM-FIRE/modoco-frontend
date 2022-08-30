@@ -49,7 +49,11 @@ export default function Room() {
   return (
     <ThemeProvider theme={theme}>
       {isSetting ? (
-        <SettingModal setSetting={setIsSetting} stream={userMediaStream} />
+        <SettingModal
+          setting={isSetting}
+          setSetting={setIsSetting}
+          stream={userMediaStream}
+        />
       ) : null}
       <Toaster />
       <Component>
