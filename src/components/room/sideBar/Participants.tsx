@@ -2,11 +2,14 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import SingleParticipant from './SingleParticipant';
 import connectedUsersStore from '../../../stores/connectedUsersStore';
+import findStream from '../findStream';
 import UserStore from '../../../stores/userStore';
+import userMediaStreamStore from '../../../stores/userMediaStreamStore';
 
 export default function Participants() {
-  const { connectedUsers } = connectedUsersStore();
-  const { nickname, avatar } = UserStore();
+  const { connectedUsers, userStream } = connectedUsersStore((state) => state);
+  const { userMediaStream } = userMediaStreamStore((state) => state);
+  const { nickname, avatar } = UserStore((state) => state);
   useEffect(() => {
     console.log('connectedUsers', connectedUsers);
   }, []);
@@ -18,6 +21,7 @@ export default function Participants() {
           isMe
           nickname={nickname}
           avatar={avatar.toString()}
+          stream={userMediaStream}
         />
         {connectedUsers.map((user) => (
           <SingleParticipant
@@ -25,6 +29,11 @@ export default function Participants() {
             isMe={false}
             nickname={user.nickname}
             avatar={user.avatar}
+            stream={findStream({
+              sid: user.socketId,
+              connectedUsers,
+              userStream,
+            })}
           />
         ))}
       </UserList>

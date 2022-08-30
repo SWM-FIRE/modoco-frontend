@@ -11,7 +11,7 @@ export const useCreateMediaStream = () => {
     setUserMic,
     setUserVideo,
     userVideo,
-  } = UserMediaStreamStore();
+  } = UserMediaStreamStore((state) => state);
   const myStream: { localStream: MediaStream | null } = {
     localStream: userMediaStream,
   };
@@ -28,15 +28,29 @@ export const useCreateMediaStream = () => {
   };
 
   const toggleMic = () => {
-    myStream.localStream
-      .getAudioTracks()
-      .forEach((track) => (track.enabled = !track.enabled));
-    setUserMic(!userMic);
+    // myStream.localStream.getAudioTracks().forEach((track) => {
+    //   track.enabled = !track.enabled;
+    // });
+    // setUserMic(!userMic);
+    if (userMic) {
+      myStream.localStream
+        .getAudioTracks()
+        .forEach((track) => (track.enabled = false));
+      setUserMic(false);
+      console.log('userMic 껐어용: ', myStream.localStream.getAudioTracks()[0]);
+    } else {
+      myStream.localStream
+        .getAudioTracks()
+        .forEach((track) => (track.enabled = true));
+      setUserMic(true);
+      console.log('userMic 켰어용', myStream.localStream.getAudioTracks()[0]);
+    }
   };
 
   const stopDisplayStream = () => {
     if (userVideo) {
       myStream.localStream.getVideoTracks().forEach((track) => track.stop());
+
       // removeDisplayTrack(sid, myStream.localStream);
       myStream.localStream.removeTrack(
         myStream.localStream.getVideoTracks()[0],

@@ -1,23 +1,31 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
-// import { ReactComponent as MicOff } from '../../assets/svg/SmallMicOff.svg';
 import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
+import { ReactComponent as MicOff } from '../../../assets/svg/SmallMicOff.svg';
 
 export default function SingleParticipant({
   isMe,
   nickname,
   avatar,
+  stream,
 }: {
   isMe: boolean;
   nickname: string;
   avatar: string;
+  stream: MediaStream;
 }) {
+  // const [isMuted, setIsMuted] = useState(false);
+  useEffect(() => {
+    console.log('stream : ', stream.getAudioTracks());
+  }, [stream]);
+
   return (
     <Container>
       <AvatarContainer>
         <MyAvatar num={Number(avatar)} />
         <MicContainer>
-          <MicOn />
+          {stream.getAudioTracks()[0]?.enabled ? <MicOn /> : <MicOff />}
         </MicContainer>
       </AvatarContainer>
       <NameContainer isMe={isMe} nicknameLength={nickname.length}>
