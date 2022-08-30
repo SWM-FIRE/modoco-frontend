@@ -50,7 +50,7 @@ const MicContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.3rem;
+  padding: 0.4rem;
 `;
 
 const Container = styled.div`
