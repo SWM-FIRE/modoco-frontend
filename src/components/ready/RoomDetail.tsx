@@ -23,6 +23,7 @@ export default function RoomDetail({ roomNo: roomId }) {
 const Container = styled.div`
   width: 40.6rem;
   height: 42.7rem;
+  margin-top: 4rem;
 `;
 
 const EnterButton = styled.button`
