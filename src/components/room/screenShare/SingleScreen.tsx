@@ -4,6 +4,7 @@ import MyAvatar from '../../../assets/avatar/MyAvatar';
 import controlModal from '../../../stores/controlModal';
 import messageStore from '../../../stores/messagesStore';
 import userStore from '../../../stores/userStore';
+import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
 
 export default function SingleScreen({ connectedUser, stream }) {
   const { messages } = messageStore();
@@ -12,6 +13,7 @@ export default function SingleScreen({ connectedUser, stream }) {
     controlModal();
   const { uid } = userStore();
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const { userAudioOutputDevice } = UserMediaStreamStore();
 
   const OpenModal = () => {
     setNickname(connectedUser.nickname);
@@ -25,7 +27,9 @@ export default function SingleScreen({ connectedUser, stream }) {
     if (videoRef.current && stream) {
       videoRef.current.srcObject = stream;
     }
-  }, [stream, videoRef]);
+    const newRef = videoRef.current;
+    (newRef as any).setSinkId(userAudioOutputDevice?.deviceId);
+  }, [stream, videoRef, userAudioOutputDevice]);
 
   useEffect(() => {
     const timer = setInterval(() => {
