@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Selectors from './Selectors';
+import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
+import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
 
 export default function SettingModal({
@@ -10,6 +12,13 @@ export default function SettingModal({
   setSetting: React.Dispatch<React.SetStateAction<boolean>>;
   stream: MediaStream;
 }) {
+  const { userAudioInputDevice } = UserMediaStreamStore();
+  const { replaceAudioStream } = useCreateMediaStream();
+
+  useEffect(() => {
+    replaceAudioStream();
+  }, [userAudioInputDevice]);
+
   const closeModal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setSetting(false);

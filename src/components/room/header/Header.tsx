@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Timer from './Timer';
 import Settings from './Settings';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
-import Theme from '../Theme';
+import Theme from './Theme';
 import roomSocket from '../../../adapters/roomSocket';
 import connectedUsersStore from '../../../stores/connectedUsersStore';
 import messageStore from '../../../stores/messagesStore';
