@@ -22,7 +22,7 @@ export default function Header({ theme, setSetting }) {
   const onClick = () => {
     const result = window.confirm('정말 모도코를 종료하시겠습니까?');
     if (result) {
-      newSocket.emit('leaveRoom', roomId);
+      newSocket.emit('leaveRoom', { room: roomId });
       setUsers([]);
       emptyPc();
       setMessages([]);
