@@ -16,16 +16,13 @@ export default function SettingModal({
   setSetting: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { userMediaStream, userAudioInputDevice } = UserMediaStreamStore();
-  const { analyser, bufferLength, dataArray } = audioContext(userMediaStream);
   const { replaceAudioStream } = useCreateMediaStream();
   const [vol, setVol] = useState<number>(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     replaceAudioStream();
-  }, [userAudioInputDevice]);
-
-  console.log('render');
+  }, [replaceAudioStream, userAudioInputDevice]);
 
   const closeModal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -38,9 +35,11 @@ export default function SettingModal({
 
   useEffect(() => {
     let myInterval;
+    const { analyser, bufferLength, dataArray } = audioContext(userMediaStream);
     if (setting) {
       myInterval = setInterval(() => {
-        const vol = audioFrequency(dataArray, analyser, bufferLength);
+        analyser.getByteFrequencyData(dataArray);
+        const vol = audioFrequency(dataArray, bufferLength);
         setVol(Math.floor((vol / 256) * 150));
       }, 30);
     }
@@ -48,9 +47,7 @@ export default function SettingModal({
   }, [setting]);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.srcObject = userMediaStream;
-    }
+    videoRef.current.srcObject = userMediaStream;
   }, [videoRef, userMediaStream]);
 
   return (
