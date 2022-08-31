@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 import userMediaStreamStore from '../../stores/userMediaStreamStore';
 import { ReactComponent as MicOff } from '../../assets/svg/MicOff.svg';
@@ -8,13 +9,14 @@ import { ReactComponent as MonitorOn } from '../../assets/svg/MonitorOn.svg';
 import { ReactComponent as MonitorOff } from '../../assets/svg/MonitorOff.svg';
 
 export default function Screen({ video: videoRef }) {
+  const { roomId } = useParams();
   const { userMic, userVideo } = userMediaStreamStore();
-  const { stopDisplayStream, createDisplayStream, toggleMic } =
+  const { stopDisplayStream, createDisplayStream, emitAudioStateChange } =
     useCreateMediaStream();
 
   const setMic = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    toggleMic();
+    emitAudioStateChange(roomId, true);
   };
 
   const setMediaStream = (event: React.MouseEvent<HTMLButtonElement>) => {
