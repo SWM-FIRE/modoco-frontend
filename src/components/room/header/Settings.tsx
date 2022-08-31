@@ -6,10 +6,15 @@ import { ReactComponent as MicOn } from '../../../assets/svg/MicOn.svg';
 import { ReactComponent as MonitorOn } from '../../../assets/svg/MonitorOn.svg';
 import { ReactComponent as MonitorOff } from '../../../assets/svg/MonitorOff.svg';
 import { ReactComponent as VideoOff } from '../../../assets/svg/VideoOff.svg';
+import { ReactComponent as Setting } from '../../../assets/svg/settings.svg';
 import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 
-export default function Settings() {
+export default function Settings({
+  setSetting,
+}: {
+  setSetting: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { userMic, userVideo } = UserMediaStreamStore();
   const { createDisplayStream, stopDisplayStream, toggleMic } =
     useCreateMediaStream();
@@ -22,16 +27,20 @@ export default function Settings() {
   const setMediaStream = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (userVideo) {
-      console.log('removing display');
       stopDisplayStream();
     } else {
       createDisplayStream();
     }
   };
   const setVideo = () => {
-    console.log('setVideo');
     toast.error('준비중입니닷!');
   };
+
+  const toggleSetting = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setSetting(true);
+  };
+
   return (
     <Component>
       <Button onClick={setMediaStream}>
@@ -40,6 +49,9 @@ export default function Settings() {
       <Button onClick={setMic}>{userMic ? <MicOn /> : <MicOff />}</Button>
       <Button onClick={setVideo}>
         <VideoOff />
+      </Button>
+      <Button onClick={toggleSetting}>
+        <Setting />
       </Button>
     </Component>
   );

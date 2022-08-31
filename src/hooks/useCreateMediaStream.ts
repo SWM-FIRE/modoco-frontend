@@ -11,7 +11,8 @@ export const useCreateMediaStream = () => {
     setUserMic,
     setUserVideo,
     userVideo,
-  } = UserMediaStreamStore((state) => state);
+    userAudioInputDevice,
+  } = UserMediaStreamStore();
   const myStream: { localStream: MediaStream | null } = {
     localStream: userMediaStream,
   };
@@ -84,6 +85,38 @@ export const useCreateMediaStream = () => {
     }
   };
 
+  const replaceAudioStream = async () => {
+    try {
+      const audioStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          deviceId: userAudioInputDevice?.deviceId,
+          autoGainControl: false,
+          channelCount: 2,
+          echoCancellation: true,
+          latency: 0,
+          noiseSuppression: false,
+          sampleRate: 48000,
+          sampleSize: 16,
+        },
+      });
+      myStream.localStream.removeTrack(
+        myStream.localStream.getAudioTracks()[0],
+      );
+      myStream.localStream.addTrack(audioStream.getAudioTracks()[0]);
+      setUserMediaStream(myStream.localStream);
+      Object.keys(pcs).forEach((pc) => {
+        const sender = pcs[pc]
+          .getSenders()
+          .find((s) => s.track.kind === 'audio');
+        sender.replaceTrack(audioStream.getAudioTracks()[0]);
+      });
+    } catch (error) {
+      console.log('failed to change audio stream', error);
+      const stream = new MediaStream();
+      setUserMediaStream(stream);
+    }
+  };
+
   const createDisplayStream = async () => {
     if (myStream.localStream.getVideoTracks().length !== 0) {
       myStream.localStream.removeTrack(
@@ -120,6 +153,7 @@ export const useCreateMediaStream = () => {
   };
 
   return {
+    replaceAudioStream,
     toggleMic,
     createDisplayStream,
     createAudioStream,
