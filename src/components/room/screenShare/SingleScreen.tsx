@@ -62,7 +62,6 @@ export default function SingleScreen({ connectedUser, stream }) {
         <AvatarPosition>
           <TalkingShadow />
           <MyAvatar num={Number(connectedUser.avatar)} />
-          {/* </TalkingShadow> */}
           <NameContainer isMe={uid === connectedUser.uid}>
             {connectedUser.nickname}
           </NameContainer>

@@ -29,26 +29,31 @@ export const useCreateMediaStream = () => {
   };
 
   const toggleMic = () => {
-    myStream.localStream
-      .getAudioTracks()
-      .forEach((track) => (track.enabled = !track.enabled));
-    setUserMic(!userMic);
+    // myStream.localStream.getAudioTracks().forEach((track) => {
+    //   track.enabled = !track.enabled;
+    // });
+    // setUserMic(!userMic);
+    if (userMic) {
+      myStream.localStream
+        .getAudioTracks()
+        .forEach((track) => (track.enabled = false));
+      setUserMic(false);
+      console.log('userMic 껐어용: ', myStream.localStream.getAudioTracks()[0]);
+    } else {
+      myStream.localStream
+        .getAudioTracks()
+        .forEach((track) => (track.enabled = true));
+      setUserMic(true);
+      console.log('userMic 켰어용', myStream.localStream.getAudioTracks()[0]);
+    }
   };
 
   const stopDisplayStream = () => {
     if (userVideo) {
-      myStream.localStream.getVideoTracks().forEach((track) => track.stop());
-      // removeDisplayTrack(sid, myStream.localStream);
-      myStream.localStream.removeTrack(
-        myStream.localStream.getVideoTracks()[0],
-      );
+      myStream.localStream
+        .getVideoTracks()
+        .forEach((track) => (track.enabled = false));
       setUserVideo(false);
-      const newStream = myStream.localStream;
-      console.log(
-        'removing display stream',
-        myStream.localStream.getVideoTracks(),
-      );
-      setUserMediaStream(newStream);
     } else {
       console.log('myStream doesnt exist', myStream);
     }
@@ -113,6 +118,11 @@ export const useCreateMediaStream = () => {
   };
 
   const createDisplayStream = async () => {
+    if (myStream.localStream.getVideoTracks().length !== 0) {
+      myStream.localStream.removeTrack(
+        myStream.localStream.getVideoTracks()[0],
+      );
+    }
     try {
       const videoStream = await navigator.mediaDevices.getDisplayMedia({
         video: {
