@@ -6,24 +6,23 @@ import VolumeBar from './VolumeBar';
 import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
+import audioContext from '../audioContext';
 
 export default function SettingModal({
   setting,
   setSetting,
-  stream,
 }: {
   setting: boolean;
   setSetting: React.Dispatch<React.SetStateAction<boolean>>;
-  stream: MediaStream;
 }) {
-  const { userAudioInputDevice } = UserMediaStreamStore();
+  const { userMediaStream, userAudioInputDevice } = UserMediaStreamStore();
   const { replaceAudioStream } = useCreateMediaStream();
-  const { getAudio } = audioFrequency(stream);
   const [vol, setVol] = useState<number>(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     replaceAudioStream();
-  }, [userAudioInputDevice]);
+  }, [replaceAudioStream, userAudioInputDevice]);
 
   const closeModal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -34,24 +33,22 @@ export default function SettingModal({
     setSetting(false);
   };
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-
   useEffect(() => {
     let myInterval;
+    const { analyser, bufferLength, dataArray } = audioContext(userMediaStream);
     if (setting) {
       myInterval = setInterval(() => {
-        const vol = getAudio();
+        analyser.getByteFrequencyData(dataArray);
+        const vol = audioFrequency(dataArray, bufferLength);
         setVol(Math.floor((vol / 256) * 150));
       }, 30);
     }
     return () => clearInterval(myInterval);
-  }, []);
+  }, [setting]);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.srcObject = stream;
-    }
-  }, [videoRef, stream]);
+    videoRef.current.srcObject = userMediaStream;
+  }, [videoRef, userMediaStream]);
 
   return (
     <Container onClick={closeModalBackground}>

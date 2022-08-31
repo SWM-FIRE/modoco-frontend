@@ -40,11 +40,7 @@ export default function ReadyPage() {
   return (
     <>
       {isSetting ? (
-        <SettingModal
-          setting={isSetting}
-          setSetting={setIsSetting}
-          stream={userMediaStream}
-        />
+        <SettingModal setting={isSetting} setSetting={setIsSetting} />
       ) : null}
       <Container>
         <Header />

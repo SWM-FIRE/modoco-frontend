@@ -7,7 +7,7 @@ export default function VolumeBar({ volume }: { volume: number }) {
     <Container>
       <Bars>
         {[...Array(n)].map((no, index) => (
-          <Bar key={no} volume={volume} no={index} />
+          <Bar key={Symbol(index).toString()} volume={volume} no={index} />
         ))}
       </Bars>
       <MicIcon>
@@ -41,7 +41,6 @@ const Bar = styled.div<{ volume: number; no: number }>`
   height: 1.6rem;
   background-color: ${(props) =>
     props.volume / 8 > 7 - props.no ? '#4ADE80' : 'rgba(255, 255, 255, 0.3)'};
-  // 'rgba(31, 41, 55, 0.1)'
   border-radius: 5rem;
 `;
 

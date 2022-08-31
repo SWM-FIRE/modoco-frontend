@@ -6,6 +6,7 @@
   "extends": [
     "airbnb", // or airbnb-base
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended", //react-hooks plugin
     "plugin:jsx-a11y/recommended", // 설치 한경우
     "plugin:import/errors", // 설치한 경우
     "plugin:import/warnings", // 설치한 경우
@@ -22,7 +23,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react", "@typescript-eslint", "react-hooks"],
   "rules": {
     "linebreak-style": 0,
     "import/prefer-default-export": 0,
@@ -39,7 +40,9 @@
     ],
     "jsx-a11y/no-noninteractive-element-interactions": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
-    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "settings": {
     "import/resolver": {
