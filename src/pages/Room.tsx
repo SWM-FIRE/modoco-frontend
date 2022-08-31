@@ -20,7 +20,6 @@ import ScreenShareModal from '../components/room/ScreenModal';
 import receiveNewMessageStore from '../stores/receiveNewMessageStore';
 import controlSidebar from '../stores/controlSidebar';
 import ChattingAlarm from '../components/room/sideBar/ChattingAlarm';
-import UserMediaStreamStore from '../stores/userMediaStreamStore';
 
 export default function Room() {
   const { roomId } = useParams();
@@ -30,7 +29,6 @@ export default function Room() {
   const { isOpenSidebar, openSidebar } = controlSidebar();
   const { isLoading, error, data } = useRoom(roomId);
   const theme = getTheme(data?.theme);
-  const { userMediaStream } = UserMediaStreamStore();
   const [isSetting, setIsSetting] = useState(false);
   roomConnection(roomId);
   onChatMessage();
@@ -49,11 +47,7 @@ export default function Room() {
   return (
     <ThemeProvider theme={theme}>
       {isSetting ? (
-        <SettingModal
-          setting={isSetting}
-          setSetting={setIsSetting}
-          stream={userMediaStream}
-        />
+        <SettingModal setting={isSetting} setSetting={setIsSetting} />
       ) : null}
       <Toaster />
       <Component>
