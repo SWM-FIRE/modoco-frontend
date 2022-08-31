@@ -45,11 +45,6 @@ export const useCreateMediaStream = () => {
       setUserMic(true);
       console.log('userMic 켰어용', myStream.localStream.getAudioTracks()[0]);
     }
-    Object.keys(pcs).forEach((pc) => {
-      const sender = pcs[pc].getSenders().find((s) => s.track.kind === 'audio');
-      console.log('sender: ', sender);
-      sender.replaceTrack(myStream.localStream.getAudioTracks()[0]);
-    });
   };
 
   const stopDisplayStream = () => {
