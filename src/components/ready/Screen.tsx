@@ -1,5 +1,6 @@
 import React, { Dispatch, RefObject, SetStateAction } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 import Settings from './Setting';
 import userMediaStreamStore from '../../stores/userMediaStreamStore';
@@ -15,13 +16,14 @@ export default function Screen({
   videoRef: RefObject<HTMLVideoElement>;
   setSetting: Dispatch<SetStateAction<boolean>>;
 }) {
+  const { roomId } = useParams();
   const { userMic, userVideo } = userMediaStreamStore();
-  const { stopDisplayStream, createDisplayStream, toggleMic } =
+  const { stopDisplayStream, createDisplayStream, emitAudioStateChange } =
     useCreateMediaStream();
 
   const setMic = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    toggleMic();
+    emitAudioStateChange(roomId, true);
   };
 
   const setMediaStream = (event: React.MouseEvent<HTMLButtonElement>) => {

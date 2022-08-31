@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 import { ReactComponent as MicOff } from '../../../assets/svg/MicOff.svg';
@@ -15,13 +16,14 @@ export default function Settings({
 }: {
   setSetting: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { userMic, userVideo } = UserMediaStreamStore();
-  const { createDisplayStream, stopDisplayStream, toggleMic } =
+  const { roomId } = useParams();
+  const { userMic, userVideo } = UserMediaStreamStore((state) => state);
+  const { createDisplayStream, stopDisplayStream, emitAudioStateChange } =
     useCreateMediaStream();
 
   const setMic = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    toggleMic();
+    emitAudioStateChange(roomId, !userMic);
   };
 
   const setMediaStream = (event: React.MouseEvent<HTMLButtonElement>) => {

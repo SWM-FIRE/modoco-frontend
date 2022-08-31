@@ -145,6 +145,8 @@ const usePeerConnection = () => {
               uid,
               avatar: res.data.avatar,
               socketId: sid,
+              enabledVideo: true,
+              enabledAudio: true,
             });
           } else {
             console.log('already connected');
