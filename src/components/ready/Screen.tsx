@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { Dispatch, RefObject, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
+import Settings from './Setting';
 import userMediaStreamStore from '../../stores/userMediaStreamStore';
 import { ReactComponent as MicOff } from '../../assets/svg/MicOff.svg';
 import { ReactComponent as MicOn } from '../../assets/svg/MicOn.svg';
 import { ReactComponent as MonitorOn } from '../../assets/svg/MonitorOn.svg';
 import { ReactComponent as MonitorOff } from '../../assets/svg/MonitorOff.svg';
 
-export default function Screen({ video: videoRef }) {
+export default function Screen({
+  videoRef,
+  setSetting,
+}: {
+  videoRef: RefObject<HTMLVideoElement>;
+  setSetting: Dispatch<SetStateAction<boolean>>;
+}) {
   const { roomId } = useParams();
   const { userMic, userVideo } = userMediaStreamStore();
   const { stopDisplayStream, createDisplayStream, emitAudioStateChange } =
@@ -31,6 +38,7 @@ export default function Screen({ video: videoRef }) {
 
   return (
     <Container>
+      <Settings setSetting={setSetting} />
       <MyScreen ref={videoRef} autoPlay playsInline muted />
       <Buttons>
         <Button onClick={setMediaStream}>
@@ -64,6 +72,8 @@ const Button = styled.button`
 `;
 
 const MyScreen = styled.video`
+  margin-top: 2.5rem;
   width: 100%;
   height: 40.4rem;
+  border-radius: 0.5rem;
 `;

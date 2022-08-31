@@ -3,14 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Timer from './Timer';
 import Settings from './Settings';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
-import Theme from '../Theme';
+import Theme from './Theme';
 import roomSocket from '../../../adapters/roomSocket';
 import connectedUsersStore from '../../../stores/connectedUsersStore';
 import messageStore from '../../../stores/messagesStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import userPcStore from '../../../stores/userPcStore';
 
-export default function Header({ theme }) {
+export default function Header({ theme, setSetting }) {
   const navigate = useNavigate();
   const { roomId } = useParams();
   const { setUsers } = connectedUsersStore();
@@ -37,7 +37,7 @@ export default function Header({ theme }) {
       <Theme theme={theme} />
       <Center>
         <Timer />
-        <Settings />
+        <Settings setSetting={setSetting} />
       </Center>
       <Button onClick={onClick}>
         나가기 <X />

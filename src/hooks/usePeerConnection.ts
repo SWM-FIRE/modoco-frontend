@@ -53,7 +53,6 @@ const usePeerConnection = () => {
 
       peerConnection.ontrack = (event: RTCTrackEvent) => {
         console.debug('adding track', event.streams[0]);
-        //
         setUserStream({ sid, stream: event.streams[0] });
       };
 
