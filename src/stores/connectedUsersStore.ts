@@ -6,6 +6,8 @@ interface VideoUserInterface {
   uid: string;
   avatar: string;
   socketId: string;
+  enabledVideo: boolean;
+  enabledAudio: boolean;
 }
 
 interface connectedUsers {

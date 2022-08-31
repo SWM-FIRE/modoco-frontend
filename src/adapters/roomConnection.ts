@@ -65,6 +65,8 @@ export const roomConnection = (roomId: string) => {
                   uid: user.uid,
                   avatar: res.data.avatar,
                   socketId: user.sid,
+                  enabledVideo: true,
+                  enabledAudio: true,
                 });
                 console.log('appendUser', user.uid, res);
               } else {
