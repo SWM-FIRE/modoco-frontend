@@ -6,7 +6,7 @@ import Information from './Information';
 import ModalPortal from '../../atoms/ModalPortal';
 import receiveNewMessageStore from '../../../stores/receiveNewMessageStore';
 
-export default function SidebarMemo() {
+export default function SidebarMemo({ moderator }: { moderator: string }) {
   const { setIsReceiveNewMessage } = receiveNewMessageStore();
   useEffect(() => {
     setIsReceiveNewMessage(false);
@@ -15,7 +15,7 @@ export default function SidebarMemo() {
     <ModalPortal>
       <Component>
         <Information />
-        <Participants />
+        <Participants moderator={moderator} />
         <Chatting />
       </Component>
     </ModalPortal>

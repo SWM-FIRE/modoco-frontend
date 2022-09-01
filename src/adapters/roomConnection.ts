@@ -98,5 +98,10 @@ export const roomConnection = (roomId: string) => {
         isHideNicknameAndAvatar: false,
       });
     });
+
+    newSocket?.off('kickUser').on('kickUser', (data) => {
+      console.log('you are kicked');
+      console.log(data);
+    });
   }, []);
 };

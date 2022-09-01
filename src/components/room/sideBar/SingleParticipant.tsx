@@ -10,11 +10,15 @@ export default function SingleParticipant({
   nickname,
   avatar,
   isAudioEnabled,
+  moderator,
+  uid,
 }: {
   isMe: boolean;
   nickname: string;
   avatar: string;
   isAudioEnabled: boolean;
+  moderator: string;
+  uid: string;
 }) {
   const [showProfile, setShowProfile] = useState<boolean>(false);
 
@@ -38,9 +42,11 @@ export default function SingleParticipant({
         <ProfileModal
           toggle={setShowProfile}
           nickname={nickname}
+          uid={uid}
           avatar={avatar}
           isMe={isMe}
           isFriend={friendState}
+          moderator={moderator}
         />
       ) : null}
     </Container>

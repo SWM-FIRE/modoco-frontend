@@ -11,12 +11,16 @@ export default function ProfileModal({
   avatar,
   isMe,
   isFriend,
+  moderator,
+  uid,
 }: {
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
   nickname: string;
   avatar: string;
   isMe: boolean;
   isFriend: boolean;
+  moderator: string;
+  uid: string;
 }) {
   return (
     <Container>
@@ -24,7 +28,11 @@ export default function ProfileModal({
         <ProfileModalHeader profileToggle={toggle} />
         <Body>
           <UserInfo avatarNo={avatar} nickname={nickname} />
-          {isFriend ? <FriendButtons /> : <Buttons isMe={isMe} />}
+          {isFriend ? (
+            <FriendButtons />
+          ) : (
+            <Buttons isMe={isMe} moderator={moderator} uid={uid} />
+          )}
         </Body>
       </Inner>
     </Container>

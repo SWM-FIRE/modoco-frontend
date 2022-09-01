@@ -4,10 +4,10 @@ import connectedUsersStore from '../../../stores/connectedUsersStore';
 import UserStore from '../../../stores/userStore';
 import userMediaStreamStore from '../../../stores/userMediaStreamStore';
 
-export default function Participants() {
+export default function Participants({ moderator }: { moderator: string }) {
   const { connectedUsers } = connectedUsersStore((state) => state);
   const { userMediaStream } = userMediaStreamStore((state) => state);
-  const { nickname, avatar } = UserStore((state) => state);
+  const { uid, nickname, avatar } = UserStore((state) => state);
 
   return (
     <Component>
@@ -16,16 +16,20 @@ export default function Participants() {
         <SingleParticipant
           isMe
           nickname={nickname}
+          uid={uid}
           avatar={avatar.toString()}
           isAudioEnabled={userMediaStream.getAudioTracks()[0].enabled}
+          moderator={moderator}
         />
         {connectedUsers.map((user) => (
           <SingleParticipant
             key={user.uid}
             isMe={false}
             nickname={user.nickname}
+            uid={user.uid}
             avatar={user.avatar}
             isAudioEnabled={user.enabledAudio}
+            moderator={moderator}
           />
         ))}
       </UserList>
