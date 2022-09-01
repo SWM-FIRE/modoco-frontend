@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
+import mediaStateChange from '../../../adapters/mediaStateChange';
 import { ReactComponent as MicOff } from '../../../assets/svg/MicOff.svg';
 import { ReactComponent as MicOn } from '../../../assets/svg/MicOn.svg';
 import { ReactComponent as MonitorOn } from '../../../assets/svg/MonitorOn.svg';
@@ -18,8 +19,8 @@ export default function Settings({
 }) {
   const { roomId } = useParams();
   const { userMic, userVideo } = UserMediaStreamStore((state) => state);
-  const { createDisplayStream, stopDisplayStream, emitAudioStateChange } =
-    useCreateMediaStream();
+  const { createDisplayStream, stopDisplayStream } = useCreateMediaStream();
+  const { emitAudioStateChange } = mediaStateChange();
 
   const setMic = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

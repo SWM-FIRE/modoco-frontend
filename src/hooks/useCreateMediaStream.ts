@@ -1,10 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
-import { useEffect } from 'react';
 import UserMediaStreamStore from '../stores/userMediaStreamStore';
 import userPcStore from '../stores/userPcStore';
-import roomSocket from '../adapters/roomSocket';
-import connectedUsersStore from '../stores/connectedUsersStore';
 
 export const useCreateMediaStream = () => {
   const {
@@ -18,20 +15,7 @@ export const useCreateMediaStream = () => {
   const myStream: { localStream: MediaStream | null } = {
     localStream: userMediaStream,
   };
-  const { connectedUsers } = connectedUsersStore((state) => state);
   const { pcs } = userPcStore();
-  const newSocket = roomSocket.socket;
-
-  useEffect(() => {
-    const audioStateChange = (data) => {
-      const { sid, enabled } = data;
-      const user = connectedUsers.find((user) => user.socketId === sid);
-      if (user) {
-        user.enabledAudio = enabled;
-      }
-    };
-    newSocket?.on('audioStateChange', audioStateChange);
-  }, [roomSocket, connectedUsers]);
 
   const stopMediaStream = () => {
     if (userMediaStream) {
@@ -43,11 +27,12 @@ export const useCreateMediaStream = () => {
     setUserMediaStream(null);
   };
 
-  const emitAudioStateChange = (room: string, enabled: boolean) => {
-    newSocket.emit('audioStateChange', { room, enabled });
-    myStream.localStream.getAudioTracks().forEach((track) => {
-      track.enabled = enabled;
-    });
+  const toggleAudioStream = (enabled: boolean) => {
+    if (myStream.localStream) {
+      myStream.localStream.getAudioTracks().forEach((track) => {
+        track.enabled = enabled;
+      });
+    }
     setUserMic(enabled);
   };
 
@@ -156,7 +141,7 @@ export const useCreateMediaStream = () => {
   };
 
   return {
-    emitAudioStateChange,
+    toggleAudioStream,
     replaceAudioStream,
     createDisplayStream,
     createAudioStream,
