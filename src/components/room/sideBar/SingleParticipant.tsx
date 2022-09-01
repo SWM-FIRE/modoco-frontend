@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ProfileModal from './ProfileModal';
+import ProfileModal from '../profileModal/ProfileModal';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
 import { ReactComponent as MicOff } from '../../../assets/svg/SmallMicOff.svg';
@@ -23,6 +23,8 @@ export default function SingleParticipant({
     setShowProfile(!showProfile);
   };
 
+  const friendState = false;
+
   return (
     <Container>
       <AvatarContainer onClick={toggleProfile}>
@@ -38,6 +40,7 @@ export default function SingleParticipant({
           nickname={nickname}
           avatar={avatar}
           isMe={isMe}
+          isFriend={friendState}
         />
       ) : null}
     </Container>
