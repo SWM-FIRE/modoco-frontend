@@ -40,7 +40,7 @@ export default function SettingModal({
       myInterval = setInterval(() => {
         analyser.getByteFrequencyData(dataArray);
         const vol = audioFrequency(dataArray, bufferLength);
-        setVol(Math.floor((vol / 256) * 150));
+        setVol(Math.floor((vol / 256) * 100));
       }, 30);
     }
     return () => clearInterval(myInterval);
