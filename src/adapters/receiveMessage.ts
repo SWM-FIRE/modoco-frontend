@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
 import moment from 'moment';
 import connectedUsersStore from '../stores/connectedUsersStore';
