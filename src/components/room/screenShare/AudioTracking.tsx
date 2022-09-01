@@ -33,7 +33,8 @@ const InnerShadow = styled.div<{ vol: number }>`
   top: -0.1rem;
   left: -0.1rem;
   border-radius: 50%;
-  border: ${(props) => (props.vol > 15 ? '0.2rem solid #05050A' : 'none')};
+  border: ${(props) =>
+    props.vol > 15 ? '0.2rem solid rgba(14, 14, 14, 0.8)' : 'none'};
 `;
 
 const TalkingShadow = styled.div<{ vol: number }>`
