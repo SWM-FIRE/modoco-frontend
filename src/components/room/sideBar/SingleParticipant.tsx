@@ -37,6 +37,7 @@ export default function SingleParticipant({
           toggle={setShowProfile}
           nickname={nickname}
           avatar={avatar}
+          isMe={isMe}
         />
       ) : null}
     </Container>

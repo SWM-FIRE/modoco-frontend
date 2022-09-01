@@ -8,10 +8,12 @@ export default function ProfileModal({
   toggle,
   nickname,
   avatar,
+  isMe,
 }: {
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
   nickname: string;
   avatar: string;
+  isMe: boolean;
 }) {
   const closeProfile = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -35,15 +37,55 @@ export default function ProfileModal({
               <RightArrow />
             </ArrowContainer>
           </UserInfo>
-          <Buttons>HI</Buttons>
+          <Buttons>
+            {isMe ? (
+              <MyPage>마이 페이지</MyPage>
+            ) : (
+              <>
+                <FriendRequest>친구요청</FriendRequest>
+                <Kick>내보내기</Kick>
+              </>
+            )}
+          </Buttons>
         </Body>
       </Inner>
     </Container>
   );
 }
 
+const MyPage = styled.button`
+  padding: 0.8rem 1.2rem;
+  border: 0.1rem solid #ffffff;
+  color: #f9fafb;
+`;
+
+const FriendRequest = styled.button`
+  background-color: #ffffff;
+  color: #111827;
+`;
+
+const Kick = styled.button`
+  border: 1px solid #fb7185;
+  color: #fb7185;
+`;
+
 const Buttons = styled.div`
-  height: 4.4rem;
+  margin-top: 1.6rem;
+  width: 100%;
+  line-height: 2rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.8rem;
+  button {
+    font-family: IBMPlexSansKRRegular;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.3rem;
+    border-radius: 5rem;
+    padding: 1.2rem 2rem;
+    cursor: pointer;
+  }
 `;
 
 const ArrowContainer = styled.div`
@@ -99,7 +141,6 @@ const Inner = styled.div`
 const Container = styled.div`
   position: absolute;
   width: 32rem;
-  height: 18.4rem;
   background-color: #23262f;
   top: 8rem;
   left: -30rem;
