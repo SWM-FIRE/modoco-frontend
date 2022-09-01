@@ -1,4 +1,6 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import ProfileModal from '../profileModal/ProfileModal';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
 import { ReactComponent as MicOff } from '../../../assets/svg/SmallMicOff.svg';
@@ -14,21 +16,40 @@ export default function SingleParticipant({
   avatar: string;
   isAudioEnabled: boolean;
 }) {
+  const [showProfile, setShowProfile] = useState<boolean>(false);
+
+  const toggleProfile = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setShowProfile(!showProfile);
+  };
+
+  const friendState = false;
+
   return (
     <Container>
-      <AvatarContainer>
+      <AvatarContainer onClick={toggleProfile}>
         <MyAvatar num={Number(avatar)} />
         <MicContainer>{isAudioEnabled ? <MicOn /> : <MicOff />}</MicContainer>
       </AvatarContainer>
       <NameContainer isMe={isMe} nicknameLength={nickname.length}>
         {nickname}
       </NameContainer>
+      {showProfile ? (
+        <ProfileModal
+          toggle={setShowProfile}
+          nickname={nickname}
+          avatar={avatar}
+          isMe={isMe}
+          isFriend={friendState}
+        />
+      ) : null}
     </Container>
   );
 }
 
 const AvatarContainer = styled.div`
   position: relative;
+  cursor: pointer;
 `;
 
 const MicContainer = styled.div`
@@ -46,6 +67,7 @@ const MicContainer = styled.div`
 `;
 
 const Container = styled.div`
+  position: relative;
   width: 4.3rem;
   svg {
     width: 100%;
