@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import controlModal from '../../../stores/controlModal';
 import messageStore from '../../../stores/messagesStore';
 import userStore from '../../../stores/userStore';
 import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
+import AudioTracking from './AudioTracking';
 
 export default function SingleScreen({ connectedUser, stream }) {
   const { messages } = messageStore();
@@ -60,7 +61,7 @@ export default function SingleScreen({ connectedUser, stream }) {
           </ChatInner>
         </ChatContainer>
         <AvatarPosition>
-          <TalkingShadow />
+          <AudioTracking stream={stream} />
           <MyAvatar num={Number(connectedUser.avatar)} />
           <NameContainer isMe={uid === connectedUser.uid}>
             {connectedUser.nickname}
@@ -147,26 +148,4 @@ const Video = styled.video`
   height: 100%;
   border-radius: 1rem;
   position: absolute;
-`;
-
-const boxFade = keyframes`
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
-const TalkingShadow = styled.div`
-  position: absolute;
-  width: 8rem;
-  height: 8rem;
-  top: 0;
-  border-radius: 50%;
-  box-shadow: #84cc16 0px 2px 10px 0px, #84cc16 0px 2px 16px 0px;
-  animation: ${boxFade} 2s 1s infinite linear alternate;
 `;
