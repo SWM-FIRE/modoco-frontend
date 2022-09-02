@@ -98,5 +98,11 @@ export const roomConnection = (roomId: string) => {
         isHideNicknameAndAvatar: false,
       });
     });
+
+    newSocket?.off('disconnect').on('disconnect', () => {
+      console.log('disconnect');
+      navigate('/');
+      window.location.reload();
+    });
   }, []);
 };
