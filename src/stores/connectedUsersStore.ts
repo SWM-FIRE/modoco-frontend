@@ -23,7 +23,8 @@ interface connectedUsers {
   setUsers: (_users: VideoUserInterface[]) => void;
   appendUser: (_user: VideoUserInterface) => void;
   removeUser: (_user: string) => void;
-  findUser: (_socketId: string) => VideoUserInterface;
+  findUserBySid: (_socketId: string) => VideoUserInterface;
+  findUserByUid: (_uid: string) => VideoUserInterface;
 }
 const connectedUsersStore = create<connectedUsers>((set, get) => ({
   connectedUsers: [],
@@ -45,9 +46,15 @@ const connectedUsersStore = create<connectedUsers>((set, get) => ({
         (user) => user.socketId !== by,
       ),
     })),
-  findUser: (by) => {
-    const user = get().connectedUsers.find((user) => user.socketId === by);
-    return user;
+  findUserBySid: (by) => {
+    const returnUser = get().connectedUsers.find(
+      (user) => user.socketId === by,
+    );
+    return returnUser;
+  },
+  findUserByUid: (by) => {
+    const returnUser = get().connectedUsers.find((user) => user.uid === by);
+    return returnUser;
   },
 }));
 

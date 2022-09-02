@@ -73,7 +73,7 @@ export default function Room() {
               )}
             </ControlSidebar>
           )}
-          {isOpenSidebar && <Sidebar />}
+          {isOpenSidebar && <Sidebar moderator={data?.moderator.uid} />}
         </Contents>
       </Component>
       {isOpen && <ScreenShareModal />}

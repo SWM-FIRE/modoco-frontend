@@ -1,6 +1,36 @@
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import UserStore from '../../../stores/userStore';
+import roomSocket from '../../../adapters/roomSocket';
+import connectedUsersStore from '../../../stores/connectedUsersStore';
 
-export default function Buttons({ isMe }: { isMe: boolean }) {
+export default function Buttons({
+  isMe,
+  moderator,
+  uid: targetUid,
+}: {
+  isMe: boolean;
+  moderator: string;
+  uid: string;
+}) {
+  const { uid } = UserStore();
+  const { roomId } = useParams();
+  const isCaptain = moderator.toString() === uid.toString();
+  const newSocket = roomSocket.socket;
+  const { findUserByUid } = connectedUsersStore();
+
+  const kickUser = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const targetSid = findUserByUid(targetUid)?.socketId;
+    const userToKick = {
+      uid: targetUid,
+      sid: targetSid,
+    };
+    newSocket.emit('kickUser', { room: roomId, userToKick });
+    console.log('kicked user');
+  };
+
   return (
     <Container>
       {isMe ? (
@@ -8,7 +38,7 @@ export default function Buttons({ isMe }: { isMe: boolean }) {
       ) : (
         <>
           <FriendRequest>친구요청</FriendRequest>
-          <Kick>내보내기</Kick>
+          {isCaptain && <Kick onClick={kickUser}>내보내기</Kick>}
         </>
       )}
     </Container>
