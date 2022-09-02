@@ -18,13 +18,11 @@ export default function Buttons({
   const { roomId } = useParams();
   const isCaptain = moderator.toString() === uid.toString();
   const newSocket = roomSocket.socket;
-  const { connectedUsers } = connectedUsersStore();
+  const { findUserByUid } = connectedUsersStore();
 
   const kickUser = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const targetSid = connectedUsers.find(
-      (user) => user.uid === targetUid,
-    )?.socketId;
+    const targetSid = findUserByUid(targetUid)?.socketId;
     const userToKick = {
       uid: targetUid,
       sid: targetSid,

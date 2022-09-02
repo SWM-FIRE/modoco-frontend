@@ -13,7 +13,7 @@ import { API } from '../config';
 
 export const roomConnection = (roomId: string) => {
   const navigate = useNavigate();
-  const { connectedUsers, appendUser, removeUser, findUser } =
+  const { connectedUsers, appendUser, removeUser, findUserBySid } =
     connectedUsersStore();
   const { userMediaStream } = UserMediaStreamStore();
   const { appendMessages } = messageStore();
@@ -83,7 +83,7 @@ export const roomConnection = (roomId: string) => {
         console.log('i left room');
         return;
       }
-      const userInfo = findUser(sid);
+      const userInfo = findUserBySid(sid);
       console.log(userInfo.nickname, 'left room');
       setPc({ sid, peerConnection: null });
       removeUser(sid);
@@ -97,11 +97,6 @@ export const roomConnection = (roomId: string) => {
         isHideTime: false,
         isHideNicknameAndAvatar: false,
       });
-    });
-
-    newSocket?.off('kickUser').on('kickUser', (data) => {
-      console.log('you are kicked');
-      console.log(data);
     });
   }, []);
 };
