@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import roomSocket from './roomSocket';
 import connectedUsersStore from '../stores/connectedUsersStore';
 import userStore from '../stores/userStore';
@@ -16,7 +15,6 @@ const mediaStateChange = () => {
   const { uid } = userStore();
   const { toggleAudioStream } = useCreateMediaStream();
   const { appendMessages } = messageStore();
-  const navigate = useNavigate();
 
   const emitAudioStateChange = (room: string, enabled: boolean) => {
     newSocket.emit('audioStateChange', { room, enabled });
@@ -34,13 +32,9 @@ const mediaStateChange = () => {
 
     newSocket?.off('kickUser').on('kickUser', (data) => {
       const { kickUser } = data;
-      console.log('kicked uid is ', kickUser.uid);
-      console.log('my uid is ', uid);
       if (kickUser.uid.toString() === uid.toString()) {
-        console.log('you are kicked');
+        alert('방장에 의해 강퇴당하였습니다.');
         newSocket.close();
-        navigate('/main');
-        window.location.reload();
       } else {
         const kickedUser = findUserByUid(kickUser.uid.toString());
         console.log(kickedUser);
@@ -59,7 +53,6 @@ const mediaStateChange = () => {
           isHideNicknameAndAvatar: false,
         });
       }
-      console.log(data);
     });
   }, [newSocket, connectedUsers]);
 
