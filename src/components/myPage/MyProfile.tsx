@@ -23,9 +23,6 @@ export default function MyProfile() {
 
   return (
     <Components>
-      <EditButton onClick={onClickEditProfile}>
-        <Edit />
-      </EditButton>
       <Avatar avatar={avatar} size={12} />
       <Contents>
         <Nickname>{nickname}</Nickname>
@@ -34,6 +31,9 @@ export default function MyProfile() {
         <Badge />
         <Logout onClick={onLogOut}>로그아웃</Logout>
       </Contents>
+      <EditButton onClick={onClickEditProfile}>
+        <Edit />
+      </EditButton>
     </Components>
   );
 }
@@ -44,6 +44,8 @@ const Components = styled.div`
   border-radius: 2rem;
   position: relative;
   display: flex;
+  justify-content: flex-start;
+  justify-content: flex-start;
   padding: 3.2rem;
   gap: 5.6rem;
   /* @media screen and (max-width: 96rem) {
@@ -52,11 +54,7 @@ const Components = styled.div`
   } */
 `;
 
-const Contents = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-`;
+const Contents = styled.div``;
 
 const EditButton = styled.button`
   cursor: pointer;

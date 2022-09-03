@@ -14,6 +14,7 @@ export default function Group() {
 }
 
 const Components = styled.div`
+  margin-top: 0.8rem;
   display: flex;
   align-items: center;
   gap: 0.8rem;
