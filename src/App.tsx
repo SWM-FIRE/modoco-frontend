@@ -7,6 +7,7 @@ import Room from './pages/Room';
 import Ready from './pages/Ready';
 import LandingPage from './pages/LandingPage';
 import MyPage from './pages/MyPage';
+import EditMyPage from './pages/EditMyPage';
 import Main from './pages/Main';
 import Error from './pages/Error';
 import SignUp from './pages/SignUp';
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route path="/profile" element={<Layout />}>
             <Route index element={<MyPage />} />
+          </Route>
+          <Route path="/editProfile" element={<Layout />}>
+            <Route index element={<EditMyPage />} />
           </Route>
           <Route path="/ready">
             <Route path=":roomId" element={<Ready />} />
