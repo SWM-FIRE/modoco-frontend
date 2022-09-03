@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "nickname": "친구1",
+    "avatar": 1,
+    "status": "online"
+  },
+  {
+    "id": "2",
+    "nickname": "친구2",
+    "avatar": 2,
+    "state": "online"
+  },
+  {
+    "id": "3",
+    "nickname": "친구3",
+    "avatar": 3,
+    "state": "online"
+  }
+]

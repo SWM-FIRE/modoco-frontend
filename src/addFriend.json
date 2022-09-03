@@ -1,0 +1,17 @@
+[
+  {
+    "requestDate": "2022-01-01 00:00:00",
+    "nickname": "test",
+    "avatar": 1
+  },
+  {
+    "requestDate": "2022-01-02 00:00:00",
+    "nickname": "test2",
+    "avatar": 2
+  },
+  {
+    "requestDate": "2022-01-03 00:00:00",
+    "nickname": "test3",
+    "avatar": 3
+  }
+]
