@@ -1,10 +1,9 @@
 import React from 'react';
 import { ReactChannelIO } from 'react-channel-plugin';
 import { Outlet } from 'react-router-dom';
-import Footer from './Footer';
 import userStore from '../../stores/userStore';
 
-export default function Layout() {
+export default function RoomLayout() {
   const { uid, nickname } = userStore();
   const profile = uid
     ? {
@@ -14,6 +13,7 @@ export default function Layout() {
     : null;
   return (
     <>
+      <Outlet />
       {uid ? (
         <ReactChannelIO
           pluginKey={process.env.REACT_APP_CHANNEL_IO_KEY}
@@ -33,13 +33,6 @@ export default function Layout() {
           autoBootTimeout={2000}
         />
       )}
-      <Outlet />
-      <Footer />
     </>
   );
 }
-
-// const Container = styled.div`
-//   width: 100vw;
-//   height: 100vh;
-// `;
