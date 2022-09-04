@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import './fonts/font.css';
 import Layout from './components/layout/Layout';
+import RoomLayout from './components/layout/RoomLayout';
 import Room from './pages/Room';
 import Ready from './pages/Ready';
 import LandingPage from './pages/LandingPage';
@@ -22,7 +23,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<LandingPage />} />
           </Route>
-          <Route path="/room">
+          <Route path="/room" element={<RoomLayout />}>
             <Route path=":roomId" element={<Room />} />
           </Route>
           <Route path="/main" element={<Layout />}>
@@ -34,7 +35,7 @@ function App() {
           <Route path="/editProfile" element={<Layout />}>
             <Route index element={<EditMyPage />} />
           </Route>
-          <Route path="/ready">
+          <Route path="/ready" element={<RoomLayout />}>
             <Route path=":roomId" element={<Ready />} />
           </Route>
           <Route path="/signUp" element={<Layout />}>
