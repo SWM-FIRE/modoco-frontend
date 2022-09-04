@@ -23,7 +23,9 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-    moveScrollToReceiveMessage('smooth', false);
+    if (messages[messages.length - 1]?.uid === uid)
+      moveScrollToReceiveMessage('smooth', true);
+    else moveScrollToReceiveMessage('smooth', false);
     setIsReceiveNewMessage(false);
   }, [messages]);
 
@@ -47,10 +49,10 @@ export default function Chat() {
   const moveScrollToReceiveMessage = useCallback(
     (behavior: string, isFirstView: boolean) => {
       if (chatWindow.current) {
-        const isBottom =
-          chatWindow.current.clientHeight + chatWindow.current.scrollTop >=
-            chatWindow.current.scrollHeight - 1000 || isFirstView;
-        if (isBottom) {
+        const isScroll =
+          chatWindow.current.scrollHeight - chatWindow.current.scrollTop <=
+            chatWindow.current.clientHeight + 100 || isFirstView;
+        if (isScroll) {
           chatWindow.current.scrollTo({
             top: chatWindow.current.scrollHeight,
             behavior,

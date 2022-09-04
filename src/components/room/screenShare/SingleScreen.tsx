@@ -56,7 +56,9 @@ export default function SingleScreen({ connectedUser, stream }) {
         <ChatContainer>
           <ChatInner>
             {newMessages.map((message) => (
-              <Chats key={message.createdAt}>{message.message}</Chats>
+              <Chats key={message.uid + message.createdAt}>
+                {message.message}
+              </Chats>
             ))}
           </ChatInner>
         </ChatContainer>
