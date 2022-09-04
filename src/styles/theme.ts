@@ -32,6 +32,7 @@ const themeFire: DefaultTheme = {
   otherChat: '#1F2331',
   myChat: '#353741',
   input: '#313540',
+  newMessageAlarm: 'rgba(49, 53, 64, 80%)',
 };
 
 const themeOcean: DefaultTheme = {
@@ -42,6 +43,7 @@ const themeOcean: DefaultTheme = {
   otherChat: '#1E3A41',
   myChat: '#4B6163',
   input: '#1E3A41',
+  newMessageAlarm: 'rgba(30, 58, 65, 80%)',
 };
 
 const themeCamping: DefaultTheme = {
@@ -52,6 +54,7 @@ const themeCamping: DefaultTheme = {
   otherChat: '#3F3046',
   myChat: '#453A4B',
   input: '#413148',
+  newMessageAlarm: 'rgba(65, 49, 72, 80%)',
 };
 
 const themeTravel: DefaultTheme = {
@@ -62,6 +65,7 @@ const themeTravel: DefaultTheme = {
   otherChat: '#2B4651',
   myChat: '#3A5A6B',
   input: '#3A5A6B',
+  newMessageAlarm: 'rgba(58, 90, 107, 80%)',
 };
 
 const themeCosmos: DefaultTheme = {
@@ -72,6 +76,7 @@ const themeCosmos: DefaultTheme = {
   otherChat: '#1F2331',
   myChat: '#353741',
   input: '#313540',
+  newMessageAlarm: 'rgba(49, 53, 64, 80%)',
 };
 
 export {

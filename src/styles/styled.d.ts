@@ -28,5 +28,6 @@ declare module 'styled-components' {
     myChat: string;
     otherChat: string;
     input: string;
+    newMessageAlarm: string;
   }
 }

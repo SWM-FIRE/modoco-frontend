@@ -7,6 +7,7 @@ import messageStore from '../../../stores/messagesStore';
 import roomSocket from '../../../adapters/roomSocket';
 import userStore from '../../../stores/userStore';
 import receiveNewMessageStore from '../../../stores/receiveNewMessageStore';
+import NewMessage from './NewMessage';
 
 export default function Chat() {
   const [newMessage, setNewMessage] = useState('');
@@ -83,7 +84,8 @@ export default function Chat() {
           />
         ))}
       </ChattingList>
-      <NewMessage onSubmit={onSubmit}>
+      <NewMessage chatWindow={chatWindow} />
+      <SubmitMessage onSubmit={onSubmit}>
         <Input
           placeholder="Write your message...."
           value={newMessage}
@@ -92,7 +94,7 @@ export default function Chat() {
         <Button>
           <MessageSend />
         </Button>
-      </NewMessage>
+      </SubmitMessage>
     </Component>
   );
 }
@@ -100,6 +102,7 @@ export default function Chat() {
 export const Chatting = React.memo(Chat);
 
 const Component = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -124,7 +127,7 @@ const ChattingList = styled.ul`
   }
 `;
 
-const NewMessage = styled.form`
+const SubmitMessage = styled.form`
   width: 100%;
   height: 4.8rem;
   margin-top: 3rem;
