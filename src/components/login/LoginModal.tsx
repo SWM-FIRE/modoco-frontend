@@ -67,7 +67,7 @@ const SignUp = styled.a`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 0.6rem;
   color: #f3f4f6;
   font-size: 1.4rem;
   cursor: pointer;

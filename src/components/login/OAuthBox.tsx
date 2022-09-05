@@ -11,7 +11,7 @@ export default function OAuthBox({ auth }: { auth: string }) {
         src={auth === 'kakao' ? Kakao : auth === 'github' ? Github : Google}
         alt={auth}
       />
-      {auth} 로그인
+      {auth}로 계속하기
     </Button>
   );
 }
