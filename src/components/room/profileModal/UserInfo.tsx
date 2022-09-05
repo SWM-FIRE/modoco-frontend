@@ -6,13 +6,13 @@ export default function UserInfo({
   avatarNo,
   nickname,
 }: {
-  avatarNo: string;
+  avatarNo: number;
   nickname: string;
 }) {
   return (
     <Container>
       <AvatarContainer>
-        <MyAvatar num={Number(avatarNo)} />
+        <MyAvatar num={avatarNo} />
       </AvatarContainer>
       {nickname}
       <ArrowContainer>

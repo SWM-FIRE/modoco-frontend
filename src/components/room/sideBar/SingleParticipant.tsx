@@ -16,10 +16,10 @@ export default function SingleParticipant({
 }: {
   isMe: boolean;
   nickname: string;
-  avatar: string;
+  avatar: number;
   isAudioEnabled: boolean;
-  moderator: string;
-  uid: string;
+  moderator: number;
+  uid: number;
 }) {
   const [showProfile, setShowProfile] = useState<boolean>(false);
 
@@ -36,9 +36,9 @@ export default function SingleParticipant({
         <MyAvatar num={Number(avatar)} />
         <MicContainer>{isAudioEnabled ? <MicOn /> : <MicOff />}</MicContainer>
       </AvatarContainer>
-      <NameContainer isMe={isMe} nicknameLength={nickname.length}>
+      <NameContainer isMe={isMe} nicknameLength={nickname?.length}>
         {nickname}
-        {moderator.toString() === uid && <Crown />}
+        {moderator === uid && <Crown />}
       </NameContainer>
       {showProfile ? (
         <ProfileModal

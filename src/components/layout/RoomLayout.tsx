@@ -18,7 +18,7 @@ export default function RoomLayout() {
         <ReactChannelIO
           pluginKey={process.env.REACT_APP_CHANNEL_IO_KEY}
           hideChannelButtonOnBoot={false}
-          memberId={uid}
+          memberId={uid.toString()}
           language="ko"
           autoBoot
           autoBootTimeout={2000}

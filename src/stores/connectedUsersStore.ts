@@ -3,8 +3,8 @@ import create from 'zustand';
 
 interface VideoUserInterface {
   nickname: string;
-  uid: string;
-  avatar: string;
+  uid: number;
+  avatar: number;
   socketId: string;
   enabledVideo: boolean;
   enabledAudio: boolean;
@@ -24,7 +24,7 @@ interface connectedUsers {
   appendUser: (_user: VideoUserInterface) => void;
   removeUser: (_user: string) => void;
   findUserBySid: (_socketId: string) => VideoUserInterface;
-  findUserByUid: (_uid: string) => VideoUserInterface;
+  findUserByUid: (_uid: number) => VideoUserInterface;
 }
 const connectedUsersStore = create<connectedUsers>((set, get) => ({
   connectedUsers: [],

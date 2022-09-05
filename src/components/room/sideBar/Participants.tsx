@@ -4,7 +4,7 @@ import connectedUsersStore from '../../../stores/connectedUsersStore';
 import UserStore from '../../../stores/userStore';
 import userMediaStreamStore from '../../../stores/userMediaStreamStore';
 
-export default function Participants({ moderator }: { moderator: string }) {
+export default function Participants({ moderator }: { moderator: number }) {
   const { connectedUsers } = connectedUsersStore((state) => state);
   const { userMediaStream } = userMediaStreamStore((state) => state);
   const { uid, nickname, avatar } = UserStore((state) => state);
@@ -17,7 +17,7 @@ export default function Participants({ moderator }: { moderator: string }) {
           isMe
           nickname={nickname}
           uid={uid}
-          avatar={avatar.toString()}
+          avatar={avatar}
           isAudioEnabled={userMediaStream.getAudioTracks()[0].enabled}
           moderator={moderator}
         />

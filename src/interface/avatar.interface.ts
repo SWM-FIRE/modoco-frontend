@@ -1,4 +1,4 @@
 export default interface AvatarInterface {
-  newAvatar: string;
-  getData: (_newAvatar: string) => void;
+  newAvatar: number;
+  getData: (_newAvatar: number) => void;
 }

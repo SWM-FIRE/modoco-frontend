@@ -23,7 +23,7 @@ export default function NewMessage({ chatWindow }) {
   useEffect(() => {
     const isBottom = isCheckBottom();
     const lastUid = messages[messages.length - 1]?.uid;
-    if (lastUid !== '' && lastUid !== uid && !isBottom) setIsVisible(true);
+    if (lastUid !== -1 && lastUid !== uid && !isBottom) setIsVisible(true);
   }, [messages]);
 
   useEffect(() => {

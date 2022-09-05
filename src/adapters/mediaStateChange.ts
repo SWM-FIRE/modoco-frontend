@@ -32,11 +32,11 @@ const mediaStateChange = () => {
 
     newSocket?.off('kickUser').on('kickUser', (data) => {
       const { kickUser } = data;
-      if (kickUser.uid.toString() === uid.toString()) {
+      if (kickUser.uid === uid) {
         alert('방장에 의해 강퇴당하였습니다.');
         newSocket.close();
       } else {
-        const kickedUser = findUserByUid(kickUser.uid.toString());
+        const kickedUser = findUserByUid(kickUser.uid);
         console.log(kickedUser);
         if (kickedUser.socketId) {
           setPc({ sid: kickedUser.socketId, peerConnection: null });

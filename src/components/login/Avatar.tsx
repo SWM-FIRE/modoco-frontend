@@ -6,7 +6,7 @@ import AvatarInterface from '../../interface/avatar.interface';
 export default function Avatar({ newAvatar, getData }: AvatarInterface) {
   const onClick = () => {
     const randomNumber = Math.floor(Math.random() * 30) + 1; // 1~30 사이 정수 생성
-    getData(JSON.stringify(randomNumber));
+    getData(randomNumber);
   };
   return (
     <Container>
