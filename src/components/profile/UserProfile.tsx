@@ -51,6 +51,7 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
             </FriendComponent>
           )}
         </NicknameComponent>
+        <OAuthId>@tempOAuth</OAuthId>
         <Group />
         <Description>{userDescription}</Description>
         <Badge />
@@ -95,6 +96,12 @@ const Contents = styled.div`
 
 const EditButton = styled.button`
   cursor: pointer;
+`;
+
+const OAuthId = styled.span`
+  color: #f9fafb;
+  font-family: IBMPlexMonoRegular;
+  font-size: 1.4rem;
 `;
 
 const NicknameComponent = styled.div`
