@@ -20,7 +20,7 @@ import ScreenShareModal from '../components/room/ScreenModal';
 import receiveNewMessageStore from '../stores/receiveNewMessageStore';
 import controlSidebar from '../stores/controlSidebar';
 import ChattingAlarm from '../components/room/sideBar/ChattingAlarm';
-import ProfileModal from '../components/room/profileModal/profileModal';
+import ProfileModal from '../components/room/profileModal/ProfileModal';
 import userStore from '../stores/userStore';
 
 export default function Room() {

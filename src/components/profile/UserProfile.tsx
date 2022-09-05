@@ -61,7 +61,7 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
             채팅하기
           </Button>
         ) : (
-          <Button>친구신청</Button>
+          !isMe && <Button>친구신청</Button>
         )}
       </Contents>
       {isMe && (
