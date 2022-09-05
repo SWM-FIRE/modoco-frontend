@@ -1,9 +1,9 @@
 [
   {
-    "uid": 1,
-    "nickname": "민수",
+    "uid": 8,
+    "nickname": "하랭",
     "avatar": 1,
-    "statusMessage": "안녕하세요",
+    "description": "안녕하세요",
     "friend": {
       "isMyFriend": true,
       "isReceiveFriend": false,
@@ -16,10 +16,10 @@
     "online": null
   },
   {
-    "uid": 2,
-    "nickname": "하랭",
+    "uid": 27,
+    "nickname": "소마",
     "avatar": 1,
-    "statusMessage": "안녕하세요",
+    "description": "안녕하세요",
     "friend": {
       "isMyFriend": false,
       "isReceiveFriend": true,
@@ -32,10 +32,10 @@
     "online": null
   },
   {
-    "uid": 3,
+    "uid": 28,
     "nickname": "영기",
     "avatar": 1,
-    "statusMessage": "안녕하세요",
+    "description": "안녕하세요",
     "friend": {
       "isMyFriend": false,
       "isReceiveFriend": false,
@@ -48,10 +48,10 @@
     "online": null
   },
   {
-    "uid": 4,
+    "uid": 45,
     "nickname": "그룻",
     "avatar": 1,
-    "statusMessage": "안녕하세요",
+    "description": "안녕하세요",
     "friend": {
       "isMyFriend": false,
       "isReceiveFriend": false,
