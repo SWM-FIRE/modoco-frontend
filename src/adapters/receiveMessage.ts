@@ -23,7 +23,7 @@ const onChatMessage = () => {
         ? {
             uid: receiveMsg.sender,
             nickname,
-            avatar: avatar.toString(),
+            avatar,
           }
         : connectedUsers.filter((user) => user.uid === receiveMsg.sender)[0];
 

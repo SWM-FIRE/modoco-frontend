@@ -11,12 +11,12 @@ export default function Buttons({
   uid: targetUid,
 }: {
   isMe: boolean;
-  moderator: string;
-  uid: string;
+  moderator: number;
+  uid: number;
 }) {
   const { uid } = UserStore();
   const { roomId } = useParams();
-  const isCaptain = moderator.toString() === uid.toString();
+  const isCaptain = moderator === uid;
   const newSocket = roomSocket.socket;
   const { findUserByUid } = connectedUsersStore();
 

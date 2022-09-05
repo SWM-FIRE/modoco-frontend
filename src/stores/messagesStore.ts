@@ -1,9 +1,9 @@
 import create from 'zustand';
 
 interface MessageInterface {
-  uid: string;
+  uid: number;
   nickname: string;
-  avatar: string;
+  avatar: number;
   message: string;
   createdAt: string;
   type: string; // 'message' || 'join' || 'leave'

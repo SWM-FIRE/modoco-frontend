@@ -22,7 +22,7 @@ export default function useSetSelf() {
         .then((res) => {
           setNickname(res.data.nickname);
           setAvatar(res.data.avatar);
-          setUid(res.data.uid.toString());
+          setUid(res.data.uid);
           axios
             .get(API.RECORDS, {
               headers: {

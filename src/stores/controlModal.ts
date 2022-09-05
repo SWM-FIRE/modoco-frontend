@@ -3,19 +3,19 @@ import create from 'zustand';
 interface Modal {
   nickname: string;
   avatar: number;
-  uid: string;
+  uid: number;
   sid: string;
   setSid: (_by: string) => void;
   setNickname: (_by: string) => void;
   setAvatar: (_by: number) => void;
-  setUid: (_by: string) => void;
+  setUid: (_by: number) => void;
   isOpen: boolean;
   toggleModal: () => void;
 }
 const ModalStore = create<Modal>((set) => ({
   nickname: '',
   avatar: 1,
-  uid: '',
+  uid: -1,
   sid: '',
   setSid: (by) => set(() => ({ sid: by })),
   setNickname: (by) => set(() => ({ nickname: by })),
