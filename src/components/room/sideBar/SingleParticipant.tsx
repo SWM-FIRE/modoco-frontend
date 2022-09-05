@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ProfileModal from '../profileModal/ProfileModal';
+import SideProfileModal from '../sideProfileModal/SideProfileModal';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
 import { ReactComponent as MicOff } from '../../../assets/svg/SmallMicOff.svg';
@@ -13,6 +13,7 @@ export default function SingleParticipant({
   isAudioEnabled,
   moderator,
   uid,
+  toggleProfileModal,
 }: {
   isMe: boolean;
   nickname: string;
@@ -20,12 +21,13 @@ export default function SingleParticipant({
   isAudioEnabled: boolean;
   moderator: number;
   uid: number;
+  toggleProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [showProfile, setShowProfile] = useState<boolean>(false);
+  const [showSideProfile, setShowSideProfile] = useState<boolean>(false);
 
   const toggleProfile = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-    setShowProfile(!showProfile);
+    setShowSideProfile(!showSideProfile);
   };
 
   const friendState = false;
@@ -40,9 +42,10 @@ export default function SingleParticipant({
         {nickname}
         {moderator === uid && <Crown />}
       </NameContainer>
-      {showProfile ? (
-        <ProfileModal
-          toggle={setShowProfile}
+      {showSideProfile ? (
+        <SideProfileModal
+          toggle={setShowSideProfile}
+          toggleProfile={toggleProfileModal}
           nickname={nickname}
           uid={uid}
           avatar={avatar}

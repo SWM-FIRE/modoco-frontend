@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import Header from '../components/main/Header';
-import UserProfile from '../components/profile/UserProfile';
-import Friends from '../components/profile/Friends';
-import Statistics from '../components/profile/Statistics';
-import Overall from '../components/profile/Overall';
+import Contents from '../components/profile/Contents';
 import userStore from '../stores/userStore';
 
 export default function Profile() {
@@ -16,14 +13,7 @@ export default function Profile() {
   return (
     <Container>
       <Header />
-      <Contents>
-        <UserInformation>
-          <UserProfile isMe={isMe} />
-          <Statistics />
-          <Overall />
-        </UserInformation>
-        {isMe && <Friends />}
-      </Contents>
+      <Contents isMe={isMe} />
     </Container>
   );
 }
@@ -36,21 +26,4 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #18181b;
-`;
-
-const Contents = styled.div`
-  display: flex;
-  gap: 4.5rem;
-  padding: 4.4rem 10rem;
-`;
-
-const UserInformation = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6.4rem;
-  align-items: center;
-  /* @media (max-width: 96rem) {
-    flex-direction: column;
-    padding: 0 4rem;
-  } */
 `;
