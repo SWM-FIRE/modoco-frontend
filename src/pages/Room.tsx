@@ -20,6 +20,8 @@ import ScreenShareModal from '../components/room/ScreenModal';
 import receiveNewMessageStore from '../stores/receiveNewMessageStore';
 import controlSidebar from '../stores/controlSidebar';
 import ChattingAlarm from '../components/room/sideBar/ChattingAlarm';
+import ProfileModal from '../components/room/profileModal/profileModal';
+import userStore from '../stores/userStore';
 
 export default function Room() {
   const { roomId } = useParams();
@@ -28,8 +30,11 @@ export default function Room() {
   const { isReceiveNewMessage, isAlarmToggle } = receiveNewMessageStore();
   const { isOpenSidebar, openSidebar } = controlSidebar();
   const { isLoading, error, data } = useRoom(roomId);
+  const { uid } = userStore();
   const theme = getTheme(data?.theme);
   const [isSetting, setIsSetting] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState<boolean>(false);
+
   roomConnection(roomId);
   onChatMessage();
   usePeerConnection();
@@ -46,15 +51,27 @@ export default function Room() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Toaster />
       {isSetting ? (
         <SettingModal setting={isSetting} setSetting={setIsSetting} />
       ) : null}
-      <Toaster />
+      {showProfileModal && (
+        <ProfileModal
+          isMe={data?.moderator.uid === uid}
+          toggle={setShowProfileModal}
+        />
+      )}
+      {isOpen && <ScreenShareModal />}
       <Component>
         <Header theme={data?.theme} setSetting={setIsSetting} />
         <Contents isOpen={isOpenSidebar}>
           <ScreenShare theme={data?.theme} />
-          {!isOpenSidebar && (
+          {isOpenSidebar ? (
+            <Sidebar
+              moderator={data?.moderator.uid}
+              toggleProfileModal={setShowProfileModal}
+            />
+          ) : (
             <ControlSidebar
               backgroundColor={theme.chatBackground}
               onClick={onControlSidebarClick}
@@ -73,10 +90,8 @@ export default function Room() {
               )}
             </ControlSidebar>
           )}
-          {isOpenSidebar && <Sidebar moderator={data?.moderator.uid} />}
         </Contents>
       </Component>
-      {isOpen && <ScreenShareModal />}
     </ThemeProvider>
   );
 }

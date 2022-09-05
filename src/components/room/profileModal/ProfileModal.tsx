@@ -1,64 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import ProfileModalHeader from './ProfileModalHeader';
-import UserInfo from './UserInfo';
-import Buttons from './Buttons';
-import FriendButtons from './FriendButtons';
+import Contents from '../../profile/Contents';
 
 export default function ProfileModal({
-  toggle,
-  nickname,
-  avatar,
   isMe,
-  isFriend,
-  moderator,
-  uid,
+  toggle,
 }: {
-  toggle: React.Dispatch<React.SetStateAction<boolean>>;
-  nickname: string;
-  avatar: number;
   isMe: boolean;
-  isFriend: boolean;
-  moderator: number;
-  uid: number;
+  toggle: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  useEffect(() => {
+    console.log('i am open');
+    return () => {
+      console.log(' i close');
+    };
+  }, []);
+  const closeModal = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    toggle(false);
+  };
   return (
-    <Container>
-      <Inner>
-        <ProfileModalHeader profileToggle={toggle} />
-        <Body>
-          <UserInfo avatarNo={avatar} nickname={nickname} />
-          {isFriend ? (
-            <FriendButtons />
-          ) : (
-            <Buttons isMe={isMe} moderator={moderator} uid={uid} />
-          )}
-        </Body>
-      </Inner>
-    </Container>
+    <Screen onClick={closeModal}>
+      <Container>
+        <Contents isMe={isMe} />
+      </Container>
+    </Screen>
   );
 }
 
-const Body = styled.div`
+const Screen = styled.div`
+  position: fixed;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  height: calc(100% - 2.4rem);
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const Inner = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Container = styled.div`
-  position: absolute;
-  width: 32rem;
-  background-color: #23262f;
-  top: 8rem;
-  left: -30rem;
-  z-index: 1;
-  padding: 2rem 2.4rem 3.2rem 2.4rem;
-  border-radius: 2rem;
+  width: 90%;
+  height: 90%;
+  background-color: black;
+  overflow: auto;
+  z-index: 999;
 `;
