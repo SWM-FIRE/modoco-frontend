@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import addFriendJson from '../../../addFriend.json';
-import Avatar from '../Avatar';
+import Avatar from '../../atoms/Avatar';
 
 export default function AddFriend() {
   return (

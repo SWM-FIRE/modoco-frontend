@@ -7,7 +7,7 @@ import RoomLayout from './components/layout/RoomLayout';
 import Room from './pages/Room';
 import Ready from './pages/Ready';
 import LandingPage from './pages/LandingPage';
-import MyPage from './pages/MyPage';
+import Profile from './pages/Profile';
 import EditMyPage from './pages/EditMyPage';
 import Main from './pages/Main';
 import Error from './pages/Error';
@@ -30,7 +30,7 @@ function App() {
             <Route index element={<Main />} />
           </Route>
           <Route path="/profile" element={<Layout />}>
-            <Route index element={<MyPage />} />
+            <Route path=":userId" element={<Profile />} />
           </Route>
           <Route path="/editProfile" element={<Layout />}>
             <Route index element={<EditMyPage />} />

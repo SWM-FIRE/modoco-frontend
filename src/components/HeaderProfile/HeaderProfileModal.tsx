@@ -6,19 +6,20 @@ import MyAvatar from '../../assets/avatar/MyAvatar';
 import UserStore from '../../stores/userStore';
 import LogoutModalStore from '../../stores/logoutModalStore';
 
-export default function LogoutModal() {
+export default function HeaderProfileModal() {
   const navigate = useNavigate();
   const { toggleLogoutModal } = LogoutModalStore();
 
-  const { nickname, avatar } = UserStore((state) => state);
+  const { nickname, avatar, uid } = UserStore((state) => state);
   const onLogOut = () => {
     localStorage.removeItem('access_token');
     navigate(`/`);
     toggleLogoutModal();
     toast.success('로그아웃 되었습니다');
   };
+
   const onProfile = () => {
-    navigate(`/profile`);
+    navigate(`/profile/${uid}`);
     toggleLogoutModal();
   };
 

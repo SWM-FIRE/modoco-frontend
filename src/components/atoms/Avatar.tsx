@@ -4,7 +4,7 @@ import MyAvatar from '../../assets/avatar/MyAvatar';
 export default function Avatar({ avatar, size }) {
   return (
     <AvatarContainer size={size}>
-      <MyAvatar num={Number(avatar)} />
+      <MyAvatar num={avatar} />
     </AvatarContainer>
   );
 }

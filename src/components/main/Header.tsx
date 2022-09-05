@@ -4,7 +4,7 @@ import UserStore from '../../stores/userStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import LoginModalStore from '../../stores/loginModalStore';
 import LogoutModalStore from '../../stores/logoutModalStore';
-import LogoutModal from '../logout/LogoutModal';
+import HeaderProfileModal from '../HeaderProfile/HeaderProfileModal';
 import { ReactComponent as TopArrow } from '../../assets/svg/topArrow.svg';
 import { ReactComponent as BottomArrow } from '../../assets/svg/bottomArrow.svg';
 
@@ -25,7 +25,7 @@ export default function Header() {
       {nickname ? (
         <Profile onClick={toggleLogoutModal}>
           <AvatarContainer>
-            <MyAvatar num={Number(avatar)} />
+            <MyAvatar num={avatar} />
           </AvatarContainer>
           <SvgComponent>
             {isOpenLogoutModal ? <TopArrow /> : <BottomArrow />}
@@ -34,7 +34,7 @@ export default function Header() {
       ) : (
         <Login onClick={openLoginModal}>로그인</Login>
       )}
-      {isOpenLogoutModal && <LogoutModal />}
+      {isOpenLogoutModal && <HeaderProfileModal />}
     </Container>
   );
 }
