@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { ReactComponent as Users } from '../../../assets/svg/users.svg';
+import { ReactComponent as ShowFriendState } from '../../../assets/svg/ShowFriendState.svg';
 
 export default function FriendButtons() {
   return (
     <Container>
       <Friend>
-        <Users />
+        <ShowFriendState />
         나와 친구입니다
       </Friend>
       <Follow>

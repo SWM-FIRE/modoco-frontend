@@ -6,9 +6,26 @@ import UserStore from '../../stores/userStore';
 import Group from './UserProfile/Group';
 import Badge from './UserProfile/Badge';
 import Edit from './UserProfile/Edit';
+import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessageBlack.svg';
+import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
 
 export default function UserProfile({ isMe }: { isMe: boolean }) {
-  const { nickname, avatar, description } = UserStore((state) => state);
+  let userNickname: string;
+  let userAvatar: number;
+  let userDescription: string;
+  let isFriend = false;
+  if (isMe) {
+    const { nickname, avatar, description } = UserStore((state) => state);
+    userNickname = nickname;
+    userAvatar = avatar;
+    userDescription = description;
+  } else {
+    // TODO: get user info from server
+    userNickname = '임시 닉네임';
+    userAvatar = 10;
+    userDescription = '임시 설명';
+    isFriend = false;
+  }
   const navigate = useNavigate();
 
   const onClickEditProfile = () => {
@@ -23,13 +40,29 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
 
   return (
     <Components>
-      <Avatar avatar={avatar} size={12} />
+      <Avatar avatar={userAvatar} size={12} />
       <Contents>
-        <Nickname>{nickname}</Nickname>
+        <NicknameComponent>
+          <Nickname>{userNickname}</Nickname>
+          {isFriend && (
+            <FriendComponent>
+              <ShowFriendState />
+              나와 친구입니다
+            </FriendComponent>
+          )}
+        </NicknameComponent>
         <Group />
-        <Description>{description}</Description>
+        <Description>{userDescription}</Description>
         <Badge />
         {isMe && <Logout onClick={onLogOut}>로그아웃</Logout>}
+        {isFriend ? (
+          <Button>
+            <SendMessageBlack />
+            채팅하기
+          </Button>
+        ) : (
+          <Button>친구신청</Button>
+        )}
       </Contents>
       {isMe && (
         <EditButton onClick={onClickEditProfile}>
@@ -56,10 +89,32 @@ const Components = styled.div`
   } */
 `;
 
-const Contents = styled.div``;
+const Contents = styled.div`
+  flex-grow: 1;
+`;
 
 const EditButton = styled.button`
   cursor: pointer;
+`;
+
+const NicknameComponent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+const FriendComponent = styled.div`
+  color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5rem;
+  padding: 1.2rem 2rem;
+  font-size: 1.3rem;
+  font-family: IBMPlexSansKRRegular;
+  gap: 1rem;
+  height: 4.4rem;
 `;
 
 const Nickname = styled.h1`
@@ -73,6 +128,20 @@ const Description = styled.p`
   font-size: 1.4rem;
   font-weight: 400;
   padding-top: 2rem;
+`;
+
+const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 5rem;
+  padding: 1.6rem 5.7rem;
+  font-size: 1.5rem;
+  font-family: IBMPlexSansKRRegular;
+  cursor: pointer;
+  gap: 0.4rem;
+  margin-top: 2rem;
 `;
 
 const Logout = styled.button`
