@@ -16,11 +16,11 @@ export default function ProfileModal({
 }: {
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
   nickname: string;
-  avatar: string;
+  avatar: number;
   isMe: boolean;
   isFriend: boolean;
-  moderator: string;
-  uid: string;
+  moderator: number;
+  uid: number;
 }) {
   return (
     <Container>

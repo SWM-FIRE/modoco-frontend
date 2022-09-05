@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as SendImage } from '../../../assets/svg/MessageSend.svg';
 import friendJson from '../../../friend.json';
-import Avatar from '../Avatar';
+import Avatar from '../../atoms/Avatar';
 
 export default function FriendList() {
   const friendList = friendJson;

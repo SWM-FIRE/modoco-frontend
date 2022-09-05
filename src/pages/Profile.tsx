@@ -1,21 +1,28 @@
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import Header from '../components/main/Header';
-import MyProfile from '../components/myPage/MyProfile';
-import Friends from '../components/myPage/Friends';
-import Statistics from '../components/myPage/Statistics';
-import Overall from '../components/myPage/Overall';
+import UserProfile from '../components/profile/UserProfile';
+import Friends from '../components/profile/Friends';
+import Statistics from '../components/profile/Statistics';
+import Overall from '../components/profile/Overall';
+import userStore from '../stores/userStore';
 
-export default function MyPage() {
+export default function Profile() {
+  const { userId } = useParams();
+  const { uid } = userStore((state) => state);
+
+  const isMe = Number(userId) === uid;
+
   return (
     <Container>
       <Header />
       <Contents>
-        <MyInformation>
-          <MyProfile />
+        <UserInformation>
+          <UserProfile isMe={isMe} />
           <Statistics />
           <Overall />
-        </MyInformation>
-        <Friends />
+        </UserInformation>
+        {isMe && <Friends />}
       </Contents>
     </Container>
   );
@@ -37,7 +44,7 @@ const Contents = styled.div`
   padding: 4.4rem 10rem;
 `;
 
-const MyInformation = styled.div`
+const UserInformation = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6.4rem;

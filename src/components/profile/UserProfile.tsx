@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import Avatar from './Avatar';
+import Avatar from '../atoms/Avatar';
 import UserStore from '../../stores/userStore';
-import Group from './MyProfile/Group';
-import Badge from './MyProfile/Badge';
-import Edit from './MyProfile/Edit';
+import Group from './UserProfile/Group';
+import Badge from './UserProfile/Badge';
+import Edit from './UserProfile/Edit';
 
-export default function MyProfile() {
-  const { nickname, avatar } = UserStore((state) => state);
+export default function UserProfile({ isMe }: { isMe: boolean }) {
+  const { nickname, avatar, description } = UserStore((state) => state);
   const navigate = useNavigate();
 
   const onClickEditProfile = () => {
@@ -27,13 +27,15 @@ export default function MyProfile() {
       <Contents>
         <Nickname>{nickname}</Nickname>
         <Group />
-        <Description>자기소개</Description>
+        <Description>{description}</Description>
         <Badge />
-        <Logout onClick={onLogOut}>로그아웃</Logout>
+        {isMe && <Logout onClick={onLogOut}>로그아웃</Logout>}
       </Contents>
-      <EditButton onClick={onClickEditProfile}>
-        <Edit />
-      </EditButton>
+      {isMe && (
+        <EditButton onClick={onClickEditProfile}>
+          <Edit />
+        </EditButton>
+      )}
     </Components>
   );
 }
