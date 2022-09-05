@@ -4,6 +4,7 @@ import ProfileModal from '../profileModal/ProfileModal';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
 import { ReactComponent as MicOff } from '../../../assets/svg/SmallMicOff.svg';
+import { ReactComponent as Crown } from '../../../assets/svg/Crown.svg';
 
 export default function SingleParticipant({
   isMe,
@@ -37,6 +38,7 @@ export default function SingleParticipant({
       </AvatarContainer>
       <NameContainer isMe={isMe} nicknameLength={nickname.length}>
         {nickname}
+        {moderator.toString() === uid && <Crown />}
       </NameContainer>
       {showProfile ? (
         <ProfileModal
@@ -56,6 +58,12 @@ export default function SingleParticipant({
 const AvatarContainer = styled.div`
   position: relative;
   cursor: pointer;
+  width: 4.3rem;
+  height: 4.3rem;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const MicContainer = styled.div`
@@ -74,11 +82,6 @@ const MicContainer = styled.div`
 
 const Container = styled.div`
   position: relative;
-  width: 4.3rem;
-  svg {
-    width: 100%;
-    height: 100%;
-  }
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -86,7 +89,13 @@ const Container = styled.div`
   gap: 0.4rem;
 `;
 
+// const CrownContainer = styled.div``;
+
 const NameContainer = styled.div<{ nicknameLength: number; isMe: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
   font-family: IBMPlexSansKRRegular;
   font-weight: 500;
   word-break: break-all;
