@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import ModalPortal from '../atoms/ModalPortal';
+import Auths from './Auths';
 import { ReactComponent as X } from '../../assets/svg/X.svg';
-import { ReactComponent as MainFire } from '../../assets/svg/MainFire.svg';
 import ModalTitle from './ModalTitle';
 import UserInput from './UserInput';
 import LoginModalStore from '../../stores/loginModalStore';
@@ -17,11 +17,9 @@ export default function Modal() {
             <X />
           </Close>
           <ModalTitle />
-          <Logo>
-            <MainFire />
-          </Logo>
           <UserInput />
           <SignUp href="/signUp">아직 회원이 아니신가요?</SignUp>
+          <Auths />
         </ModalBox>
       </ModalBackground>
     </ModalPortal>
@@ -50,7 +48,7 @@ const ModalBox = styled.div`
   justify-content: center;
   align-items: center;
   top: 16rem;
-  padding: 6.8rem 10.2rem 3.3rem 10.2rem;
+  padding: 6.8rem 10.2rem 3.6rem 10.2rem;
 `;
 
 const Close = styled.div`
@@ -64,15 +62,12 @@ const Close = styled.div`
   }
 `;
 
-const Logo = styled.div`
-  svg {
-    width: 10.8rem;
-    height: 10.8rem;
-  }
-`;
-
 const SignUp = styled.a`
-  margin-top: 1.4rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
   color: #f3f4f6;
   font-size: 1.4rem;
   cursor: pointer;
