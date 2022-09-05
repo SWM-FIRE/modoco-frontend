@@ -26,6 +26,11 @@ const usePeerConnection = () => {
           'stun:stun4.l.google.com:19302',
         ],
       },
+      {
+        urls: 'turn:turn.modocode.com:3478?transport=tcp',
+        credential: 'modocode123!!',
+        username: 'modoclient',
+      },
     ],
   };
 
