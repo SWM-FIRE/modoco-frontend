@@ -1,28 +1,32 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Toaster } from 'react-hot-toast';
 import useSetSelf from '../hooks/useSetSelf';
-import ModalStore from '../stores/createRoomModalStore';
 import RoomCards from '../components/main/RoomCards';
 import MainTitle from '../components/main/MainTitle';
-import LoginModal from '../components/login/LoginModal';
 import CreateRoomModal from '../components/main/CreateRoomModal/CreateRoomModal';
-import LoginModalStore from '../stores/loginModalStore';
 
 export default function Main() {
-  const { isOpenCreateRoomModal } = ModalStore();
-  const { isOpenLoginModal } = LoginModalStore();
+  const [isCreateRoomModal, setIsCreateRoomModal] = useState(false);
 
   useSetSelf();
+  const openCreateRoom = () => {
+    setIsCreateRoomModal(true);
+  };
+  const closeCreateRoom = () => {
+    setIsCreateRoomModal(false);
+  };
 
   return (
     <>
       <Container>
         <Toaster />
         <MainTitle />
-        <RoomCards />
+        <RoomCards openCreateRoom={openCreateRoom} />
       </Container>
-      {isOpenLoginModal && <LoginModal />}
-      {isOpenCreateRoomModal && <CreateRoomModal />}
+      {isCreateRoomModal && (
+        <CreateRoomModal closeCreateRoom={closeCreateRoom} />
+      )}
     </>
   );
 }

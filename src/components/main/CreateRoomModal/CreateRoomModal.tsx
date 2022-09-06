@@ -2,14 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 // import toast from 'react-hot-toast';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
-import modal from '../../../stores/createRoomModalStore';
 import useCreateRoom from '../../../hooks/useCreateRoom';
 import CreateRoomForm from './CreateRoomForm';
 
-export default function CreateRoomModal() {
-  const { closeModal } = modal();
+export default function CreateRoomModal({
+  closeCreateRoom,
+}: {
+  closeCreateRoom: () => void;
+}) {
   const { inputs, onChange, onKeyPress, onDeleteTag, useRoomCreator } =
-    useCreateRoom();
+    useCreateRoom({ closeCreateRoom });
 
   const { isLoading, mutate } = useRoomCreator();
 
@@ -17,11 +19,11 @@ export default function CreateRoomModal() {
     return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
 
   return (
-    <ModalBackground onClick={closeModal}>
+    <ModalBackground onClick={closeCreateRoom}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
         <ModalController>
           <Title>방 생성하기</Title>
-          <Close onClick={closeModal}>
+          <Close onClick={closeCreateRoom}>
             <X />
           </Close>
         </ModalController>

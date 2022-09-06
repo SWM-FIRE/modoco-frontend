@@ -5,10 +5,12 @@ import { useMutation } from 'react-query';
 import toast from 'react-hot-toast';
 import userStore from '../stores/userStore';
 import { API } from '../config';
-import modal from '../stores/createRoomModalStore';
 
-export default function useCreateRoom() {
-  const { closeModal } = modal();
+export default function useCreateRoom({
+  closeCreateRoom,
+}: {
+  closeCreateRoom: () => void;
+}) {
   const [inputs, setInputs] = useState({
     title: '',
     details: '',
@@ -86,7 +88,7 @@ export default function useCreateRoom() {
 
       {
         onSuccess: () => {
-          closeModal();
+          closeCreateRoom();
           toast.success('방이 생성되었습니다.');
           setTimeout(() => {
             window.location.reload();
