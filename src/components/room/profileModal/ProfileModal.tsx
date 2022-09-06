@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import Header from './Header';
 import Contents from '../../profile/Contents';
 
 export default function ProfileModal({
@@ -7,7 +8,7 @@ export default function ProfileModal({
   toggle,
 }: {
   isMe: boolean;
-  toggle: React.Dispatch<React.SetStateAction<boolean>>;
+  toggle: () => void;
 }) {
   useEffect(() => {
     console.log('i am open');
@@ -15,13 +16,15 @@ export default function ProfileModal({
       console.log(' i close');
     };
   }, []);
-  const closeModal = (event: React.MouseEvent<HTMLDivElement>) => {
+  const closeModalBackground = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-    toggle(false);
+    toggle();
   };
+
   return (
-    <Screen onClick={closeModal}>
-      <Container>
+    <Screen onClick={closeModalBackground}>
+      <Container onClick={(e) => e.stopPropagation()}>
+        <Header toggle={toggle} />
         <Contents isMe={isMe} />
       </Container>
     </Screen>
@@ -30,18 +33,25 @@ export default function ProfileModal({
 
 const Screen = styled.div`
   position: fixed;
-  z-index: 999;
+  z-index: 5;
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const Container = styled.div`
-  width: 90%;
+  position: relative;
+  width: 60%;
+  min-width: 80rem;
   height: 90%;
   background-color: black;
   overflow: auto;
-  z-index: 999;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  border-radius: 3rem;
+  border: 3px solid rgba(255, 255, 255, 0.2);
 `;
