@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import MyAvatar from '../../assets/avatar/MyAvatar';
-import UserStore from '../../stores/room/userStore';
+import UserStore from '../../stores/userStore';
 
 export default function HeaderProfileModal({
   toggleModal,

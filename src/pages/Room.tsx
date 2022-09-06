@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
@@ -8,7 +8,6 @@ import { roomConnection } from '../adapters/roomConnection';
 import useRoom from '../hooks/useRoom';
 import usePeerConnection from '../hooks/usePeerConnection';
 import usePopHistory from '../hooks/usePopHistory';
-import controlModal from '../stores/room/controlModal';
 import SettingModal from '../components/atoms/settingModal/SettingModal';
 import Header from '../components/room/header/Header';
 import ScreenShare from '../components/room/screenShare/ScreenShare';
@@ -16,24 +15,29 @@ import { ReactComponent as LeftTwoArrows } from '../assets/svg/Room/LeftTwoArrow
 import { ReactComponent as Chatting } from '../assets/svg/Room/Chatting.svg';
 import { ReactComponent as NewChatting } from '../assets/svg/Room/NewChatting.svg';
 import Sidebar from '../components/room/sideBar/Sidebar';
+import roomModalStore from '../stores/room/roomModalStore';
 import ScreenShareModal from '../components/room/ScreenModal';
-import receiveNewMessageStore from '../stores/receiveNewMessageStore';
-import controlSidebar from '../stores/room/controlSidebar';
+import receiveNewMessageStore from '../stores/room/receiveNewMessageStore';
 import ChattingAlarm from '../components/room/sideBar/ChattingAlarm';
 import ProfileModal from '../components/room/profileModal/ProfileModal';
-import userStore from '../stores/room/userStore';
+import userStore from '../stores/userStore';
 
 export default function Room() {
   const { roomId } = useParams();
-  const { isOpen } = controlModal();
   const volumeRef = useRef<HTMLAudioElement>(null);
   const { isReceiveNewMessage, isAlarmToggle } = receiveNewMessageStore();
-  const { isOpenSidebar, openSidebar } = controlSidebar();
   const { isLoading, error, data } = useRoom(roomId);
   const { uid } = userStore();
+  const {
+    screenModal,
+    settingModal,
+    sidebarModal,
+    profileModal,
+    toggleSettingModal,
+    toggleSidebarModal,
+    toggleProfileModal,
+  } = roomModalStore();
   const theme = getTheme(data?.theme);
-  const [isSetting, setIsSetting] = useState(false);
-  const [showProfileModal, setShowProfileModal] = useState<boolean>(false);
 
   roomConnection(roomId);
   onChatMessage();
@@ -46,31 +50,28 @@ export default function Room() {
   if (error) return <div>An error has occurred: </div>;
 
   const onControlSidebarClick = () => {
-    openSidebar();
+    toggleSidebarModal();
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Toaster />
-      {isSetting ? (
-        <SettingModal setting={isSetting} setSetting={setIsSetting} />
-      ) : null}
-      {showProfileModal && (
+      {settingModal && (
+        <SettingModal setting={settingModal} toggle={toggleSettingModal} />
+      )}
+      {profileModal && (
         <ProfileModal
           isMe={data?.moderator.uid === uid}
-          toggle={setShowProfileModal}
+          toggle={toggleProfileModal}
         />
       )}
-      {isOpen && <ScreenShareModal />}
+      {screenModal && <ScreenShareModal />}
       <Component>
-        <Header theme={data?.theme} setSetting={setIsSetting} />
-        <Contents isOpen={isOpenSidebar}>
+        <Header theme={data?.theme} />
+        <Contents isOpen={sidebarModal}>
           <ScreenShare theme={data?.theme} />
-          {isOpenSidebar ? (
-            <Sidebar
-              moderator={data?.moderator.uid}
-              toggleProfileModal={setShowProfileModal}
-            />
+          {sidebarModal ? (
+            <Sidebar moderator={data?.moderator.uid} />
           ) : (
             <ControlSidebar
               backgroundColor={theme.chatBackground}

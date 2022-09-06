@@ -7,7 +7,7 @@ import SettingModal from '../components/atoms/settingModal/SettingModal';
 import Header from '../components/ready/Header';
 import RoomDetail from '../components/ready/RoomDetail';
 import Screen from '../components/ready/Screen';
-import userStore from '../stores/room/userStore';
+import userStore from '../stores/userStore';
 import roomSocket, { generateSocket } from '../adapters/roomSocket';
 
 export default function ReadyPage() {
@@ -31,6 +31,10 @@ export default function ReadyPage() {
     }
   }, []);
 
+  const toggleSetting = () => {
+    setIsSetting(!isSetting);
+  };
+
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.srcObject = userMediaStream;
@@ -40,7 +44,7 @@ export default function ReadyPage() {
   return (
     <>
       {isSetting ? (
-        <SettingModal setting={isSetting} setSetting={setIsSetting} />
+        <SettingModal setting={isSetting} toggle={toggleSetting} />
       ) : null}
       <Container>
         <Header />

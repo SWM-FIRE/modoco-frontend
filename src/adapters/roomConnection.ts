@@ -6,7 +6,7 @@ import connectedUsersStore from '../stores/room/connectedUsersStore';
 import roomSocket from './roomSocket';
 import messageStore from '../stores/room/messagesStore';
 import userPcStore from '../stores/room/userPcStore';
-import userStore from '../stores/room/userStore';
+import userStore from '../stores/userStore';
 import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import { API } from '../config';
@@ -24,7 +24,7 @@ export const roomConnection = (roomId: string) => {
 
   useEffect(() => {
     const joinSuccess = async () => {
-      if (uid) {
+      if (uid !== -1) {
         if (!userMediaStream) {
           await createAll();
         }

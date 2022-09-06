@@ -1,27 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
-import controlModal from '../../../stores/room/controlModal';
+import roomModalStore from '../../../stores/room/roomModalStore';
 import messageStore from '../../../stores/room/messagesStore';
-import userStore from '../../../stores/room/userStore';
+import userStore from '../../../stores/userStore';
 import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import AudioTracking from './AudioTracking';
 
 export default function SingleScreen({ connectedUser, stream }) {
   const { messages } = messageStore();
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
-  const { toggleModal, setNickname, setAvatar, setUid, setSid } =
-    controlModal();
+  const { setScreenUid, toggleScreenModal } = roomModalStore();
   const { uid } = userStore();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { userAudioOutputDevice } = UserMediaStreamStore();
 
-  const OpenModal = () => {
-    setNickname(connectedUser.nickname);
-    setAvatar(connectedUser.avatar);
-    setUid(connectedUser.uid);
-    if (uid !== connectedUser.uid) setSid(connectedUser.socketId);
-    toggleModal();
+  const openScreenModal = () => {
+    setScreenUid(connectedUser.uid);
+    toggleScreenModal();
   };
 
   useEffect(() => {
@@ -46,7 +42,7 @@ export default function SingleScreen({ connectedUser, stream }) {
   );
 
   return (
-    <Container onClick={OpenModal}>
+    <Container onClick={openScreenModal}>
       {uid === connectedUser.uid ? (
         <Video ref={videoRef} autoPlay playsInline muted />
       ) : (

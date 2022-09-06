@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReactChannelIO } from 'react-channel-plugin';
 import { Outlet } from 'react-router-dom';
-import userStore from '../../stores/room/userStore';
+import userStore from '../../stores/userStore';
 
 export default function RoomLayout() {
   const { uid, nickname } = userStore();

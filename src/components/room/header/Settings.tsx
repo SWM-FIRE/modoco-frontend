@@ -12,11 +12,7 @@ import { ReactComponent as Setting } from '../../../assets/svg/settings.svg';
 import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 
-export default function Settings({
-  setSetting,
-}: {
-  setSetting: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function Settings({ setSetting }: { setSetting: () => void }) {
   const { roomId } = useParams();
   const { userMic, userVideo } = UserMediaStreamStore((state) => state);
   const { createDisplayStream, stopDisplayStream } = useCreateMediaStream();
@@ -41,7 +37,7 @@ export default function Settings({
 
   const toggleSetting = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    setSetting(true);
+    setSetting();
   };
 
   return (

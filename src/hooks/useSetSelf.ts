@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { API } from '../config';
-import UserStore from '../stores/room/userStore';
+import UserStore from '../stores/userStore';
 
 export default function useSetSelf() {
   const { setNickname, setAvatar, setUid, setClear, setTime } = UserStore(

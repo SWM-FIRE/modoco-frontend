@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import UserStore from '../../stores/room/userStore';
+import UserStore from '../../stores/userStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import LoginModalStore from '../../stores/loginModalStore';
 import HeaderProfileModal from '../HeaderProfile/HeaderProfileModal';

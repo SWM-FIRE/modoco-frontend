@@ -4,8 +4,8 @@ import moment from 'moment';
 import connectedUsersStore from '../stores/room/connectedUsersStore';
 import messageStore from '../stores/room/messagesStore';
 import roomSocket from './roomSocket';
-import userStore from '../stores/room/userStore';
-import receiveNewMessageStore from '../stores/receiveNewMessageStore';
+import userStore from '../stores/userStore';
+import receiveNewMessageStore from '../stores/room/receiveNewMessageStore';
 
 const onChatMessage = () => {
   const { connectedUsers } = connectedUsersStore();

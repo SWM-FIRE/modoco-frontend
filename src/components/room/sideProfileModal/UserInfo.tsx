@@ -1,27 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
+import roomModalStore from '../../../stores/room/roomModalStore';
 import { ReactComponent as RightArrow } from '../../../assets/svg/rightArrow.svg';
 
 export default function UserInfo({
   avatarNo,
   nickname,
   toggle,
-  toggleProfile,
 }: {
   avatarNo: number;
   nickname: string;
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleProfile: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const toggleProfileModal = (event: React.MouseEvent<HTMLDivElement>) => {
+  const { toggleProfileModal } = roomModalStore();
+  const toggleProfile = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     toggle(false);
-    toggleProfile(true);
+    toggleProfileModal();
   };
 
   return (
-    <Container onClick={toggleProfileModal}>
+    <Container onClick={toggleProfile}>
       <AvatarContainer>
         <MyAvatar num={avatarNo} />
       </AvatarContainer>

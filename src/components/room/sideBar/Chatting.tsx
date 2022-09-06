@@ -5,8 +5,8 @@ import { ReactComponent as MessageSend } from '../../../assets/svg/MessageSend.s
 import ChattingItem from './ChattingItem';
 import messageStore from '../../../stores/room/messagesStore';
 import roomSocket from '../../../adapters/roomSocket';
-import userStore from '../../../stores/room/userStore';
-import receiveNewMessageStore from '../../../stores/receiveNewMessageStore';
+import userStore from '../../../stores/userStore';
+import receiveNewMessageStore from '../../../stores/room/receiveNewMessageStore';
 import NewMessage from './NewMessage';
 
 export default function Chat() {

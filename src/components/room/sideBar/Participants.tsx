@@ -2,16 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import SingleParticipant from './SingleParticipant';
 import connectedUsersStore from '../../../stores/room/connectedUsersStore';
-import UserStore from '../../../stores/room/userStore';
+import UserStore from '../../../stores/userStore';
 import userMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 
-export default function Participants({
-  moderator,
-  toggleProfileModal,
-}: {
-  moderator: number;
-  toggleProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function Participants({ moderator }: { moderator: number }) {
   const { connectedUsers } = connectedUsersStore((state) => state);
   const { userMediaStream } = userMediaStreamStore((state) => state);
   const { uid, nickname, avatar } = UserStore((state) => state);
@@ -27,11 +21,9 @@ export default function Participants({
           avatar={avatar}
           isAudioEnabled={userMediaStream.getAudioTracks()[0].enabled}
           moderator={moderator}
-          toggleProfileModal={toggleProfileModal}
         />
         {connectedUsers.map((user) => (
           <SingleParticipant
-            toggleProfileModal={toggleProfileModal}
             key={user.uid}
             isMe={false}
             nickname={user.nickname}

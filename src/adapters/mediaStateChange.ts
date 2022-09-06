@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import roomSocket from './roomSocket';
 import connectedUsersStore from '../stores/room/connectedUsersStore';
-import userStore from '../stores/room/userStore';
+import userStore from '../stores/userStore';
 import messageStore from '../stores/room/messagesStore';
 import userPcStore from '../stores/room/userPcStore';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
