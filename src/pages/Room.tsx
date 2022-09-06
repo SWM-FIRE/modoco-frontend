@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
@@ -11,21 +10,15 @@ import usePopHistory from '../hooks/usePopHistory';
 import SettingModal from '../components/atoms/settingModal/SettingModal';
 import Header from '../components/room/header/Header';
 import ScreenShare from '../components/room/screenShare/ScreenShare';
-import { ReactComponent as LeftTwoArrows } from '../assets/svg/Room/LeftTwoArrows.svg';
-import { ReactComponent as Chatting } from '../assets/svg/Room/Chatting.svg';
-import { ReactComponent as NewChatting } from '../assets/svg/Room/NewChatting.svg';
+import ControlSidebar from '../components/room/ControlSidebar';
 import Sidebar from '../components/room/sideBar/Sidebar';
 import roomModalStore from '../stores/room/roomModalStore';
 import ScreenShareModal from '../components/room/ScreenModal';
-import receiveNewMessageStore from '../stores/room/receiveNewMessageStore';
-import ChattingAlarm from '../components/room/sideBar/ChattingAlarm';
 import ProfileModal from '../components/room/profileModal/ProfileModal';
 import userStore from '../stores/userStore';
 
 export default function Room() {
   const { roomId } = useParams();
-  const volumeRef = useRef<HTMLAudioElement>(null);
-  const { isReceiveNewMessage, isAlarmToggle } = receiveNewMessageStore();
   const { isLoading, error, data } = useRoom(roomId);
   const { uid } = userStore();
   const {
@@ -75,21 +68,8 @@ export default function Room() {
           ) : (
             <ControlSidebar
               backgroundColor={theme.chatBackground}
-              onClick={onControlSidebarClick}
-            >
-              <LeftTwoArrows />
-              {isReceiveNewMessage ? (
-                <>
-                  <ChattingAlarm
-                    volumeRef={volumeRef}
-                    isAlarmToggle={isAlarmToggle}
-                  />
-                  <NewChatting />
-                </>
-              ) : (
-                <Chatting />
-              )}
-            </ControlSidebar>
+              toggle={onControlSidebarClick}
+            />
           )}
         </Contents>
       </Component>
@@ -110,21 +90,4 @@ const Contents = styled.div<{ isOpen: boolean }>`
     justify-content: center;
   }
   position: relative;
-`;
-
-const ControlSidebar = styled.div<{ backgroundColor: string }>`
-  z-index: 1;
-  position: absolute;
-  right: 0;
-  top: 1.6rem;
-  width: 8.6rem;
-  height: 6.8rem;
-  border-radius: 1rem 0 0 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.9rem;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  cursor: pointer;
-  box-shadow: 0px 4px 59px rgba(50, 50, 71, 0.3);
 `;

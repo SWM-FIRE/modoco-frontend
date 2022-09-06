@@ -56,6 +56,7 @@ export default function ScreenModal() {
 const ModalVideo = styled.video`
   margin-top: 1.6rem;
   width: calc(100% - 1.43rem);
+  overflow-y: auto;
 `;
 
 const Nickname = styled.div`
@@ -94,7 +95,6 @@ const ModalBox = styled.div<{ isOpen: boolean }>`
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  z-index: 999;
+  z-index: 2;
   padding-bottom: 2rem;
 `;
