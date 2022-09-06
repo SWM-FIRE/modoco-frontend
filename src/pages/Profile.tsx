@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import Header from '../components/main/Header';
 import Contents from '../components/profile/Contents';
 import userStore from '../stores/userStore';
 
@@ -12,7 +11,6 @@ export default function Profile() {
 
   return (
     <Container>
-      <Header />
       <Contents isMe={isMe} />
     </Container>
   );

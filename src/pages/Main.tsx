@@ -3,7 +3,6 @@ import { Toaster } from 'react-hot-toast';
 import useSetSelf from '../hooks/useSetSelf';
 import ModalStore from '../stores/createRoomModalStore';
 import RoomCards from '../components/main/RoomCards';
-import Header from '../components/main/Header';
 import MainTitle from '../components/main/MainTitle';
 import LoginModal from '../components/login/LoginModal';
 import CreateRoomModal from '../components/main/CreateRoomModal/CreateRoomModal';
@@ -19,7 +18,6 @@ export default function Main() {
     <>
       <Container>
         <Toaster />
-        <Header />
         <MainTitle />
         <RoomCards />
       </Container>
