@@ -30,19 +30,39 @@ export default function Friends() {
           친구신청
         </CategoryButton>
       </Category>
-      {categoryType === 'friendList' ? <FriendList /> : <AddFriend />}
+      <FriendComponent>
+        {categoryType === 'friendList' ? <FriendList /> : <AddFriend />}
+      </FriendComponent>
     </Components>
   );
 }
 
 const Components = styled.div`
-  width: 29.4rem;
+  width: 25%;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  /* @media (max-width: 96rem) {
+  position: absolute;
+  right: 1rem;
+  top: 0;
+  @media (max-width: 1020px) {
+    position: static;
     width: 100%;
-  } */
+    margin-top: 6.4rem;
+  }
+`;
+
+const FriendComponent = styled.div`
+  @media (max-width: 1020px) {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    max-height: 15rem;
+    overflow: auto;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `;
 
 const Category = styled.div`
