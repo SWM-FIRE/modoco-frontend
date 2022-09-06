@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 import { ReactComponent as LeftArrow } from '../../assets/svg/arrow-left.svg';
-import UserMediaStreamStore from '../../stores/userMediaStreamStore';
+import UserMediaStreamStore from '../../stores/room/userMediaStreamStore';
 
 export default function Header() {
   const { stopMediaStream } = useCreateMediaStream();

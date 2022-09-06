@@ -5,10 +5,10 @@ import Settings from './Settings';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
 import Theme from './Theme';
 import roomSocket from '../../../adapters/roomSocket';
-import connectedUsersStore from '../../../stores/connectedUsersStore';
-import messageStore from '../../../stores/messagesStore';
+import connectedUsersStore from '../../../stores/room/connectedUsersStore';
+import messageStore from '../../../stores/room/messagesStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
-import userPcStore from '../../../stores/userPcStore';
+import userPcStore from '../../../stores/room/userPcStore';
 
 export default function Header({ theme, setSetting }) {
   const navigate = useNavigate();

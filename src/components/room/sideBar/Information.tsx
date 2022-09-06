@@ -6,7 +6,7 @@ import { ReactComponent as RightTwoArrows } from '../../../assets/svg/Room/Right
 import { ReactComponent as Chatting } from '../../../assets/svg/Room/Chatting.svg';
 import { ReactComponent as LongBar } from '../../../assets/svg/Room/LongBar.svg';
 
-import controlSidebar from '../../../stores/controlSidebar';
+import controlSidebar from '../../../stores/room/controlSidebar';
 
 export default function Information() {
   const { roomId } = useParams();

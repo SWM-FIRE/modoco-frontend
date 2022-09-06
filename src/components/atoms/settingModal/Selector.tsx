@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
+import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import { ReactComponent as CameraSetting } from '../../../assets/svg/videoSetting.svg';
 import { ReactComponent as MicSetting } from '../../../assets/svg/micSetting.svg';
 import { ReactComponent as SpeakerSetting } from '../../../assets/svg/headphoneSetting.svg';

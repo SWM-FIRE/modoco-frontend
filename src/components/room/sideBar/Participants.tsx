@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import SingleParticipant from './SingleParticipant';
-import connectedUsersStore from '../../../stores/connectedUsersStore';
-import UserStore from '../../../stores/userStore';
-import userMediaStreamStore from '../../../stores/userMediaStreamStore';
+import connectedUsersStore from '../../../stores/room/connectedUsersStore';
+import UserStore from '../../../stores/room/userStore';
+import userMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 
 export default function Participants({
   moderator,

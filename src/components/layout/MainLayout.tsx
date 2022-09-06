@@ -3,7 +3,7 @@ import { ReactChannelIO } from 'react-channel-plugin';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
-import userStore from '../../stores/userStore';
+import userStore from '../../stores/room/userStore';
 
 export default function MainLayout() {
   const { uid, nickname } = userStore();

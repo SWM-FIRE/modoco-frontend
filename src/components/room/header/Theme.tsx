@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import MovingTheme from '../screenShare/MovingTheme';
 import { ReactComponent as VolumeOn } from '../../../assets/svg/VolumeOn.svg';
 import { ReactComponent as VolumeOff } from '../../../assets/svg/VolumeOff.svg';
-import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
+import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import ThemeSound from './ThemeSound';
 
 export default function Theme({ theme }) {

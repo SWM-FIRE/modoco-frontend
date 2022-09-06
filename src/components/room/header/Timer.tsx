@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import roomSocket from '../../../adapters/roomSocket';
 import { ReactComponent as Divide } from '../../../assets/svg/Divide.svg';
-import userStore from '../../../stores/userStore';
+import userStore from '../../../stores/room/userStore';
 
 export default function Timer() {
   const { time: initTime } = userStore();

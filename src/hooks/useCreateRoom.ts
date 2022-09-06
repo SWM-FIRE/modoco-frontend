@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useMutation } from 'react-query';
 import toast from 'react-hot-toast';
-import userStore from '../stores/userStore';
+import userStore from '../stores/room/userStore';
 import { API } from '../config';
 
 export default function useCreateRoom({

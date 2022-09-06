@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import audioFrequency from './audioFrequency';
 import Selectors from './Selectors';
 import VolumeBar from './VolumeBar';
-import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
+import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
 import audioContext from '../audioContext';

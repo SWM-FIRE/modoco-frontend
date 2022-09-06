@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import UserStore from '../../../stores/userStore';
+import UserStore from '../../../stores/room/userStore';
 import roomSocket from '../../../adapters/roomSocket';
-import connectedUsersStore from '../../../stores/connectedUsersStore';
+import connectedUsersStore from '../../../stores/room/connectedUsersStore';
 
 export default function Buttons({
   isMe,

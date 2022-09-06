@@ -8,7 +8,7 @@ import { roomConnection } from '../adapters/roomConnection';
 import useRoom from '../hooks/useRoom';
 import usePeerConnection from '../hooks/usePeerConnection';
 import usePopHistory from '../hooks/usePopHistory';
-import controlModal from '../stores/controlModal';
+import controlModal from '../stores/room/controlModal';
 import SettingModal from '../components/atoms/settingModal/SettingModal';
 import Header from '../components/room/header/Header';
 import ScreenShare from '../components/room/screenShare/ScreenShare';
@@ -18,10 +18,10 @@ import { ReactComponent as NewChatting } from '../assets/svg/Room/NewChatting.sv
 import Sidebar from '../components/room/sideBar/Sidebar';
 import ScreenShareModal from '../components/room/ScreenModal';
 import receiveNewMessageStore from '../stores/receiveNewMessageStore';
-import controlSidebar from '../stores/controlSidebar';
+import controlSidebar from '../stores/room/controlSidebar';
 import ChattingAlarm from '../components/room/sideBar/ChattingAlarm';
 import ProfileModal from '../components/room/profileModal/ProfileModal';
-import userStore from '../stores/userStore';
+import userStore from '../stores/room/userStore';
 
 export default function Room() {
   const { roomId } = useParams();

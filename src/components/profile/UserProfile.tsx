@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Avatar from '../atoms/Avatar';
-import UserStore from '../../stores/userStore';
+import UserStore from '../../stores/room/userStore';
 import Group from './UserProfile/Group';
 import Badge from './UserProfile/Badge';
 import Edit from './UserProfile/Edit';

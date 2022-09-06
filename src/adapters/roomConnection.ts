@@ -2,12 +2,12 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import connectedUsersStore from '../stores/connectedUsersStore';
+import connectedUsersStore from '../stores/room/connectedUsersStore';
 import roomSocket from './roomSocket';
-import messageStore from '../stores/messagesStore';
-import userPcStore from '../stores/userPcStore';
-import userStore from '../stores/userStore';
-import UserMediaStreamStore from '../stores/userMediaStreamStore';
+import messageStore from '../stores/room/messagesStore';
+import userPcStore from '../stores/room/userPcStore';
+import userStore from '../stores/room/userStore';
+import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import { API } from '../config';
 

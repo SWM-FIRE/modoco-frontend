@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
-import controlModal from '../../../stores/controlModal';
-import messageStore from '../../../stores/messagesStore';
-import userStore from '../../../stores/userStore';
-import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
+import controlModal from '../../../stores/room/controlModal';
+import messageStore from '../../../stores/room/messagesStore';
+import userStore from '../../../stores/room/userStore';
+import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import AudioTracking from './AudioTracking';
 
 export default function SingleScreen({ connectedUser, stream }) {

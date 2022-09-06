@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API } from '../config';
-import userStore from '../stores/userStore';
+import userStore from '../stores/room/userStore';
 
 export default function useSignUp() {
   const navigate = useNavigate();

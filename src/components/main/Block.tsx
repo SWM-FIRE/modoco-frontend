@@ -2,7 +2,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import UserStore from '../../stores/userStore';
+import UserStore from '../../stores/room/userStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import RoomDetail from '../atoms/RoomDetail';
 

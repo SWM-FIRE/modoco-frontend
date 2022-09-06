@@ -2,13 +2,13 @@ import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import ModalPortal from '../atoms/ModalPortal';
 import { ReactComponent as LeftArrow } from '../../assets/svg/arrow-left.svg';
-import controlModal from '../../stores/controlModal';
+import controlModal from '../../stores/room/controlModal';
 import MyAvatar from '../../assets/avatar/MyAvatar';
-import userStore from '../../stores/userStore';
-import userMediaStreamStore from '../../stores/userMediaStreamStore';
-import connectedUsersStore from '../../stores/connectedUsersStore';
+import userStore from '../../stores/room/userStore';
+import userMediaStreamStore from '../../stores/room/userMediaStreamStore';
+import connectedUsersStore from '../../stores/room/connectedUsersStore';
 import findStream from './findStream';
-import controlSidebar from '../../stores/controlSidebar';
+import controlSidebar from '../../stores/room/controlSidebar';
 
 export default function ScreenModal() {
   const videoRef = useRef<HTMLVideoElement>(null);
