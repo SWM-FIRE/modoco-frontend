@@ -19,6 +19,7 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
     userNickname = nickname;
     userAvatar = avatar;
     userDescription = description;
+    console.log('isMe');
   } else {
     // TODO: get user info from server
     userNickname = '임시 닉네임';
@@ -39,7 +40,7 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
   };
 
   return (
-    <Components>
+    <Components isMe={isMe}>
       <Avatar avatar={userAvatar} size={12} />
       <Contents>
         <NicknameComponent>
@@ -74,20 +75,18 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
   );
 }
 
-const Components = styled.div`
+const Components = styled.div<{ isMe: boolean }>`
   background-color: #23262f;
-  width: 92.5rem;
+  width: ${(props) => (props.isMe ? '70%' : '100%')};
   border-radius: 2rem;
   position: relative;
   display: flex;
   justify-content: flex-start;
-  justify-content: flex-start;
   padding: 3.2rem;
   gap: 5.6rem;
-  /* @media screen and (max-width: 96rem) {
+  @media (max-width: 1020px) {
     width: 100%;
-    min-width: 63.6rem;
-  } */
+  }
 `;
 
 const Contents = styled.div`

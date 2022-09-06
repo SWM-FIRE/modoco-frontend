@@ -6,30 +6,32 @@ import Overall from './Overall';
 
 export default function Contents({ isMe }: { isMe: boolean }) {
   return (
-    <Container>
+    <Container isMe={isMe}>
       <UserInformation>
         <UserProfile isMe={isMe} />
-        <Statistics />
-        <Overall />
+        {isMe && <Friends />}
       </UserInformation>
-      {isMe && <Friends />}
+      <Statistics isMe={isMe} />
+      <Overall isMe={isMe} />
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ isMe: boolean }>`
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   gap: 4.5rem;
   padding: 4.4rem 10rem;
+  width: ${(props) => (props.isMe ? '100%' : '80%')};
 `;
 
 const UserInformation = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6.4rem;
-  align-items: center;
-  /* @media (max-width: 96rem) {
+  width: 100%;
+  position: relative;
+  @media (max-width: 102rem) {
+    display: flex;
     flex-direction: column;
-    padding: 0 4rem;
-  } */
+  }
 `;
