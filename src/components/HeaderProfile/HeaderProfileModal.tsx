@@ -4,42 +4,54 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import UserStore from '../../stores/userStore';
-import LogoutModalStore from '../../stores/logoutModalStore';
 
-export default function HeaderProfileModal() {
+export default function HeaderProfileModal({
+  toggleModal,
+}: {
+  toggleModal: () => void;
+}) {
   const navigate = useNavigate();
-  const { toggleLogoutModal } = LogoutModalStore();
 
   const { nickname, avatar, uid } = UserStore((state) => state);
   const onLogOut = () => {
     localStorage.removeItem('access_token');
     navigate(`/`);
-    toggleLogoutModal();
+    toggleModal();
     toast.success('로그아웃 되었습니다');
   };
 
   const onProfile = () => {
     navigate(`/profile/${uid}`);
-    toggleLogoutModal();
+    toggleModal();
   };
 
   return (
-    <Component>
-      <UserInformation>
-        <AboutMe>
-          <AvatarComponent>
-            <MyAvatar num={avatar} />
-          </AvatarComponent>
-          <Nickname>{nickname}</Nickname>
-        </AboutMe>
-        <Button onClick={onProfile}>마이페이지</Button>
-      </UserInformation>
-      <Button onClick={onLogOut}>로그아웃</Button>
-    </Component>
+    <ModalPosition>
+      <Container>
+        <UserInformation>
+          <AboutMe>
+            <AvatarComponent>
+              <MyAvatar num={avatar} />
+            </AvatarComponent>
+            <Nickname>{nickname}</Nickname>
+          </AboutMe>
+          <Button onClick={onProfile}>마이페이지</Button>
+        </UserInformation>
+        <Button onClick={onLogOut}>로그아웃</Button>
+      </Container>
+    </ModalPosition>
   );
 }
 
-const Component = styled.div`
+const ModalPosition = styled.div`
+  position: absolute;
+  top: 8.4rem;
+  right: 4.4rem;
+  overflow: hidden;
+  z-index: 1;
+`;
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -47,11 +59,17 @@ const Component = styled.div`
   width: 32rem;
   background-color: #23262f;
   border-radius: 2rem;
-  position: absolute;
-  top: 12.4rem;
-  right: 4.4rem;
   padding: 3.2rem 2.4rem;
-  z-index: 999;
+  z-index: 2;
+  @keyframes dropdown {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  animation: dropdown 400ms ease-in-out forwards;
 `;
 
 const AvatarComponent = styled.div`
@@ -90,4 +108,7 @@ const Button = styled.button`
   border-radius: 2rem;
   padding: 1rem 0 1rem 0;
   cursor: pointer;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 `;

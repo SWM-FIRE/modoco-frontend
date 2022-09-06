@@ -7,7 +7,11 @@ import { filterData } from './filterData';
 import searchInputStore from '../../stores/searchInputStore';
 import Loading from '../atoms/Loading';
 
-export default function RoomCards() {
+export default function RoomCards({
+  openCreateRoom,
+}: {
+  openCreateRoom: () => void;
+}) {
   const { searchInput } = searchInputStore();
   const { isLoading, error, data } = useRooms();
 
@@ -24,7 +28,7 @@ export default function RoomCards() {
 
   return (
     <Container>
-      <CreateRoom />
+      <CreateRoom openCreateRoom={openCreateRoom} />
       {newData.map((data) => {
         return <Block key={data.itemId} isMain data={data} />;
       })}

@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
 import moment from 'moment';
-import connectedUsersStore from '../stores/connectedUsersStore';
-import messageStore from '../stores/messagesStore';
+import connectedUsersStore from '../stores/room/connectedUsersStore';
+import messageStore from '../stores/room/messagesStore';
 import roomSocket from './roomSocket';
 import userStore from '../stores/userStore';
-import receiveNewMessageStore from '../stores/receiveNewMessageStore';
+import receiveNewMessageStore from '../stores/room/receiveNewMessageStore';
 
 const onChatMessage = () => {
   const { connectedUsers } = connectedUsersStore();

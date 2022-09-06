@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as BottomArrow } from '../../../assets/svg/bottomArrow.svg';
-import messageStore from '../../../stores/messagesStore';
+import messageStore from '../../../stores/room/messagesStore';
 import userStore from '../../../stores/userStore';
 
 export default function NewMessage({ chatWindow }) {

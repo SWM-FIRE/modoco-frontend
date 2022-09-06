@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
-import UserMediaStreamStore from '../stores/userMediaStreamStore';
+import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
 import SettingModal from '../components/atoms/settingModal/SettingModal';
 import Header from '../components/ready/Header';
 import RoomDetail from '../components/ready/RoomDetail';
@@ -31,6 +31,10 @@ export default function ReadyPage() {
     }
   }, []);
 
+  const toggleSetting = () => {
+    setIsSetting(!isSetting);
+  };
+
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.srcObject = userMediaStream;
@@ -40,7 +44,7 @@ export default function ReadyPage() {
   return (
     <>
       {isSetting ? (
-        <SettingModal setting={isSetting} setSetting={setIsSetting} />
+        <SettingModal setting={isSetting} toggle={toggleSetting} />
       ) : null}
       <Container>
         <Header />

@@ -1,10 +1,11 @@
 import React from 'react';
 import { ReactChannelIO } from 'react-channel-plugin';
 import { Outlet } from 'react-router-dom';
+import Header from './Header';
 import Footer from './Footer';
 import userStore from '../../stores/userStore';
 
-export default function Layout() {
+export default function MainLayout() {
   const { uid, nickname } = userStore();
   const profile = uid
     ? {
@@ -33,13 +34,9 @@ export default function Layout() {
           autoBootTimeout={2000}
         />
       )}
+      <Header />
       <Outlet />
       <Footer />
     </>
   );
 }
-
-// const Container = styled.div`
-//   width: 100vw;
-//   height: 100vh;
-// `;

@@ -13,7 +13,6 @@ export default function SingleParticipant({
   isAudioEnabled,
   moderator,
   uid,
-  toggleProfileModal,
 }: {
   isMe: boolean;
   nickname: string;
@@ -21,7 +20,6 @@ export default function SingleParticipant({
   isAudioEnabled: boolean;
   moderator: number;
   uid: number;
-  toggleProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [showSideProfile, setShowSideProfile] = useState<boolean>(false);
 
@@ -45,7 +43,6 @@ export default function SingleParticipant({
       {showSideProfile ? (
         <SideProfileModal
           toggle={setShowSideProfile}
-          toggleProfile={toggleProfileModal}
           nickname={nickname}
           uid={uid}
           avatar={avatar}

@@ -3,17 +3,17 @@ import styled from 'styled-components';
 import audioFrequency from './audioFrequency';
 import Selectors from './Selectors';
 import VolumeBar from './VolumeBar';
-import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
+import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
 import audioContext from '../audioContext';
 
 export default function SettingModal({
   setting,
-  setSetting,
+  toggle,
 }: {
   setting: boolean;
-  setSetting: React.Dispatch<React.SetStateAction<boolean>>;
+  toggle: () => void;
 }) {
   const { userMediaStream, userAudioInputDevice } = UserMediaStreamStore();
   const { replaceAudioStream } = useCreateMediaStream();
@@ -26,11 +26,11 @@ export default function SettingModal({
 
   const closeModal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    setSetting(false);
+    toggle();
   };
   const closeModalBackground = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-    setSetting(false);
+    toggle();
   };
 
   useEffect(() => {

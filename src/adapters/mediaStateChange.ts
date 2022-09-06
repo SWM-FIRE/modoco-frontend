@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
 import roomSocket from './roomSocket';
-import connectedUsersStore from '../stores/connectedUsersStore';
+import connectedUsersStore from '../stores/room/connectedUsersStore';
 import userStore from '../stores/userStore';
-import messageStore from '../stores/messagesStore';
-import userPcStore from '../stores/userPcStore';
+import messageStore from '../stores/room/messagesStore';
+import userPcStore from '../stores/room/userPcStore';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 
 const mediaStateChange = () => {

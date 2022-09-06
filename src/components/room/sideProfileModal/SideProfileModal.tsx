@@ -7,7 +7,6 @@ import FriendButtons from './FriendButtons';
 
 export default function ProfileModal({
   toggle,
-  toggleProfile,
   nickname,
   avatar,
   isMe,
@@ -16,7 +15,6 @@ export default function ProfileModal({
   uid,
 }: {
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleProfile: React.Dispatch<React.SetStateAction<boolean>>;
   nickname: string;
   avatar: number;
   isMe: boolean;
@@ -36,12 +34,7 @@ export default function ProfileModal({
         <Inner>
           <ProfileModalHeader profileToggle={toggle} />
           <Body>
-            <UserInfo
-              avatarNo={avatar}
-              nickname={nickname}
-              toggle={toggle}
-              toggleProfile={toggleProfile}
-            />
+            <UserInfo avatarNo={avatar} nickname={nickname} toggle={toggle} />
             {isFriend ? (
               <FriendButtons />
             ) : (

@@ -1,43 +1,67 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import UserStore from '../../stores/userStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import LoginModalStore from '../../stores/loginModalStore';
-import LogoutModalStore from '../../stores/logoutModalStore';
 import HeaderProfileModal from '../HeaderProfile/HeaderProfileModal';
 import { ReactComponent as TopArrow } from '../../assets/svg/topArrow.svg';
 import { ReactComponent as BottomArrow } from '../../assets/svg/bottomArrow.svg';
 
 export default function Header() {
-  const { nickname, avatar } = UserStore((state) => state);
+  const { nickname, avatar } = UserStore();
 
-  const { openLoginModal } = LoginModalStore((state) => state);
-  const { isOpenLogoutModal, toggleLogoutModal } = LogoutModalStore();
+  const { openLoginModal } = LoginModalStore();
+  const [headerProfileModal, toggleHeaderProfileModal] =
+    useState<boolean>(false);
   const navigate = useNavigate();
 
   const clickLogo = () => {
-    navigate('/#/');
+    if (localStorage.getItem('access_token')) {
+      navigate('/main');
+    } else {
+      navigate('/');
+    }
+  };
+
+  const toggleModal = () => {
+    toggleHeaderProfileModal(!headerProfileModal);
+  };
+
+  const closeHeaderProfile = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    toggleModal();
   };
 
   return (
-    <Container>
-      <Logo onClick={clickLogo}>modoco</Logo>
-      {nickname ? (
-        <Profile onClick={toggleLogoutModal}>
-          <AvatarContainer>
-            <MyAvatar num={avatar} />
-          </AvatarContainer>
-          <SvgComponent>
-            {isOpenLogoutModal ? <TopArrow /> : <BottomArrow />}
-          </SvgComponent>
-        </Profile>
-      ) : (
-        <Login onClick={openLoginModal}>로그인</Login>
-      )}
-      {isOpenLogoutModal && <HeaderProfileModal />}
-    </Container>
+    <>
+      {headerProfileModal && <Screen onClick={toggleModal} />}
+      <Container>
+        <Logo onClick={clickLogo}>modoco</Logo>
+        {nickname ? (
+          <Profile onClick={closeHeaderProfile}>
+            <AvatarContainer>
+              <MyAvatar num={avatar} />
+            </AvatarContainer>
+            <SvgComponent>
+              {headerProfileModal ? <TopArrow /> : <BottomArrow />}
+            </SvgComponent>
+          </Profile>
+        ) : (
+          <Login onClick={openLoginModal}>로그인</Login>
+        )}
+        {headerProfileModal && <HeaderProfileModal toggleModal={toggleModal} />}
+      </Container>
+    </>
   );
 }
+
+const Screen = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+`;
 
 const Login = styled.button`
   width: 9.1rem;

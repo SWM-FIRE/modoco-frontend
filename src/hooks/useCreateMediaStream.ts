@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
-import UserMediaStreamStore from '../stores/userMediaStreamStore';
-import userPcStore from '../stores/userPcStore';
+import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
+import userPcStore from '../stores/room/userPcStore';
 
 export const useCreateMediaStream = () => {
   const {

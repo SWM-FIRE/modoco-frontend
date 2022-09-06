@@ -4,15 +4,9 @@ import Participants from './Participants';
 import Chatting from './Chatting';
 import Information from './Information';
 import ModalPortal from '../../atoms/ModalPortal';
-import receiveNewMessageStore from '../../../stores/receiveNewMessageStore';
+import receiveNewMessageStore from '../../../stores/room/receiveNewMessageStore';
 
-export default function SidebarMemo({
-  moderator,
-  toggleProfileModal,
-}: {
-  moderator: number;
-  toggleProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function SidebarMemo({ moderator }: { moderator: number }) {
   const { setIsReceiveNewMessage } = receiveNewMessageStore();
   useEffect(() => {
     setIsReceiveNewMessage(false);
@@ -21,10 +15,7 @@ export default function SidebarMemo({
     <ModalPortal>
       <Component>
         <Information />
-        <Participants
-          moderator={moderator}
-          toggleProfileModal={toggleProfileModal}
-        />
+        <Participants moderator={moderator} />
         <Chatting />
       </Component>
     </ModalPortal>
@@ -43,6 +34,6 @@ const Component = styled.div`
   right: 0;
   top: 10rem;
   height: calc(100vh - 14rem);
-  z-index: 999;
+  z-index: 2;
   box-shadow: 0px 4px 59px rgba(50, 50, 71, 0.3);
 `;

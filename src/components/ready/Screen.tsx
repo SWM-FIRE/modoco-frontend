@@ -2,7 +2,7 @@ import React, { Dispatch, RefObject, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { useCreateMediaStream } from '../../hooks/useCreateMediaStream';
 import Settings from './Setting';
-import userMediaStreamStore from '../../stores/userMediaStreamStore';
+import userMediaStreamStore from '../../stores/room/userMediaStreamStore';
 import { ReactComponent as MicOff } from '../../assets/svg/MicOff.svg';
 import { ReactComponent as MicOn } from '../../assets/svg/MicOn.svg';
 import { ReactComponent as MonitorOn } from '../../assets/svg/MonitorOn.svg';
