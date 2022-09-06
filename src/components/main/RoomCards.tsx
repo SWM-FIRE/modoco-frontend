@@ -5,7 +5,7 @@ import useRooms from '../../hooks/useRooms';
 import CreateRoom from './CreateRoom';
 import { filterData } from './filterData';
 import searchInputStore from '../../stores/searchInputStore';
-import Loading from '../atoms/Loading';
+import EmptyBlock from './EmptyBlock';
 
 export default function RoomCards({
   openCreateRoom,
@@ -15,13 +15,6 @@ export default function RoomCards({
   const { searchInput } = searchInputStore();
   const { isLoading, error, data } = useRooms();
 
-  if (isLoading)
-    return (
-      <LoadingContainer>
-        <Loading />
-      </LoadingContainer>
-    );
-
   if (error) return <div>An error has occurred: </div>;
 
   const newData = filterData(data, searchInput);
@@ -29,19 +22,16 @@ export default function RoomCards({
   return (
     <Container>
       <CreateRoom openCreateRoom={openCreateRoom} />
-      {newData.map((data) => {
-        return <Block key={data.itemId} isMain data={data} />;
-      })}
+      {isLoading
+        ? [...Array(3)].map((no, index) => (
+            <EmptyBlock key={Symbol(index).toString()} isMain={false} />
+          ))
+        : newData.map((data) => {
+            return <Block key={data.itemId} isMain data={data} />;
+          })}
     </Container>
   );
 }
-
-const LoadingContainer = styled.div`
-  margin-top: 10rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const Container = styled.div`
   /* width: calc(100% - 10rem); */
