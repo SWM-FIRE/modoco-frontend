@@ -1,7 +1,7 @@
 import React from 'react';
 import { ReactChannelIO } from 'react-channel-plugin';
 import { Outlet } from 'react-router-dom';
-import Header from '../main/Header';
+import Header from './Header';
 import Footer from './Footer';
 import userStore from '../../stores/userStore';
 

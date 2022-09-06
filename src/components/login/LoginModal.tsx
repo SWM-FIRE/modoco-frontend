@@ -7,7 +7,7 @@ import ModalTitle from './ModalTitle';
 import UserInput from './UserInput';
 import LoginModalStore from '../../stores/loginModalStore';
 
-export default function Modal() {
+export default function LoginModal() {
   const { closeLoginModal } = LoginModalStore();
   return (
     <ModalPortal>
