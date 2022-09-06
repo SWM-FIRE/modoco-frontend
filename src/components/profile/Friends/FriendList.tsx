@@ -11,7 +11,13 @@ export default function FriendList() {
       {friendList.map((friend) => (
         <Component key={friend.id}>
           <Avatar avatar={friend.avatar} size={4} />
-          <Nickname>{friend.nickname}</Nickname>
+          <Information>
+            <Nickname>{friend.nickname}</Nickname>
+            <FriendStatus>
+              <OnlineStatus isOnline={friend.state !== ''} />
+              {friend.state !== '' ? friend.state : '오프라인'}
+            </FriendStatus>
+          </Information>
           <SendMessage>
             <SendButton>
               <SendImage />
@@ -29,11 +35,42 @@ const Component = styled.div`
   color: #f9fafb;
   font-size: 1.5rem;
   margin-top: 2.8rem;
+  max-width: 24.6rem;
+  width: min-content;
 `;
 
 const Nickname = styled.div`
-  margin-left: 1rem;
   font-size: 1.5rem;
+  width: 10rem;
+  overflow: auto;
+  white-space: nowrap;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const Information = styled.div`
+  margin-left: 1rem;
+`;
+
+const FriendStatus = styled.div`
+  font-size: 1.2rem;
+  font-family: IBMPlexSansKRRegular;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(248, 250, 252, 0.1);
+  border-radius: 5rem;
+  margin-top: 0.8rem;
+  padding: 0.2rem 0.8rem;
+  width: max-content;
+`;
+
+const OnlineStatus = styled.div<{ isOnline: boolean }>`
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background-color: ${(props) => (props.isOnline ? '#45B26B' : '#a5a5a5')};
 `;
 
 const SendMessage = styled.div`
@@ -44,7 +81,7 @@ const SendMessage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 2.8rem;
+  margin-left: 2rem;
   cursor: pointer;
 `;
 
