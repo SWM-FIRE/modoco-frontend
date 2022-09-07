@@ -35,13 +35,12 @@ const Component = styled.div`
   color: #f9fafb;
   font-size: 1.5rem;
   margin-top: 2.8rem;
-  max-width: 24.6rem;
-  width: min-content;
+  max-width: 28rem;
 `;
 
 const Nickname = styled.div`
   font-size: 1.5rem;
-  width: 10rem;
+  width: 100%;
   overflow: auto;
   white-space: nowrap;
   ::-webkit-scrollbar {
@@ -51,6 +50,7 @@ const Nickname = styled.div`
 
 const Information = styled.div`
   margin-left: 1rem;
+  flex-grow: 1;
 `;
 
 const FriendStatus = styled.div`

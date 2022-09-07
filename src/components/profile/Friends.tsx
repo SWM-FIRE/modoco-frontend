@@ -53,8 +53,8 @@ const Components = styled.div`
 `;
 
 const FriendComponent = styled.div`
+  width: 100%;
   @media (max-width: 1020px) {
-    width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     max-height: 15rem;
