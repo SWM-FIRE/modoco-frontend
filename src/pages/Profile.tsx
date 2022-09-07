@@ -5,7 +5,7 @@ import userStore from '../stores/userStore';
 
 export default function Profile() {
   const { userId } = useParams();
-  const { uid } = userStore((state) => state);
+  const { uid } = userStore();
 
   const isMe = Number(userId) === uid;
 

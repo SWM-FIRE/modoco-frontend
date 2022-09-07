@@ -2,14 +2,10 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Header from './Header';
 import Contents from '../../profile/Contents';
+import userStore from '../../../stores/userStore';
+import roomModalStore from '../../../stores/room/roomModalStore';
 
-export default function ProfileModal({
-  isMe,
-  toggle,
-}: {
-  isMe: boolean;
-  toggle: () => void;
-}) {
+export default function ProfileModal({ toggle }: { toggle: () => void }) {
   useEffect(() => {
     console.log('i am open');
     return () => {
@@ -20,12 +16,16 @@ export default function ProfileModal({
     event.preventDefault();
     toggle();
   };
+  const { uid } = userStore();
+  const { profileUid } = roomModalStore();
 
   return (
     <Screen onClick={closeModalBackground}>
       <Container onClick={(e) => e.stopPropagation()}>
         <Header toggle={toggle} />
-        <Contents isMe={isMe} />
+        <CenterContent>
+          <Contents isMe={uid === profileUid} />
+        </CenterContent>
       </Container>
     </Screen>
   );
@@ -42,10 +42,17 @@ const Screen = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
+const CenterContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Container = styled.div`
   position: relative;
   width: 60%;
-  min-width: 80rem;
+  min-width: 60rem;
   height: 90%;
   background-color: black;
   overflow: auto;

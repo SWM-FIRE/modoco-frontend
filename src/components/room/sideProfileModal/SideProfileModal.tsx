@@ -5,7 +5,7 @@ import UserInfo from './UserInfo';
 import Buttons from './Buttons';
 import FriendButtons from './FriendButtons';
 
-export default function ProfileModal({
+export default function SideProfileModal({
   toggle,
   nickname,
   avatar,
@@ -34,7 +34,12 @@ export default function ProfileModal({
         <Inner>
           <ProfileModalHeader profileToggle={toggle} />
           <Body>
-            <UserInfo avatarNo={avatar} nickname={nickname} toggle={toggle} />
+            <UserInfo
+              avatarNo={avatar}
+              nickname={nickname}
+              toggle={toggle}
+              uid={uid}
+            />
             {isFriend ? (
               <FriendButtons />
             ) : (
