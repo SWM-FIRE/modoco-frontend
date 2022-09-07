@@ -7,6 +7,8 @@ interface Modal {
   toggleSettingModal: () => void;
   sidebarModal: boolean;
   toggleSidebarModal: () => void;
+  profileUid: number;
+  setProfileUid: (_by: number) => void;
   profileModal: boolean;
   toggleProfileModal: () => void;
   sideProfileModal: boolean;
@@ -25,6 +27,8 @@ const roomModalStore = create<Modal>((set) => ({
   sidebarModal: false,
   toggleSidebarModal: () =>
     set((state) => ({ sidebarModal: !state.sidebarModal })),
+  profileUid: -1,
+  setProfileUid: (by: number) => set(() => ({ profileUid: by })),
   profileModal: false,
   toggleProfileModal: () =>
     set((state) => ({ profileModal: !state.profileModal })),

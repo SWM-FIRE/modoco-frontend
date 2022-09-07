@@ -12,6 +12,7 @@ export default function Statistics({ isMe }) {
 const Components = styled.div`
   color: #f9fafb;
   width: 100%;
+  min-width: 55rem;
 `;
 
 const Title = styled.h1`

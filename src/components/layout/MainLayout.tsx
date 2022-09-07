@@ -4,8 +4,11 @@ import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import userStore from '../../stores/userStore';
+import useSetSelf from '../../hooks/useSetSelf';
 
 export default function MainLayout() {
+  useSetSelf();
+
   const { uid, nickname } = userStore();
   const profile = uid
     ? {

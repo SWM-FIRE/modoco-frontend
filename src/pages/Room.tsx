@@ -15,12 +15,10 @@ import Sidebar from '../components/room/sideBar/Sidebar';
 import roomModalStore from '../stores/room/roomModalStore';
 import ScreenShareModal from '../components/room/ScreenModal';
 import ProfileModal from '../components/room/profileModal/ProfileModal';
-import userStore from '../stores/userStore';
 
 export default function Room() {
   const { roomId } = useParams();
   const { isLoading, error, data } = useRoom(roomId);
-  const { uid } = userStore();
   const {
     screenModal,
     settingModal,
@@ -52,12 +50,7 @@ export default function Room() {
       {settingModal && (
         <SettingModal setting={settingModal} toggle={toggleSettingModal} />
       )}
-      {profileModal && (
-        <ProfileModal
-          isMe={data?.moderator.uid === uid}
-          toggle={toggleProfileModal}
-        />
-      )}
+      {profileModal && <ProfileModal toggle={toggleProfileModal} />}
       {screenModal && <ScreenShareModal />}
       <Component>
         <Header theme={data?.theme} />

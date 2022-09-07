@@ -7,17 +7,21 @@ import { ReactComponent as RightArrow } from '../../../assets/svg/rightArrow.svg
 export default function UserInfo({
   avatarNo,
   nickname,
+  uid,
   toggle,
 }: {
   avatarNo: number;
   nickname: string;
+  uid: number;
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { toggleProfileModal } = roomModalStore();
+  const { toggleProfileModal, setProfileUid } = roomModalStore();
+
   const toggleProfile = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     toggle(false);
     toggleProfileModal();
+    setProfileUid(uid);
   };
 
   return (

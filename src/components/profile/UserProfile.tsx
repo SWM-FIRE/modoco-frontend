@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Avatar from '../atoms/Avatar';
-import UserStore from '../../stores/userStore';
+import userStore from '../../stores/userStore';
 import Group from './UserProfile/Group';
 import Badge from './UserProfile/Badge';
 import Edit from './UserProfile/Edit';
@@ -10,12 +10,12 @@ import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessage
 import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
 
 export default function UserProfile({ isMe }: { isMe: boolean }) {
+  const { nickname, avatar, description } = userStore();
   let userNickname: string;
   let userAvatar: number;
   let userDescription: string;
   let isFriend = false;
   if (isMe) {
-    const { nickname, avatar, description } = UserStore((state) => state);
     userNickname = nickname;
     userAvatar = avatar;
     userDescription = description;
@@ -84,6 +84,7 @@ const Components = styled.div<{ isMe: boolean }>`
   justify-content: flex-start;
   padding: 3.2rem;
   gap: 5.6rem;
+  min-width: 55rem;
   @media (max-width: 1020px) {
     width: 100%;
   }
