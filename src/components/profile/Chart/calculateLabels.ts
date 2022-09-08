@@ -16,7 +16,7 @@ export const calculateLabels = (type: string) => {
     let temp = 0;
     for (let i = 48; i > 0; i -= 7) {
       const last = moment(now)
-        .subtract(i + 7 - temp, 'days')
+        .subtract(i + 6 - temp, 'days')
         .format('M월 D일');
       labels.push(
         moment(now)
@@ -26,12 +26,8 @@ export const calculateLabels = (type: string) => {
       temp += 1;
     }
   } else {
-    for (let i = 0; i < 30; i += 1) {
-      labels.push(
-        moment(moment(now).subtract(29, 'days'))
-          .add(i, 'days')
-          .format('M월 D일'),
-      );
+    for (let i = 29; i >= 0; i -= 1) {
+      labels.push(moment(moment(now).subtract(i, 'days')).format('M월 D일'));
     }
   }
   return labels;
