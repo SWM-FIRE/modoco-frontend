@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import FriendList from './Friends/FriendList';
 import AddFriend from './Friends/AddFriend';
 
-export default function Friends() {
+export default function Friends({ isModal }: { isModal: boolean }) {
   const [categoryType, setCategoryType] = useState('friendList');
 
   const onClickFriendList = () => {
@@ -15,7 +15,7 @@ export default function Friends() {
   };
 
   return (
-    <Components>
+    <Components isModal={isModal}>
       <Category>
         <CategoryButton
           onClick={onClickFriendList}
@@ -30,14 +30,14 @@ export default function Friends() {
           친구신청
         </CategoryButton>
       </Category>
-      <FriendComponent>
+      <FriendComponent isModal={isModal}>
         {categoryType === 'friendList' ? <FriendList /> : <AddFriend />}
       </FriendComponent>
     </Components>
   );
 }
 
-const Components = styled.div`
+const Components = styled.div<{ isModal: boolean }>`
   width: 25%;
   display: flex;
   align-items: flex-start;
@@ -45,16 +45,16 @@ const Components = styled.div`
   position: absolute;
   right: 1rem;
   top: 0;
-  @media (max-width: 1020px) {
+  @media (max-width: ${(props) => (props.isModal ? '1700px ' : '1020px')}) {
     position: static;
     width: 100%;
     margin-top: 6.4rem;
   }
 `;
 
-const FriendComponent = styled.div`
+const FriendComponent = styled.div<{ isModal: boolean }>`
   width: 100%;
-  @media (max-width: 1020px) {
+  @media (max-width: ${(props) => (props.isModal ? '1700px ' : '1020px')}) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     max-height: 15rem;
