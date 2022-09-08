@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ProfileModal from '../profileModal/ProfileModal';
+import SideProfileModal from '../sideProfileModal/SideProfileModal';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
 import { ReactComponent as MicOff } from '../../../assets/svg/SmallMicOff.svg';
@@ -16,16 +16,16 @@ export default function SingleParticipant({
 }: {
   isMe: boolean;
   nickname: string;
-  avatar: string;
+  avatar: number;
   isAudioEnabled: boolean;
-  moderator: string;
-  uid: string;
+  moderator: number;
+  uid: number;
 }) {
-  const [showProfile, setShowProfile] = useState<boolean>(false);
+  const [showSideProfile, setShowSideProfile] = useState<boolean>(false);
 
   const toggleProfile = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-    setShowProfile(!showProfile);
+    setShowSideProfile(!showSideProfile);
   };
 
   const friendState = false;
@@ -36,13 +36,13 @@ export default function SingleParticipant({
         <MyAvatar num={Number(avatar)} />
         <MicContainer>{isAudioEnabled ? <MicOn /> : <MicOff />}</MicContainer>
       </AvatarContainer>
-      <NameContainer isMe={isMe} nicknameLength={nickname.length}>
+      <NameContainer isMe={isMe} nicknameLength={nickname?.length}>
         {nickname}
-        {moderator.toString() === uid && <Crown />}
+        {moderator === uid && <Crown />}
       </NameContainer>
-      {showProfile ? (
-        <ProfileModal
-          toggle={setShowProfile}
+      {showSideProfile ? (
+        <SideProfileModal
+          toggle={setShowSideProfile}
           nickname={nickname}
           uid={uid}
           avatar={avatar}

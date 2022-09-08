@@ -5,19 +5,12 @@ import { LeftArrow, RightArrow } from './Arrow';
 import Block from './Block';
 import useRooms from '../../hooks/useRooms';
 import { filterData } from './filterData';
-import Loading from '../atoms/Loading';
 import TagStore from '../../stores/searchInputStore';
+import EmptyBlock from './EmptyBlock';
 
 export default function Scrolls() {
   const { isLoading, error, data } = useRooms();
   const { searchInput } = TagStore();
-  if (isLoading)
-    return (
-      <LoadingContainer>
-        <Loading />
-      </LoadingContainer>
-    );
-
   if (error) return <div>An error has occurred: </div>;
 
   const newData = filterData(data, searchInput);
@@ -25,20 +18,17 @@ export default function Scrolls() {
   return (
     <Container>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-        {newData.map((data) => {
-          return <Block key={data.itemId} isMain={false} data={data} />;
-        })}
+        {isLoading
+          ? [...Array(3)].map((no, index) => (
+              <EmptyBlock key={Symbol(index).toString()} isMain={false} />
+            ))
+          : newData.map((data) => {
+              return <Block key={data.itemId} isMain={false} data={data} />;
+            })}
       </ScrollMenu>
     </Container>
   );
 }
-
-const LoadingContainer = styled.div`
-  margin-top: 3.6rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const Container = styled.div`
   margin-top: 3.6rem;

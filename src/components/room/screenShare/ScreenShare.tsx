@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import SingleScreen from './SingleScreen';
-import connectedUsersStore from '../../../stores/connectedUsersStore';
+import connectedUsersStore from '../../../stores/room/connectedUsersStore';
 import VoidScreen from './VoidScreen';
 import MovingTheme from './MovingTheme';
 import findStream from '../findStream';
 import userStore from '../../../stores/userStore';
-import userMediaStreamStore from '../../../stores/userMediaStreamStore';
+import userMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 
 export default function ScreenShare({ theme }) {
   const { connectedUsers, userStream } = connectedUsersStore();

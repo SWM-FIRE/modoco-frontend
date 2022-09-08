@@ -1,64 +1,64 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import ProfileModalHeader from './ProfileModalHeader';
-import UserInfo from './UserInfo';
-import Buttons from './Buttons';
-import FriendButtons from './FriendButtons';
+import Header from './Header';
+import Contents from '../../profile/Contents';
+import userStore from '../../../stores/userStore';
+import roomModalStore from '../../../stores/room/roomModalStore';
 
-export default function ProfileModal({
-  toggle,
-  nickname,
-  avatar,
-  isMe,
-  isFriend,
-  moderator,
-  uid,
-}: {
-  toggle: React.Dispatch<React.SetStateAction<boolean>>;
-  nickname: string;
-  avatar: string;
-  isMe: boolean;
-  isFriend: boolean;
-  moderator: string;
-  uid: string;
-}) {
+export default function ProfileModal({ toggle }: { toggle: () => void }) {
+  useEffect(() => {
+    console.log('i am open');
+    return () => {
+      console.log(' i close');
+    };
+  }, []);
+  const closeModalBackground = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    toggle();
+  };
+  const { uid } = userStore();
+  const { profileUid } = roomModalStore();
+
   return (
-    <Container>
-      <Inner>
-        <ProfileModalHeader profileToggle={toggle} />
-        <Body>
-          <UserInfo avatarNo={avatar} nickname={nickname} />
-          {isFriend ? (
-            <FriendButtons />
-          ) : (
-            <Buttons isMe={isMe} moderator={moderator} uid={uid} />
-          )}
-        </Body>
-      </Inner>
-    </Container>
+    <Screen onClick={closeModalBackground}>
+      <Container onClick={(e) => e.stopPropagation()}>
+        <Header toggle={toggle} />
+        <CenterContent>
+          <Contents isMe={uid === profileUid} />
+        </CenterContent>
+      </Container>
+    </Screen>
   );
 }
 
-const Body = styled.div`
+const Screen = styled.div`
+  position: fixed;
+  z-index: 5;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  height: calc(100% - 2.4rem);
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const Inner = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
+const CenterContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Container = styled.div`
-  position: absolute;
-  width: 32rem;
-  background-color: #23262f;
-  top: 8rem;
-  left: -30rem;
-  z-index: 1;
-  padding: 2rem 2.4rem 3.2rem 2.4rem;
-  border-radius: 2rem;
+  position: relative;
+  width: 60%;
+  min-width: 60rem;
+  height: 90%;
+  background-color: black;
+  overflow: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  border-radius: 3rem;
+  border: 3px solid rgba(255, 255, 255, 0.2);
 `;

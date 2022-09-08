@@ -1,11 +1,9 @@
 import styled from 'styled-components';
-import Header from '../components/main/Header';
 import MyPageForm from '../components/signUp/MyPageForm';
 
 export default function MyPage() {
   return (
     <>
-      <Header />
       <Component />
       <MyPageForm />
     </>

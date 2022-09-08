@@ -1,0 +1,66 @@
+[
+  {
+    "uid": 8,
+    "nickname": "하랭",
+    "avatar": 1,
+    "description": "안녕하세요",
+    "friend": {
+      "isMyFriend": true,
+      "isReceiveFriend": false,
+      "isSendFriend": false,
+      "beFriendDate": "2020-01-01 00:00:00"
+    },
+    "company": "쿠팡",
+    "group": ["소마"],
+    "badge": ["새싹1"],
+    "online": null
+  },
+  {
+    "uid": 27,
+    "nickname": "소마",
+    "avatar": 1,
+    "description": "안녕하세요",
+    "friend": {
+      "isMyFriend": false,
+      "isReceiveFriend": true,
+      "isSendFriend": false,
+      "beFriendDate": null
+    },
+    "company": "쿠팡",
+    "group": ["소마"],
+    "badge": ["새싹1"],
+    "online": null
+  },
+  {
+    "uid": 28,
+    "nickname": "영기",
+    "avatar": 1,
+    "description": "안녕하세요",
+    "friend": {
+      "isMyFriend": false,
+      "isReceiveFriend": false,
+      "isSendFriend": true,
+      "beFriendDate": null
+    },
+    "company": "쿠팡",
+    "group": ["소마"],
+    "badge": ["새싹1"],
+    "online": null
+  },
+  {
+    "uid": 45,
+    "nickname": "그룻",
+    "avatar": 1,
+    "description": "안녕하세요",
+    "friend": {
+      "isMyFriend": false,
+      "isReceiveFriend": false,
+      "isSendFriend": false,
+      "beFriendDate": null
+    },
+    "company": "쿠팡",
+    "group": ["소마"],
+    "badge": ["새싹1"],
+    "online": null
+  }
+]

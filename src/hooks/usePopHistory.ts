@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import roomSocket from '../adapters/roomSocket';
 import { history } from './useHistory';
-import connectedUsersStore from '../stores/connectedUsersStore';
+import connectedUsersStore from '../stores/room/connectedUsersStore';
 import { useCreateMediaStream } from './useCreateMediaStream';
 // import usePreventLeave from './usePreventLeave';
-import messageStore from '../stores/messagesStore';
-import userPcStore from '../stores/userPcStore';
+import messageStore from '../stores/room/messagesStore';
+import userPcStore from '../stores/room/userPcStore';
 
 export default function usePopHistory(roomId: string) {
   const { setUsers } = connectedUsersStore();

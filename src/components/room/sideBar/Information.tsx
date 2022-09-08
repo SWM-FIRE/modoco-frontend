@@ -5,16 +5,16 @@ import useRoom from '../../../hooks/useRoom';
 import { ReactComponent as RightTwoArrows } from '../../../assets/svg/Room/RightTwoArrows.svg';
 import { ReactComponent as Chatting } from '../../../assets/svg/Room/Chatting.svg';
 import { ReactComponent as LongBar } from '../../../assets/svg/Room/LongBar.svg';
-
-import controlSidebar from '../../../stores/controlSidebar';
+import roomModalStore from '../../../stores/room/roomModalStore';
 
 export default function Information() {
   const { roomId } = useParams();
   const { data } = useRoom(roomId);
-  const { closeSidebar } = controlSidebar();
+  const { toggleSidebarModal } = roomModalStore();
 
-  const onControlSidebarClick = () => {
-    closeSidebar();
+  const onControlSidebarClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    toggleSidebarModal();
   };
 
   return (

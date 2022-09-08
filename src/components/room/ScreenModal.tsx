@@ -1,27 +1,25 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import ModalPortal from '../atoms/ModalPortal';
 import { ReactComponent as LeftArrow } from '../../assets/svg/arrow-left.svg';
-import controlModal from '../../stores/controlModal';
+import connectedUsersStore from '../../stores/room/connectedUsersStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import userStore from '../../stores/userStore';
-import userMediaStreamStore from '../../stores/userMediaStreamStore';
-import connectedUsersStore from '../../stores/connectedUsersStore';
+import userMediaStreamStore from '../../stores/room/userMediaStreamStore';
+import roomModalStore from '../../stores/room/roomModalStore';
 import findStream from './findStream';
-import controlSidebar from '../../stores/controlSidebar';
 
 export default function ScreenModal() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const { uid: myUid } = userStore();
-  const { sid, uid, nickname, avatar, toggleModal } = controlModal();
+  const { uid, avatar, nickname } = userStore();
+  const { screenUid, toggleScreenModal, sidebarModal } = roomModalStore();
   const { userMediaStream } = userMediaStreamStore();
-  const { connectedUsers, userStream } = connectedUsersStore();
-  const { isOpenSidebar } = controlSidebar();
+  const { connectedUsers, userStream, findUserByUid } = connectedUsersStore();
 
-  const newStream =
-    myUid === uid
-      ? userMediaStream
-      : findStream({ sid, connectedUsers, userStream });
+  const user = findUserByUid(screenUid);
+  const isMe = uid === screenUid;
+  const newStream = isMe
+    ? userMediaStream
+    : findStream({ sid: user.socketId, connectedUsers, userStream });
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.srcObject = newStream;
@@ -29,28 +27,36 @@ export default function ScreenModal() {
   }, [videoRef, userMediaStream]);
 
   return (
-    <ModalPortal>
-      <ModalBox isOpen={isOpenSidebar}>
-        <ModalController>
-          <ArrowBox onClick={toggleModal}>
-            <LeftArrow />
-          </ArrowBox>
-          <MyAvatar num={Number(avatar)} />
-          <Nickname>{nickname}</Nickname>
-        </ModalController>
-        {myUid === uid ? (
-          <ModalVideo ref={videoRef} autoPlay playsInline muted />
+    <ModalBox isOpen={sidebarModal}>
+      <ModalController>
+        <ArrowBox onClick={toggleScreenModal}>
+          <LeftArrow />
+        </ArrowBox>
+        {isMe ? (
+          <>
+            <MyAvatar num={avatar} />
+            <Nickname>{nickname}</Nickname>
+          </>
         ) : (
-          <ModalVideo ref={videoRef} autoPlay playsInline />
+          <>
+            <MyAvatar num={Number(user.avatar)} />
+            <Nickname>{user.nickname}</Nickname>
+          </>
         )}
-      </ModalBox>
-    </ModalPortal>
+      </ModalController>
+      {isMe ? (
+        <ModalVideo ref={videoRef} autoPlay playsInline muted />
+      ) : (
+        <ModalVideo ref={videoRef} autoPlay playsInline />
+      )}
+    </ModalBox>
   );
 }
 
 const ModalVideo = styled.video`
   margin-top: 1.6rem;
   width: calc(100% - 1.43rem);
+  overflow-y: auto;
 `;
 
 const Nickname = styled.div`
@@ -89,7 +95,6 @@ const ModalBox = styled.div<{ isOpen: boolean }>`
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  z-index: 999;
+  z-index: 2;
   padding-bottom: 2rem;
 `;

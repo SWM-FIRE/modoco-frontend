@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Scrolls from '../components/main/Scrolls';
-import Header from '../components/main/Header';
 import Title from '../components/main/TitleContainer';
 import LoginModal from '../components/login/LoginModal';
 import useSetSelf from '../hooks/useSetSelf';
@@ -24,7 +23,6 @@ export default function Landing() {
     <>
       <Container>
         <Toaster />
-        <Header />
         <Title />
         <Scrolls />
         <LandingPage />

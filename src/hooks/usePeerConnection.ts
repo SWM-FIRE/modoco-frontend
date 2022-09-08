@@ -2,10 +2,10 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import roomSocket from '../adapters/roomSocket';
-import UserMediaStreamStore from '../stores/userMediaStreamStore';
-import connectedUsersStore from '../stores/connectedUsersStore';
-import userPcStore from '../stores/userPcStore';
-import messageStore from '../stores/messagesStore';
+import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
+import connectedUsersStore from '../stores/room/connectedUsersStore';
+import userPcStore from '../stores/room/userPcStore';
+import messageStore from '../stores/room/messagesStore';
 import { API } from '../config';
 
 const usePeerConnection = () => {

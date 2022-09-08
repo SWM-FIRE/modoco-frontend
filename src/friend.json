@@ -1,20 +1,56 @@
 [
   {
     "id": "1",
-    "nickname": "친구1",
+    "nickname": "친구친구친구친구",
     "avatar": 1,
-    "status": "online"
+    "state": "알고리즘"
   },
   {
     "id": "2",
     "nickname": "친구2",
     "avatar": 2,
-    "state": "online"
+    "state": "컴공핑핑"
   },
   {
     "id": "3",
     "nickname": "친구3",
     "avatar": 3,
-    "state": "online"
+    "state": ""
+  },
+  {
+    "id": "4",
+    "nickname": "친구친구친구친구",
+    "avatar": 1,
+    "state": "리액트"
+  },
+  {
+    "id": "5",
+    "nickname": "친구2",
+    "avatar": 2,
+    "state": "노드"
+  },
+  {
+    "id": "6",
+    "nickname": "친구3",
+    "avatar": 3,
+    "state": "장고"
+  },
+  {
+    "id": "7",
+    "nickname": "친구친구친구친구",
+    "avatar": 1,
+    "state": "파이썬"
+  },
+  {
+    "id": "8",
+    "nickname": "친구2",
+    "avatar": 2,
+    "state": ""
+  },
+  {
+    "id": "9",
+    "nickname": "친구3",
+    "avatar": 3,
+    "state": ""
   }
 ]

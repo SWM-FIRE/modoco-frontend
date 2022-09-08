@@ -3,10 +3,10 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as MessageSend } from '../../../assets/svg/MessageSend.svg';
 import ChattingItem from './ChattingItem';
-import messageStore from '../../../stores/messagesStore';
+import messageStore from '../../../stores/room/messagesStore';
 import roomSocket from '../../../adapters/roomSocket';
 import userStore from '../../../stores/userStore';
-import receiveNewMessageStore from '../../../stores/receiveNewMessageStore';
+import receiveNewMessageStore from '../../../stores/room/receiveNewMessageStore';
 import NewMessage from './NewMessage';
 
 export default function Chat() {

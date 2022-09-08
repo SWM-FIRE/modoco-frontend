@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import UserMediaStreamStore from '../../../stores/userMediaStreamStore';
+import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import { ReactComponent as CameraSetting } from '../../../assets/svg/videoSetting.svg';
 import { ReactComponent as MicSetting } from '../../../assets/svg/micSetting.svg';
 import { ReactComponent as SpeakerSetting } from '../../../assets/svg/headphoneSetting.svg';
@@ -85,7 +85,7 @@ export default function Selector({
         <Icon />
         {theme}
       </SelectorTitle>
-      <CameraDropDown onClick={dropDown}>
+      <DropDownContainer onClick={dropDown}>
         <Text>
           {myDevice !== null ? myDevice?.label : defaultDevice(device)}
         </Text>
@@ -106,7 +106,7 @@ export default function Selector({
             </DropDown>
           </DropDownPosition>
         )}
-      </CameraDropDown>
+      </DropDownContainer>
     </Container>
   );
 }
@@ -168,7 +168,7 @@ const Text = styled.div`
 
 const Container = styled.div``;
 
-const CameraDropDown = styled.div`
+const DropDownContainer = styled.div`
   width: 100%;
   padding: 1.3rem 1.6rem;
   height: 4.9rem;

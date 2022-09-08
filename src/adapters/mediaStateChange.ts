@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
 import roomSocket from './roomSocket';
-import connectedUsersStore from '../stores/connectedUsersStore';
+import connectedUsersStore from '../stores/room/connectedUsersStore';
 import userStore from '../stores/userStore';
-import messageStore from '../stores/messagesStore';
-import userPcStore from '../stores/userPcStore';
+import messageStore from '../stores/room/messagesStore';
+import userPcStore from '../stores/room/userPcStore';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 
 const mediaStateChange = () => {
@@ -32,11 +32,11 @@ const mediaStateChange = () => {
 
     newSocket?.off('kickUser').on('kickUser', (data) => {
       const { kickUser } = data;
-      if (kickUser.uid.toString() === uid.toString()) {
+      if (kickUser.uid === uid) {
         alert('방장에 의해 강퇴당하였습니다.');
         newSocket.close();
       } else {
-        const kickedUser = findUserByUid(kickUser.uid.toString());
+        const kickedUser = findUserByUid(kickUser.uid);
         console.log(kickedUser);
         if (kickedUser.socketId) {
           setPc({ sid: kickedUser.socketId, peerConnection: null });

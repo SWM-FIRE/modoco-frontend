@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Toaster } from 'react-hot-toast';
-import Header from '../components/main/Header';
 import SignUpForm from '../components/signUp/SignUpForm';
 import LoginModalStore from '../stores/loginModalStore';
 import LoginModal from '../components/login/LoginModal';
@@ -10,7 +9,6 @@ export default function SignUp() {
   return (
     <>
       <Toaster />
-      <Header />
       <Component>
         <SignUpForm />
       </Component>
