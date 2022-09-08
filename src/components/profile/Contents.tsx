@@ -3,13 +3,15 @@ import UserProfile from './UserProfile';
 import Friends from './Friends';
 import Statistics from './Statistics';
 import Overall from './Overall';
+import roomModalStore from '../../stores/room/roomModalStore';
 
 export default function Contents({ isMe }: { isMe: boolean }) {
+  const { profileModal } = roomModalStore();
   return (
     <Container isMe={isMe}>
-      <UserInformation>
+      <UserInformation isModal={profileModal}>
         <UserProfile isMe={isMe} />
-        {isMe && <Friends />}
+        {isMe && <Friends isModal={profileModal} />}
       </UserInformation>
       <Statistics isMe={isMe} />
       <Overall isMe={isMe} />
@@ -27,10 +29,10 @@ const Container = styled.div<{ isMe: boolean }>`
   width: ${(props) => (props.isMe ? '100%' : '80%')};
 `;
 
-const UserInformation = styled.div`
+const UserInformation = styled.div<{ isModal: boolean }>`
   width: 100%;
   position: relative;
-  @media (max-width: 102rem) {
+  @media (max-width: ${(props) => (props.isModal ? '1700px ' : '1020px')}) {
     display: flex;
     flex-direction: column;
   }
