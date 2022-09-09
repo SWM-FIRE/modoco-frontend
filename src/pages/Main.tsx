@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Toaster } from 'react-hot-toast';
-import useSetSelf from '../hooks/useSetSelf';
 import RoomCards from '../components/main/RoomCards';
 import MainTitle from '../components/main/MainTitle';
 import CreateRoomModal from '../components/main/CreateRoomModal/CreateRoomModal';
@@ -9,7 +7,6 @@ import CreateRoomModal from '../components/main/CreateRoomModal/CreateRoomModal'
 export default function Main() {
   const [isCreateRoomModal, setIsCreateRoomModal] = useState(false);
 
-  useSetSelf();
   const openCreateRoom = () => {
     setIsCreateRoomModal(true);
   };
@@ -20,7 +17,6 @@ export default function Main() {
   return (
     <>
       <Container>
-        <Toaster />
         <MainTitle />
         <RoomCards openCreateRoom={openCreateRoom} />
       </Container>

@@ -12,12 +12,13 @@ export default function HeaderProfileModal({
 }) {
   const navigate = useNavigate();
 
-  const { nickname, avatar, uid } = UserStore((state) => state);
+  const { nickname, avatar, uid, setClear } = UserStore();
   const onLogOut = () => {
     localStorage.removeItem('access_token');
-    navigate(`/`);
     toggleModal();
+    setClear();
     toast.success('로그아웃 되었습니다');
+    navigate(`/`);
   };
 
   const onProfile = () => {
