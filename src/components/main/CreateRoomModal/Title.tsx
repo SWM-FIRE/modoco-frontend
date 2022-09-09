@@ -21,7 +21,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2.9rem;
+  margin-top: 1rem;
   width: 100%;
 `;
 
@@ -38,7 +38,7 @@ const Input = styled.input`
   outline: none;
   color: #f9fafb;
   font-size: 1.5rem;
-  background-color: #080909;
+  background-color: #191f28;
   border-radius: 0.6rem;
   padding: 0 1.6rem;
 `;
