@@ -8,6 +8,7 @@ interface VideoUserInterface {
   socketId: string;
   enabledVideo: boolean;
   enabledAudio: boolean;
+  isAlreadyEntered: boolean;
 }
 
 interface connectedUsers {
