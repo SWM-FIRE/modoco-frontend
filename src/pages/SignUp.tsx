@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Toaster } from 'react-hot-toast';
 import SignUpForm from '../components/signUp/SignUpForm';
 import LoginModalStore from '../stores/loginModalStore';
 import LoginModal from '../components/login/LoginModal';
@@ -8,7 +7,6 @@ export default function SignUp() {
   const { isOpenLoginModal } = LoginModalStore();
   return (
     <>
-      <Toaster />
       <Component>
         <SignUpForm />
       </Component>
