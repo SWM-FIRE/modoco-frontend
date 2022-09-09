@@ -15,7 +15,10 @@ export default function SingleScreen({ connectedUser, stream }) {
   const { uid } = userStore();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const volumeRef = useRef<HTMLAudioElement>(null);
-
+  const isNewUser =
+    connectedUser.uid &&
+    connectedUser.uid !== uid &&
+    !connectedUser.isAlreadyEntered;
   const { userAudioOutputDevice } = UserMediaStreamStore();
 
   const openScreenModal = () => {
@@ -46,7 +49,7 @@ export default function SingleScreen({ connectedUser, stream }) {
 
   return (
     <>
-      {connectedUser.uid !== uid && <NewUserAlarm volumeRef={volumeRef} />}
+      {isNewUser && <NewUserAlarm volumeRef={volumeRef} />}
       <Container onClick={openScreenModal}>
         {uid === connectedUser.uid ? (
           <Video ref={videoRef} autoPlay playsInline muted />

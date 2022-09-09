@@ -68,6 +68,7 @@ export const roomConnection = (roomId: string) => {
                   socketId: user.sid,
                   enabledVideo: true,
                   enabledAudio: true,
+                  isAlreadyEntered: true,
                 });
                 console.log('appendUser', user.uid, res);
               } else {
