@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import './fonts/font.css';
 import MainLayout from './components/layout/MainLayout';
@@ -18,7 +18,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <Router>
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<LandingPage />} />
@@ -43,7 +43,7 @@ function App() {
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </QueryClientProvider>
   );
 }

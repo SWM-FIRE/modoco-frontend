@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MyPageForm /> matches snapshot 1`] = `
+<div>
+  <div
+    class="sc-ftvSup fRxRiZ"
+  >
+    <h1
+      class="sc-papXJ cSNFdj"
+    >
+      프로필 수정
+    </h1>
+    <form
+      class="sc-jqUVSM kPTbMi"
+    >
+      <div
+        class="sc-bczRLJ fqGdDf"
+      >
+        <label
+          class="sc-dkzDqf Revln"
+        >
+          프로필 이미지
+        </label>
+        <div
+          class="sc-gsnTZi ddTkGA"
+        >
+          <svg
+            fill="none"
+            height="80"
+            role="img"
+            viewBox="0 0 36 36"
+            width="80"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+              Mahalia Jackson
+            </title>
+            <mask
+              height="36"
+              id="mask__beam"
+              maskUnits="userSpaceOnUse"
+              width="36"
+              x="0"
+              y="0"
+            >
+              <rect
+                fill="#FFFFFF"
+                height="36"
+                rx="72"
+                width="36"
+              />
+            </mask>
+            <g
+              mask="url(#mask__beam)"
+            >
+              <rect
+                fill="#ffad08"
+                height="36"
+                width="36"
+              />
+              <rect
+                fill="#73b06f"
+                height="36"
+                rx="36"
+                transform="translate(2 6) rotate(222 18 18) scale(1)"
+                width="36"
+                x="0"
+                y="0"
+              />
+              <g
+                transform="translate(-6 1) rotate(-2 18 18)"
+              >
+                <path
+                  d="M13,19 a1,0.75 0 0,0 10,0"
+                  fill="#000000"
+                />
+                <rect
+                  fill="#000000"
+                  height="2"
+                  rx="1"
+                  stroke="none"
+                  width="1.5"
+                  x="12"
+                  y="14"
+                />
+                <rect
+                  fill="#000000"
+                  height="2"
+                  rx="1"
+                  stroke="none"
+                  width="1.5"
+                  x="22"
+                  y="14"
+                />
+              </g>
+            </g>
+          </svg>
+          <button
+            class="sc-hKMtZM fPBanq"
+            type="button"
+          >
+            아바타 재생성
+          </button>
+        </div>
+      </div>
+      <p
+        class="sc-eCYdqJ llvhwo"
+      >
+        <label
+          class="sc-jSMfEi cbffqr"
+          for="nickname"
+        >
+          닉네임 *
+        </label>
+        <input
+          class="sc-gKXOVf iMMMEw"
+          id="nickname"
+          name="nickname"
+          placeholder="닉네임을 입력해주세요."
+          type="text"
+          value=""
+        />
+        <span
+          class="sc-iBkjds bBTOoc"
+        />
+      </p>
+      <button
+        class="sc-kDDrLX jgGKeV"
+        disabled=""
+      >
+        수정 완료
+      </button>
+    </form>
+  </div>
+  ,
+</div>
+`;
