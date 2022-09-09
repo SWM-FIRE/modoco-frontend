@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { API } from '../config';
 import UserStore from '../stores/userStore';
 
-export default function useSetSelf() {
+const useSetSelf = () => {
   const { setNickname, setAvatar, setUid, setClear, setTime } = UserStore(
     (state) => state,
   );
@@ -36,13 +36,18 @@ export default function useSetSelf() {
             });
         })
         .catch(() => {
-          localStorage.removeItem('access_token');
-          toast.error('로그인 시간이 만료되었습니다.');
+          if (localStorage.getItem('access_token')) {
+            toast.error('로그인 시간이 만료되었습니다.');
+            localStorage.removeItem('access_token');
+          }
           navigate(`/`);
           setClear();
         });
     } else {
       setClear();
+      navigate(`/`);
     }
   }, []);
-}
+};
+
+export default useSetSelf;

@@ -4,9 +4,11 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { API } from '../config';
 import LoginModalStore from '../stores/loginModalStore';
+import userStore from '../stores/userStore';
 
 export default function useLogin() {
   const navigate = useNavigate();
+  const { setNickname, setAvatar, setUid } = userStore();
   const { closeLoginModal, openLoginModal } = LoginModalStore();
   const [inputs, setInputs] = useState({
     email: localStorage.getItem('email') ?? '',
@@ -38,8 +40,19 @@ export default function useLogin() {
       .then((res) => {
         localStorage.setItem('access_token', res.data.access_token);
         localStorage.setItem('email', inputs.email);
-        navigate(`/main`);
-        toast.success('로그인이 완료되었습니다');
+        axios
+          .get(API.ME, {
+            headers: {
+              Authorization: `Bearer ${res.data.access_token}`,
+            },
+          })
+          .then((res) => {
+            setNickname(res.data.nickname);
+            setAvatar(res.data.avatar);
+            setUid(res.data.uid);
+            toast.success('로그인이 완료되었습니다');
+            navigate(`/main`);
+          });
         closeLoginModal();
       })
       .catch((err) => {

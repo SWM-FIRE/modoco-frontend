@@ -7,15 +7,16 @@ import LoginModalStore from '../../stores/loginModalStore';
 import HeaderProfileModal from '../HeaderProfile/HeaderProfileModal';
 import { ReactComponent as TopArrow } from '../../assets/svg/topArrow.svg';
 import { ReactComponent as BottomArrow } from '../../assets/svg/bottomArrow.svg';
+import useSetSelf from '../../hooks/useSetSelf';
 
 export default function Header() {
   const { nickname, avatar } = UserStore();
-
   const { openLoginModal } = LoginModalStore();
   const [headerProfileModal, toggleHeaderProfileModal] =
     useState<boolean>(false);
   const navigate = useNavigate();
 
+  useSetSelf();
   const clickLogo = () => {
     if (localStorage.getItem('access_token')) {
       navigate('/main');
