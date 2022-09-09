@@ -6,6 +6,7 @@ import messageStore from '../../../stores/room/messagesStore';
 import userStore from '../../../stores/userStore';
 import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import AudioTracking from './AudioTracking';
+import NewUserAlarm from './NewUserAlarm';
 
 export default function SingleScreen({ connectedUser, stream }) {
   const { messages } = messageStore();
@@ -13,6 +14,8 @@ export default function SingleScreen({ connectedUser, stream }) {
   const { setScreenUid, toggleScreenModal } = roomModalStore();
   const { uid } = userStore();
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const volumeRef = useRef<HTMLAudioElement>(null);
+
   const { userAudioOutputDevice } = UserMediaStreamStore();
 
   const openScreenModal = () => {
@@ -42,31 +45,34 @@ export default function SingleScreen({ connectedUser, stream }) {
   );
 
   return (
-    <Container onClick={openScreenModal}>
-      {uid === connectedUser.uid ? (
-        <Video ref={videoRef} autoPlay playsInline muted />
-      ) : (
-        <Video ref={videoRef} autoPlay playsInline />
-      )}
-      <ControlBar>
-        <ChatContainer>
-          <ChatInner>
-            {newMessages.map((message) => (
-              <Chats key={message.uid + message.createdAt}>
-                {message.message}
-              </Chats>
-            ))}
-          </ChatInner>
-        </ChatContainer>
-        <AvatarPosition>
-          <AudioTracking stream={stream} />
-          <MyAvatar num={Number(connectedUser.avatar)} />
-          <NameContainer isMe={uid === connectedUser.uid}>
-            {connectedUser.nickname}
-          </NameContainer>
-        </AvatarPosition>
-      </ControlBar>
-    </Container>
+    <>
+      {connectedUser.uid !== uid && <NewUserAlarm volumeRef={volumeRef} />}
+      <Container onClick={openScreenModal}>
+        {uid === connectedUser.uid ? (
+          <Video ref={videoRef} autoPlay playsInline muted />
+        ) : (
+          <Video ref={videoRef} autoPlay playsInline />
+        )}
+        <ControlBar>
+          <ChatContainer>
+            <ChatInner>
+              {newMessages.map((message) => (
+                <Chats key={message.uid + message.createdAt}>
+                  {message.message}
+                </Chats>
+              ))}
+            </ChatInner>
+          </ChatContainer>
+          <AvatarPosition>
+            <AudioTracking stream={stream} />
+            <MyAvatar num={Number(connectedUser.avatar)} />
+            <NameContainer isMe={uid === connectedUser.uid}>
+              {connectedUser.nickname}
+            </NameContainer>
+          </AvatarPosition>
+        </ControlBar>
+      </Container>
+    </>
   );
 }
 
