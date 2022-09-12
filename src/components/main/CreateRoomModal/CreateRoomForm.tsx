@@ -16,7 +16,8 @@ export default function CreateRoomForm({
   onClickTheme,
   onClickTotal,
 }) {
-  const { title, details, total, newTag, tags } = inputs;
+  const { title, details, total, newTag, tags, isPrivate, roomPassword } =
+    inputs;
 
   return (
     <Form onSubmit={mutate}>
@@ -37,7 +38,11 @@ export default function CreateRoomForm({
       </Section>
       <Total total={total} onClickTotal={onClickTotal} />
       <Theme onClickTheme={onClickTheme} />
-      <Private onChange={onChange} />
+      <Private
+        isPrivate={isPrivate}
+        roomPassword={roomPassword}
+        onChange={onChange}
+      />
       <Submit>방 생성하기</Submit>
     </Form>
   );

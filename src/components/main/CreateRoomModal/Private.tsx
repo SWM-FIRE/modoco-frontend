@@ -1,33 +1,39 @@
 import styled from 'styled-components';
+import RoomPassword from './RoomPassword';
 
-export default function Private({ onChange }) {
+export default function Private({ isPrivate, roomPassword, onChange }) {
   return (
-    <Component>
-      <Type>공개 여부 *</Type>
-      <Inputs>
-        <Label>
-          <Input
-            type="radio"
-            id="isPrivate"
-            name="isPrivate"
-            value="false"
-            onChange={onChange}
-            checked
-          />
-          공개 코딩방
-        </Label>
-        <Label>
-          <Input
-            type="radio"
-            id="isPrivate"
-            name="isPrivate"
-            value="true"
-            onChange={onChange}
-          />
-          비공개 코딩방
-        </Label>
-      </Inputs>
-    </Component>
+    <>
+      <Component>
+        <Type>공개 여부 *</Type>
+        <Inputs>
+          <Label>
+            <Input
+              type="radio"
+              id="isPrivate"
+              name="isPrivate"
+              value="false"
+              onChange={onChange}
+              checked={isPrivate === false}
+            />
+            공개 코딩방
+          </Label>
+          <Label>
+            <Input
+              type="radio"
+              id="isPrivate"
+              name="isPrivate"
+              value="true"
+              onChange={onChange}
+            />
+            비공개 코딩방
+          </Label>
+        </Inputs>
+      </Component>
+      {isPrivate ? (
+        <RoomPassword roomPassword={roomPassword} onChange={onChange} />
+      ) : null}
+    </>
   );
 }
 
