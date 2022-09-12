@@ -10,6 +10,9 @@ export default function Avatar({ avatar, size }) {
 }
 
 const AvatarContainer = styled.div<{ size: number }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: ${({ size }) => size}rem;
   width: ${({ size }) => size}rem;
   margin-left: 0.3rem;
