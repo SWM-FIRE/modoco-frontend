@@ -33,7 +33,7 @@ function App() {
             <Route path=":userId" element={<Profile />} />
           </Route>
           <Route path="/editProfile" element={<MainLayout />}>
-            <Route index element={<EditMyPage />} />
+            <Route path=":userId" element={<EditMyPage />} />
           </Route>
           <Route path="/ready" element={<RoomLayout />}>
             <Route path=":roomId" element={<Ready />} />
