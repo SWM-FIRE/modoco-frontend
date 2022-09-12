@@ -19,6 +19,7 @@ export default function useCreateRoom({
     newTag: '',
     tags: [],
     isPrivate: false,
+    roomPassword: '',
   });
   const { title, details, total, theme, newTag, tags } = inputs;
   const { uid } = userStore((state) => state);

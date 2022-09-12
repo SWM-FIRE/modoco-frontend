@@ -5,9 +5,9 @@ import axios from 'axios';
 import { API } from '../config';
 import userStore from '../stores/userStore';
 
-export default function useSignUp() {
+export default function useChangeProfile() {
   const navigate = useNavigate();
-  // const { uid } = userStore();
+  const { setAvatar, setNickname, setDescription, uid } = userStore();
   const {
     avatar: myAvatar,
     nickname: myNickname,
@@ -18,7 +18,7 @@ export default function useSignUp() {
     nickname: myNickname,
     description: myDescription,
   });
-  const { avatar, nickname } = inputs;
+  const { avatar, nickname, description } = inputs;
 
   const onChange = (e) => {
     setInputs({
@@ -56,7 +56,10 @@ export default function useSignUp() {
       )
       .then((res) => {
         console.debug('[success]', res);
-        navigate(`/`);
+        setAvatar(avatar);
+        setNickname(nickname);
+        setDescription(description);
+        navigate(`/profile/${uid}`);
         toast.success('유저 정보가 변경되었습니다');
       })
       .catch((err) => {
