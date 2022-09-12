@@ -1,18 +1,20 @@
 import styled from 'styled-components';
-import MyPageForm from '../components/signUp/MyPageForm';
+import Contents from '../components/EditPage/Contents';
 
-export default function MyPage() {
+export default function EditMyPage() {
   return (
-    <>
-      <Component />
-      <MyPageForm />
-    </>
+    <Container>
+      <Contents />
+    </Container>
   );
 }
 
-const Component = styled.div`
-  background-color: #18181b;
-  width: 100vw;
+const Container = styled.div`
   margin: 0;
   padding: 0;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #18181b;
 `;

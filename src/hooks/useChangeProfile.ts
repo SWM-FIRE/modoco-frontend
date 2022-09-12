@@ -7,10 +7,16 @@ import userStore from '../stores/userStore';
 
 export default function useSignUp() {
   const navigate = useNavigate();
-  const { avatar: myAvatar, nickname: myNickname } = userStore();
+  // const { uid } = userStore();
+  const {
+    avatar: myAvatar,
+    nickname: myNickname,
+    description: myDescription,
+  } = userStore();
   const [inputs, setInputs] = useState({
     avatar: myAvatar,
     nickname: myNickname,
+    description: myDescription,
   });
   const { avatar, nickname } = inputs;
 
