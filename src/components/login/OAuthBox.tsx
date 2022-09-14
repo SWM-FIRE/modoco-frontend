@@ -1,13 +1,14 @@
 /* eslint-disable no-nested-ternary */
 import styled from 'styled-components';
+import { API } from '../../config';
 import Kakao from '../../assets/img/oauth/kakao.png';
 import Github from '../../assets/img/oauth/github.png';
 import Google from '../../assets/img/oauth/google.png';
 
 export default function OAuthBox({ auth }: { auth: string }) {
-  const GithubURI = `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}`;
-  const KakaoURI = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
-  const GoogleURI = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
+  const GithubURI = API.GITHUB;
+  const KakaoURI = API.KAKAO;
+  const GoogleURI = API.GOOGLE;
 
   const handleLogin = () => {
     window.location.href =

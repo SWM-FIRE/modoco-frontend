@@ -10,8 +10,9 @@ import LandingPage from './pages/LandingPage';
 import Profile from './pages/Profile';
 import EditMyPage from './pages/EditMyPage';
 import Main from './pages/Main';
-import Error from './pages/Error';
 import SignUp from './pages/SignUp';
+import Auth from './pages/Auth';
+import Error from './pages/Error';
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route path="/signUp" element={<MainLayout />}>
             <Route index element={<SignUp />} />
+          </Route>
+          <Route path="/auth">
+            <Route index element={<Auth />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
