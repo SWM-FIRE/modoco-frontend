@@ -79,11 +79,10 @@ const ModalBackground = styled.div`
   align-items: center;
   display: flex;
   top: 0;
-  z-index: 999;
+  z-index: 5;
 `;
 
 const ModalBox = styled.div`
-  position: fixed;
   background-color: #23262f;
   border-radius: 2rem;
   width: 60.8rem;

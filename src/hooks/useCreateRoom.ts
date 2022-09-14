@@ -35,11 +35,11 @@ export default function useCreateRoom({
         [e.target.name]: e.target.value,
       });
     }
-    if (e.target.name === 'newTag' && newTag.includes(' ')) {
+    if (e.target.name === 'newTag') {
       setInputs((prev) => {
         return {
           ...prev,
-          newTag: prev.newTag.trim().replace(/ /g, '-'),
+          newTag: prev.newTag,
         };
       });
     }
@@ -60,8 +60,18 @@ export default function useCreateRoom({
   };
 
   const onKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
+      if (tags.includes(newTag)) {
+        toast.error('이미 추가된 태그입니다.');
+        setInputs((prev) => {
+          return {
+            ...prev,
+            newTag: '',
+          };
+        });
+        return;
+      }
       if (newTag !== '') {
         onAddTag();
       }
