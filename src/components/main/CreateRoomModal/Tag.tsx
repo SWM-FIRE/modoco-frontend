@@ -11,25 +11,28 @@ export default function TagsComponent({
   return (
     <>
       <Label htmlFor="tag">태그</Label>
-      <Input
-        id="tag"
-        name="newTag"
-        type="text"
-        value={newTag}
-        onChange={onChange}
-        onKeyPress={onKeyPress}
-        placeholder="태그 입력후 Enter를 눌러주세요."
-      />
-      <Tags>
+      <Component>
         {tags.map((myTag, index) => (
-          <TagComponent key={myTag.concat(`${index}`)}>
+          <TagComponent
+            key={myTag.concat(`${index}`)}
+            onClick={(e) => onDeleteTag(e, index)}
+          >
             <Tag key={myTag}>#{myTag}</Tag>
             <TagButton type="button" onClick={(e) => onDeleteTag(e, index)}>
               <DeleteTag />
             </TagButton>
           </TagComponent>
         ))}
-      </Tags>
+        <Input
+          id="tag"
+          name="newTag"
+          type="text"
+          value={newTag}
+          onChange={onChange}
+          onKeyPress={onKeyPress}
+          placeholder="태그를 입력하세요."
+        />
+      </Component>
     </>
   );
 }
@@ -39,10 +42,19 @@ const Label = styled.label`
   line-height: 2.9rem;
 `;
 
+const Component = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: 0.6rem;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+`;
+
 const Input = styled.input`
   height: 4.9rem;
-  width: 100%;
-  margin-top: 0.25rem;
+  min-width: 15rem;
+  max-width: 15rem;
   background: transparent;
   outline: none;
   color: #f9fafb;
@@ -52,22 +64,17 @@ const Input = styled.input`
   padding: 0 1.6rem;
 `;
 
-const Tags = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  flex-wrap: wrap;
-  gap: 1.2rem;
-  margin-top: 1.65rem;
-`;
-
 const TagComponent = styled.div`
   display: flex;
   align-items: center;
   border-radius: 0.6rem;
   background-color: rgba(69, 178, 107, 0.1);
   padding: 0.5rem 1rem;
+
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(69, 178, 107, 0.2);
+  }
 `;
 
 const TagButton = styled.button`
