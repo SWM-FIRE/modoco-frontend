@@ -96,7 +96,7 @@ const DropDown = styled.div`
   background-color: #191f28;
   border-radius: 0.6rem;
   top: 8.9rem;
-
+  z-index: 5;
   @keyframes dropdown {
     0% {
       transform: translateY(-5%);
@@ -105,7 +105,9 @@ const DropDown = styled.div`
       transform: translateY(0);
     }
   }
-  animation: dropdown 400ms ease-in-out forwards;
+  height: 15rem;
+  overflow-y: auto;
+  animation: dropdown 0.4s ease;
 `;
 
 const Option = styled.button`

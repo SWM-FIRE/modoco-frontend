@@ -5,6 +5,7 @@ interface User {
   nickname: string;
   uid: number;
   time: number;
+  isLogin: boolean;
   company: string;
   description: string;
   group: [string];
@@ -18,6 +19,7 @@ interface User {
   setGroup: (_by: []) => void;
   setBadge: (_by: []) => void;
   setClear: () => void;
+  setLogin: (_by: boolean) => void;
 }
 const userStore = create<User>((set) => ({
   nickname: '',
@@ -28,6 +30,7 @@ const userStore = create<User>((set) => ({
   description: '임시 설명입니다',
   group: ['soma'],
   badge: ['씨앗1'],
+  isLogin: false,
   setTime: (_by: number) => set(() => ({ time: _by })),
   setNickname: (by) => {
     set(() => ({ nickname: by }));
@@ -56,6 +59,9 @@ const userStore = create<User>((set) => ({
       uid: 0,
       avatar: 1,
     }));
+  },
+  setLogin: (by) => {
+    set(() => ({ isLogin: by }));
   },
 }));
 

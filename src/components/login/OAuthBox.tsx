@@ -1,4 +1,5 @@
 /* eslint-disable no-nested-ternary */
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { API } from '../../config';
 import Kakao from '../../assets/img/oauth/kakao.png';
@@ -9,8 +10,10 @@ export default function OAuthBox({ auth }: { auth: string }) {
   const GithubURI = API.GITHUB;
   const KakaoURI = API.KAKAO;
   const GoogleURI = API.GOOGLE;
+  const navigate = useNavigate();
 
   const handleLogin = () => {
+    navigate('/loading');
     window.location.href =
       auth === 'kakao' ? KakaoURI : auth === 'github' ? GithubURI : GoogleURI;
   };

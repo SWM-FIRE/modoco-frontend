@@ -12,6 +12,7 @@ import EditMyPage from './pages/EditMyPage';
 import Main from './pages/Main';
 import SignUp from './pages/SignUp';
 import Auth from './pages/Auth';
+import Loading from './pages/Loading';
 import Error from './pages/Error';
 
 const queryClient = new QueryClient();
@@ -44,6 +45,9 @@ function App() {
           </Route>
           <Route path="/auth">
             <Route index element={<Auth />} />
+          </Route>
+          <Route path="/loading">
+            <Route index element={<Loading />} />
           </Route>
           <Route path="*" element={<Error />} />
         </Routes>
