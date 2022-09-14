@@ -76,7 +76,7 @@ const Login = styled.button`
   font-weight: 700;
 `;
 
-const Logo = styled.div`
+const Logo = styled.h1`
   cursor: pointer;
   font-size: 3.2rem;
   font-family: IBMPlexSansKRRegular, Arial;

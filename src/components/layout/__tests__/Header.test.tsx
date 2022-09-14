@@ -18,7 +18,7 @@ describe('<Header />', () => {
         <Header />,
       </Router>,
     );
-    utils.getByText('modoco');
+    utils.getByText('modoco', { selector: 'h1' });
   });
   it('has loginButton', () => {
     const utils = render(

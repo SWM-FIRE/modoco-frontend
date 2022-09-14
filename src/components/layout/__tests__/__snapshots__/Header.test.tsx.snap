@@ -5,11 +5,11 @@ exports[`<Header /> matches snapshot 1`] = `
   <div
     class="sc-crXcEl cgWTUl"
   >
-    <div
+    <h1
       class="sc-papXJ dqcJOn"
     >
       modoco
-    </div>
+    </h1>
     <button
       class="sc-ftvSup zBHDT"
     >
