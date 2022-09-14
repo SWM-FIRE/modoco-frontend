@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> matches snapshot 1`] = `
+<div>
+  <div
+    class="sc-crXcEl cgWTUl"
+  >
+    <h1
+      class="sc-papXJ dqcJOn"
+    >
+      modoco
+    </h1>
+    <button
+      class="sc-ftvSup zBHDT"
+    >
+      로그인
+    </button>
+  </div>
+  ,
+</div>
+`;

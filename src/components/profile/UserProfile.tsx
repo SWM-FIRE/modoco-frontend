@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Avatar from '../atoms/Avatar';
 import userStore from '../../stores/userStore';
@@ -11,6 +11,7 @@ import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendSt
 
 export default function UserProfile({ isMe }: { isMe: boolean }) {
   const { nickname, avatar, description } = userStore();
+  const { userId } = useParams();
   let userNickname: string;
   let userAvatar: number;
   let userDescription: string;
@@ -19,7 +20,6 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
     userNickname = nickname;
     userAvatar = avatar;
     userDescription = description;
-    console.log('isMe');
   } else {
     // TODO: get user info from server
     userNickname = '임시 닉네임';
@@ -30,7 +30,7 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
   const navigate = useNavigate();
 
   const onClickEditProfile = () => {
-    navigate('/editProfile');
+    navigate(`/editProfile/${userId}`);
   };
 
   const onLogOut = () => {

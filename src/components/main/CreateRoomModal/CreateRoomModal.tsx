@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-// import toast from 'react-hot-toast';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
 import useCreateRoom from '../../../hooks/useCreateRoom';
 import CreateRoomForm from './CreateRoomForm';
@@ -10,8 +9,15 @@ export default function CreateRoomModal({
 }: {
   closeCreateRoom: () => void;
 }) {
-  const { inputs, onChange, onKeyPress, onDeleteTag, useRoomCreator } =
-    useCreateRoom({ closeCreateRoom });
+  const {
+    inputs,
+    onChange,
+    onKeyPress,
+    onDeleteTag,
+    useRoomCreator,
+    onClickTheme,
+    onClickTotal,
+  } = useCreateRoom({ closeCreateRoom });
 
   const { isLoading, mutate } = useRoomCreator();
 
@@ -33,6 +39,8 @@ export default function CreateRoomModal({
           onChange={onChange}
           onKeyPress={onKeyPress}
           onDeleteTag={onDeleteTag}
+          onClickTheme={onClickTheme}
+          onClickTotal={onClickTotal}
         />
       </ModalBox>
     </ModalBackground>
@@ -40,11 +48,6 @@ export default function CreateRoomModal({
 }
 
 const ModalController = styled.div`
-  svg {
-    height: 100%;
-    width: 3.2rem;
-  }
-  height: 3.2rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -59,9 +62,11 @@ const Title = styled.h1`
 
 const Close = styled.div`
   cursor: pointer;
+  width: 3.2rem;
+  height: 3.2rem;
   svg {
     height: 100%;
-    width: 3.2rem;
+    width: 100%;
   }
 `;
 
@@ -82,10 +87,10 @@ const ModalBox = styled.div`
   background-color: #23262f;
   border-radius: 2rem;
   width: 60.8rem;
-  height: 90%;
+  max-height: 90%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 3.2rem;
 `;

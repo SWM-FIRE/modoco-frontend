@@ -18,15 +18,23 @@ export default function useCreateRoom({
     theme: '',
     newTag: '',
     tags: [],
+    isPrivate: false,
+    roomPassword: '',
   });
   const { title, details, total, theme, newTag, tags } = inputs;
   const { uid } = userStore((state) => state);
 
   const onChange = (e) => {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name === 'isPrivate') {
+      if (e.target.value === 'true') {
+        setInputs({ ...inputs, isPrivate: true });
+      } else setInputs({ ...inputs, isPrivate: false });
+    } else {
+      setInputs({
+        ...inputs,
+        [e.target.name]: e.target.value,
+      });
+    }
     if (e.target.name === 'newTag' && newTag.includes(' ')) {
       setInputs((prev) => {
         return {
@@ -35,6 +43,20 @@ export default function useCreateRoom({
         };
       });
     }
+  };
+
+  const onClickTheme = (theme) => {
+    setInputs({
+      ...inputs,
+      theme,
+    });
+  };
+
+  const onClickTotal = (e) => {
+    setInputs({
+      ...inputs,
+      total: e.target.innerText,
+    });
   };
 
   const onKeyPress = (e) => {
@@ -111,5 +133,7 @@ export default function useCreateRoom({
     onDeleteTag,
     onSubmit,
     useRoomCreator,
+    onClickTheme,
+    onClickTotal,
   };
 }

@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
-export default function Title({ title, onChange }) {
+export default function RoomPassword({ roomPassword, onChange }) {
   return (
     <Container>
-      <Label htmlFor="title">방 이름 *</Label>
+      <Label htmlFor="roomPassword">방 비밀번호 *</Label>
       <Input
-        id="title"
-        name="title"
+        id="roomPassword"
+        name="roomPassword"
         type="text"
-        value={title}
+        value={roomPassword}
         onChange={onChange}
-        placeholder="방 이름을 입력해주세요."
+        placeholder="비밀번호를 입력해주세요."
         required
       />
     </Container>
@@ -21,7 +21,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 2.9rem;
   width: 100%;
 `;
 

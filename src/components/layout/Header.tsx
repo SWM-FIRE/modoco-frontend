@@ -7,15 +7,16 @@ import LoginModalStore from '../../stores/loginModalStore';
 import HeaderProfileModal from '../HeaderProfile/HeaderProfileModal';
 import { ReactComponent as TopArrow } from '../../assets/svg/topArrow.svg';
 import { ReactComponent as BottomArrow } from '../../assets/svg/bottomArrow.svg';
+import useSetSelf from '../../hooks/useSetSelf';
 
 export default function Header() {
   const { nickname, avatar } = UserStore();
-
   const { openLoginModal } = LoginModalStore();
   const [headerProfileModal, toggleHeaderProfileModal] =
     useState<boolean>(false);
   const navigate = useNavigate();
 
+  useSetSelf();
   const clickLogo = () => {
     if (localStorage.getItem('access_token')) {
       navigate('/main');
@@ -75,7 +76,7 @@ const Login = styled.button`
   font-weight: 700;
 `;
 
-const Logo = styled.div`
+const Logo = styled.h1`
   cursor: pointer;
   font-size: 3.2rem;
   font-family: IBMPlexSansKRRegular, Arial;

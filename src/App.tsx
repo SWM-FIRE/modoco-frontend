@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import './fonts/font.css';
 import MainLayout from './components/layout/MainLayout';
@@ -10,15 +10,16 @@ import LandingPage from './pages/LandingPage';
 import Profile from './pages/Profile';
 import EditMyPage from './pages/EditMyPage';
 import Main from './pages/Main';
-import Error from './pages/Error';
 import SignUp from './pages/SignUp';
+import Auth from './pages/Auth';
+import Error from './pages/Error';
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <Router>
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<LandingPage />} />
@@ -33,7 +34,7 @@ function App() {
             <Route path=":userId" element={<Profile />} />
           </Route>
           <Route path="/editProfile" element={<MainLayout />}>
-            <Route index element={<EditMyPage />} />
+            <Route path=":userId" element={<EditMyPage />} />
           </Route>
           <Route path="/ready" element={<RoomLayout />}>
             <Route path=":roomId" element={<Ready />} />
@@ -41,9 +42,12 @@ function App() {
           <Route path="/signUp" element={<MainLayout />}>
             <Route index element={<SignUp />} />
           </Route>
+          <Route path="/auth">
+            <Route index element={<Auth />} />
+          </Route>
           <Route path="*" element={<Error />} />
         </Routes>
-      </BrowserRouter>
+      </Router>
     </QueryClientProvider>
   );
 }

@@ -1,81 +1,113 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Up } from '../../../assets/svg/up.svg';
 import { ReactComponent as Down } from '../../../assets/svg/down.svg';
 
-export default function Total({ total, onChange }) {
+export default function Total({ total, onClickTotal }) {
+  const [isDropDown, setIsDropDown] = useState(false);
+  const onClickOption = (e) => {
+    onClickTotal(e);
+    setIsDropDown(false);
+  };
+
+  const onClickSelect = () => {
+    setIsDropDown(!isDropDown);
+  };
+
   return (
-    <>
-      <Label htmlFor="total">최대 인원 수 *</Label>
-      <div style={{ width: '100%', display: 'flex' }}>
-        <Select
-          id="total"
-          name="total"
-          placeholder="최대 인원 수를 선택해주세요."
-          required
-          value={total}
-          onChange={onChange}
-        >
-          <option value="" disabled selected>
-            최대 인원 수를 선택해주세요.
-          </option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
+    <Component>
+      <Label>최대 인원 수 *</Label>
+      <SelectButton type="button" onClick={onClickSelect}>
+        <Select isTotalSelected={total !== ''}>
+          {total === '' ? '방 인원수를 선택해주세요' : total}
         </Select>
         <SelectIcon>
           <Up />
           <Down />
         </SelectIcon>
-      </div>
-    </>
+      </SelectButton>
+      {isDropDown && (
+        <DropDown>
+          <Option onClick={onClickOption}>2</Option>
+          <Option onClick={onClickOption}>3</Option>
+          <Option onClick={onClickOption}>4</Option>
+        </DropDown>
+      )}
+    </Component>
   );
 }
+
+const Component = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2.9rem;
+  width: 100%;
+  position: relative;
+`;
 
 const Label = styled.label`
   width: 100%;
   line-height: 2.9rem;
 `;
 
-const Select = styled.select`
-  width: 95%;
+const SelectButton = styled.button`
+  width: 100%;
+  display: flex;
+  align-items: center;
   height: 4.9rem;
   margin-top: 0.25rem;
-  background: transparent;
+  background-color: #191f28;
+  border-radius: 0.6rem;
+  padding: 1.3rem 1.6rem;
+  cursor: pointer;
+`;
+
+const Select = styled.div<{ isTotalSelected: boolean }>`
+  width: 95%;
   outline: none;
   border: none;
-  color: #f9fafb;
+  color: ${(props) => (props.isTotalSelected ? '#f9fafb' : 'gray')};
   font-size: 1.5rem;
-  background-color: #080909;
-  border-top-left-radius: 0.6rem;
-  border-bottom-left-radius: 0.6rem;
-  padding: 0 1.6rem;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  :required:invalid {
-    color: #909090;
-  }
-  option[value=''][disabled] {
-    display: none;
-  }
+  text-align: left;
 `;
 
 const SelectIcon = styled.div`
-  width: 5%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 4.9rem;
-  margin-top: 0.25rem;
-  background: transparent;
-  outline: none;
-  border: none;
-  color: #f9fafb;
-  font-size: 1.5rem;
-  background-color: #080909;
-  border-top-right-radius: 0.6rem;
-  border-bottom-right-radius: 0.6rem;
-  gap: 0.6rem;
   flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  width: 5%;
+`;
+
+const DropDown = styled.div`
+  position: absolute;
+  width: 100%;
+  background-color: #191f28;
+  border-radius: 0.6rem;
+  top: 8.9rem;
+  z-index: 2;
+  @keyframes dropdown {
+    0% {
+      transform: translateY(-5%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  animation: dropdown 400ms ease-in-out forwards;
+`;
+
+const Option = styled.button`
+  width: 100%;
+  color: #f1f5f9;
+  font-family: IBMPlexSansKRRegular;
+  font-size: 1.5rem;
+  height: 4.9rem;
+
+  &:hover {
+    border-radius: 0.6rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+  }
 `;

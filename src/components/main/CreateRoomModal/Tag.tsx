@@ -47,7 +47,7 @@ const Input = styled.input`
   outline: none;
   color: #f9fafb;
   font-size: 1.5rem;
-  background-color: #080909;
+  background-color: #191f28;
   border-radius: 0.6rem;
   padding: 0 1.6rem;
 `;

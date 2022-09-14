@@ -152,6 +152,7 @@ const usePeerConnection = () => {
               socketId: sid,
               enabledVideo: true,
               enabledAudio: true,
+              isAlreadyEntered: false,
             });
           } else {
             console.log('already connected');

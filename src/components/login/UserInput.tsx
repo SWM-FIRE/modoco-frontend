@@ -12,6 +12,7 @@ export default function UserInput() {
       errorMsg.current.style.display = 'block';
       errorMsg.current.innerText = '이메일을 입력해주세요.';
     } else if (!password) {
+      errorMsg.current.style.display = 'block';
       errorMsg.current.innerText = '비밀번호를 입력해주세요.';
     } else {
       errorMsg.current.style.display = 'none';

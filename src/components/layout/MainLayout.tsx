@@ -1,15 +1,13 @@
 import React from 'react';
 import { ReactChannelIO } from 'react-channel-plugin';
 import { Outlet } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Header from './Header';
 import Footer from './Footer';
 import userStore from '../../stores/userStore';
-import useSetSelf from '../../hooks/useSetSelf';
 
 export default function MainLayout() {
-  useSetSelf();
-
-  const { uid, nickname } = userStore();
+  const { uid, nickname } = userStore((state) => state);
   const profile = uid
     ? {
         email: localStorage.getItem('email'),
@@ -37,6 +35,7 @@ export default function MainLayout() {
           autoBootTimeout={2000}
         />
       )}
+      <Toaster />
       <Header />
       <Outlet />
       <Footer />
