@@ -64,6 +64,10 @@ function renderSignUp() {
 }
 
 describe('<SignUpForm />', () => {
+  it('matches snapshot', () => {
+    const { result } = renderSignUp();
+    expect(result.container).toMatchSnapshot();
+  });
   it('sign up form rendering', () => {
     const {
       Heading,
