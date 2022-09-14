@@ -95,7 +95,7 @@ const DropDown = styled.div`
       transform: translateY(0);
     }
   }
-  animation: dropdown 400ms ease-in-out forwards;
+  animation: dropdown 0.4s ease;
 `;
 
 const Option = styled.button`
