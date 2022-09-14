@@ -6,9 +6,8 @@ import { API } from '../config';
 import UserStore from '../stores/userStore';
 
 const useSetSelf = () => {
-  const { setNickname, setAvatar, setUid, setClear, setTime } = UserStore(
-    (state) => state,
-  );
+  const { setNickname, setAvatar, setUid, setClear, setTime, setLogin } =
+    UserStore();
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -33,6 +32,7 @@ const useSetSelf = () => {
               if (res.data.length !== 0) {
                 setTime(Number(res.data[0].duration) * 60);
               }
+              setLogin(true);
             });
         })
         .catch(() => {
@@ -42,10 +42,12 @@ const useSetSelf = () => {
           }
           navigate(`/`);
           setClear();
+          setLogin(true);
         });
     } else {
       setClear();
       navigate(`/`);
+      setLogin(true);
     }
   }, []);
 };

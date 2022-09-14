@@ -21,8 +21,11 @@ export default function SettingModal({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    if (!userAudioInputDevice) {
+      return;
+    }
     replaceAudioStream();
-  }, [replaceAudioStream, userAudioInputDevice]);
+  }, [userAudioInputDevice]);
 
   const closeModal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
