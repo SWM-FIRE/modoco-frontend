@@ -5,7 +5,7 @@ import Avatar from '../atoms/Avatar';
 import userStore from '../../stores/userStore';
 import Group from './UserProfile/Group';
 import Badge from './UserProfile/Badge';
-import Edit from './UserProfile/Edit';
+// import Edit from './UserProfile/Edit';
 import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessageBlack.svg';
 import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
 
@@ -67,9 +67,7 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
         )}
       </Contents>
       {isMe && (
-        <EditButton onClick={onClickEditProfile}>
-          <Edit />
-        </EditButton>
+        <EditButton onClick={onClickEditProfile}>프로필 수정</EditButton>
       )}
     </Components>
   );
@@ -96,6 +94,17 @@ const Contents = styled.div`
 
 const EditButton = styled.button`
   cursor: pointer;
+  position: absolute;
+  right: 3.2rem;
+  top: 4.4rem;
+  color: #f9fafb;
+  font-size: 1.5rem;
+  border-radius: 5rem;
+  border: 1px solid #f9fafb;
+  padding: 0.8rem 1.6rem;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 `;
 
 const OAuthId = styled.span`
@@ -160,4 +169,7 @@ const Logout = styled.button`
   font-size: 1.5rem;
   margin-top: 2rem;
   width: 8.6rem;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 `;
