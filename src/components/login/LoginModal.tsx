@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ModalPortal from '../atoms/ModalPortal';
 import Auths from './Auths';
@@ -18,7 +19,9 @@ export default function LoginModal() {
           </Close>
           <ModalTitle />
           <UserInput />
-          <SignUp href="/signUp">아직 회원이 아니신가요?</SignUp>
+          <SignUp onClick={closeLoginModal}>
+            <Link to="/signUp">아직 회원이 아니신가요?</Link>
+          </SignUp>
           <Auths />
         </ModalBox>
       </ModalBackground>
@@ -62,7 +65,7 @@ const Close = styled.div`
   }
 `;
 
-const SignUp = styled.a`
+const SignUp = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
