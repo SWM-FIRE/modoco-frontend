@@ -10,6 +10,7 @@ export default function NewMessage({ chatWindow }) {
   const { uid } = userStore((state) => state);
 
   const isCheckBottom = () => {
+    if (!chatWindow.current) return false;
     if (
       chatWindow.current.scrollHeight - chatWindow.current.scrollTop <=
       chatWindow.current.clientHeight + 100
