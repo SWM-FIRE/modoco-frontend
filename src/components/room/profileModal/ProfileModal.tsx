@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Header from './Header';
 import Contents from '../../profile/Contents';
@@ -6,12 +6,6 @@ import userStore from '../../../stores/userStore';
 import roomModalStore from '../../../stores/room/roomModalStore';
 
 export default function ProfileModal({ toggle }: { toggle: () => void }) {
-  useEffect(() => {
-    console.log('i am open');
-    return () => {
-      console.log(' i close');
-    };
-  }, []);
   const closeModalBackground = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     toggle();

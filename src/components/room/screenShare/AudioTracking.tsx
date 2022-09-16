@@ -8,7 +8,7 @@ export default function AudioTracking({ stream }) {
 
   useEffect(() => {
     let myInterval;
-    if (stream) {
+    if (stream && stream.getAudioTracks().length > 0) {
       const { analyser, bufferLength, dataArray } = audioContext(stream);
       myInterval = setInterval(() => {
         analyser.getByteFrequencyData(dataArray);
