@@ -18,8 +18,8 @@ export default function SignUpForm() {
   const { avatar, nickname, email, password, passwordCheck } = inputs;
   return (
     <Container data-cy="register-container">
-      <Title>회원가입</Title>
-      <Form onSubmit={onSubmit}>
+      <Title data-cy="register-title">회원가입</Title>
+      <Form onSubmit={onSubmit} data-cy="register-form">
         <Avatar avatar={avatar} onChangeAvatar={onChangeAvatar} />
         <Nickname nickname={nickname} onChange={onChange} />
         <Email email={email} onChange={onChange} isValidEmail={isValidEmail} />
@@ -29,7 +29,9 @@ export default function SignUpForm() {
           onChange={onChange}
           isValidPassword={isValidPassword}
         />
-        <Submit disabled={isDisable()}>회원가입</Submit>
+        <Submit disabled={isDisable()} data-cy="register-submit">
+          회원가입
+        </Submit>
       </Form>
     </Container>
   );

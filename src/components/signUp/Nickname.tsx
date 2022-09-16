@@ -15,7 +15,7 @@ export default function Nickname({ nickname, onChange }) {
     }
   };
   return (
-    <Section>
+    <Container data-cy="register-nickname">
       <Label htmlFor="nickname">닉네임 *</Label>
       <Input
         id="nickname"
@@ -25,13 +25,14 @@ export default function Nickname({ nickname, onChange }) {
         onChange={onChange}
         onBlur={onBlur}
         placeholder="닉네임을 입력해주세요."
+        data-cy="register-nickname-input"
       />
       <Error ref={errorMsg} />
-    </Section>
+    </Container>
   );
 }
 
-const Section = styled.p`
+const Container = styled.p`
   display: flex;
   flex-direction: column;
   width: 100%;

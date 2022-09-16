@@ -3,19 +3,23 @@ import MyAvatar from '../../assets/avatar/MyAvatar';
 
 export default function Avatar({ avatar, onChangeAvatar }) {
   return (
-    <Section>
+    <Container data-cy="register-avatar">
       <Label>프로필 이미지</Label>
       <ProfileComponent>
         <MyAvatar num={avatar} />
-        <SetupButton type="button" onClick={onChangeAvatar}>
+        <SetupButton
+          type="button"
+          onClick={onChangeAvatar}
+          data-cy="register-avatar-button"
+        >
           아바타 재생성
         </SetupButton>
       </ProfileComponent>
-    </Section>
+    </Container>
   );
 }
 
-const Section = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
