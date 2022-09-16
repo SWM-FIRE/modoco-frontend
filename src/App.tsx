@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp';
 import Auth from './pages/Auth';
 import Loading from './pages/Loading';
 import Error from './pages/Error';
+import Invite from './pages/Invite';
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,9 @@ function App() {
           </Route>
           <Route path="/auth">
             <Route index element={<Auth />} />
+          </Route>
+          <Route path="/invite">
+            <Route index element={<Invite />} />
           </Route>
           <Route path="/loading">
             <Route index element={<Loading />} />
