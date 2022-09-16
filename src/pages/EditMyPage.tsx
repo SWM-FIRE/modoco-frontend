@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Contents from '../components/EditPage/Contents';
+import Contents from '../components/editMyPage/Contents';
 
 export default function EditMyPage() {
   return (

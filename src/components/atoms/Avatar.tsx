@@ -15,7 +15,6 @@ const AvatarContainer = styled.div<{ size: number }>`
   justify-content: center;
   height: ${({ size }) => size}rem;
   width: ${({ size }) => size}rem;
-  margin-left: 0.3rem;
   svg {
     height: 100%;
     width: 100%;

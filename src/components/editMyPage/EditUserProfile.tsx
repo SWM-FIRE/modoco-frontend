@@ -76,12 +76,7 @@ const Buttons = styled.div`
   right: 3.2rem;
   top: 3.2rem;
   #accept {
-    background-color: #17ce3a;
-    margin-left: 1rem;
-    &:hover {
-      background-color: #12a02d;
-      box-shadow: rgba(18, 160, 45, 0.4) 0px 0.4rem 0.8rem;
-    }
+    margin-left: 0.8rem;
   }
 `;
 
@@ -89,14 +84,11 @@ const Button = styled.button`
   cursor: pointer;
   color: #f3f4f6;
   font-size: 1.5rem;
-  background-color: #0b131b;
-  border-radius: 0.4rem;
-  padding: 1.2rem 1.6rem;
+  border-radius: 5rem;
+  border: 1px solid #f9fafb;
+  padding: 0.8rem 1.6rem;
   &:hover {
-    background-color: #294663;
-    transition: all 0.3s ease 0s;
-    transform: translateY(-0.5rem);
-    box-shadow: rgba(41, 70, 99, 0.4) 0px 0.4rem 0.8rem;
+    background-color: rgba(255, 255, 255, 0.1);
   }
 `;
 
@@ -115,4 +107,7 @@ const Logout = styled.button`
   font-size: 1.5rem;
   margin-top: 2rem;
   width: 8.6rem;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 `;

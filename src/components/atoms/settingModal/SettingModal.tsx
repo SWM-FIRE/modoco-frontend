@@ -38,13 +38,16 @@ export default function SettingModal({
 
   useEffect(() => {
     let myInterval;
-    const { analyser, bufferLength, dataArray } = audioContext(userMediaStream);
-    if (setting) {
-      myInterval = setInterval(() => {
-        analyser.getByteFrequencyData(dataArray);
-        const vol = audioFrequency(dataArray, bufferLength);
-        setVol(Math.floor((vol / 256) * 100));
-      }, 30);
+    if (userMediaStream && userMediaStream.getAudioTracks().length > 0) {
+      const { analyser, bufferLength, dataArray } =
+        audioContext(userMediaStream);
+      if (setting) {
+        myInterval = setInterval(() => {
+          analyser.getByteFrequencyData(dataArray);
+          const vol = audioFrequency(dataArray, bufferLength);
+          setVol(Math.floor((vol / 256) * 100));
+        }, 30);
+      }
     }
     return () => clearInterval(myInterval);
   }, [setting]);

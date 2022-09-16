@@ -6,7 +6,7 @@ import UserStore from '../../../stores/userStore';
 import userMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 
 export default function Participants({ moderator }: { moderator: number }) {
-  const { connectedUsers } = connectedUsersStore((state) => state);
+  const { connectedUsers, userStream } = connectedUsersStore((state) => state);
   const { userMediaStream } = userMediaStreamStore((state) => state);
   const { uid, nickname, avatar } = UserStore((state) => state);
 
@@ -19,7 +19,11 @@ export default function Participants({ moderator }: { moderator: number }) {
           nickname={nickname}
           uid={uid}
           avatar={avatar}
-          isAudioEnabled={userMediaStream.getAudioTracks()[0].enabled}
+          isAudioEnabled={
+            userMediaStream.getAudioTracks().length > 0
+              ? userMediaStream.getAudioTracks()[0].enabled
+              : false
+          }
           moderator={moderator}
         />
         {connectedUsers.map((user) => (
@@ -29,7 +33,11 @@ export default function Participants({ moderator }: { moderator: number }) {
             nickname={user.nickname}
             uid={user.uid}
             avatar={user.avatar}
-            isAudioEnabled={user.enabledAudio}
+            isAudioEnabled={
+              userStream[user.socketId]?.getAudioTracks().length > 0
+                ? user.enabledAudio
+                : false
+            }
             moderator={moderator}
           />
         ))}

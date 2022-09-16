@@ -27,9 +27,9 @@ const usePeerConnection = () => {
         ],
       },
       {
-        urls: 'turn:turn.modocode.com:3478?transport=tcp',
-        credential: 'modocode123!!',
-        username: 'modoclient',
+        urls: process.env.REACT_APP_TURN_URL,
+        credential: process.env.REACT_APP_TURN_CREDENTIAL,
+        username: process.env.REACT_APP_TURN_USERNAME,
       },
     ],
   };
