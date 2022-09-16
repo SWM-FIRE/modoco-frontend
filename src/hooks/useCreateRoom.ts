@@ -45,7 +45,7 @@ export default function useCreateRoom({
     }
   };
 
-  const onClickTheme = (theme) => {
+  const onClickTheme = (theme: string) => {
     setInputs({
       ...inputs,
       theme,
