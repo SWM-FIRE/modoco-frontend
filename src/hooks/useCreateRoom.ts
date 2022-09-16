@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useMutation } from 'react-query';
 import toast from 'react-hot-toast';
@@ -45,7 +45,7 @@ export default function useCreateRoom({
     }
   };
 
-  const onClickTheme = (theme) => {
+  const onClickTheme = (theme: string) => {
     setInputs({
       ...inputs,
       theme,
@@ -59,7 +59,7 @@ export default function useCreateRoom({
     });
   };
 
-  const onKeyPress = (e) => {
+  const onKeyPress = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       if (tags.includes(newTag)) {

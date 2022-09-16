@@ -9,6 +9,8 @@ const RECORDS = '/records/';
 const KAKAO = '/auth/kakao/';
 const GOOGLE = '/auth/google/';
 const GITHUB = '/auth/github/';
+const LAMBDA_URL = process.env.REACT_APP_LAMBDA_INVITE;
+const INVITE = '/invite/';
 
 export const API = {
   BASE_URL: `${BASE_URL}`,
@@ -21,4 +23,5 @@ export const API = {
   KAKAO: `${BASE_URL}${API_VER}${KAKAO}`,
   GOOGLE: `${BASE_URL}${API_VER}${GOOGLE}`,
   GITHUB: `${BASE_URL}${API_VER}${GITHUB}`,
+  INVITE: `${LAMBDA_URL}${INVITE}`,
 };
