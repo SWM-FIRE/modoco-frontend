@@ -12,15 +12,20 @@ export default function LoginModal() {
   const { closeLoginModal } = LoginModalStore();
   return (
     <ModalPortal>
-      <ModalBackground onClick={closeLoginModal}>
-        <ModalBox onClick={(e) => e.stopPropagation()}>
-          <Close onClick={closeLoginModal}>
+      <ModalBackground onClick={closeLoginModal} data-cy="main-login-outer">
+        <ModalBox
+          onClick={(e) => e.stopPropagation()}
+          data-cy="main-login-container"
+        >
+          <Close onClick={closeLoginModal} data-cy="main-login-close">
             <X />
           </Close>
           <ModalTitle />
           <UserInput />
           <SignUp onClick={closeLoginModal}>
-            <Link to="/signUp">아직 회원이 아니신가요?</Link>
+            <Link to="/signUp" data-cy="main-move-to-register">
+              아직 회원이 아니신가요?
+            </Link>
           </SignUp>
           <Auths />
         </ModalBox>
