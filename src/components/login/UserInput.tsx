@@ -40,7 +40,9 @@ export default function UserInput() {
         onChange={onChange}
         onBlur={onBlur}
       />
-      <Button disabled={isDisable()}>로그인</Button>
+      <Button disabled={isDisable()} data-cy="login-button">
+        로그인
+      </Button>
       <Error ref={errorMsg} />
       {isError ? (
         <Error style={{ display: 'block' }}>

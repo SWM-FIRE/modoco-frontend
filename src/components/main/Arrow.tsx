@@ -19,6 +19,7 @@ function Left({
       onMouseLeave={() => {
         setShow(false);
       }}
+      data-cy="left-arrow-button"
     >
       {children}
     </Button>
@@ -30,6 +31,7 @@ function Left({
       onMouseEnter={() => {
         setShow(true);
       }}
+      data-cy="left-arrow-transparent"
     />
   );
 }
@@ -50,6 +52,7 @@ function Right({
       onMouseLeave={() => {
         setShow(false);
       }}
+      data-cy="right-arrow-button"
     >
       {children}
     </Button>
@@ -61,6 +64,7 @@ function Right({
       onMouseEnter={() => {
         setShow(true);
       }}
+      data-cy="right-arrow-transparent"
     />
   );
 }
