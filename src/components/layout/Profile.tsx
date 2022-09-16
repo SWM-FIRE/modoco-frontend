@@ -21,7 +21,7 @@ export default function Profile({
   };
 
   return nickname ? (
-    <ProfileContainer onClick={closeHeaderProfile}>
+    <ProfileContainer onClick={closeHeaderProfile} data-cy="main-profile">
       <AvatarContainer>
         <MyAvatar num={avatar} />
       </AvatarContainer>
@@ -30,7 +30,9 @@ export default function Profile({
       </SvgComponent>
     </ProfileContainer>
   ) : (
-    <Login onClick={openLoginModal}>로그인</Login>
+    <Login onClick={openLoginModal} data-cy="main-login-button">
+      로그인
+    </Login>
   );
 }
 

@@ -29,7 +29,9 @@ export default function Header() {
     <>
       {headerProfileModal && <Screen onClick={toggleModal} />}
       <Container>
-        <Logo onClick={clickLogo}>modoco</Logo>
+        <Logo onClick={clickLogo} data-cy="modoco-logo">
+          modoco
+        </Logo>
         {isLogin ? (
           <Profile
             toggleModal={toggleModal}

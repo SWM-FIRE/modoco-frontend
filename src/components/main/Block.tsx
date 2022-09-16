@@ -24,14 +24,14 @@ export default function Block({ isMain, data }) {
     navigate(`/ready/${data.itemId}`);
   };
   return (
-    <Container main={isMain}>
-      <AvatarContainer>
+    <Container main={isMain} data-cy="main-room-cards">
+      <AvatarContainer data-cy="main-room-moderator">
         <MyAvatar num={Number(data.moderator.avatar)} />
         <Moderator>
           방장<Nickname>{data.moderator.nickname}</Nickname>
         </Moderator>
       </AvatarContainer>
-      <DetailContainer>
+      <DetailContainer data-cy="main-room-detail">
         <Title>{data.title}</Title>
         <Description>{data.details}</Description>
         <Tags>
@@ -43,7 +43,9 @@ export default function Block({ isMain, data }) {
           <RoomDetail data={data} />
         </PositionRoom>
       </DetailContainer>
-      <Enter onClick={enterRoom}>입장하기 →</Enter>
+      <Enter onClick={enterRoom} data-cy="main-room-enter">
+        입장하기 →
+      </Enter>
     </Container>
   );
 }

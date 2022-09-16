@@ -1,0 +1,100 @@
+[
+  {
+    "itemId": 1,
+    "moderator": {
+      "nickname": "윤영기",
+      "uid": 193,
+      "avatar": 28
+    },
+    "title": "영기의 Cypress 방",
+    "details": "Cypress 빡공하는 방입니다, 아무나 컴",
+    "tags": ["Cypress", "JAVA", "GoF"],
+    "current": 0,
+    "total": 4,
+    "theme": "fire"
+  },
+  {
+    "itemId": 2,
+    "moderator": {
+      "nickname": "하랭",
+      "uid": 8,
+      "avatar": 7
+    },
+    "title": "블로그 글쓰기",
+    "details": "블로그 글쓰자 와오람 ",
+    "tags": ["블로그", "글쓰기", "velog"],
+    "current": 2,
+    "total": 4,
+    "theme": "camping"
+  },
+  {
+    "itemId": 3,
+    "moderator": {
+      "nickname": "그루밍",
+      "uid": 45,
+      "avatar": 1
+    },
+    "title": "해삐 추석",
+    "details": "추석맞이 코딩",
+    "tags": ["추석", "코딩", "React", "C언어"],
+    "current": 4,
+    "total": 4,
+    "theme": "camping"
+  },
+  {
+    "itemId": 4,
+    "moderator": {
+      "nickname": "감구마",
+      "uid": 173,
+      "avatar": 8
+    },
+    "title": "감성주점",
+    "details": "모여서 도란도란 음주해요",
+    "tags": ["React"],
+    "current": 0,
+    "total": 4,
+    "theme": "fire"
+  },
+  {
+    "itemId": 5,
+    "moderator": {
+      "nickname": "suhyun",
+      "uid": 125,
+      "avatar": 19
+    },
+    "title": "워키토키",
+    "details": "",
+    "tags": [],
+    "current": 0,
+    "total": 2,
+    "theme": "cosmos"
+  },
+  {
+    "itemId": 6,
+    "moderator": {
+      "nickname": "하랭",
+      "uid": 8,
+      "avatar": 7
+    },
+    "title": "핑핑이",
+    "details": "",
+    "tags": ["컴공", "핑핑"],
+    "current": 0,
+    "total": 2,
+    "theme": "cosmos"
+  },
+  {
+    "itemId": 7,
+    "moderator": {
+      "nickname": "현또",
+      "uid": 124,
+      "avatar": 13
+    },
+    "title": "현또방 - 패치됐다길래 와봄",
+    "details": "패치됐다길래 와봄",
+    "tags": [],
+    "current": 0,
+    "total": 4,
+    "theme": "travel"
+  }
+]
