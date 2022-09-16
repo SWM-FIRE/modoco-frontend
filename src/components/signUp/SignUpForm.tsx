@@ -17,7 +17,7 @@ export default function SignUpForm() {
   } = useSignUp();
   const { avatar, nickname, email, password, passwordCheck } = inputs;
   return (
-    <Container>
+    <Container data-cy="register-container">
       <Title>회원가입</Title>
       <Form onSubmit={onSubmit}>
         <Avatar avatar={avatar} onChangeAvatar={onChangeAvatar} />

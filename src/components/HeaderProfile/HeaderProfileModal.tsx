@@ -38,7 +38,9 @@ export default function HeaderProfileModal({
           </AboutMe>
           <Button onClick={onProfile}>마이페이지</Button>
         </UserInformation>
-        <Button onClick={onLogOut}>로그아웃</Button>
+        <Button onClick={onLogOut} data-cy="profile-logout">
+          로그아웃
+        </Button>
       </Container>
     </ModalPosition>
   );
