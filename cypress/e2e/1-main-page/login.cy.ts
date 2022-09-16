@@ -86,5 +86,23 @@ describe('try login', () => {
     cy.wait(500);
     cy.get('[data-cy="main-login-outer"]').click('bottom');
     cy.get('[data-cy="main-login-container"]').should('not.exist');
+
+    // click outside of modal to close -> left
+    cy.get('[data-cy="main-login-button"]').click();
+    cy.get('[data-cy="main-login-container"]')
+      .should('exist')
+      .should('be.visible');
+    cy.wait(500);
+    cy.get('[data-cy="main-login-outer"]').click('left');
+    cy.get('[data-cy="main-login-container"]').should('not.exist');
+
+    // click outside of modal to close -> right
+    cy.get('[data-cy="main-login-button"]').click();
+    cy.get('[data-cy="main-login-container"]')
+      .should('exist')
+      .should('be.visible');
+    cy.wait(500);
+    cy.get('[data-cy="main-login-outer"]').click('right');
+    cy.get('[data-cy="main-login-container"]').should('not.exist');
   });
 });
