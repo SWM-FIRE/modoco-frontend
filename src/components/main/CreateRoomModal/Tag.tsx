@@ -14,11 +14,11 @@ export default function TagsComponent({
       <Component>
         {tags.map((myTag, index) => (
           <TagComponent
-            key={myTag.concat(`${index}`)}
             onClick={(e) => onDeleteTag(e, index)}
+            key={myTag.concat(`${index}`)}
           >
             <Tag key={myTag}>#{myTag}</Tag>
-            <TagButton type="button" onClick={(e) => onDeleteTag(e, index)}>
+            <TagButton type="button">
               <DeleteTag />
             </TagButton>
           </TagComponent>

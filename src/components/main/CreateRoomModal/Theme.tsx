@@ -96,7 +96,6 @@ const DropDown = styled.div`
   background-color: #191f28;
   border-radius: 0.6rem;
   top: 8.9rem;
-  z-index: 5;
   @keyframes dropdown {
     0% {
       transform: translateY(-5%);
