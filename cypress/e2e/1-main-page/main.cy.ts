@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { API } from '../../config';
 
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -14,6 +15,7 @@ describe('open main page', () => {
     cy.viewport(1536, 960);
   });
 
+  // render Main Page
   it('render Main Props', () => {
     // check if title is visible
     cy.title().should('include', 'MODOCO');
@@ -35,6 +37,7 @@ describe('open main page', () => {
       .should('contain', 'Privacy Policy');
   });
 
+  // render Rooms cards in main page
   it('render Rooms', () => {
     // check if all rooms are rendered
     cy.get('[data-cy="main-room-cards"]').should('have.length', 7);
@@ -70,6 +73,7 @@ describe('open main page', () => {
     ).should('be.not.visible');
   });
 
+  // click arrow functions in room cards and see if works
   it('click arrow functions', () => {
     // check is arrow button works
     // first check right arrow and see if last element is now visible
