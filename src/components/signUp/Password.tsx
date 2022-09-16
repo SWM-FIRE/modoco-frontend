@@ -36,7 +36,7 @@ export default function Password({
 
   return (
     <>
-      <Section>
+      <Container data-cy="register-password">
         <Label htmlFor="password">비밀번호 *</Label>
         <Input
           type="password"
@@ -46,10 +46,11 @@ export default function Password({
           onChange={onChange}
           onBlur={onBlurPw}
           placeholder="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."
+          data-cy="register-password-input"
         />
         <Error ref={errorMsgPW} />
-      </Section>
-      <Section>
+      </Container>
+      <Container data-cy="register-password-verification">
         <Label htmlFor="passwordCheck">비밀번호 확인 *</Label>
         <Input
           type="password"
@@ -59,14 +60,15 @@ export default function Password({
           onChange={onChange}
           onBlur={onBlurPwCheck}
           placeholder="비밀번호를 다시 입력해주세요."
+          data-cy="register-password-verification-input"
         />
         <Error ref={errorMsgPWCheck} />
-      </Section>
+      </Container>
     </>
   );
 }
 
-const Section = styled.p`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;

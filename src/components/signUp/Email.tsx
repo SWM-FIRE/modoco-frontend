@@ -14,7 +14,7 @@ export default function Email({ email, onChange, isValidEmail }) {
     }
   };
   return (
-    <Section isValidEmail={isValidEmail}>
+    <Container isValidEmail={isValidEmail} data-cy="register-email">
       <Label htmlFor="email">이메일 *</Label>
       <Input
         type="text"
@@ -24,9 +24,10 @@ export default function Email({ email, onChange, isValidEmail }) {
         onChange={onChange}
         placeholder="이메일을 입력해주세요."
         onBlur={onBlur}
+        data-cy="register-email-input"
       />
       <Error ref={errorMsg} />
-    </Section>
+    </Container>
   );
 }
 
@@ -34,7 +35,7 @@ interface sectionInterface {
   isValidEmail: boolean;
 }
 
-const Section = styled.p<sectionInterface>`
+const Container = styled.p<sectionInterface>`
   display: flex;
   flex-direction: column;
   width: 100%;
