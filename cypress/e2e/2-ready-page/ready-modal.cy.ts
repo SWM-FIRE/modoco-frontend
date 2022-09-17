@@ -19,12 +19,6 @@ describe('check ready page modals', () => {
       { fixture: 'singleRoom.json' },
     );
 
-    // mock post my login data
-    cy.intercept(
-      { method: 'POST', url: API.SESSION },
-      { fixture: 'loginResult.json' },
-    );
-
     // mock get my data
     cy.intercept({ method: 'GET', url: API.ME }, { fixture: 'me.json' });
     cy.intercept(
