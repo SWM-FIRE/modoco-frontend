@@ -1,6 +1,5 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 /* eslint-disable no-unused-vars */
-import { wait } from '@testing-library/user-event/dist/utils';
 import { API } from '../../config';
 
 Cypress.on('uncaught:exception', (err, runnable) => {
