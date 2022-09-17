@@ -50,7 +50,6 @@ const ModalPosition = styled.div`
   position: absolute;
   top: 8.4rem;
   right: 4.4rem;
-  overflow: hidden;
   z-index: 1;
 `;
 
@@ -64,15 +63,6 @@ const Container = styled.div`
   border-radius: 2rem;
   padding: 3.2rem 2.4rem;
   z-index: 2;
-  @keyframes dropdown {
-    0% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-  animation: dropdown 400ms ease-in-out forwards;
 `;
 
 const AvatarComponent = styled.div`
