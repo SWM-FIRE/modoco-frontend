@@ -3,7 +3,7 @@ import PositiveCircle from './PositiveCircle';
 
 export default function GiveWhat() {
   return (
-    <Container>
+    <Container data-cy="landing-giveWhat">
       <MainTitle>
         개발자에게
         <br /> 친화적인 환경 제공

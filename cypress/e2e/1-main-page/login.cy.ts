@@ -1,6 +1,5 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 /* eslint-disable no-unused-vars */
-
 import { API } from '../../config';
 
 Cypress.on('uncaught:exception', (err, runnable) => {
@@ -45,6 +44,7 @@ describe('try login', () => {
     // logout
     cy.wait(500);
     cy.get('[data-cy="profile-logout"]').click();
+    cy.get('[data-cy="main-profile"]').should('not.exist');
   });
 
   // goes to register page

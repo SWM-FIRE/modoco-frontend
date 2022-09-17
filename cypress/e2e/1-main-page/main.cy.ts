@@ -1,3 +1,4 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 /* eslint-disable no-unused-vars */
 import { API } from '../../config';
 
@@ -95,7 +96,6 @@ describe('open main page', () => {
 
     // second check left arrow and see if first element is now visible
     // make sure last element is hidden again
-
     cy.get('[data-cy="left-arrow-transparent"]').trigger('mouseover');
     cy.get('[data-cy="left-arrow-button"]').click();
     cy.get(
@@ -110,5 +110,39 @@ describe('open main page', () => {
     cy.get(
       '[data-key="7"] > [data-cy="main-room-cards"] > [data-cy="main-room-enter"]',
     ).should('be.not.visible');
+  });
+
+  // check landing page
+  it('check landing page', () => {
+    // check if landing page is visible
+    cy.get('[data-cy="landing-page"]').should('be.visible');
+
+    // check landing-what is modoco part
+    cy.get('[data-cy="landing-whatIsModoco"]').scrollIntoView();
+    cy.get('[data-cy="landing-whatIsModoco"]')
+      .should('be.visible')
+      .should('contain.text', '모도코란?');
+
+    // check ladning problems part
+    cy.get('[data-cy="landing-problems"]').scrollIntoView();
+    cy.wait(500);
+    cy.get('[data-cy="landing-problems"]')
+      .should('be.visible')
+      .should('contain.text', '기존 모각코의')
+      .should('contain.text', ' 문제점을 해결해요');
+
+    // check landing give what part
+    cy.get('[data-cy="landing-giveWhat"]').scrollIntoView();
+    cy.wait(500);
+    cy.get('[data-cy="landing-giveWhat"]')
+      .should('be.visible')
+      .should('contain.text', '개발자에게')
+      .should('contain.text', ' 친화적인 환경 제공');
+
+    // check landing footer
+    cy.get('[data-cy="main-footer"]').scrollIntoView();
+    cy.wait(500);
+    cy.get('[data-cy="footer-title').should('contain', 'Modoco');
+    cy.get('[data-cy="footer-detail"]').should('contain', '아남타워');
   });
 });

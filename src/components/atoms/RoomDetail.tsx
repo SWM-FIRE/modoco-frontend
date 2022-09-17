@@ -4,7 +4,7 @@ import { ReactComponent as Bar } from '../../assets/svg/Room/Bar.svg';
 
 export default function RoomDetail({ data }) {
   return (
-    <Container>
+    <Container data-cy="card-room-detail">
       <ThemeImage theme={data.theme} />
       <Bar />
       <Attend>

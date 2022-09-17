@@ -1,0 +1,14 @@
+{
+  "itemId": 1,
+  "moderator": {
+    "nickname": "윤영기",
+    "uid": 193,
+    "avatar": 28
+  },
+  "title": "영기의 Cypress 방",
+  "details": "Cypress 빡공하는 방입니다, 아무나 컴",
+  "tags": ["Cypress", "JAVA", "GoF"],
+  "current": 0,
+  "total": 4,
+  "theme": "fire"
+}

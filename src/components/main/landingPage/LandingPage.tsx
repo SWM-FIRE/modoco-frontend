@@ -5,7 +5,7 @@ import GiveWhat from './GiveWhat';
 
 export default function LandingPage() {
   return (
-    <Container>
+    <Container data-cy="landing-page">
       <WhatIsModoco />
       <Problems />
       <GiveWhat />

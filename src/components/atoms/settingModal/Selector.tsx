@@ -80,25 +80,29 @@ export default function Selector({
   };
 
   return (
-    <Container>
+    <Container data-cy="setting-modal-selector-container">
       <SelectorTitle>
         <Icon />
         {theme}
       </SelectorTitle>
-      <DropDownContainer onClick={dropDown}>
+      <DropDownContainer
+        onClick={dropDown}
+        data-cy="setting-modal-dropdown-container"
+      >
         <Text>
           {myDevice !== null ? myDevice?.label : defaultDevice(device)}
         </Text>
         <BottomArrow />
         {showDropDown && (
           <DropDownPosition>
-            <DropDown>
+            <DropDown data-cy="setting-modal-dropdown">
               {device.map((device) => (
                 <DropDownItem
                   key={device.deviceId}
                   onClick={(event) => {
                     setDevice(device, event);
                   }}
+                  data-cy="setting-modal-dropdown-item"
                 >
                   <Text>{device.label}</Text>
                 </DropDownItem>

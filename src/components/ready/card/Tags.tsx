@@ -4,7 +4,9 @@ export default function Tags({ data }) {
   return (
     <Container>
       {data.tags.map((myTag: string) => (
-        <Tag key={myTag}>#{myTag}</Tag>
+        <Tag key={myTag} data-cy="ready-card-tag">
+          #{myTag}
+        </Tag>
       ))}
     </Container>
   );
