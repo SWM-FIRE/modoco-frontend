@@ -57,17 +57,23 @@ export default function SettingModal({
   }, [videoRef, userMediaStream]);
 
   return (
-    <Container onClick={closeModalBackground}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
+    <Container onClick={closeModalBackground} data-cy="setting-modal-outer">
+      <ModalBox onClick={(e) => e.stopPropagation()} data-cy="setting-modal">
         <ModalTitle>
           기기설정
-          <ExitButton onClick={closeModal}>
+          <ExitButton onClick={closeModal} data-cy="setting-modal-close-button">
             <X />
           </ExitButton>
         </ModalTitle>
         <Main>
           <MyScreen>
-            <Screen ref={videoRef} autoPlay playsInline muted />
+            <Screen
+              ref={videoRef}
+              autoPlay
+              playsInline
+              muted
+              data-cy="setting-modal-screen"
+            />
             <VolumeBar volume={vol} />
           </MyScreen>
           <Selectors />

@@ -12,9 +12,9 @@ export default function Settings({
     setSetting(true);
   };
   return (
-    <SettingContainer>
+    <SettingContainer data-cy="ready-setting-container">
       <Message>코딩방 입장 전 화면과 오디오 상태를 체크하는 곳입니다</Message>
-      <Setting onClick={openSetting}>
+      <Setting onClick={openSetting} data-cy="ready-setting-button">
         <SettingIcon />
         기기 설정
       </Setting>

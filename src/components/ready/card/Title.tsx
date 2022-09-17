@@ -2,9 +2,11 @@ import styled from 'styled-components';
 
 export default function Title({ data }) {
   return (
-    <Container>
-      <MainTitle>{data.title}</MainTitle>
-      <DetailTitle>{data.details}</DetailTitle>
+    <Container data-cy="ready-card-title">
+      <MainTitle data-cy="ready-card-main-title">{data.title}</MainTitle>
+      <DetailTitle data-cy="ready-card-detail-title">
+        {data.details}
+      </DetailTitle>
     </Container>
   );
 }
