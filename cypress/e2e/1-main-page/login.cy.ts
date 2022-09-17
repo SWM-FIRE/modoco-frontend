@@ -45,6 +45,7 @@ describe('try login', () => {
     // logout
     cy.wait(500);
     cy.get('[data-cy="profile-logout"]').click();
+    cy.get('[data-cy="main-profile"]').should('not.exist');
   });
 
   // goes to register page

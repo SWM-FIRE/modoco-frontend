@@ -4,7 +4,7 @@ import ProblemWords from './ProblemWords';
 
 export default function Problems() {
   return (
-    <Container>
+    <Container data-cy="landing-problems">
       <ProblemTitle>
         기존 모각코의
         <br /> 문제점을 해결해요

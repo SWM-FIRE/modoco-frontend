@@ -3,7 +3,7 @@ import { ReactComponent as DevelopingSocialNetwork } from '../../../assets/svg/D
 
 export default function WhatIsModoco() {
   return (
-    <Container>
+    <Container data-cy="landing-whatIsModoco">
       <SvgContainer>
         <DevelopingSocialNetwork />
       </SvgContainer>
