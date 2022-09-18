@@ -21,6 +21,7 @@ jobs:
           wait-on: 'http://localhost:3000'
 
         env:
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
           # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.TARGET_CYPRESS_RECORDS_KEY }}
           # pass GitHub token to allow accurately detecting a build vs a re-run build
