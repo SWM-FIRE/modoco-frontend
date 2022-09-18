@@ -136,8 +136,6 @@
 
 [![halang's GitHub stats](https://velog-readme-stats.vercel.app/api?name=lhr4884&slug=모달창-만들기-드롭다운-구현하기)](https://velog.io/@lhr4884/모달창-만들기-드롭다운-구현하기)
 
-[![halang's GitHub stats](https://velog-readme-stats.vercel.app/api?name=lhr4884&slug=모달창-만들기-드롭다운-구현하기)](https://velog.io/@lhr4884/모달창-만들기-드롭다운-구현하기)
-
 [![halang's GitHub stats](https://velog-readme-stats.vercel.app/api?name=lhr4884&slug=velog에서-사용하는-태그-입력-기능-만들기)](https://velog.io/@lhr4884/velog%EC%97%90%EC%84%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%ED%83%9C%EA%B7%B8-%EC%9E%85%EB%A0%A5-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0)
 
 [![halang's GitHub stats](https://velog-readme-stats.vercel.app/api?name=lhr4884&slug=초대-링크-만들기-AWS-Lambda와-API-gateway로-api-만들기)](https://velog.io/@lhr4884/%EC%B4%88%EB%8C%80-%EB%A7%81%ED%81%AC-%EB%A7%8C%EB%93%A4%EA%B8%B0-AWS-Lambda%EC%99%80-API-gateway%EB%A1%9C-api-%EB%A7%8C%EB%93%A4%EA%B8%B0)
