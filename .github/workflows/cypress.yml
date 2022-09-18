@@ -11,7 +11,11 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
+          start: yarn start & yarn cypress run
           record: true
+          browser: chrome
+          wait-on: 'http://localhost:3000'
+
         env:
           # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.TARGET_CYPRESS_ORGANIZATION_ID }}
