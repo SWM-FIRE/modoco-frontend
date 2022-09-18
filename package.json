@@ -37,7 +37,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:css": "stylelint --ignore-path .gitignore '**/*.(css|tsx)'"
+    "lint:css": "stylelint --ignore-path .gitignore '**/*.(css|tsx)'",
+    "cypress": "source .env; yarn start | npx cypress run --record --key $REACT_APP_CYPRESS_KEY"
   },
   "eslintConfig": {
     "extends": [

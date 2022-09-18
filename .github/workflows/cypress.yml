@@ -6,15 +6,14 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          start: yarn start & yarn cypress run
+          start: yarn start
           record: true
           browser: chrome
-          wait-on: 'http://localhost:3000'
 
         env:
           # pass the Dashboard record key as an environment variable
