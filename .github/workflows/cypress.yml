@@ -8,12 +8,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # - name: My Own Cypress
+      #   with:
+      #     start: yarn install | yarn start | npx cypress run --record --key ${{ secrets.TARGET_CYPRESS_RECORDS_KEY  }}
+
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
           start: yarn start
           record: true
           browser: chrome
+          wait-on: 'http://localhost:3000'
 
         env:
           # pass the Dashboard record key as an environment variable
