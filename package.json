@@ -19,6 +19,7 @@
     "react": "^18.2.0",
     "react-channel-plugin": "^2.2.0",
     "react-chartjs-2": "^4.3.1",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-horizontal-scrolling-menu": "^3.1.0",
     "react-hot-toast": "^2.3.0",
