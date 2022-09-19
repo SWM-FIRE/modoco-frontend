@@ -10,24 +10,32 @@ import roomModalStore from '../../../stores/room/roomModalStore';
 export default function Information() {
   const { roomId } = useParams();
   const { data } = useRoom(roomId);
-  const { toggleSidebarModal } = roomModalStore();
+  const { toggleSidebarModal, toggleInviteModal } = roomModalStore();
 
   const onControlSidebarClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     toggleSidebarModal();
   };
 
+  const onControlInviteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    toggleInviteModal();
+  };
+
   return (
     <Component>
-      <ControlSidebar onClick={onControlSidebarClick}>
-        <RightTwoArrows />
-        <Chatting />
-      </ControlSidebar>
-      <RoomTitle>{data.title}</RoomTitle>
-      <LongBar />
-      <Number>
-        <Current>{data.current}</Current>/<Total>{data.total}</Total>
-      </Number>
+      <InformationComponent>
+        <ControlSidebar onClick={onControlSidebarClick}>
+          <RightTwoArrows />
+          <Chatting />
+        </ControlSidebar>
+        <RoomTitle>{data.title}</RoomTitle>
+        <LongBar />
+        <Number>
+          {data.current} / {data.total}
+        </Number>
+      </InformationComponent>
+      <InviteButton onClick={onControlInviteClick}>초대링크</InviteButton>
     </Component>
   );
 }
@@ -35,11 +43,27 @@ export default function Information() {
 const Component = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 2.5rem;
   color: #f9fafb;
   font-size: 1.8rem;
-  gap: 0.8rem;
   font-family: IBMPlexSansKRRegular;
+`;
+
+const InformationComponent = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+`;
+
+const InviteButton = styled.button`
+  color: white;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-family: IBMPlexSansKRRegular;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const ControlSidebar = styled.div`
@@ -60,6 +84,6 @@ const Number = styled.div`
   gap: 0.4rem;
 `;
 
-const Current = styled.span``;
+// const Current = styled.span``;
 
-const Total = styled.span``;
+// const Total = styled.span``;
