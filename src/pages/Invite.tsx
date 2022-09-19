@@ -18,8 +18,6 @@ export default function Invite() {
     });
   };
 
-  const code = inviteCode.slice(0, 10);
-
   return (
     <Component>
       <Toaster />
@@ -31,7 +29,7 @@ export default function Invite() {
         ) : (
           <>
             초대링크
-            <Code>{code}</Code>
+            <Code>{inviteCode}</Code>
             <CopyToClipboard
               text={inviteCode}
               onCopy={() => toast.success(`복사되었습니다. ${inviteCode}`)}
