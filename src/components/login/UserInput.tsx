@@ -93,6 +93,7 @@ const Input = styled.input<{ isError: boolean }>`
   border: ${(props) => (props.isError ? '1px solid #ed8e8e' : 'none')};
   ${media.small} {
     width: 80%;
+    font-size: 1.2rem;
   }
 `;
 

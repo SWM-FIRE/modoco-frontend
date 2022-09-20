@@ -3,9 +3,10 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import UserStore from '../../stores/userStore';
-import MyAvatar from '../../assets/avatar/MyAvatar';
-import RoomDetail from '../atoms/RoomDetail';
+import UserStore from '../../../stores/userStore';
+import MyAvatar from '../../../assets/avatar/MyAvatar';
+import RoomDetail from '../../atoms/RoomDetail';
+import BlockDetail from './BlockDetail';
 
 export default function Block({ isMain, data }) {
   const navigate = useNavigate();
@@ -28,52 +29,29 @@ export default function Block({ isMain, data }) {
     <Container main={isMain} data-cy="main-room-cards">
       <AvatarContainer data-cy="main-room-moderator">
         <MyAvatar num={Number(data.moderator.avatar)} />
+        <Moderator>
+          방장<Nickname>{data.moderator.nickname}</Nickname>
+        </Moderator>
       </AvatarContainer>
-      <Moderator>
-        방장<Nickname>{data.moderator.nickname}</Nickname>
-      </Moderator>
-      <DetailContainer data-cy="main-room-detail">
-        <TitleContainer>
-          <Title>{data.title}</Title>
-        </TitleContainer>
-        <DescriptionContainer>
-          <Description>{data.details}</Description>
-        </DescriptionContainer>
-        <Tags>
-          {data.tags.map((myTag) => (
-            <Tag key={Symbol(myTag).toString()}>#{myTag}</Tag>
-          ))}
-        </Tags>
-        <PositionRoom>
-          <RoomDetail data={data} />
-        </PositionRoom>
-      </DetailContainer>
-      <Enter onClick={enterRoom} data-cy="main-room-enter">
-        입장하기 →
-      </Enter>
+      <BlockDetail data={data} />
+      <Entering>
+        <RoomDetail data={data} />
+        <Enter onClick={enterRoom} data-cy="main-room-enter">
+          입장하기 →
+        </Enter>
+      </Entering>
     </Container>
   );
 }
 
-const PositionRoom = styled.div`
+const Entering = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const Tags = styled.div`
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  overflow-y: auto;
-  width: 100%;
-  white-space: nowrap;
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  gap: 3rem;
   ${media.small} {
-    display: none;
+    gap: 0.5rem;
   }
 `;
 
@@ -98,50 +76,8 @@ const Enter = styled.button`
   }
 `;
 
-const Tag = styled.div`
-  padding: 0 1rem;
-  height: 3.1rem;
-  color: #45b26b;
-  background-color: rgba(69, 178, 107, 0.1);
-  border-radius: 0.6rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  ${media.small} {
-    padding: 0 0.5rem;
-    height: 2.5rem;
-    font-size: 1rem;
-  }
-`;
-
-const DetailContainer = styled.div`
-  height: 18.8rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  gap: 2rem;
-`;
-
-const DescriptionContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  ${media.small} {
-    display: none;
-  }
-`;
-
-const Description = styled.div`
-  color: #777e90;
-  font-size: 1.4rem;
-`;
-
 const AvatarContainer = styled.div`
   width: 8rem;
-  height: 11.4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -153,34 +89,20 @@ const AvatarContainer = styled.div`
   }
 `;
 
-const TitleContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Title = styled.div`
-  color: #fcfcfd;
-  font-size: 2.4rem;
-  ${media.small} {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    margin-top: 1rem;
-    font-size: 1.8rem;
-  }
-`;
-
 const Moderator = styled.span`
   color: rgba(255, 255, 255, 0.5);
   display: flex;
+  margin-top: 2rem;
   align-items: center;
   gap: 0.3rem;
   font-size: 1.2rem;
   font-family: IBMPlexMonoRegular;
   width: 100%;
   justify-content: center;
+  ${media.small} {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
 `;
 
 const Nickname = styled.span`
@@ -205,5 +127,6 @@ const Container = styled.div<{ main: boolean }>`
     height: 26rem;
     min-width: 14rem;
     width: 14rem;
+    margin-right: ${(props) => (props.main ? '0rem' : '1rem')};
   }
 `;

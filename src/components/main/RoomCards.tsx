@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import Block from './Block';
+import media from 'src/styles/media';
+import Block from './block/Block';
 import useRooms from '../../hooks/useRooms';
 import CreateRoom from './CreateRoom';
 import { filterData } from './filterData';
 import searchInputStore from '../../stores/searchInputStore';
-import EmptyBlock from './EmptyBlock';
+import EmptyBlock from './block/EmptyBlock';
 
 export default function RoomCards({
   openCreateRoom,
@@ -42,4 +43,12 @@ const Container = styled.div`
   padding-right: 10%;
   margin: 10rem 0 0 20%;
   row-gap: 7.6rem;
+  ${media.small} {
+    margin: 3rem 0;
+    padding-right: 0;
+    justify-content: center;
+    align-items: center;
+    row-gap: 4rem;
+    gap: 2rem;
+  }
 `;
