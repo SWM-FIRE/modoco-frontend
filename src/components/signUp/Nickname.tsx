@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 
 export default function Nickname({ nickname, onChange }) {
   const errorMsg = useRef(null);
@@ -37,6 +38,9 @@ const Container = styled.p`
   flex-direction: column;
   width: 100%;
   margin-top: 3rem;
+  ${media.small} {
+    margin-top: 1.5rem;
+  }
 `;
 
 const Label = styled.label`
@@ -48,14 +52,15 @@ const Input = styled.input`
   margin-top: 1.2rem;
   height: 4.9rem;
   padding-left: 1.6rem;
-  color: #f9fafb;
   background-color: #191f28;
-  font-size: 1.5rem;
-  font-family: IBMPlexSansKRRegular;
-  border-radius: 0.6rem;
+  border-radius: 1rem;
+  color: #f9fafb;
 `;
 
 const Error = styled.span`
   color: #ed8e8e;
   margin-top: 0.5rem;
+  ${media.small} {
+    font-size: 1.2rem;
+  }
 `;

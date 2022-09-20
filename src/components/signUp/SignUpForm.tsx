@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import Avatar from './Avatar';
 import Email from './Email';
 import Nickname from './Nickname';
@@ -46,11 +47,21 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 7.8rem 0 14.4rem 0;
   font-family: IBMPlexSansKRRegular;
+  color: #f9fafb;
+  font-size: 1.5rem;
+  border-radius: 0.6rem;
+  ${media.small} {
+    width: 80%;
+    padding: 3.6rem 0 4.2rem 0;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 4rem;
   color: #f9fafb;
+  ${media.small} {
+    font-size: 2.4rem;
+  }
 `;
 
 const Form = styled.form`
@@ -70,12 +81,17 @@ const Submit = styled.button`
   color: #111827;
   width: 100%;
   font-size: 1.5rem;
-  border-radius: 1rem;
   font-family: IBMPlexSansKRRegular;
   cursor: pointer;
   margin-top: 5rem;
+  border-radius: 1rem;
   :disabled {
     cursor: default;
     background-color: #a9afb8;
+  }
+  ${media.small} {
+    margin-top: 3rem;
+    height: 4.6rem;
+    font-size: 1.2rem;
   }
 `;
