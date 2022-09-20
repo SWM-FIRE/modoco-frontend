@@ -51,7 +51,7 @@ const Container = styled.div`
   gap: 12.7rem;
   margin-top: 15rem;
   ${media.small} {
-    margin-top: 10rem;
+    margin-top: 5rem;
     padding: 10%;
   }
 `;
