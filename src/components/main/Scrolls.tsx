@@ -3,11 +3,11 @@ import media from 'src/styles/media';
 import styled from 'styled-components';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import { LeftArrow, RightArrow } from './Arrow';
-import Block from './Block';
+import Block from './block/Block';
 import useRooms from '../../hooks/useRooms';
 import { filterData } from './filterData';
 import TagStore from '../../stores/searchInputStore';
-import EmptyBlock from './EmptyBlock';
+import EmptyBlock from './block/EmptyBlock';
 
 export default function Scrolls() {
   const { isLoading, error, data } = useRooms();

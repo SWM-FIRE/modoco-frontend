@@ -91,5 +91,6 @@ const Container = styled.div`
     height: 26rem;
     min-width: 14rem;
     width: 14rem;
+    margin-right: 0rem;
   }
 `;
