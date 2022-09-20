@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import { ReactComponent as DevelopingSocialNetwork } from '../../../assets/svg/DevelopingSocialNetwork.svg';
 
 export default function WhatIsModoco() {
@@ -29,12 +30,14 @@ const Explain = styled.div`
 
 const ModocoContainer = styled.div`
   color: #fcfcf9;
+  display: flex;
+  flex-direction: column;
   @media (max-width: 1440px) {
     margin-right: 20%;
   }
-  display: flex;
-  flex-direction: column;
-  width: 36.9rem;
+  ${media.small} {
+    margin-right: 0;
+  }
 `;
 
 const Container = styled.div`
@@ -47,6 +50,10 @@ const Container = styled.div`
   align-items: center;
   gap: 12.7rem;
   margin-top: 15rem;
+  ${media.small} {
+    margin-top: 10rem;
+    padding: 10%;
+  }
 `;
 
 const ModocoTitle = styled.div`
@@ -58,5 +65,12 @@ const ModocoTitle = styled.div`
 const SvgContainer = styled.div`
   @media (max-width: 1440px) {
     margin-left: 20%;
+  }
+  ${media.small} {
+    width: 70vw;
+    height: 70vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;

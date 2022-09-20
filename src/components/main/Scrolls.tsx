@@ -1,4 +1,5 @@
 import React from 'react';
+import media from 'src/styles/media';
 import styled from 'styled-components';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import { LeftArrow, RightArrow } from './Arrow';
@@ -43,4 +44,12 @@ const Container = styled.div`
   }
   align-self: start;
   margin-left: 10rem;
+  ${media.xlarge} {
+    margin-left: 5rem;
+    width: calc(100% - 5rem);
+  }
+  ${media.small} {
+    margin-left: 1rem;
+    width: calc(100% - 2rem);
+  }
 `;

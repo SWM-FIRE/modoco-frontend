@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import { useNavigate } from 'react-router-dom';
 import UserStore from '../../stores/userStore';
 import Profile from './Profile';
@@ -77,5 +78,7 @@ const Container = styled.div`
   border-bottom: solid #2b2e41 0.1rem;
   padding: 0 4.4rem;
   position: relative;
-  background-color: #18181b;
+  ${media.small} {
+    padding: 0 2rem;
+  }
 `;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import { ReactComponent as Problem1 } from '../../../assets/svg/Problem1.svg';
 import { ReactComponent as Problem2 } from '../../../assets/svg/Problem2.svg';
 import { ReactComponent as Problem3 } from '../../../assets/svg/Problem3.svg';
@@ -67,4 +68,8 @@ const Problem = styled.div`
 const FlexProblems = styled.div`
   display: flex;
   gap: 8.3rem;
+  ${media.small} {
+    flex-direction: column;
+    gap: 4rem;
+  }
 `;

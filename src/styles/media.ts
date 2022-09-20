@@ -1,5 +1,5 @@
-export const mediaQuery = (minWidth: number) => {
-  return `@media screen and (min-width: ${minWidth}px)`;
+export const mediaQuery = (maxWidth: number) => {
+  return `@media screen and (max-width: ${maxWidth}px)`;
 };
 
 const media = {

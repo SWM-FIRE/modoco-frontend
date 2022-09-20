@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import { ReactComponent as WantToBuildTeamImage } from '../../../assets/svg/WantToBuildTeam.svg';
 import ProblemWords from './ProblemWords';
 
@@ -20,8 +21,12 @@ export default function Problems() {
 }
 
 const ImageContainer = styled.div`
-  @media (max-width: 1440px) {
-    margin-left: 30%;
+  ${media.xlarge} {
+    margin-top: 2rem;
+    margin-left: 20%;
+  }
+  ${media.small} {
+    display: none;
   }
 `;
 
@@ -29,9 +34,9 @@ const ProblemsContainer = styled.div`
   display: flex;
   gap: 8.3rem;
   margin-top: 6rem;
-  @media (max-width: 1440px) {
+  ${media.xlarge} {
     flex-direction: column;
-    gap: 2rem;
+    gap: 0rem;
   }
 `;
 
@@ -39,13 +44,20 @@ const ProblemTitle = styled.div`
   font-family: IBMPlexSansKRRegular;
   font-weight: 600;
   font-size: 5.2rem;
+  ${media.small} {
+    font-size: 3.2rem;
+  }
 `;
 
 const Container = styled.div`
   margin-top: 30rem;
-  @media (max-width: 1440px) {
-    margin-top: 13rem;
-  }
   margin-left: 15%;
   color: #fcfcf9;
+  ${media.xlarge} {
+    margin-top: 13rem;
+  }
+  ${media.small} {
+    margin-top: 0;
+    margin-left: 10%;
+  }
 `;

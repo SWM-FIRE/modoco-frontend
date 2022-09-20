@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import { VisibilityContext } from 'react-horizontal-scrolling-menu';
 
 function Left({
@@ -117,6 +118,12 @@ const Button = styled.button<Props>`
     ${(props) => props.border[1]}rem ${(props) => props.border[2]}rem
     ${(props) => props.border[3]}rem;
   margin-left: ${(props) => props.margin}rem;
+  ${media.xlarge} {
+    ${(props) => (props.margin ? 'margin-left: 5rem' : null)};
+  }
+  ${media.small} {
+    ${(props) => (props.margin ? 'margin-left: 1rem' : null)};
+  }
 `;
 
 export function LeftArrow() {
