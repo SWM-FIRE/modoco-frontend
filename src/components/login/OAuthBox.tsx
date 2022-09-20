@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import { API } from '../../config';
 import Kakao from '../../assets/img/oauth/kakao.png';
 import Github from '../../assets/img/oauth/github.png';
@@ -24,10 +25,16 @@ export default function OAuthBox({ auth }: { auth: string }) {
         src={auth === 'kakao' ? Kakao : auth === 'github' ? Github : Google}
         alt={auth}
       />
-      {auth}로 계속하기
+      <Text>{auth}로 계속하기</Text>
     </Button>
   );
 }
+
+const Text = styled.p`
+  ${media.small} {
+    display: none;
+  }
+`;
 
 const Img = styled.img`
   width: 2rem;
@@ -51,5 +58,11 @@ const Button = styled.button`
   :disabled {
     cursor: default;
     background-color: #a9afb8;
+  }
+  ${media.small} {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 100%;
+    background-color: #f3f4f6;
   }
 `;

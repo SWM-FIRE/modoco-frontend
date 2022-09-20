@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import OAuthBox from './OAuthBox';
 
 export default function Auths() {
@@ -18,4 +19,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  ${media.small} {
+    flex-direction: row;
+    gap: 2rem;
+  }
 `;

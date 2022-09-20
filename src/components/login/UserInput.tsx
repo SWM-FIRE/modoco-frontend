@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import useLogin from '../../hooks/useLogin';
 
 export default function UserInput() {
@@ -74,6 +75,10 @@ const Form = styled.form`
   input:focus {
     border: 1px solid lightblue;
   }
+
+  ${media.small} {
+    align-items: center;
+  }
 `;
 
 const Input = styled.input<{ isError: boolean }>`
@@ -86,6 +91,9 @@ const Input = styled.input<{ isError: boolean }>`
   background-color: #191f28;
   padding-left: 1.6rem;
   border: ${(props) => (props.isError ? '1px solid #ed8e8e' : 'none')};
+  ${media.small} {
+    width: 80%;
+  }
 `;
 
 const Button = styled.button`
@@ -100,6 +108,9 @@ const Button = styled.button`
   :disabled {
     cursor: default;
     background-color: #a9afb8;
+  }
+  ${media.small} {
+    width: 80%;
   }
 `;
 
