@@ -13,8 +13,9 @@ import Main from './pages/Main';
 import SignUp from './pages/SignUp';
 import Auth from './pages/Auth';
 import Loading from './pages/Loading';
-import Error from './pages/Error';
+import NoExist from './pages/NoExist';
 import Invite from './pages/Invite';
+import Error from './pages/Error';
 
 const queryClient = new QueryClient();
 
@@ -53,7 +54,10 @@ function App() {
           <Route path="/loading">
             <Route index element={<Loading />} />
           </Route>
-          <Route path="*" element={<Error />} />
+          <Route path="/error">
+            <Route index element={<Error />} />
+          </Route>
+          <Route path="*" element={<NoExist />} />
         </Routes>
       </Router>
     </QueryClientProvider>
