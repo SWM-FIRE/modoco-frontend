@@ -2,6 +2,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import UserStore from '../../stores/userStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import RoomDetail from '../atoms/RoomDetail';
@@ -27,13 +28,17 @@ export default function Block({ isMain, data }) {
     <Container main={isMain} data-cy="main-room-cards">
       <AvatarContainer data-cy="main-room-moderator">
         <MyAvatar num={Number(data.moderator.avatar)} />
-        <Moderator>
-          방장<Nickname>{data.moderator.nickname}</Nickname>
-        </Moderator>
       </AvatarContainer>
+      <Moderator>
+        방장<Nickname>{data.moderator.nickname}</Nickname>
+      </Moderator>
       <DetailContainer data-cy="main-room-detail">
-        <Title>{data.title}</Title>
-        <Description>{data.details}</Description>
+        <TitleContainer>
+          <Title>{data.title}</Title>
+        </TitleContainer>
+        <DescriptionContainer>
+          <Description>{data.details}</Description>
+        </DescriptionContainer>
         <Tags>
           {data.tags.map((myTag) => (
             <Tag key={Symbol(myTag).toString()}>#{myTag}</Tag>
@@ -67,11 +72,15 @@ const Tags = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  ${media.small} {
+    display: none;
+  }
 `;
 
 const Enter = styled.button`
   width: 12.6rem;
   height: 4.8rem;
+  min-height: 4rem;
   font-size: 1.6rem;
   font-family: SFProDisplayRegular;
   color: #fcfcfd;
@@ -81,6 +90,12 @@ const Enter = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  ${media.small} {
+    width: 8.6rem;
+    height: 3.2rem;
+    font-size: 1.2rem;
+    margin: 1rem 0rem;
+  }
 `;
 
 const Tag = styled.div`
@@ -92,6 +107,11 @@ const Tag = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  ${media.small} {
+    padding: 0 0.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+  }
 `;
 
 const DetailContainer = styled.div`
@@ -102,6 +122,16 @@ const DetailContainer = styled.div`
   align-items: center;
   justify-content: space-around;
   gap: 2rem;
+`;
+
+const DescriptionContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${media.small} {
+    display: none;
+  }
 `;
 
 const Description = styled.div`
@@ -117,12 +147,29 @@ const AvatarContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  gap: 1.6rem;
+  ${media.small} {
+    height: 5.4rem;
+    margin-bottom: 1.6rem;
+  }
+`;
+
+const TitleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled.div`
   color: #fcfcfd;
   font-size: 2.4rem;
+  ${media.small} {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-top: 1rem;
+    font-size: 1.8rem;
+  }
 `;
 
 const Moderator = styled.span`
@@ -132,6 +179,8 @@ const Moderator = styled.span`
   gap: 0.3rem;
   font-size: 1.2rem;
   font-family: IBMPlexMonoRegular;
+  width: 100%;
+  justify-content: center;
 `;
 
 const Nickname = styled.span`
@@ -151,4 +200,10 @@ const Container = styled.div<{ main: boolean }>`
   justify-content: space-between;
   padding: 4.3rem 1rem;
   min-width: 29.4rem;
+  ${media.small} {
+    padding: 2.3rem 0.5rem;
+    height: 26rem;
+    min-width: 14rem;
+    width: 14rem;
+  }
 `;

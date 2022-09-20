@@ -35,6 +35,8 @@ const Container = styled.div`
   margin-top: 3.6rem;
   width: calc(100% - 10rem);
   overflow: hidden;
+  align-self: start;
+  margin-left: 10rem;
   .react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
     display: none;
   }
@@ -42,8 +44,6 @@ const Container = styled.div`
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
-  align-self: start;
-  margin-left: 10rem;
   ${media.xlarge} {
     margin-left: 5rem;
     width: calc(100% - 5rem);

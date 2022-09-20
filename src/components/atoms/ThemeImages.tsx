@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import Cosmos from '../../assets/theme/cosmos.png';
 import Fire from '../../assets/theme/fire.png';
 import Ocean from '../../assets/theme/ocean.png';
 import Travel from '../../assets/theme/travel.png';
 import Camping from '../../assets/theme/camp.png';
+import { ReactComponent as Bar } from '../../assets/svg/Room/Bar.svg';
 
 export default function ThemeImage({ theme }) {
   if (theme === 'cosmos') {
@@ -11,6 +13,7 @@ export default function ThemeImage({ theme }) {
       <Component>
         <Img src={Cosmos} alt="cosmos" />
         <Name>우주</Name>
+        <Bar />
       </Component>
     );
   }
@@ -19,6 +22,7 @@ export default function ThemeImage({ theme }) {
       <Component>
         <Img src={Fire} alt="fire" />
         <Name>모닥불</Name>
+        <Bar />
       </Component>
     );
   }
@@ -27,6 +31,7 @@ export default function ThemeImage({ theme }) {
       <Component>
         <Img src={Ocean} alt="ocean" />
         <Name>바다</Name>
+        <Bar />
       </Component>
     );
   }
@@ -35,6 +40,7 @@ export default function ThemeImage({ theme }) {
       <Component>
         <Img src={Travel} alt="travel" />
         <Name>여행</Name>
+        <Bar />
       </Component>
     );
   }
@@ -43,6 +49,7 @@ export default function ThemeImage({ theme }) {
       <Component>
         <Img src={Camping} alt="camping" />
         <Name>캠핑</Name>
+        <Bar />
       </Component>
     );
   }
@@ -58,6 +65,9 @@ const Component = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.6rem;
+  ${media.small} {
+    display: none;
+  }
 `;
 
 const Name = styled.span`
