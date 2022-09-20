@@ -1,6 +1,17 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import Error from './Error';
 
 export default function RoomPassword({ roomPassword, onChange }) {
+  const [error, setError] = useState(false);
+  console.log(error);
+  const onBlur = () => {
+    if (!roomPassword) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  };
   return (
     <Container>
       <Label htmlFor="roomPassword">방 비밀번호 *</Label>
@@ -12,7 +23,10 @@ export default function RoomPassword({ roomPassword, onChange }) {
         onChange={onChange}
         placeholder="비밀번호를 입력해주세요."
         required
+        onBlur={onBlur}
+        data-cy="create-room-modal-pw"
       />
+      {error && <Error />}
     </Container>
   );
 }
@@ -20,9 +34,9 @@ export default function RoomPassword({ roomPassword, onChange }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: 2.9rem;
   width: 100%;
+  position: relative;
 `;
 
 const Label = styled.label`

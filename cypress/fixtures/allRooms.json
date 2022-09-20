@@ -96,5 +96,19 @@
     "current": 0,
     "total": 4,
     "theme": "travel"
+  },
+  {
+    "itemId": 8,
+    "moderator": {
+      "nickname": "하랭",
+      "uid": 8,
+      "avatar": 7
+    },
+    "title": "엄청긴타이틀틅르르틀틀티마",
+    "details": "엄청긴디테일밍렁미나러ㅣ만ㅇ러ㅣㅇㄴ머린얼미ㅏ어림ㄴ어리ㅏㄴ",
+    "tags": ["엄청", "길지", "안", "되는", "태그"],
+    "current": 0,
+    "total": 4,
+    "theme": "travel"
   }
 ]

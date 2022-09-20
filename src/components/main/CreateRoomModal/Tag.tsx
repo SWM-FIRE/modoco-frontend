@@ -11,7 +11,7 @@ export default function TagsComponent({
   return (
     <>
       <Label htmlFor="tag">태그</Label>
-      <TagComponent>
+      <TagComponent data-cy="create-room-modal-tags">
         {tags.map((myTag, index) => (
           <Tag
             onClick={(e) => onDeleteTag(e, index)}

@@ -131,7 +131,13 @@ export default function useCreateRoom({
     return mutation;
   };
 
+  const isDisable = () => {
+    if (theme === '' || total === '' || title === '') return true;
+    return false;
+  };
+
   const onSubmit = () => {
+    if (isDisable()) return;
     const { mutate } = useRoomCreator();
     mutate();
   };
@@ -145,5 +151,6 @@ export default function useCreateRoom({
     useRoomCreator,
     onClickTheme,
     onClickTotal,
+    isDisable,
   };
 }
