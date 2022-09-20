@@ -1,6 +1,7 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import styled from 'styled-components';
 import media from 'src/styles/media';
 import UserStore from '../../../stores/userStore';
@@ -16,6 +17,10 @@ export default function Block({ isMain, data }) {
     event.preventDefault();
     if (!nickname) {
       toast.error('로그인이 필요합니다');
+      return;
+    }
+    if (isMobile) {
+      toast.error('모바일에서는 접속이 불가능합니다');
       return;
     }
     if (data.current === data.total) {
