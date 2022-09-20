@@ -15,6 +15,7 @@ export default function CreateRoomForm({
   mutate,
   onClickTheme,
   onClickTotal,
+  isDisable,
 }) {
   const { title, details, total, newTag, tags, isPrivate, roomPassword } =
     inputs;
@@ -43,7 +44,9 @@ export default function CreateRoomForm({
         roomPassword={roomPassword}
         onChange={onChange}
       />
-      <Submit>방 생성하기</Submit>
+      <Submit data-cy="create-room-modal-create" disabled={isDisable()}>
+        방 생성하기
+      </Submit>
     </Form>
   );
 }

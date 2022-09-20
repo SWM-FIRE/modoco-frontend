@@ -25,6 +25,7 @@ export default function Private({ isPrivate, roomPassword, onChange }) {
               name="isPrivate"
               value="true"
               onChange={onChange}
+              data-cy="create-room-modal-private"
             />
             비공개 코딩방
           </Label>
@@ -43,6 +44,7 @@ const Component = styled.div`
   align-items: center;
   margin-top: 2.9rem;
   width: 100%;
+  position: relative;
 `;
 
 const Type = styled.div`

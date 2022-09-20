@@ -1,6 +1,17 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import Error from './Error';
 
 export default function Title({ title, onChange }) {
+  const [error, setError] = useState(false);
+
+  const onBlur = () => {
+    if (!title) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  };
   return (
     <Container>
       <Label htmlFor="title">방 이름 *</Label>
@@ -10,9 +21,13 @@ export default function Title({ title, onChange }) {
         type="text"
         value={title}
         onChange={onChange}
-        placeholder="방 이름을 입력해주세요."
+        placeholder="방 이름을 입력해주세요. (14자 이내)"
         required
+        onBlur={onBlur}
+        maxLength={14}
+        data-cy="create-room-modal-title"
       />
+      {error && <Error />}
     </Container>
   );
 }
@@ -20,9 +35,9 @@ export default function Title({ title, onChange }) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: 1rem;
   width: 100%;
+  position: relative;
 `;
 
 const Label = styled.label`

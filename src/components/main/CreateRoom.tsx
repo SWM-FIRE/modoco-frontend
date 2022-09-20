@@ -13,7 +13,9 @@ export default function CreateRoom({
         <Title>새로 방 생성</Title>
         <Detail>우리모두 모여서 도란도란 코딩해요.</Detail>
       </DetailContainer>
-      <Enter onClick={openCreateRoom}>방 만들기 →</Enter>
+      <Enter onClick={openCreateRoom} data-cy="create-room-modal-open">
+        방 만들기 →
+      </Enter>
     </Container>
   );
 }
