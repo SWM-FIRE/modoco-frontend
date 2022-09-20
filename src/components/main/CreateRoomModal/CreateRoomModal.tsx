@@ -17,6 +17,7 @@ export default function CreateRoomModal({
     useRoomCreator,
     onClickTheme,
     onClickTotal,
+    isDisable,
   } = useCreateRoom({ closeCreateRoom });
 
   const { isLoading, mutate } = useRoomCreator();
@@ -25,11 +26,17 @@ export default function CreateRoomModal({
     return <div style={{ color: 'white', fontSize: '5rem' }}>loading....</div>;
 
   return (
-    <ModalBackground onClick={closeCreateRoom}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
+    <ModalBackground
+      onClick={closeCreateRoom}
+      data-cy="create-room-modal-background"
+    >
+      <ModalBox
+        onClick={(e) => e.stopPropagation()}
+        data-cy="create-room-modal"
+      >
         <ModalController>
           <Title>방 생성하기</Title>
-          <Close onClick={closeCreateRoom}>
+          <Close onClick={closeCreateRoom} data-cy="create-room-modal-close">
             <X />
           </Close>
         </ModalController>
@@ -41,6 +48,7 @@ export default function CreateRoomModal({
           onDeleteTag={onDeleteTag}
           onClickTheme={onClickTheme}
           onClickTotal={onClickTotal}
+          isDisable={isDisable}
         />
       </ModalBox>
     </ModalBackground>

@@ -1,24 +1,37 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Up } from '../../../assets/svg/up.svg';
 import { ReactComponent as Down } from '../../../assets/svg/down.svg';
+import Error from './Error';
 
 export default function Total({ total, onClickTotal }) {
   const [isDropDown, setIsDropDown] = useState(false);
-  const onClickOption = (e) => {
+  const [error, setError] = useState(false);
+
+  const onClickOption = (e: React.MouseEvent<HTMLButtonElement>) => {
     onClickTotal(e);
     setIsDropDown(false);
+    setError(false);
   };
 
   const onClickSelect = () => {
     setIsDropDown(!isDropDown);
+    if (!isDropDown) return;
+    if (total === '') {
+      setError(true);
+    } else {
+      setError(false);
+    }
   };
 
   return (
     <Component>
       <Label>최대 인원 수 *</Label>
       <SelectButton type="button" onClick={onClickSelect}>
-        <Select isTotalSelected={total !== ''}>
+        <Select
+          isTotalSelected={total !== ''}
+          data-cy="create-room-modal-total"
+        >
           {total === '' ? '방 인원수를 선택해주세요' : total}
         </Select>
         <SelectIcon>
@@ -27,12 +40,19 @@ export default function Total({ total, onClickTotal }) {
         </SelectIcon>
       </SelectButton>
       {isDropDown && (
-        <DropDown>
-          <Option onClick={onClickOption}>2</Option>
-          <Option onClick={onClickOption}>3</Option>
-          <Option onClick={onClickOption}>4</Option>
+        <DropDown data-cy="create-room-modal-total-dropdown">
+          <Option onClick={onClickOption} type="button">
+            2
+          </Option>
+          <Option onClick={onClickOption} type="button">
+            3
+          </Option>
+          <Option onClick={onClickOption} type="button">
+            4
+          </Option>
         </DropDown>
       )}
+      {error && <Error />}
     </Component>
   );
 }
@@ -40,7 +60,6 @@ export default function Total({ total, onClickTotal }) {
 const Component = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: 2.9rem;
   width: 100%;
   position: relative;
