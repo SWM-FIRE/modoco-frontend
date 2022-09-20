@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import toast from 'react-hot-toast';
 import vectors from '../atoms/Vectors';
 import Search from './Search';
@@ -45,7 +46,6 @@ const Container = styled.div`
   position: relative;
   margin-top: 6rem;
   width: 100%;
-  height: 35rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,6 +57,9 @@ const Title = styled.h1<{ color: string }>`
   font-size: 7.2rem;
   align-self: center;
   color: #${(props) => props.color};
+  ${media.small} {
+    font-size: 4.2rem;
+  }
 `;
 
 const Vector = styled.img<PositionInterface>`
@@ -64,6 +67,9 @@ const Vector = styled.img<PositionInterface>`
   width: ${(props) => props.size}rem;
   left: ${(props) => props.left}%;
   top: ${(props) => props.top}%;
+  ${media.small} {
+    display: none;
+  }
 `;
 
 const TitleFlex = styled.div`

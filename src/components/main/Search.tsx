@@ -1,4 +1,5 @@
 import React from 'react';
+import media from 'src/styles/media';
 import styled from 'styled-components';
 import SearchIcon from '../../assets/svg/Search';
 import searchInputStore from '../../stores/searchInputStore';
@@ -38,6 +39,9 @@ const SearchIconContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 10%;
+  ${media.small} {
+    width: 15%;
+  }
 `;
 
 const SearchContainer = styled.div`
@@ -50,4 +54,7 @@ const SearchContainer = styled.div`
   border: solid 0.1rem #374151;
   display: flex;
   align-items: center;
+  ${media.small} {
+    width: 90%;
+  }
 `;
