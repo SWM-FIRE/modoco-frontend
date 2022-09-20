@@ -20,6 +20,7 @@
     "react-channel-plugin": "^2.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-copy-to-clipboard": "^5.1.0",
+    "react-device-detect": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-horizontal-scrolling-menu": "^3.1.0",
     "react-hot-toast": "^2.3.0",
