@@ -58,9 +58,3 @@ const Title = styled.div`
     font-size: 1.8rem;
   }
 `;
-
-// const PositionRoom = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
