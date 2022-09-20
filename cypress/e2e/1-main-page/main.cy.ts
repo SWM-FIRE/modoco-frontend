@@ -41,7 +41,7 @@ describe('open main page', () => {
   // render Rooms cards in main page
   it('render Rooms', () => {
     // check if all rooms are rendered
-    cy.get('[data-cy="main-room-cards"]').should('have.length', 7);
+    cy.get('[data-cy="main-room-cards"]').should('have.length', 8);
 
     // check if first room is rendered good
     cy.get(
