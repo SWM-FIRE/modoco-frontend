@@ -10,6 +10,7 @@ root.render(
   // <StrictMode>
   <>
     <GlobalStyle />
+    <div id="modal" />
     <App />
   </>,
   // </StrictMode>,

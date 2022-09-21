@@ -22,6 +22,7 @@ const defaultTheme = {
   },
   activated: '#2F3135',
   grayColor: '#727272',
+  input: '#313540',
 };
 
 const themeFire: DefaultTheme = {
