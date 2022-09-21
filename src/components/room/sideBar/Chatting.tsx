@@ -30,7 +30,9 @@ export default function Chat() {
     setIsReceiveNewMessage(false);
   }, [messages]);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (
+    event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent,
+  ) => {
     event.preventDefault();
     if (newMessage.trim() === '') return;
     newSocket.emit('chatMessage', {
@@ -39,12 +41,12 @@ export default function Chat() {
       message: newMessage,
       createdAt: new Date(),
     });
-
     setNewMessage('');
   };
 
   const onMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewMessage(event.target.value);
+    event.preventDefault();
+    setNewMessage(() => event.target.value);
   };
 
   const moveScrollToReceiveMessage = useCallback(
@@ -87,8 +89,8 @@ export default function Chat() {
       <NewMessage chatWindow={chatWindow} />
       <SubmitMessage onSubmit={onSubmit}>
         <Input
-          placeholder="Write your message...."
           value={newMessage}
+          placeholder="Write your message..."
           onChange={onMessageChange}
         />
         <Button>
@@ -129,7 +131,7 @@ const ChattingList = styled.ul`
 
 const SubmitMessage = styled.form`
   width: 100%;
-  height: 4.8rem;
+  max-height: 19rem;
   margin-top: 3rem;
   border-radius: 1rem;
   padding: 1.5rem 2rem;
@@ -139,12 +141,13 @@ const SubmitMessage = styled.form`
 
 const Input = styled.input`
   width: calc(100% - 2.7rem);
-  height: 100%;
   font-size: 1.3rem;
   background-color: ${({ theme }) => theme.input};
   font-family: IBMPlexSansKRRegular;
   color: rgba(255, 255, 255, 1);
-
+  ::-webkit-scrollbar {
+    width: 0.3rem;
+  }
   &:focus {
     outline: none;
   }
