@@ -18,6 +18,7 @@ const TagContainer = styled.div`
   align-items: center;
   overflow-y: auto;
   width: 100%;
+  height: 3.1rem;
   white-space: nowrap;
   ::-webkit-scrollbar {
     display: none;

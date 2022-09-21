@@ -32,6 +32,7 @@ export default function Scrolls() {
 }
 
 const Container = styled.div`
+  position: relative;
   margin-top: 3.6rem;
   width: calc(100% - 10rem);
   overflow: hidden;
