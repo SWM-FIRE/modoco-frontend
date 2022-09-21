@@ -54,7 +54,7 @@ const Entering = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 3.2rem;
   ${media.small} {
     gap: 0.5rem;
   }
@@ -77,7 +77,7 @@ const Enter = styled.button`
     width: 8.6rem;
     height: 3.2rem;
     font-size: 1.2rem;
-    margin: 1rem 0rem;
+    margin: 0.3rem 0rem;
   }
 `;
 
@@ -117,21 +117,30 @@ const Nickname = styled.span`
 
 const Container = styled.div<{ main: boolean }>`
   background-color: #23262f;
-  margin-right: 2.4rem;
   border-radius: 2rem;
-  width: ${(props) => (props.main ? '20%' : '22.5rem')};
+  margin: 1.4rem;
+  width: 29.4rem;
   height: 50rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 4.3rem 1rem;
-  min-width: 29.4rem;
+  ${media.xlarge} {
+    width: 29.4rem;
+  }
+  ${media.medium} {
+    width: 33.6rem;
+  }
   ${media.small} {
-    padding: 2.3rem 0.5rem;
     height: 26rem;
-    min-width: 14rem;
-    width: 14rem;
-    margin-right: ${(props) => (props.main ? '0rem' : '1rem')};
+    width: 18rem;
+    margin: 0.7rem;
+    padding: 3rem 0.7rem;
+  }
+  ${media.xsmall} {
+    height: 20rem;
+    width: 12.8rem;
+    padding: 2rem 0.7rem;
   }
 `;

@@ -22,33 +22,49 @@ export default function RoomCards({
 
   return (
     <Container>
-      <CreateRoom openCreateRoom={openCreateRoom} />
-      {isLoading
-        ? [...Array(3)].map((no, index) => (
-            <EmptyBlock key={Symbol(index).toString()} isMain={false} />
-          ))
-        : newData.map((data) => {
-            return <Block key={data.itemId} isMain data={data} />;
-          })}
+      <BlockContainer>
+        <CreateRoom openCreateRoom={openCreateRoom} />
+        {isLoading
+          ? [...Array(3)].map((no, index) => (
+              <EmptyBlock key={Symbol(index).toString()} isMain={false} />
+            ))
+          : newData.map((data) => {
+              return <Block key={data.itemId} isMain data={data} />;
+            })}
+      </BlockContainer>
     </Container>
   );
 }
 
 const Container = styled.div`
-  /* width: calc(100% - 10rem); */
-  width: 100%;
+  width: 1260px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  padding-right: 10%;
-  margin: 10rem 0 0 20%;
-  row-gap: 7.6rem;
+  margin: 10rem auto;
+  ${media.large} {
+    width: 940px;
+  }
+  ${media.medium} {
+    width: 700px;
+  }
   ${media.small} {
     margin: 3rem 0;
-    padding-right: 0;
-    justify-content: center;
     align-items: center;
-    row-gap: 4rem;
-    gap: 2rem;
+    width: 360px;
+  }
+  ${media.xsmall} {
+    width: 260px;
+  }
+  ${media.xxsmall} {
+    width: 120px;
+  }
+`;
+
+const BlockContainer = styled.div`
+  display: flex;
+  margin: -1.4rem;
+  flex-wrap: wrap;
+  row-gap: 7rem;
+  ${media.large} {
+    row-gap: 2rem;
   }
 `;

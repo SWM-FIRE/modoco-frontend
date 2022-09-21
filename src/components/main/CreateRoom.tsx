@@ -42,9 +42,8 @@ const Enter = styled.button`
 
   ${media.small} {
     width: 8.6rem;
-    height: 3.2rem;
+    height: 4rem;
     font-size: 1.2rem;
-    margin: 1rem 0rem;
   }
 `;
 
@@ -58,6 +57,7 @@ const DetailContainer = styled.div`
   align-items: center;
   ${media.small} {
     width: 100%;
+    margin-top: 2.2rem;
   }
 `;
 
@@ -73,13 +73,16 @@ const Title = styled.div`
   color: #fcfcfd;
   font-size: 2.4rem;
   font-weight: 600;
+  ${media.small} {
+    font-size: 2rem;
+  }
 `;
 
 const Container = styled.div`
   background-color: #23262f;
-  margin-right: 2.4rem;
+  margin: 1.4rem;
   border-radius: 2rem;
-  width: 20%;
+  width: 29.4rem;
   height: 50rem;
   display: flex;
   flex-direction: column;
@@ -87,12 +90,21 @@ const Container = styled.div`
   justify-content: center;
   position: relative;
   border: 1px dashed rgba(107, 114, 128, 1);
-  min-width: 29.4rem;
+  ${media.xlarge} {
+    width: 29.4rem;
+  }
+  ${media.medium} {
+    width: 33.6rem;
+  }
   ${media.small} {
-    padding: 2.3rem 0.5rem;
     height: 26rem;
-    min-width: 14rem;
-    width: 14rem;
-    margin-right: 0rem;
+    width: 18rem;
+    margin: 0.7rem;
+    padding: 3rem 0.7rem;
+  }
+  ${media.xsmall} {
+    height: 20rem;
+    width: 12.8rem;
+    padding: 2rem 0.7rem;
   }
 `;
