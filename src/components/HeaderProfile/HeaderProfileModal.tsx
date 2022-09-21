@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import MyAvatar from '../../assets/avatar/MyAvatar';
@@ -38,7 +39,9 @@ export default function HeaderProfileModal({
           </AboutMe>
           <Button onClick={onProfile}>마이페이지</Button>
         </UserInformation>
-        <Button onClick={onLogOut}>로그아웃</Button>
+        <Button onClick={onLogOut} data-cy="profile-logout">
+          로그아웃
+        </Button>
       </Container>
     </ModalPosition>
   );
@@ -48,8 +51,11 @@ const ModalPosition = styled.div`
   position: absolute;
   top: 8.4rem;
   right: 4.4rem;
-  overflow: hidden;
   z-index: 1;
+  ${media.small} {
+    top: 5.4rem;
+    right: 2rem;
+  }
 `;
 
 const Container = styled.div`
@@ -62,20 +68,19 @@ const Container = styled.div`
   border-radius: 2rem;
   padding: 3.2rem 2.4rem;
   z-index: 2;
-  @keyframes dropdown {
-    0% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(0);
-    }
+  ${media.small} {
+    width: 20rem;
+    gap: 1.2rem;
   }
-  animation: dropdown 400ms ease-in-out forwards;
 `;
 
 const AvatarComponent = styled.div`
   width: 4.8rem;
   height: 4.8rem;
+  ${media.small} {
+    width: 4rem;
+    height: 4rem;
+  }
   svg {
     width: 100%;
     height: 100%;
@@ -92,6 +97,9 @@ const AboutMe = styled.div`
 const UserInformation = styled.div`
   border-bottom: 1px solid #4b5563;
   padding-bottom: 2.8rem;
+  ${media.small} {
+    padding-bottom: 1rem;
+  }
 `;
 
 const Nickname = styled.span`
@@ -111,5 +119,9 @@ const Button = styled.button`
   cursor: pointer;
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
+  }
+  ${media.small} {
+    font-size: 1.2rem;
+    height: 4rem;
   }
 `;

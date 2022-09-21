@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import userStore from '../../stores/userStore';
 import LoginModalStore from '../../stores/loginModalStore';
@@ -21,7 +22,7 @@ export default function Profile({
   };
 
   return nickname ? (
-    <ProfileContainer onClick={closeHeaderProfile}>
+    <ProfileContainer onClick={closeHeaderProfile} data-cy="main-profile">
       <AvatarContainer>
         <MyAvatar num={avatar} />
       </AvatarContainer>
@@ -30,7 +31,9 @@ export default function Profile({
       </SvgComponent>
     </ProfileContainer>
   ) : (
-    <Login onClick={openLoginModal}>로그인</Login>
+    <Login onClick={openLoginModal} data-cy="main-login-button">
+      로그인
+    </Login>
   );
 }
 
@@ -44,6 +47,9 @@ const ProfileContainer = styled.div`
   border: 1px solid #4b5563;
   border-radius: 5rem;
   cursor: pointer;
+  ${media.small} {
+    font-size: 1.2rem;
+  }
 `;
 
 const Login = styled.button`
@@ -56,6 +62,11 @@ const Login = styled.button`
   font-size: 1.6rem;
   font-family: IBMPlexSansKRRegular;
   font-weight: 700;
+  ${media.small} {
+    width: 7.4rem;
+    height: 3.8rem;
+    font-size: 1.2rem;
+  }
 `;
 
 const AvatarContainer = styled.div`
@@ -66,10 +77,17 @@ const AvatarContainer = styled.div`
     height: 100%;
     width: 100%;
   }
+  ${media.small} {
+    height: 3.2rem;
+    width: 3.2rem;
+  }
 `;
 
 const SvgComponent = styled.div`
   margin: 1.9rem;
   display: flex;
   align-items: center;
+  ${media.small} {
+    margin: 1.5rem;
+  }
 `;

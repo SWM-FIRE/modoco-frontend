@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 
 export default function EmptyBlock({ isMain }) {
   return (
@@ -15,6 +16,12 @@ const Enter = styled.button`
   height: 4.8rem;
   border-radius: 9rem;
   background-color: rgba(255, 255, 255, 0.1);
+  ${media.small} {
+    width: 8.6rem;
+    height: 3.2rem;
+    font-size: 1.2rem;
+    margin: 1rem 0rem;
+  }
 `;
 
 const DetailContainer = styled.div`
@@ -23,6 +30,9 @@ const DetailContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 1.6rem;
   gap: 2rem;
+  ${media.small} {
+    height: 8rem;
+  }
 `;
 
 const AvatarContainer = styled.div`
@@ -31,6 +41,9 @@ const AvatarContainer = styled.div`
   border-radius: 1.6rem;
   background-color: rgba(255, 255, 255, 0.1);
   gap: 1.6rem;
+  ${media.small} {
+    height: 6rem;
+  }
 `;
 
 const Container = styled.div<{ main: boolean }>`
@@ -45,4 +58,11 @@ const Container = styled.div<{ main: boolean }>`
   justify-content: space-between;
   padding: 4.3rem 1rem;
   min-width: 29.4rem;
+  ${media.small} {
+    padding: 2.3rem 0.5rem;
+    height: 26rem;
+    min-width: 14rem;
+    width: 14rem;
+    margin-right: ${(props) => (props.main ? '0rem' : '1rem')};
+  }
 `;

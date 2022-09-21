@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 
 export default function ModalTitle() {
   return (
@@ -29,10 +30,16 @@ const TitleLogo = styled.div`
   span {
     font-weight: 600;
   }
+  ${media.small} {
+    display: none;
+  }
 `;
 
 const TitleStart = styled.div`
   font-family: IBMPlexSansKRRegular;
   font-size: 4rem;
   margin-top: 1.6rem;
+  ${media.small} {
+    font-size: 2rem;
+  }
 `;

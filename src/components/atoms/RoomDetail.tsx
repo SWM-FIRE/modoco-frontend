@@ -1,12 +1,11 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import ThemeImage from './ThemeImages';
-import { ReactComponent as Bar } from '../../assets/svg/Room/Bar.svg';
 
 export default function RoomDetail({ data }) {
   return (
-    <Container>
+    <Container data-cy="card-room-detail">
       <ThemeImage theme={data.theme} />
-      <Bar />
       <Attend>
         <div style={{ marginTop: '-0.3rem' }}>🔥</div>
         <div>{data.total}중</div>
@@ -24,6 +23,9 @@ const Container = styled.div`
   height: 2rem;
   font-size: 1.4rem;
   font-family: IBMPlexMonoRegular;
+  ${media.small} {
+    font-size: 1rem;
+  }
 `;
 
 const Attend = styled.div`

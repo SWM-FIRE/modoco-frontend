@@ -15,7 +15,9 @@ export default function RoomDetail({ roomNo: roomId }) {
   return (
     <Container>
       <Card room={roomId} />
-      <EnterButton onClick={enterRoom}>입장하기 →</EnterButton>
+      <EnterButton onClick={enterRoom} data-cy="ready-enter-button">
+        입장하기 →
+      </EnterButton>
     </Container>
   );
 }

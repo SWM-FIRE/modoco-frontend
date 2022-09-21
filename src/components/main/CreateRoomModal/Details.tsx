@@ -10,7 +10,9 @@ export default function Details({ details, onChange }) {
         type="text"
         value={details}
         onChange={onChange}
-        placeholder="설명을 입력해주세요."
+        placeholder="설명을 입력해주세요. (30자 이내)"
+        data-cy="create-room-modal-details"
+        maxLength={30}
       />
     </>
   );

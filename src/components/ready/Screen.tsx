@@ -37,12 +37,20 @@ export default function Screen({
   return (
     <Container>
       <Settings setSetting={setSetting} />
-      <MyScreen ref={videoRef} autoPlay playsInline muted />
+      <MyScreen
+        ref={videoRef}
+        autoPlay
+        playsInline
+        muted
+        data-cy="ready-screen"
+      />
       <Buttons>
-        <Button onClick={setMediaStream}>
+        <Button onClick={setMediaStream} data-cy="ready-screen-button">
           {userVideo ? <MonitorOn /> : <MonitorOff />}
         </Button>
-        <Button onClick={setMic}>{userMic ? <MicOn /> : <MicOff />}</Button>
+        <Button onClick={setMic} data-cy="ready-mic-button">
+          {userMic ? <MicOn /> : <MicOff />}
+        </Button>
       </Buttons>
     </Container>
   );

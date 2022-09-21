@@ -1,46 +1,69 @@
-import { useEffect, useRef } from 'react';
-import Lottie from 'lottie-web';
 import styled from 'styled-components';
-import error404 from '../assets/theme/404.json';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 export default function Error() {
-  const errorRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    Lottie.loadAnimation({
-      container: errorRef.current,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      animationData: error404,
-      rendererSettings: {},
-    });
-  }, []);
+  const [getUrl] = useSearchParams();
+  const myStatus = getUrl.get('statusCode');
+  const msg = getUrl.get('message');
+  const navigate = useNavigate();
+
+  const backHome = () => {
+    navigate('/');
+  };
+
   return (
-    <Image>
-      <ErrorMessage>404 Not Found</ErrorMessage>
-      <File ref={errorRef} />
-    </Image>
+    <Container>
+      <ErrorImage>
+        <Img title="403" src="https://embed.lottiefiles.com/animation/26474" />
+      </ErrorImage>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '3rem',
+        }}
+      >
+        <White>{myStatus} Error</White>
+        <White>
+          {msg === 'Invalid Credential'}이미 해당 이메일로 가입 하시지는
+          않으셨나요?
+        </White>
+        <Button onClick={backHome}>홈으로 돌아가기</Button>
+      </div>
+    </Container>
   );
 }
 
-const ErrorMessage = styled.div`
-  font-family: GmarketSansBold;
-  color: white;
-  margin-top: 3%;
-  font-size: 10rem;
-  font-weight: 400;
-  font-stretch: normal;
+const Img = styled.iframe`
+  width: 30vw;
+  height: 30vw;
+  border: none;
 `;
 
-const Image = styled.div`
-  width: 100vw;
-  height: 100vh;
+const ErrorImage = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  background-color: #18181b;
+  margin-top: 5rem;
 `;
-const File = styled.div`
-  width: 60%;
-  height: 60%;
+
+const White = styled.div`
+  color: white;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+`;
+
+const Container = styled.div``;
+
+const Button = styled.button`
+  width: 30vw;
+  height: 5vh;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  font-size: 1.5rem;
 `;

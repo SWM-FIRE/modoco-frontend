@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 
 export default function Email({ email, onChange, isValidEmail }) {
   const errorMsg = useRef(null);
@@ -14,7 +15,7 @@ export default function Email({ email, onChange, isValidEmail }) {
     }
   };
   return (
-    <Section isValidEmail={isValidEmail}>
+    <Container isValidEmail={isValidEmail} data-cy="register-email">
       <Label htmlFor="email">이메일 *</Label>
       <Input
         type="text"
@@ -24,9 +25,10 @@ export default function Email({ email, onChange, isValidEmail }) {
         onChange={onChange}
         placeholder="이메일을 입력해주세요."
         onBlur={onBlur}
+        data-cy="register-email-input"
       />
       <Error ref={errorMsg} />
-    </Section>
+    </Container>
   );
 }
 
@@ -34,13 +36,16 @@ interface sectionInterface {
   isValidEmail: boolean;
 }
 
-const Section = styled.p<sectionInterface>`
+const Container = styled.p<sectionInterface>`
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-top: 3rem;
   #regx {
     display: ${(props) => (props.isValidEmail ? 'none' : 'block')};
+  }
+  ${media.small} {
+    margin-top: 1.5rem;
   }
 `;
 
@@ -53,15 +58,16 @@ const Input = styled.input`
   margin-top: 1.2rem;
   height: 4.9rem;
   padding-left: 1.6rem;
-  color: #f9fafb;
   background-color: #191f28;
-  font-size: 1.5rem;
-  font-family: IBMPlexSansKRRegular;
-  border-radius: 0.6rem;
+  border-radius: 1rem;
+  color: #f9fafb;
 `;
 
 const Error = styled.span`
   color: #ed8e8e;
   margin-top: 0.5rem;
   display: none;
+  ${media.small} {
+    font-size: 1.2rem;
+  }
 `;

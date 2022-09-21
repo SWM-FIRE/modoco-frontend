@@ -1,10 +1,13 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import styled from 'styled-components';
-import UserStore from '../../stores/userStore';
-import MyAvatar from '../../assets/avatar/MyAvatar';
-import RoomDetail from '../atoms/RoomDetail';
+import media from 'src/styles/media';
+import UserStore from '../../../stores/userStore';
+import MyAvatar from '../../../assets/avatar/MyAvatar';
+import RoomDetail from '../../atoms/RoomDetail';
+import BlockDetail from './BlockDetail';
 
 export default function Block({ isMain, data }) {
   const navigate = useNavigate();
@@ -16,6 +19,10 @@ export default function Block({ isMain, data }) {
       toast.error('로그인이 필요합니다');
       return;
     }
+    if (isMobile) {
+      toast.error('모바일에서는 접속이 불가능합니다');
+      return;
+    }
     if (data.current === data.total) {
       toast.error('방이 이미 가득 찼습니다');
       return;
@@ -24,52 +31,39 @@ export default function Block({ isMain, data }) {
     navigate(`/ready/${data.itemId}`);
   };
   return (
-    <Container main={isMain}>
-      <AvatarContainer>
+    <Container main={isMain} data-cy="main-room-cards">
+      <AvatarContainer data-cy="main-room-moderator">
         <MyAvatar num={Number(data.moderator.avatar)} />
         <Moderator>
           방장<Nickname>{data.moderator.nickname}</Nickname>
         </Moderator>
       </AvatarContainer>
-      <DetailContainer>
-        <Title>{data.title}</Title>
-        <Description>{data.details}</Description>
-        <Tags>
-          {data.tags.map((myTag) => (
-            <Tag key={Symbol(myTag).toString()}>#{myTag}</Tag>
-          ))}
-        </Tags>
-        <PositionRoom>
-          <RoomDetail data={data} />
-        </PositionRoom>
-      </DetailContainer>
-      <Enter onClick={enterRoom}>입장하기 →</Enter>
+      <BlockDetail data={data} />
+      <Entering>
+        <RoomDetail data={data} />
+        <Enter onClick={enterRoom} data-cy="main-room-enter">
+          입장하기 →
+        </Enter>
+      </Entering>
     </Container>
   );
 }
 
-const PositionRoom = styled.div`
+const Entering = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const Tags = styled.div`
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  overflow-y: auto;
-  width: 100%;
-  white-space: nowrap;
-  ::-webkit-scrollbar {
-    display: none;
+  gap: 3.2rem;
+  ${media.small} {
+    gap: 0.5rem;
   }
 `;
 
 const Enter = styled.button`
   width: 12.6rem;
   height: 4.8rem;
+  min-height: 4rem;
   font-size: 1.6rem;
   font-family: SFProDisplayRegular;
   color: #fcfcfd;
@@ -79,57 +73,41 @@ const Enter = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-`;
-
-const Tag = styled.div`
-  padding: 0 1rem;
-  height: 3.1rem;
-  color: #45b26b;
-  background-color: rgba(69, 178, 107, 0.1);
-  border-radius: 0.6rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const DetailContainer = styled.div`
-  height: 18.8rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  gap: 2rem;
-`;
-
-const Description = styled.div`
-  color: #777e90;
-  font-size: 1.4rem;
+  ${media.small} {
+    width: 8.6rem;
+    height: 3.2rem;
+    font-size: 1.2rem;
+    margin: 0.3rem 0rem;
+  }
 `;
 
 const AvatarContainer = styled.div`
   width: 8rem;
-  height: 11.4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  gap: 1.6rem;
-`;
-
-const Title = styled.div`
-  color: #fcfcfd;
-  font-size: 2.4rem;
+  ${media.small} {
+    height: 5.4rem;
+    margin-bottom: 1.6rem;
+  }
 `;
 
 const Moderator = styled.span`
   color: rgba(255, 255, 255, 0.5);
   display: flex;
+  margin-top: 2rem;
   align-items: center;
   gap: 0.3rem;
   font-size: 1.2rem;
   font-family: IBMPlexMonoRegular;
+  width: 100%;
+  justify-content: center;
+  ${media.small} {
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
 `;
 
 const Nickname = styled.span`
@@ -139,14 +117,30 @@ const Nickname = styled.span`
 
 const Container = styled.div<{ main: boolean }>`
   background-color: #23262f;
-  margin-right: 2.4rem;
   border-radius: 2rem;
-  width: ${(props) => (props.main ? '20%' : '22.5rem')};
+  margin: 1.4rem;
+  width: 29.4rem;
   height: 50rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 4.3rem 1rem;
-  min-width: 29.4rem;
+  ${media.xlarge} {
+    width: 29.4rem;
+  }
+  ${media.medium} {
+    width: 33.6rem;
+  }
+  ${media.small} {
+    height: 26rem;
+    width: 18rem;
+    margin: 0.7rem;
+    padding: 3rem 0.7rem;
+  }
+  ${media.xsmall} {
+    height: 20rem;
+    width: 12.8rem;
+    padding: 2rem 0.7rem;
+  }
 `;

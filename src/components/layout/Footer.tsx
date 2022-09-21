@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export default function Footer() {
   return (
-    <Container>
+    <Container data-cy="main-footer">
       <FooterWrapper>
         <Upper>
-          <Title>Modoco</Title>
+          <Title data-cy="footer-title">Modoco</Title>
           <Company>(주)모도코 | Team : FIRE</Company>
-          <Detail>
+          <Detail data-cy="footer-detail">
             {/* 사업자 등록번호 : 123-44-56789 | 대표 : 홍길동 <br /> */}
             서울특별시 강남구 테헤란로 311 59-12 아남타워 7층
             <br />
@@ -15,12 +15,14 @@ export default function Footer() {
           </Detail>
         </Upper>
         <Lower>
-          <Copyright>
+          <Copyright data-cy="footer-copyright">
             &copy; {new Date().getFullYear()} All rights reserved
           </Copyright>
           <Other>
-            <OtherButton>Terms</OtherButton>
-            <OtherButton>Privacy Policy</OtherButton>
+            <OtherButton data-cy="footer-terms">Terms</OtherButton>
+            <OtherButton data-cy="footer-privacy-policy">
+              Privacy Policy
+            </OtherButton>
           </Other>
         </Lower>
       </FooterWrapper>
@@ -28,7 +30,7 @@ export default function Footer() {
   );
 }
 
-const OtherButton = styled.div``;
+const OtherButton = styled.button``;
 
 const Other = styled.div`
   gap: 5rem;

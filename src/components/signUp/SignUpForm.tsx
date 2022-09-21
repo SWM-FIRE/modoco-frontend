@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import Avatar from './Avatar';
 import Email from './Email';
 import Nickname from './Nickname';
@@ -17,9 +18,9 @@ export default function SignUpForm() {
   } = useSignUp();
   const { avatar, nickname, email, password, passwordCheck } = inputs;
   return (
-    <Container>
-      <Title>회원가입</Title>
-      <Form onSubmit={onSubmit}>
+    <Container data-cy="register-container">
+      <Title data-cy="register-title">회원가입</Title>
+      <Form onSubmit={onSubmit} data-cy="register-form">
         <Avatar avatar={avatar} onChangeAvatar={onChangeAvatar} />
         <Nickname nickname={nickname} onChange={onChange} />
         <Email email={email} onChange={onChange} isValidEmail={isValidEmail} />
@@ -29,7 +30,9 @@ export default function SignUpForm() {
           onChange={onChange}
           isValidPassword={isValidPassword}
         />
-        <Submit disabled={isDisable()}>회원가입</Submit>
+        <Submit disabled={isDisable()} data-cy="register-submit">
+          회원가입
+        </Submit>
       </Form>
     </Container>
   );
@@ -44,11 +47,21 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 7.8rem 0 14.4rem 0;
   font-family: IBMPlexSansKRRegular;
+  color: #f9fafb;
+  font-size: 1.5rem;
+  border-radius: 0.6rem;
+  ${media.small} {
+    width: 80%;
+    padding: 3.6rem 0 4.2rem 0;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 4rem;
   color: #f9fafb;
+  ${media.small} {
+    font-size: 2.4rem;
+  }
 `;
 
 const Form = styled.form`
@@ -68,12 +81,17 @@ const Submit = styled.button`
   color: #111827;
   width: 100%;
   font-size: 1.5rem;
-  border-radius: 1rem;
   font-family: IBMPlexSansKRRegular;
   cursor: pointer;
   margin-top: 5rem;
+  border-radius: 1rem;
   :disabled {
     cursor: default;
     background-color: #a9afb8;
+  }
+  ${media.small} {
+    margin-top: 3rem;
+    height: 4.6rem;
+    font-size: 1.2rem;
   }
 `;

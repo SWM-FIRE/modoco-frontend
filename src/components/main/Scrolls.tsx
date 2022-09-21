@@ -1,12 +1,13 @@
 import React from 'react';
+import media from 'src/styles/media';
 import styled from 'styled-components';
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import { LeftArrow, RightArrow } from './Arrow';
-import Block from './Block';
+import Block from './block/Block';
 import useRooms from '../../hooks/useRooms';
 import { filterData } from './filterData';
 import TagStore from '../../stores/searchInputStore';
-import EmptyBlock from './EmptyBlock';
+import EmptyBlock from './block/EmptyBlock';
 
 export default function Scrolls() {
   const { isLoading, error, data } = useRooms();
@@ -31,9 +32,12 @@ export default function Scrolls() {
 }
 
 const Container = styled.div`
+  position: relative;
   margin-top: 3.6rem;
   width: calc(100% - 10rem);
   overflow: hidden;
+  align-self: start;
+  margin-left: 10rem;
   .react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
     display: none;
   }
@@ -41,6 +45,12 @@ const Container = styled.div`
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
-  align-self: start;
-  margin-left: 10rem;
+  ${media.xlarge} {
+    margin-left: 5rem;
+    width: calc(100% - 5rem);
+  }
+  ${media.small} {
+    margin-left: 1rem;
+    width: calc(100% - 2rem);
+  }
 `;

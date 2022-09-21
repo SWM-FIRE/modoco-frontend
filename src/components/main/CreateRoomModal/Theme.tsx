@@ -1,28 +1,36 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import themeJson from '../../../theme.json';
 import { ReactComponent as Up } from '../../../assets/svg/up.svg';
 import { ReactComponent as Down } from '../../../assets/svg/down.svg';
+import Error from './Error';
 
 export default function Theme({ onClickTheme }) {
   const [isDropDown, setIsDropDown] = useState(false);
   const [selectedTheme, setSelectedTheme] = useState('');
+  const [error, setError] = useState(false);
 
-  const onClickOption = (e) => {
-    onClickTheme(e.target.value);
-    setSelectedTheme(e.target.innerText);
+  const onClickOption = (e: React.MouseEvent<HTMLButtonElement>) => {
+    onClickTheme(e.currentTarget.value);
+    setSelectedTheme(e.currentTarget.innerText);
     setIsDropDown(false);
+    setError(false);
   };
 
   const onClickSelect = () => {
     setIsDropDown(!isDropDown);
+    if (!isDropDown) return;
+    if (selectedTheme === '') setError(true);
   };
 
   return (
     <Component>
       <Label>테마 *</Label>
       <SelectButton type="button" onClick={onClickSelect}>
-        <Select isThemeSelected={selectedTheme !== ''}>
+        <Select
+          isThemeSelected={selectedTheme !== ''}
+          data-cy="create-room-modal-theme"
+        >
           {selectedTheme === '' ? '테마를 선택해주세요' : selectedTheme}
         </Select>
         <SelectIcon>
@@ -31,18 +39,20 @@ export default function Theme({ onClickTheme }) {
         </SelectIcon>
       </SelectButton>
       {isDropDown && (
-        <DropDown>
+        <DropDown data-cy="create-room-modal-theme-dropdown">
           {themeJson.map((theme) => (
             <Option
               value={theme.value}
               key={theme.value}
               onClick={onClickOption}
+              type="button"
             >
               {theme.name}
             </Option>
           ))}
         </DropDown>
       )}
+      {error && <Error />}
     </Component>
   );
 }
@@ -50,7 +60,6 @@ export default function Theme({ onClickTheme }) {
 const Component = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-top: 2.9rem;
   width: 100%;
   position: relative;
@@ -96,7 +105,7 @@ const DropDown = styled.div`
   background-color: #191f28;
   border-radius: 0.6rem;
   top: 8.9rem;
-  z-index: 5;
+  z-index: 2;
   @keyframes dropdown {
     0% {
       transform: translateY(-5%);

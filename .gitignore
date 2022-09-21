@@ -25,3 +25,6 @@ yarn-error.log*
 *.pem
 *.env
 .env
+
+cypress/videos
+cypress/screenshots

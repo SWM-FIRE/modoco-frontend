@@ -3,11 +3,11 @@ import MyAvatar from '../../../assets/avatar/MyAvatar';
 
 export default function Header({ data }) {
   return (
-    <Container>
+    <Container data-cy="ready-card-header">
       <AvatarControl>
         <MyAvatar num={Number(data.moderator.avatar)} />
       </AvatarControl>
-      <NameTag>
+      <NameTag data-cy="ready-card-name">
         <Moderator isModerator={1}>방장</Moderator>
         <Moderator isModerator={0}>{data.moderator.nickname}</Moderator>
       </NameTag>

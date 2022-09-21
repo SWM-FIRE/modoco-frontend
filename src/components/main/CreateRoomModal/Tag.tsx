@@ -11,17 +11,17 @@ export default function TagsComponent({
   return (
     <>
       <Label htmlFor="tag">태그</Label>
-      <Component>
+      <TagComponent data-cy="create-room-modal-tags">
         {tags.map((myTag, index) => (
-          <TagComponent
-            key={myTag.concat(`${index}`)}
+          <Tag
             onClick={(e) => onDeleteTag(e, index)}
+            key={myTag.concat(`${index}`)}
           >
-            <Tag key={myTag}>#{myTag}</Tag>
-            <TagButton type="button" onClick={(e) => onDeleteTag(e, index)}>
+            <TagName key={myTag}>#{myTag}</TagName>
+            <TagButton type="button">
               <DeleteTag />
             </TagButton>
-          </TagComponent>
+          </Tag>
         ))}
         <Input
           id="tag"
@@ -32,7 +32,7 @@ export default function TagsComponent({
           onKeyPress={onKeyPress}
           placeholder="태그를 입력하세요."
         />
-      </Component>
+      </TagComponent>
     </>
   );
 }
@@ -42,7 +42,7 @@ const Label = styled.label`
   line-height: 2.9rem;
 `;
 
-const Component = styled.div`
+const TagComponent = styled.div`
   display: flex;
   align-items: center;
   border-radius: 0.6rem;
@@ -64,7 +64,7 @@ const Input = styled.input`
   padding: 0 1.6rem;
 `;
 
-const TagComponent = styled.div`
+const Tag = styled.div`
   display: flex;
   align-items: center;
   border-radius: 0.6rem;
@@ -85,7 +85,7 @@ const TagButton = styled.button`
   align-items: center;
 `;
 
-const Tag = styled.div`
+const TagName = styled.div`
   color: rgba(69, 178, 107, 1);
   font-family: IBMPlexSansKRRegular, Arial;
 `;

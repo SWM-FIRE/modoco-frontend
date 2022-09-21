@@ -7,6 +7,10 @@ interface Modal {
   toggleSettingModal: () => void;
   sidebarModal: boolean;
   toggleSidebarModal: () => void;
+  inviteModal: boolean;
+  toggleInviteModal: () => void;
+  inviteCode: string;
+  setInviteCode: (_by: string) => void;
   profileUid: number;
   setProfileUid: (_by: number) => void;
   profileModal: boolean;
@@ -27,6 +31,11 @@ const roomModalStore = create<Modal>((set) => ({
   sidebarModal: false,
   toggleSidebarModal: () =>
     set((state) => ({ sidebarModal: !state.sidebarModal })),
+  inviteModal: false,
+  toggleInviteModal: () =>
+    set((state) => ({ inviteModal: !state.inviteModal })),
+  inviteCode: '',
+  setInviteCode: (by: string) => set(() => ({ inviteCode: by })),
   profileUid: -1,
   setProfileUid: (by: number) => set(() => ({ profileUid: by })),
   profileModal: false,

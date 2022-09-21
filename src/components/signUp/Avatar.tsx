@@ -1,21 +1,26 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 
 export default function Avatar({ avatar, onChangeAvatar }) {
   return (
-    <Section>
+    <Container data-cy="register-avatar">
       <Label>프로필 이미지</Label>
       <ProfileComponent>
         <MyAvatar num={avatar} />
-        <SetupButton type="button" onClick={onChangeAvatar}>
+        <SetupButton
+          type="button"
+          onClick={onChangeAvatar}
+          data-cy="register-avatar-button"
+        >
           아바타 재생성
         </SetupButton>
       </ProfileComponent>
-    </Section>
+    </Container>
   );
 }
 
-const Section = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -31,6 +36,12 @@ const ProfileComponent = styled.div`
     width: 12rem;
     height: 12rem;
   }
+  ${media.small} {
+    svg {
+      width: 8rem;
+      height: 8rem;
+    }
+  }
 `;
 
 const Label = styled.label`
@@ -45,4 +56,7 @@ const SetupButton = styled.button`
   border-radius: 5rem;
   padding: 1.6rem 2.4rem;
   cursor: pointer;
+  ${media.small} {
+    padding: 1.2rem 1.6rem;
+  }
 `;

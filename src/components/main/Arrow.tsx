@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import { VisibilityContext } from 'react-horizontal-scrolling-menu';
 
 function Left({
@@ -19,6 +20,7 @@ function Left({
       onMouseLeave={() => {
         setShow(false);
       }}
+      data-cy="left-arrow-button"
     >
       {children}
     </Button>
@@ -30,6 +32,7 @@ function Left({
       onMouseEnter={() => {
         setShow(true);
       }}
+      data-cy="left-arrow-transparent"
     />
   );
 }
@@ -50,6 +53,7 @@ function Right({
       onMouseLeave={() => {
         setShow(false);
       }}
+      data-cy="right-arrow-button"
     >
       {children}
     </Button>
@@ -61,6 +65,7 @@ function Right({
       onMouseEnter={() => {
         setShow(true);
       }}
+      data-cy="right-arrow-transparent"
     />
   );
 }
@@ -85,9 +90,19 @@ const Transparent = styled.div<Props>`
     return `right: 0;`;
   }}
   border-radius: ${(props) => props.border[0]}rem
-    ${(props) => props.border[1]}rem ${(props) => props.border[2]}rem
-    ${(props) => props.border[3]}rem;
+  ${(props) => props.border[1]}rem ${(props) => props.border[2]}rem
+  ${(props) => props.border[3]}rem;
   margin-left: ${(props) => props.margin}rem;
+  ${media.xlarge} {
+    ${(props) => (props.margin ? 'margin-left: 5rem' : null)};
+  }
+  ${media.small} {
+    ${(props) => (props.margin ? 'margin-left: 1rem' : null)};
+  }
+  ${media.small} {
+    width: 5rem;
+    height: 26rem;
+  }
 `;
 
 const Button = styled.button<Props>`
@@ -97,11 +112,11 @@ const Button = styled.button<Props>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
   user-select: none;
   width: 10rem;
   position: absolute;
-  z-index: 999;
+  z-index: 998;
   height: 50rem;
   ${(props) => {
     if (props.left) {
@@ -113,6 +128,16 @@ const Button = styled.button<Props>`
     ${(props) => props.border[1]}rem ${(props) => props.border[2]}rem
     ${(props) => props.border[3]}rem;
   margin-left: ${(props) => props.margin}rem;
+  ${media.xlarge} {
+    ${(props) => (props.margin ? 'margin-left: 5rem' : null)};
+  }
+  ${media.small} {
+    ${(props) => (props.margin ? 'margin-left: 1rem' : null)};
+  }
+  ${media.small} {
+    width: 5rem;
+    height: 26rem;
+  }
 `;
 
 export function LeftArrow() {
