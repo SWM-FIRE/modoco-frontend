@@ -24,6 +24,7 @@ yarn-error.log*
 
 *.pem
 *.env
+.env.*
 .env
 
 cypress/videos
