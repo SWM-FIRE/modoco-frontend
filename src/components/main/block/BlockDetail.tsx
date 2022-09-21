@@ -22,7 +22,8 @@ const DetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  height: 12rem;
+  justify-content: space-between;
   gap: 2rem;
 `;
 
@@ -55,6 +56,6 @@ const Title = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 `;
