@@ -3,9 +3,13 @@ import styled from 'styled-components';
 import ModalPortal from '../atoms/ModalPortal';
 import { ReactComponent as X } from '../../assets/svg/X.svg';
 import SendChat from '../atoms/chatting/SendChat';
+import userStore from '../../stores/userStore';
+import Participants from './Participants';
 
 export default function Lobby({ toggleModal }: { toggleModal: () => void }) {
   const [isChat, setChat] = useState<boolean>(true);
+  const { uid } = userStore();
+
   return (
     <ModalPortal>
       <Outside onClick={toggleModal}>
@@ -26,10 +30,10 @@ export default function Lobby({ toggleModal }: { toggleModal: () => void }) {
             {isChat ? (
               <>
                 <Chats>Place for real chat</Chats>
-                <SendChat roomId="" uid={1} />
+                <SendChat roomId="" uid={uid} />
               </>
             ) : (
-              <Participants>Place for real participants</Participants>
+              <Participants />
             )}
           </ChatArea>
         </Container>
@@ -37,16 +41,6 @@ export default function Lobby({ toggleModal }: { toggleModal: () => void }) {
     </ModalPortal>
   );
 }
-
-const Participants = styled.div`
-  width: 100%;
-  height: calc(100% - 6rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.5);
-`;
 
 const Chats = styled.div`
   width: 100%;
@@ -112,9 +106,9 @@ const ChatArea = styled.div`
 
 const Outside = styled.div`
   z-index: 998;
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

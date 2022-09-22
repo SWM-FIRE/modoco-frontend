@@ -20,10 +20,10 @@ export default function TitleContainer() {
     setLobby(!isLobby);
   };
 
-  const { connectedUsers, appendUser } = connectedLobbyUsers();
+  const { connectedUsers, appendUser, findUserBySid, removeUser } =
+    connectedLobbyUsers();
 
   if (!lobbySocket.socket) {
-    console.log('test');
     generateSocket();
     console.log(lobbySocket.socket);
   }
@@ -39,7 +39,7 @@ export default function TitleContainer() {
           },
         })
         .then((res) => {
-          lobbySocket.socket?.emit('joinLobby', res.data.uid);
+          lobbySocket.socket?.emit('joinLobby', { uid: res.data.uid });
         });
     });
 
@@ -101,6 +101,19 @@ export default function TitleContainer() {
             });
           return user;
         });
+      });
+
+    lobbySocket.socket
+      ?.off('leftLobby')
+      .on('leftLobby', ({ sid }: { sid: string }) => {
+        console.log('got left lobby msg');
+        if (lobbySocket.socket.id === sid) {
+          console.log('i left room');
+          return;
+        }
+        const userInfo = findUserBySid(sid);
+        console.log(userInfo.nickname, 'left room');
+        removeUser(sid);
       });
   }, []);
 
