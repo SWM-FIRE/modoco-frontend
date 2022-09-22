@@ -15,10 +15,13 @@ export default function SendChat({
   const newSocket = roomId ? roomSocket.socket : lobbySocket.socket;
 
   const onMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewMessage(event.target.value);
+    event.preventDefault();
+    setNewMessage(() => event.target.value);
   };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (
+    event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent,
+  ) => {
     event.preventDefault();
     if (newMessage.trim() === '') return;
     newSocket.emit('chatMessage', {
@@ -48,7 +51,7 @@ export default function SendChat({
 
 const SubmitMessage = styled.form<{ roomId: string }>`
   width: 100%;
-  height: 4.8rem;
+  max-height: 19rem;
   margin-top: 3rem;
   border-radius: 1rem;
   padding: 1.5rem 2rem;
@@ -59,7 +62,6 @@ const SubmitMessage = styled.form<{ roomId: string }>`
 
 const Input = styled.input<{ roomId: string }>`
   width: calc(100% - 2.7rem);
-  height: 100%;
   font-size: 1.3rem;
   background-color: ${(props) =>
     props.roomId ? ({ theme }) => theme.input : '#313540'};
