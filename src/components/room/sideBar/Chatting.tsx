@@ -9,11 +9,11 @@ import SendChat from '../../atoms/chatting/SendChat';
 import NewMessage from './NewMessage';
 
 export default function Chat() {
-  const { setIsReceiveNewMessage } = receiveNewMessageStore((state) => state);
+  const { setIsReceiveNewMessage } = receiveNewMessageStore();
   const { roomId } = useParams();
   const chatWindow = useRef(null);
-  const { messages } = messageStore((state) => state);
-  const { uid } = userStore((state) => state);
+  const { messages } = messageStore();
+  const { uid } = userStore();
 
   useEffect(() => {
     moveScrollToReceiveMessage('auto', true);
