@@ -1,30 +1,23 @@
 import styled from 'styled-components';
 import React, { useCallback, useRef, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import ChattingItem from './ChattingItem';
-import messageStore from '../../../stores/room/messagesStore';
-import userStore from '../../../stores/userStore';
-import receiveNewMessageStore from '../../../stores/room/receiveNewMessageStore';
-import SendChat from '../../atoms/chatting/SendChat';
-import NewMessage from './NewMessage';
+import ChattingItem from '../room/sideBar/ChattingItem';
+import lobbyMessageStore from '../../stores/lobbyMessageStore';
+import userStore from '../../stores/userStore';
+import SendChat from '../atoms/chatting/SendChat';
 
 export default function Chat() {
-  const { setIsReceiveNewMessage } = receiveNewMessageStore();
-  const { roomId } = useParams();
   const chatWindow = useRef(null);
-  const { messages } = messageStore();
+  const { messages } = lobbyMessageStore();
   const { uid } = userStore();
 
   useEffect(() => {
     moveScrollToReceiveMessage('auto', true);
-    setIsReceiveNewMessage(false);
   }, []);
 
   useEffect(() => {
     if (messages[messages.length - 1]?.uid === uid)
       moveScrollToReceiveMessage('smooth', true);
     else moveScrollToReceiveMessage('smooth', false);
-    setIsReceiveNewMessage(false);
   }, [messages]);
 
   const moveScrollToReceiveMessage = useCallback(
@@ -46,7 +39,6 @@ export default function Chat() {
 
   return (
     <Component>
-      <Title>채팅</Title>
       <ChattingList ref={chatWindow}>
         {messages.map((message) => (
           <ChattingItem
@@ -64,8 +56,7 @@ export default function Chat() {
           />
         ))}
       </ChattingList>
-      <NewMessage chatWindow={chatWindow} />
-      <SendChat roomId={roomId} uid={uid} />
+      <SendChat roomId="lobby" uid={uid} />
     </Component>
   );
 }
@@ -78,14 +69,10 @@ const Component = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  height: calc(100% - 17.8rem);
+  height: calc(100% - 5.8rem);
   font-family: IBMPlexSansKRRegular;
   font-size: 1.3rem;
   color: #9ca3af;
-`;
-
-const Title = styled.div`
-  margin-top: 2.4rem;
 `;
 
 const ChattingList = styled.ul`

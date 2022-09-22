@@ -2,13 +2,11 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import ModalPortal from '../atoms/ModalPortal';
 import { ReactComponent as X } from '../../assets/svg/X.svg';
-import SendChat from '../atoms/chatting/SendChat';
-import userStore from '../../stores/userStore';
 import Participants from './Participants';
+import Chatting from './Chatting';
 
 export default function Lobby({ toggleModal }: { toggleModal: () => void }) {
   const [isChat, setChat] = useState<boolean>(true);
-  const { uid } = userStore();
 
   return (
     <ModalPortal>
@@ -27,30 +25,13 @@ export default function Lobby({ toggleModal }: { toggleModal: () => void }) {
                 참여자
               </ParticipantToggle>
             </ChatHeader>
-            {isChat ? (
-              <>
-                <Chats>Place for real chat</Chats>
-                <SendChat roomId="" uid={uid} />
-              </>
-            ) : (
-              <Participants />
-            )}
+            {isChat ? <Chatting /> : <Participants />}
           </ChatArea>
         </Container>
       </Outside>
     </ModalPortal>
   );
 }
-
-const Chats = styled.div`
-  width: 100%;
-  height: calc(100% - 13.8rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.5);
-`;
 
 const ChatToggle = styled.div<{ isChat: boolean }>`
   padding-right: 1rem;

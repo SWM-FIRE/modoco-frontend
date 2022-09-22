@@ -5,9 +5,9 @@ import messageStore from '../../../stores/room/messagesStore';
 import userStore from '../../../stores/userStore';
 
 export default function NewMessage({ chatWindow }) {
-  const { messages } = messageStore((state) => state);
+  const { messages } = messageStore();
   const [isVisible, setIsVisible] = useState(false);
-  const { uid } = userStore((state) => state);
+  const { uid } = userStore();
 
   const isCheckBottom = () => {
     if (!chatWindow.current) return false;

@@ -34,7 +34,7 @@ export default function Room() {
   const theme = getTheme(data?.theme);
 
   roomConnection(roomId);
-  onChatMessage();
+  onChatMessage(roomId);
   usePeerConnection();
   usePopHistory(roomId);
 

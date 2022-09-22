@@ -3,20 +3,32 @@ import { useEffect } from 'react';
 import moment from 'moment';
 import connectedUsersStore from '../stores/room/connectedUsersStore';
 import messageStore from '../stores/room/messagesStore';
+import lobbyMessageStore from '../stores/lobbyMessageStore';
+import connectedLobbyUsers from '../stores/connectedLobbyUsers';
 import roomSocket from './roomSocket';
+import lobbySocket from './lobbySocket';
 import userStore from '../stores/userStore';
 import receiveNewMessageStore from '../stores/room/receiveNewMessageStore';
 
-const onChatMessage = () => {
-  const { connectedUsers } = connectedUsersStore();
-  const { setIsReceiveNewMessage, setIsAlarmToggle } = receiveNewMessageStore(
-    (state) => state,
-  );
-  const { messages, setMessages } = messageStore((state) => state);
-  const { uid, nickname, avatar } = userStore((state) => state);
-  const newSocket = roomSocket.socket;
+const onChatMessage = (roomId: string) => {
+  const { connectedUsers: roomConnected } = connectedUsersStore();
+  const { connectedUsers: lobbyConnected } = connectedLobbyUsers();
+  const connectedUsers = roomId === 'lobby' ? lobbyConnected : roomConnected;
+
+  const { setIsReceiveNewMessage, setIsAlarmToggle } = receiveNewMessageStore();
+
+  const { messages: roomMessages, setMessages: setRoomMessages } =
+    messageStore();
+  const { messages: lobbyMessages, setMessages: setLobbyMessages } =
+    lobbyMessageStore();
+  const messages = roomId === 'lobby' ? lobbyMessages : roomMessages;
+  const setMessages = roomId === 'lobby' ? setLobbyMessages : setRoomMessages;
+
+  const { uid, nickname, avatar } = userStore();
+  const newSocket = roomId === 'lobby' ? lobbySocket.socket : roomSocket.socket;
 
   useEffect(() => {
+    console.log('ready to get message');
     const receiveMessage = (receiveMsg) => {
       const isMe = receiveMsg.sender === uid;
       const userInfo = isMe
@@ -62,8 +74,11 @@ const onChatMessage = () => {
     };
 
     newSocket.off('chatMessage').on('chatMessage', (message) => {
-      setIsReceiveNewMessage(true);
-      setIsAlarmToggle();
+      console.log('got message');
+      if (roomId !== 'lobby') {
+        setIsReceiveNewMessage(true);
+        setIsAlarmToggle();
+      }
       receiveMessage(message);
     });
 

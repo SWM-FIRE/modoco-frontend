@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import lobbySocket, { generateSocket } from 'src/adapters/lobbySocket';
 import { API } from 'src/config';
 import connectedLobbyUsers from '../../stores/connectedLobbyUsers';
+import onChatMessage from '../../adapters/receiveMessage';
 import Search from './Search';
 import Lobby from './Lobby';
 import { ReactComponent as MainFire } from '../../assets/svg/MainFire.svg';
@@ -27,6 +28,7 @@ export default function TitleContainer() {
     generateSocket();
     console.log(lobbySocket.socket);
   }
+  onChatMessage('lobby');
   useEffect(() => {
     // send my info
     lobbySocket.socket?.on('connect', () => {
