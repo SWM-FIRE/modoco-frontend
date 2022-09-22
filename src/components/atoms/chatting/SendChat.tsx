@@ -12,7 +12,7 @@ export default function SendChat({
   uid: number;
 }) {
   const [newMessage, setNewMessage] = useState('');
-  const newSocket = roomId ? roomSocket.socket : lobbySocket.socket;
+  const newSocket = roomId === 'lobby' ? lobbySocket.socket : roomSocket.socket;
 
   const onMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -56,7 +56,7 @@ const SubmitMessage = styled.form<{ roomId: string }>`
   border-radius: 1rem;
   padding: 1.5rem 2rem;
   background-color: ${(props) =>
-    props.roomId ? ({ theme }) => theme.input : '#313540'};
+    props.roomId !== 'lobby' ? ({ theme }) => theme.input : '#313540'};
   z-index: 999;
 `;
 
@@ -64,7 +64,7 @@ const Input = styled.input<{ roomId: string }>`
   width: calc(100% - 2.7rem);
   font-size: 1.3rem;
   background-color: ${(props) =>
-    props.roomId ? ({ theme }) => theme.input : '#313540'};
+    props.roomId !== 'lobby' ? ({ theme }) => theme.input : '#313540'};
   font-family: IBMPlexSansKRRegular;
   color: rgba(255, 255, 255, 1);
 
