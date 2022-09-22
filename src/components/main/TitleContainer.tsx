@@ -24,7 +24,7 @@ export default function TitleContainer() {
       </TitleFlex>
       <Title color="ffffff">코딩해요</Title>
       <Search />
-      <RandomEnter onClick={randomEnter}>랜덤 입장</RandomEnter>
+      <RandomEnter onClick={randomEnter}>로비 입장</RandomEnter>
     </Container>
   );
 }

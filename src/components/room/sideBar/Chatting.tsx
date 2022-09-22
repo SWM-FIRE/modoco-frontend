@@ -1,22 +1,19 @@
 import styled from 'styled-components';
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ReactComponent as MessageSend } from '../../../assets/svg/MessageSend.svg';
 import ChattingItem from './ChattingItem';
 import messageStore from '../../../stores/room/messagesStore';
-import roomSocket from '../../../adapters/roomSocket';
 import userStore from '../../../stores/userStore';
 import receiveNewMessageStore from '../../../stores/room/receiveNewMessageStore';
+import SendChat from '../../atoms/chatting/SendChat';
 import NewMessage from './NewMessage';
 
 export default function Chat() {
-  const [newMessage, setNewMessage] = useState('');
   const { setIsReceiveNewMessage } = receiveNewMessageStore((state) => state);
   const { roomId } = useParams();
   const chatWindow = useRef(null);
   const { messages } = messageStore((state) => state);
   const { uid } = userStore((state) => state);
-  const newSocket = roomSocket.socket;
 
   useEffect(() => {
     moveScrollToReceiveMessage('auto', true);
@@ -29,25 +26,6 @@ export default function Chat() {
     else moveScrollToReceiveMessage('smooth', false);
     setIsReceiveNewMessage(false);
   }, [messages]);
-
-  const onSubmit = (
-    event: React.FormEvent<HTMLFormElement> | React.KeyboardEvent,
-  ) => {
-    event.preventDefault();
-    if (newMessage.trim() === '') return;
-    newSocket.emit('chatMessage', {
-      room: roomId,
-      sender: uid,
-      message: newMessage,
-      createdAt: new Date(),
-    });
-    setNewMessage('');
-  };
-
-  const onMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    setNewMessage(() => event.target.value);
-  };
 
   const moveScrollToReceiveMessage = useCallback(
     (behavior: string, isFirstView: boolean) => {
@@ -87,16 +65,7 @@ export default function Chat() {
         ))}
       </ChattingList>
       <NewMessage chatWindow={chatWindow} />
-      <SubmitMessage onSubmit={onSubmit}>
-        <Input
-          value={newMessage}
-          placeholder="Write your message..."
-          onChange={onMessageChange}
-        />
-        <Button>
-          <MessageSend />
-        </Button>
-      </SubmitMessage>
+      <SendChat roomId={roomId} uid={uid} />
     </Component>
   );
 }
@@ -126,38 +95,5 @@ const ChattingList = styled.ul`
   height: 100%;
   ::-webkit-scrollbar {
     display: none;
-  }
-`;
-
-const SubmitMessage = styled.form`
-  width: 100%;
-  max-height: 19rem;
-  margin-top: 3rem;
-  border-radius: 1rem;
-  padding: 1.5rem 2rem;
-  background-color: ${({ theme }) => theme.input};
-  z-index: 999;
-`;
-
-const Input = styled.input`
-  width: calc(100% - 2.7rem);
-  font-size: 1.3rem;
-  background-color: ${({ theme }) => theme.input};
-  font-family: IBMPlexSansKRRegular;
-  color: rgba(255, 255, 255, 1);
-  ::-webkit-scrollbar {
-    width: 0.3rem;
-  }
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Button = styled.button`
-  cursor: pointer;
-  float: right;
-  svg {
-    width: 2rem;
-    height: 2rem;
   }
 `;

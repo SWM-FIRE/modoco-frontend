@@ -3,7 +3,8 @@ const API_VER = '/api/v1';
 const USER = '/users/';
 const ROOM = '/rooms/';
 const SESSION = '/session/';
-const SOCKET = '/socket/room/';
+const SOCKET_ROOM = '/socket/room/';
+const SOCKET_LOBBY = '/socket/lobby/';
 const ME = 'me/';
 const RECORDS = '/records/';
 const KAKAO = '/auth/kakao/';
@@ -14,7 +15,8 @@ const INVITE = '/invite/';
 
 export const API = {
   BASE_URL: `${BASE_URL}`,
-  SOCKET: `${BASE_URL}${SOCKET}`,
+  SOCKET_ROOM: `${BASE_URL}${SOCKET_ROOM}`,
+  SOCKET_LOBBY: `${BASE_URL}${SOCKET_LOBBY}`,
   ROOM: `${BASE_URL}${API_VER}${ROOM}`,
   USER: `${BASE_URL}${API_VER}${USER}`,
   SESSION: `${BASE_URL}${API_VER}${SESSION}`,
