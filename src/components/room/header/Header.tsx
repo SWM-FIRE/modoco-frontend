@@ -29,8 +29,7 @@ export default function Header({ theme }) {
       emptyPc();
       setMessages([]);
       stopMediaStream();
-      navigate('/');
-      window.location.reload();
+      navigate('/main');
     }
   };
 
