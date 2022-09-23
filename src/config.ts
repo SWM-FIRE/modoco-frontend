@@ -12,6 +12,7 @@ const GOOGLE = '/auth/google/';
 const GITHUB = '/auth/github/';
 const LAMBDA_URL = process.env.REACT_APP_LAMBDA_INVITE;
 const INVITE = '/invite/';
+const FRIEND = '/friend/';
 
 export const API = {
   BASE_URL: `${BASE_URL}`,
@@ -26,4 +27,5 @@ export const API = {
   GOOGLE: `${BASE_URL}${API_VER}${GOOGLE}`,
   GITHUB: `${BASE_URL}${API_VER}${GITHUB}`,
   INVITE: `${LAMBDA_URL}${INVITE}`,
+  FRIEND: `${BASE_URL}${API_VER}${FRIEND}`,
 };
