@@ -1,7 +1,18 @@
 {
-  "title": "cypress 테스트 코드",
-  "details": "cypress 테스트 중",
-  "tags": ["cypress", "test"],
-  "total": 3,
-  "theme": "ocean"
+  "itemId": 134,
+  "title": "test",
+  "details": "test용",
+  "tags": ["test", "react"],
+  "total": 4,
+  "current": 0,
+  "theme": "ocean",
+  "moderator": {
+    "uid": 8,
+    "nickname": "하랭",
+    "statusQuo": "",
+    "avatar": 7,
+    "githubId": null,
+    "googleId": null,
+    "kakaoId": null
+  }
 }
