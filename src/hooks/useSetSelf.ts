@@ -6,11 +6,15 @@ import { API } from '../config';
 import UserStore from '../stores/userStore';
 
 const useSetSelf = () => {
-  const { setNickname, setAvatar, setUid, setClear, setTime, setLogin } =
+  const { setNickname, setAvatar, setUid, setClear, setTime, setLogin, uid } =
     UserStore();
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem('access_token');
+    if (uid !== -1) {
+      setLogin(true);
+      return;
+    }
     if (token) {
       axios
         .get(API.ME, {

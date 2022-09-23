@@ -32,6 +32,7 @@ export const roomConnection = (roomId: string) => {
         newSocket.emit('joinRoom', payload);
       } else {
         console.log('[roomConnection] UID가 존재하지 않음');
+        alert('잘못된 접근입니다.');
         navigate('/');
         window.location.reload();
       }
