@@ -34,7 +34,7 @@ export default function Participants({ moderator }: { moderator: number }) {
             uid={user.uid}
             avatar={user.avatar}
             isAudioEnabled={
-              userStream[user.socketId]?.getAudioTracks().length > 0
+              userStream[user?.socketId]?.getAudioTracks().length > 0
                 ? user.enabledAudio
                 : false
             }

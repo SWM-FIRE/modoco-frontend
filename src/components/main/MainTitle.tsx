@@ -8,9 +8,11 @@ import onChatMessage from '../../adapters/receiveMessage';
 import Search from './Search';
 import Lobby from './Lobby';
 import { ReactComponent as MainFire } from '../../assets/svg/MainFire.svg';
+import CheckInvite from './CheckInvite';
 
 export default function TitleContainer() {
   const [isLobby, setLobby] = useState<boolean>(false);
+  const [showInvite, setShowInvite] = useState<boolean>(false);
 
   const randomEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -119,10 +121,21 @@ export default function TitleContainer() {
       });
   }, []);
 
+  // invite code
+  const inviteCode = localStorage.getItem('inviteId');
+  useEffect(() => {
+    if (inviteCode) {
+      setShowInvite(true);
+    }
+  }, []);
+
   return (
     <>
       {isLobby ? <Lobby toggleModal={toggleModal} /> : null}
       <Container>
+        {showInvite && (
+          <CheckInvite inviteCode={inviteCode} toggleInvite={setShowInvite} />
+        )}
         <MainFire />
         <Search />
         <RandomEnter onClick={randomEnter}>로비 입장</RandomEnter>

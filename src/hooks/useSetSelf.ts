@@ -50,7 +50,6 @@ const useSetSelf = () => {
         });
     } else {
       setClear();
-      navigate(`/`);
       setLogin(true);
     }
   }, []);
