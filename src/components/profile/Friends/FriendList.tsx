@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import { ReactComponent as SendImage } from '../../../assets/svg/MessageSend.svg';
 import friendJson from '../../../friend.json';
-import Avatar from '../../atoms/Avatar';
+import MyAvatar from '../../../assets/avatar/MyAvatar';
 
 export default function FriendList() {
   const friendList = friendJson;
@@ -10,7 +11,9 @@ export default function FriendList() {
     <>
       {friendList.map((friend) => (
         <Component key={friend.id}>
-          <Avatar avatar={friend.avatar} size={4} />
+          <AvatarContainer>
+            <MyAvatar num={friend.avatar} />
+          </AvatarContainer>
           <Information>
             <Nickname>{friend.nickname}</Nickname>
             <FriendStatus>
@@ -36,6 +39,12 @@ const Component = styled.div`
   font-size: 1.5rem;
   margin-top: 2.8rem;
   max-width: 28rem;
+  ${media.small} {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    justify-content: space-between;
+    width: 100%;
+  }
 `;
 
 const Nickname = styled.div`
@@ -45,6 +54,9 @@ const Nickname = styled.div`
   white-space: nowrap;
   ::-webkit-scrollbar {
     display: none;
+  }
+  ${media.small} {
+    font-size: 1.5rem;
   }
 `;
 
@@ -64,6 +76,9 @@ const FriendStatus = styled.div`
   margin-top: 0.8rem;
   padding: 0.2rem 0.8rem;
   width: max-content;
+  ${media.small} {
+    margin-top: 0.3rem;
+  }
 `;
 
 const OnlineStatus = styled.div<{ isOnline: boolean }>`
@@ -83,6 +98,10 @@ const SendMessage = styled.div`
   justify-content: center;
   margin-left: 2rem;
   cursor: pointer;
+  ${media.small} {
+    background-color: #232630;
+    margin: 0;
+  }
 `;
 
 const SendButton = styled.button`
@@ -92,5 +111,20 @@ const SendButton = styled.button`
   svg {
     width: 80%;
     height: 80%;
+  }
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  width: 4rem;
+  svg {
+    height: 100%;
+    width: 100%;
+  }
+  ${media.small} {
+    display: none;
   }
 `;

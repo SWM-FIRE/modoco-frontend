@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import addFriendJson from '../../../addFriend.json';
 import Avatar from '../../atoms/Avatar';
 
@@ -46,6 +47,10 @@ const AcceptButton = styled.button`
   padding: 0.4rem 1.6rem;
   font-size: 1.5rem;
   cursor: pointer;
+  ${media.small} {
+    padding: 0.2rem 1rem;
+    font-size: 1.2rem;
+  }
 `;
 
 const RejectButton = styled.button`
@@ -56,4 +61,8 @@ const RejectButton = styled.button`
   font-size: 1.5rem;
   margin-left: 1rem;
   cursor: pointer;
+  ${media.small} {
+    padding: 0.2rem 1rem;
+    font-size: 1.2rem;
+  }
 `;
