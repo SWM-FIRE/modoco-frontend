@@ -54,13 +54,17 @@ describe('open main page', () => {
     )
       .should('contain', '영기의 Cypress 방')
       .should('contain', 'Cypress 빡공하는')
-      .should('contain', '#Cypress')
-      .should('contain', '모닥불');
+      .should('contain', '#Cypress');
+
+    cy.get(
+      '[data-key="1"] > [data-cy="main-room-cards"] > [data-cy="main-room-entering"]',
+    )
+      .should('be.visible')
+      .should('contain', '모닥불')
+      .should('contain', '참여중')
+      .should('contain', '입장하기');
 
     // check if last room is rendered at overflow
-    cy.get(
-      '[data-key="1"] > [data-cy="main-room-cards"] > [data-cy="main-room-enter"]',
-    ).should('be.visible');
     cy.get(
       '[data-key="7"] > [data-cy="main-room-cards"] > [data-cy="main-room-moderator"]',
     )
@@ -70,7 +74,7 @@ describe('open main page', () => {
       '[data-key="7"] > [data-cy="main-room-cards"] > [data-cy="main-room-detail"]',
     ).should('be.not.visible');
     cy.get(
-      '[data-key="7"] > [data-cy="main-room-cards"] > [data-cy="main-room-enter"]',
+      '[data-key="7"] > [data-cy="main-room-cards"] > [data-cy="main-room-entering"]',
     ).should('be.not.visible');
   });
 
@@ -108,13 +112,13 @@ describe('open main page', () => {
       '[data-key="1"] > [data-cy="main-room-cards"] > [data-cy="main-room-detail"]',
     ).should('be.visible');
     cy.get(
-      '[data-key="1"] > [data-cy="main-room-cards"] > [data-cy="main-room-enter"]',
+      '[data-key="1"] > [data-cy="main-room-cards"] > [data-cy="main-room-entering"]',
     ).should('be.visible');
     cy.get(
       '[data-key="7"] > [data-cy="main-room-cards"] > [data-cy="main-room-detail"]',
     ).should('be.not.visible');
     cy.get(
-      '[data-key="7"] > [data-cy="main-room-cards"] > [data-cy="main-room-enter"]',
+      '[data-key="7"] > [data-cy="main-room-cards"] > [data-cy="main-room-entering"]',
     ).should('be.not.visible');
   });
 

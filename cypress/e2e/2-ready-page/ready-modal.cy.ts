@@ -31,7 +31,10 @@ describe('check ready page modals', () => {
     cy.visit('http://localhost:3000');
     cy.viewport(1536, 960);
     // click to first room
-    cy.get(':nth-child(2) > [data-cy="main-room-enter"]').click();
+    cy.get(
+      ':nth-child(2) > [data-cy="main-room-entering"] > [data-cy="main-room-enter"]',
+    ).click();
+
     cy.get('[data-cy="ready-card-container"]').should('be.visible');
     cy.wait(500);
   });

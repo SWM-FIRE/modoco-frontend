@@ -39,7 +39,7 @@ export default function Block({ isMain, data }) {
         </Moderator>
       </AvatarContainer>
       <BlockDetail data={data} />
-      <Entering>
+      <Entering data-cy="main-room-entering">
         <RoomDetail data={data} />
         <Enter onClick={enterRoom} data-cy="main-room-enter">
           입장하기 →

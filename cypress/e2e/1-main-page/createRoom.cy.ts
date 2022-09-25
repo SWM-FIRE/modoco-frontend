@@ -32,12 +32,12 @@ describe('open create room modal in main page', () => {
     localStorage.setItem('access_token', 'mock_access_token');
     cy.visit('http://localhost:3000');
     cy.viewport(1536, 960);
-    cy.wait(500);
+    cy.wait(100);
 
     // check if room modal is opened
     cy.get('[data-cy="create-room-modal-open"]').click();
     cy.get('[data-cy="create-room-modal"]').should('be.visible');
-    cy.wait(500);
+    cy.wait(100);
   });
 
   // close modal test
@@ -46,13 +46,12 @@ describe('open create room modal in main page', () => {
     cy.get('[data-cy="create-room-modal-close"]').click();
     cy.get('[data-cy="create-room-modal"]').should('not.exist');
 
-    cy.wait(500);
+    cy.wait(100);
   });
 
   it('check close modal when user clicks background', () => {
     cy.get('[data-cy="create-room-modal-background"]').click('left');
     cy.get('[data-cy="create-room-modal"]').should('not.exist');
-    cy.wait(500);
   });
 
   // create room test
@@ -63,14 +62,12 @@ describe('open create room modal in main page', () => {
     cy.get('[data-cy="create-room-modal-title"]').type(
       '1234567891011121314151617181920',
     );
-    cy.wait(500);
 
     // check if title length is not over 14
     cy.get('[data-cy="create-room-modal-title"]').should(
       'be.not.length.greaterThan',
       14,
     );
-    cy.wait(500);
 
     // check if details length is not over 30
     cy.get('[data-cy="create-room-modal-details"]').type(
@@ -80,7 +77,6 @@ describe('open create room modal in main page', () => {
       'be.not.length.greaterThan',
       30,
     );
-    cy.wait(500);
 
     // click create button when user does not enter room's total
     cy.get('[data-cy="create-room-modal-create"]').should('be.disabled');
@@ -88,7 +84,6 @@ describe('open create room modal in main page', () => {
     cy.get(
       '[data-cy="create-room-modal-total-dropdown"] > :nth-child(3)',
     ).click();
-    cy.wait(500);
 
     // click create button when user does not enter room's theme
     cy.get('[data-cy="create-room-modal-create"]').should('be.disabled');
@@ -96,19 +91,17 @@ describe('open create room modal in main page', () => {
     cy.get(
       '[data-cy="create-room-modal-theme-dropdown"] > :nth-child(3)',
     ).click();
-    cy.wait(500);
 
     // click create button when user does not enter room's pw (optional)
     // private / public api 개발 후 테스트 코드 추가
     // cy.get('[data-cy="create-room-modal-private"]').click();
     // cy.get('[data-cy="create-room-modal-create"]').should('be.disabled');
     // cy.get('[data-cy="create-room-modal-pw"]').type('1234');
-    cy.wait(500);
 
     // click create button when user enters all required information
 
     cy.get('[data-cy="create-room-modal-create"]').should('not.be.disabled');
     cy.get('[data-cy="create-room-modal-create"]').click();
-    cy.wait(500);
+    cy.wait(100);
   });
 });
