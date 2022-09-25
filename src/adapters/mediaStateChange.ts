@@ -38,9 +38,9 @@ const mediaStateChange = () => {
       } else {
         const kickedUser = findUserByUid(kickUser.uid);
         console.log(kickedUser);
-        if (kickedUser.socketId) {
-          setPc({ sid: kickedUser.socketId, peerConnection: null });
-          removeUser(kickedUser.socketId);
+        if (kickedUser?.socketId) {
+          setPc({ sid: kickedUser?.socketId, peerConnection: null });
+          removeUser(kickedUser?.socketId);
         }
         appendMessages({
           uid: kickedUser.uid,

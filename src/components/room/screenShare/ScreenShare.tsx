@@ -29,7 +29,7 @@ export default function ScreenShare({ theme }) {
               key={connectedUsers[0].uid}
               connectedUser={connectedUsers[0]}
               stream={findStream({
-                sid: connectedUsers[0].socketId,
+                sid: connectedUsers[0]?.socketId,
                 connectedUsers,
                 userStream,
               })}
@@ -47,7 +47,7 @@ export default function ScreenShare({ theme }) {
               key={connectedUsers[1].uid}
               connectedUser={connectedUsers[1]}
               stream={findStream({
-                sid: connectedUsers[1].socketId,
+                sid: connectedUsers[1]?.socketId,
                 connectedUsers,
                 userStream,
               })}
@@ -60,7 +60,7 @@ export default function ScreenShare({ theme }) {
               key={connectedUsers[2].uid}
               connectedUser={connectedUsers[2]}
               stream={findStream({
-                sid: connectedUsers[2].socketId,
+                sid: connectedUsers[2]?.socketId,
                 connectedUsers,
                 userStream,
               })}
