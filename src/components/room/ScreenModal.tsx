@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as LeftArrow } from '../../assets/svg/arrow-left.svg';
+import { ReactComponent as ExpandScreen } from '../../assets/svg/ExpandScreen.svg';
 import connectedUsersStore from '../../stores/room/connectedUsersStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import userStore from '../../stores/userStore';
@@ -26,6 +27,13 @@ export default function ScreenModal() {
     }
   }, [videoRef, userMediaStream]);
 
+  const onClickExpandButton = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.requestFullscreen) {
+      videoRef.current.requestFullscreen();
+    }
+  };
+
   return (
     <ModalBox isOpen={sidebarModal}>
       <ModalController>
@@ -39,7 +47,7 @@ export default function ScreenModal() {
           </>
         ) : (
           <>
-            <MyAvatar num={Number(user.avatar)} />
+            <MyAvatar num={user.avatar} />
             <Nickname>{user.nickname}</Nickname>
           </>
         )}
@@ -49,6 +57,9 @@ export default function ScreenModal() {
       ) : (
         <ModalVideo ref={videoRef} autoPlay playsInline />
       )}
+      <ExpandButton onClick={onClickExpandButton}>
+        <ExpandScreen />
+      </ExpandButton>
     </ModalBox>
   );
 }
@@ -97,4 +108,17 @@ const ModalBox = styled.div<{ isOpen: boolean }>`
   flex-direction: column;
   z-index: 2;
   padding-bottom: 2rem;
+`;
+
+const ExpandButton = styled.div`
+  position: absolute;
+  width: 2.2rem;
+  height: 2.2rem;
+  cursor: pointer;
+  right: 3rem;
+  bottom: 3rem;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
