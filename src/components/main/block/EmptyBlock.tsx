@@ -48,21 +48,30 @@ const AvatarContainer = styled.div`
 
 const Container = styled.div<{ main: boolean }>`
   background-color: #23262f;
-  margin-right: 2.4rem;
   border-radius: 2rem;
-  width: ${(props) => (props.main ? '20%' : '22.5rem')};
+  margin: 1.4rem;
+  width: 29.4rem;
   height: 50rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 4.3rem 1rem;
-  min-width: 29.4rem;
+  ${media.xlarge} {
+    width: 29.4rem;
+  }
+  ${media.medium} {
+    width: 33.6rem;
+  }
   ${media.small} {
-    padding: 2.3rem 0.5rem;
     height: 26rem;
-    min-width: 14rem;
-    width: 14rem;
-    margin-right: ${(props) => (props.main ? '0rem' : '1rem')};
+    width: 18rem;
+    margin: 0.7rem;
+    padding: 3rem 0.7rem;
+  }
+  ${media.xsmall} {
+    height: 20rem;
+    width: 12.8rem;
+    padding: 2rem 0.7rem;
   }
 `;

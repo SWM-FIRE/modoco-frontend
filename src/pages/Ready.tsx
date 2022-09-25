@@ -19,8 +19,8 @@ export default function ReadyPage() {
   const [isSetting, setIsSetting] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem('invitedId')) {
-      localStorage.removeItem('invitedId');
+    if (localStorage.getItem('inviteId') === roomId) {
+      localStorage.removeItem('inviteId');
     }
     if (localStorage.getItem('access_token') && !userMediaStream) {
       createAll();
@@ -74,6 +74,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  background-color: #18181b;
   height: 100vh;
+  background-color: #18181b;
 `;
