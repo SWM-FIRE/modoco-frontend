@@ -13,7 +13,6 @@ function Left({
   const [show, setShow] = useState(false);
   return show ? (
     <Button
-      margin={10}
       border={[2, 0, 0, 2]}
       left
       onClick={onClick}
@@ -26,7 +25,6 @@ function Left({
     </Button>
   ) : (
     <Transparent
-      margin={10}
       border={[2, 0, 0, 2]}
       left
       onMouseEnter={() => {
@@ -46,7 +44,6 @@ function Right({
   const [show, setShow] = useState(false);
   return show ? (
     <Button
-      margin={0}
       border={[0, 2, 2, 0]}
       left={false}
       onClick={onClick}
@@ -59,7 +56,6 @@ function Right({
     </Button>
   ) : (
     <Transparent
-      margin={0}
       border={[0, 2, 2, 0]}
       left={false}
       onMouseEnter={() => {
@@ -71,7 +67,6 @@ function Right({
 }
 
 interface Props {
-  margin: number;
   border: number[];
   left?: boolean;
 }
@@ -92,16 +87,18 @@ const Transparent = styled.div<Props>`
   border-radius: ${(props) => props.border[0]}rem
   ${(props) => props.border[1]}rem ${(props) => props.border[2]}rem
   ${(props) => props.border[3]}rem;
-  margin-left: ${(props) => props.margin}rem;
-  ${media.xlarge} {
-    ${(props) => (props.margin ? 'margin-left: 5rem' : null)};
-  }
+
+  // margin
+  margin: 1.4rem 0;
+
   ${media.small} {
-    ${(props) => (props.margin ? 'margin-left: 1rem' : null)};
-  }
-  ${media.small} {
-    width: 5rem;
+    margin: 0.7rem 0;
+    width: 6rem;
     height: 26rem;
+  }
+  ${media.xsmall} {
+    height: 20rem;
+    width: 6.8rem;
   }
 `;
 
@@ -127,16 +124,17 @@ const Button = styled.button<Props>`
   border-radius: ${(props) => props.border[0]}rem
     ${(props) => props.border[1]}rem ${(props) => props.border[2]}rem
     ${(props) => props.border[3]}rem;
-  margin-left: ${(props) => props.margin}rem;
-  ${media.xlarge} {
-    ${(props) => (props.margin ? 'margin-left: 5rem' : null)};
-  }
+
+  // margin
+  margin: 1.4rem 1rem 1.4rem 0;
   ${media.small} {
-    ${(props) => (props.margin ? 'margin-left: 1rem' : null)};
-  }
-  ${media.small} {
-    width: 5rem;
+    margin: 0.7rem 0;
+    width: 6rem;
     height: 26rem;
+  }
+  ${media.xsmall} {
+    height: 20rem;
+    width: 6.8rem;
   }
 `;
 

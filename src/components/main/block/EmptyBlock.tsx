@@ -49,7 +49,6 @@ const AvatarContainer = styled.div`
 const Container = styled.div<{ main: boolean }>`
   background-color: #23262f;
   border-radius: 2rem;
-  margin: 1.4rem;
   width: 29.4rem;
   height: 50rem;
   display: flex;
@@ -57,16 +56,19 @@ const Container = styled.div<{ main: boolean }>`
   align-items: center;
   justify-content: space-between;
   padding: 4.3rem 1rem;
+
+  // margin
+  margin: 1.4rem 2.8rem 1.4rem 0;
   ${media.xlarge} {
     width: 29.4rem;
   }
   ${media.medium} {
-    width: 33.6rem;
+    width: 29.4rem;
   }
   ${media.small} {
     height: 26rem;
     width: 18rem;
-    margin: 0.7rem;
+    margin: 0.7rem 1.4rem 0.7rem 0;
     padding: 3rem 0.7rem;
   }
   ${media.xsmall} {
