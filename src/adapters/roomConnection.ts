@@ -1,3 +1,4 @@
+import { toast } from 'react-hot-toast';
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -61,7 +62,7 @@ export const roomConnection = (roomId: string) => {
               },
             })
             .then((res) => {
-              if (!connectedUsers.includes(user.uid)) {
+              if (!connectedUsers.includes(user.uid) && user.uid !== uid) {
                 appendUser({
                   nickname: res.data.nickname,
                   uid: user.uid,
@@ -73,7 +74,8 @@ export const roomConnection = (roomId: string) => {
                 });
                 console.log('appendUser', user.uid, res);
               } else {
-                console.log('already connected');
+                toast.error('이미 접속중인 유저입니다.');
+                navigate('/main');
               }
             });
           return user;
