@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { toast } from 'react-hot-toast';
+import { themeFire } from '../styles/theme';
 import RoomCards from '../components/main/RoomCards';
 import MainTitle from '../components/main/MainTitle';
 import CreateRoomModal from '../components/main/CreateRoomModal/CreateRoomModal';
@@ -21,7 +22,7 @@ export default function Main() {
   };
 
   return (
-    <>
+    <ThemeProvider theme={themeFire}>
       <Container>
         <MainTitle />
         <RoomCards openCreateRoom={openCreateRoom} />
@@ -29,7 +30,7 @@ export default function Main() {
       {isCreateRoomModal && (
         <CreateRoomModal closeCreateRoom={closeCreateRoom} />
       )}
-    </>
+    </ThemeProvider>
   );
 }
 

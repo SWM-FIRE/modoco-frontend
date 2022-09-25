@@ -49,7 +49,7 @@ function App() {
             <Route index element={<Auth />} />
           </Route>
           <Route path="/invite">
-            <Route index element={<Invite />} />
+            <Route path=":inviteId" element={<Invite />} />
           </Route>
           <Route path="/loading">
             <Route index element={<Loading />} />

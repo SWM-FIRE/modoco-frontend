@@ -13,6 +13,8 @@ export default function Timer() {
   let dtm = 0;
   let tick = Date.now();
 
+  let requestId;
+
   const callback = () => {
     dts += Date.now() - tick;
     dtm += Date.now() - tick;
@@ -26,14 +28,15 @@ export default function Timer() {
       tmpTime += Math.floor(dts / 1000);
       setTime(tmpTime);
       dts = 0;
-      requestAnimationFrame(callback);
+      requestId = requestAnimationFrame(callback);
     } else {
-      requestAnimationFrame(callback);
+      requestId = requestAnimationFrame(callback);
     }
   };
 
   useEffect(() => {
     requestAnimationFrame(callback);
+    return () => cancelAnimationFrame(requestId);
   }, []);
 
   const TimerHour =

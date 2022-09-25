@@ -7,12 +7,11 @@ import SettingModal from '../components/atoms/settingModal/SettingModal';
 import Header from '../components/ready/Header';
 import RoomDetail from '../components/ready/RoomDetail';
 import Screen from '../components/ready/Screen';
-import userStore from '../stores/userStore';
 import roomSocket, { generateSocket } from '../adapters/roomSocket';
+import useSetSelf from '../hooks/useSetSelf';
 
 export default function ReadyPage() {
   const { createAll } = useCreateMediaStream();
-  const { uid } = userStore();
   const { userMediaStream } = UserMediaStreamStore();
   const videoRef = useRef<HTMLVideoElement>(null);
   const { roomId } = useParams();
@@ -20,7 +19,10 @@ export default function ReadyPage() {
   const [isSetting, setIsSetting] = useState(false);
 
   useEffect(() => {
-    if (uid && localStorage.getItem('access_token') && !userMediaStream) {
+    if (localStorage.getItem('inviteId') === roomId) {
+      localStorage.removeItem('inviteId');
+    }
+    if (localStorage.getItem('access_token') && !userMediaStream) {
       createAll();
     } else {
       navigate('/');
@@ -30,6 +32,8 @@ export default function ReadyPage() {
       generateSocket();
     }
   }, []);
+
+  useSetSelf();
 
   const toggleSetting = () => {
     setIsSetting(!isSetting);
@@ -70,6 +74,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100vw;
-  background-color: #18181b;
   height: 100vh;
+  background-color: #18181b;
 `;

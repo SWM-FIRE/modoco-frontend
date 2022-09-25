@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import messageInterface from '../../../interface/message.interface';
@@ -16,7 +16,24 @@ export default function ChattingItem({
   const { uid } = userStore();
   const isMe = user.uid === uid;
   const entrance = type === 'join' || type === 'leave';
+  const msgRef = useRef(null);
 
+  const onCheckUrl = (message: string) => {
+    const urlReg =
+      /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi;
+    const text1 = message.replace(
+      urlReg,
+      "<a href='$1' target='_blank'>$1</a>",
+    );
+    const exp2 = /(^|[^/])(www\.[\S]+(\b|$))/gim;
+    return text1.replace(exp2, '$1<a href="http://$2" target="_blank">$2</a>');
+  };
+
+  useEffect(() => {
+    if (msgRef.current) {
+      msgRef.current.innerHTML = onCheckUrl(msg);
+    }
+  }, []);
   return (
     <div>
       {entrance ? (
@@ -37,7 +54,7 @@ export default function ChattingItem({
               </Nickname>
             )}
             <MessageBox isMe={isMe}>
-              <Message isMe={isMe}>{msg}</Message>
+              <Message isMe={isMe} ref={msgRef} />
               {!isHideTime && <Time>{moment(time).format('LT')}</Time>}
             </MessageBox>
           </MessageComponent>
@@ -119,6 +136,9 @@ const Message = styled.div<userInterface>`
     isMe ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
   background-color: ${({ isMe, theme }) =>
     isMe ? theme.myChat : theme.otherChat};
+  a {
+    color: #2992e3;
+  }
 `;
 
 const Time = styled.div`
