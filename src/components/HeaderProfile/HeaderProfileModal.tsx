@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import UserStore from '../../stores/userStore';
+import Friends from './Friends';
 
 export default function HeaderProfileModal({
   toggleModal,
@@ -39,6 +40,7 @@ export default function HeaderProfileModal({
           </AboutMe>
           <Button onClick={onProfile}>마이페이지</Button>
         </UserInformation>
+        <Friends />
         <Button onClick={onLogOut} data-cy="profile-logout">
           로그아웃
         </Button>
