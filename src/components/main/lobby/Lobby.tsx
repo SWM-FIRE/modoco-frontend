@@ -1,11 +1,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import ModalPortal from '../atoms/ModalPortal';
-import { ReactComponent as X } from '../../assets/svg/X.svg';
+import ModalPortal from '../../atoms/ModalPortal';
+import { ReactComponent as X } from '../../../assets/svg/X.svg';
 import Participants from './Participants';
 import Chatting from './Chatting';
 import LobbyCanvas from './LobbyCanvas';
-import { disableScroll, enableScroll } from '../atoms/scrollPrevent';
+import { disableScroll, enableScroll } from '../../atoms/scrollPrevent';
 
 export default function Lobby({ toggleModal }: { toggleModal: () => void }) {
   const [isChat, setChat] = useState<boolean>(true);

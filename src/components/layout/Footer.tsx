@@ -5,7 +5,7 @@ export default function Footer() {
     <Container data-cy="main-footer">
       <FooterWrapper>
         <Upper>
-          <Title data-cy="footer-title">Modoco</Title>
+          <Title data-cy="footer-title">modoco</Title>
           <Company>(주)모도코 | Team : FIRE</Company>
           <Detail data-cy="footer-detail">
             {/* 사업자 등록번호 : 123-44-56789 | 대표 : 홍길동 <br /> */}

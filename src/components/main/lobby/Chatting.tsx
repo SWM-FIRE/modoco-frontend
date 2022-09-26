@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, { useCallback, useRef, useEffect } from 'react';
-import ChattingItem from '../room/sideBar/ChattingItem';
-import lobbyMessageStore from '../../stores/lobbyMessageStore';
-import userStore from '../../stores/userStore';
-import SendChat from '../atoms/chatting/SendChat';
+import ChattingItem from '../../room/sideBar/ChattingItem';
+import lobbyMessageStore from '../../../stores/lobbyMessageStore';
+import userStore from '../../../stores/userStore';
+import SendChat from '../../atoms/chatting/SendChat';
 
 export default function Chat() {
   const chatWindow = useRef(null);
