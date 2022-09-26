@@ -11,6 +11,16 @@ interface VideoUserInterface {
   isAlreadyEntered: boolean;
 }
 
+const initUser = {
+  nickname: '',
+  uid: -1,
+  avatar: 0,
+  socketId: '',
+  enabledVideo: false,
+  enabledAudio: false,
+  isAlreadyEntered: false,
+};
+
 interface connectedUsers {
   connectedUsers: VideoUserInterface[];
   userStream: { [key: string]: MediaStream | null };
@@ -51,10 +61,12 @@ const connectedUsersStore = create<connectedUsers>((set, get) => ({
     const returnUser = get().connectedUsers.find(
       (user) => user.socketId === by,
     );
+    if (!returnUser) return initUser;
     return returnUser;
   },
   findUserByUid: (by) => {
     const returnUser = get().connectedUsers.find((user) => user.uid === by);
+    if (!returnUser) return initUser;
     return returnUser;
   },
 }));
