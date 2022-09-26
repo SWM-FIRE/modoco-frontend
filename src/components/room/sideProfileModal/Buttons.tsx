@@ -33,32 +33,26 @@ export default function Buttons({
 
   return (
     <Container>
-      {isMe ? (
-        <MyPage>마이 페이지</MyPage>
-      ) : (
-        <>
+      {!isMe && (
+        <FriendComponent>
           <FriendRequest>친구요청</FriendRequest>
           {isCaptain && <Kick onClick={kickUser}>내보내기</Kick>}
-        </>
+        </FriendComponent>
       )}
     </Container>
   );
 }
 
-const MyPage = styled.button`
-  padding: 0.8rem 1.2rem;
-  border: 0.1rem solid #ffffff;
-  color: #f9fafb;
-`;
-
 const FriendRequest = styled.button`
   background-color: #ffffff;
   color: #111827;
+  flex-grow: 1;
 `;
 
 const Kick = styled.button`
   border: 1px solid #fb7185;
   color: #fb7185;
+  flex-grow: 1;
 `;
 
 const Container = styled.div`
@@ -78,4 +72,10 @@ const Container = styled.div`
     padding: 1.2rem 2rem;
     cursor: pointer;
   }
+`;
+
+const FriendComponent = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 1rem;
 `;
