@@ -25,7 +25,7 @@ export default function ScreenModal() {
     if (videoRef.current) {
       videoRef.current.srcObject = newStream;
     }
-    if (user.uid === -1) {
+    if (!isMe && user.uid === -1) {
       toggleScreenModal();
     }
   }, [videoRef, userMediaStream, user]);
