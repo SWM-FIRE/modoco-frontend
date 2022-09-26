@@ -80,8 +80,8 @@ const Title = styled.div`
 
 const Container = styled.div`
   background-color: #23262f;
-  margin: 1.4rem;
   border-radius: 2rem;
+  border: 1px dashed rgba(107, 114, 128, 1);
   width: 29.4rem;
   height: 50rem;
   display: flex;
@@ -89,17 +89,19 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  border: 1px dashed rgba(107, 114, 128, 1);
+
+  // margin
+  margin: 1.4rem 2.8rem 1.4rem 0;
   ${media.xlarge} {
     width: 29.4rem;
   }
   ${media.medium} {
-    width: 33.6rem;
+    width: 29.4rem;
   }
   ${media.small} {
     height: 26rem;
     width: 18rem;
-    margin: 0.7rem;
+    margin: 0.7rem 1.4rem 0.7rem 0;
     padding: 3rem 0.7rem;
   }
   ${media.xsmall} {
