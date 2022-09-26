@@ -4,6 +4,7 @@ import ProfileModalHeader from './SideProfileModalHeader';
 import UserInfo from './UserInfo';
 import Buttons from './Buttons';
 import FriendButtons from './FriendButtons';
+import ControlVolume from './ControlVolume';
 
 export default function SideProfileModal({
   toggle,
@@ -40,6 +41,7 @@ export default function SideProfileModal({
               toggle={toggle}
               uid={uid}
             />
+            {!isMe && <ControlVolume uid={uid} />}
             {isFriend ? (
               <FriendButtons />
             ) : (
@@ -80,4 +82,5 @@ const Container = styled.div`
   z-index: 1;
   padding: 2rem 2.4rem 3.2rem 2.4rem;
   border-radius: 2rem;
+  box-shadow: 0px 4px 103px rgba(50, 50, 71, 0.4);
 `;
