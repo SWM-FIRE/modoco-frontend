@@ -14,12 +14,12 @@ import { API } from '../config';
 
 export const roomConnection = (roomId: string) => {
   const navigate = useNavigate();
-  const { connectedUsers, appendUser, removeUser, findUserBySid } =
+  const { connectedUsers, appendUser, removeUser, findUserBySid, setUsers } =
     connectedUsersStore();
   const { userMediaStream } = UserMediaStreamStore();
-  const { appendMessages } = messageStore();
-  const { setPc } = userPcStore();
-  const { createAll } = useCreateMediaStream();
+  const { appendMessages, setMessages } = messageStore();
+  const { setPc, emptyPc } = userPcStore();
+  const { createAll, stopMediaStream } = useCreateMediaStream();
   const { uid } = userStore();
   const newSocket = roomSocket.socket;
 
@@ -75,6 +75,11 @@ export const roomConnection = (roomId: string) => {
                 console.log('appendUser', user.uid, res);
               } else {
                 toast.error('이미 접속중인 유저입니다.');
+                newSocket.emit('leaveRoom', { room: roomId });
+                setUsers([]);
+                emptyPc();
+                setMessages([]);
+                stopMediaStream();
                 navigate('/main');
               }
             });
