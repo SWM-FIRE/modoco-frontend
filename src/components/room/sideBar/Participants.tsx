@@ -6,9 +6,15 @@ import UserStore from '../../../stores/userStore';
 import userMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 
 export default function Participants({ moderator }: { moderator: number }) {
-  const { connectedUsers, userStream } = connectedUsersStore((state) => state);
+  const { connectedUsers, userStream, setVolumeByUid } = connectedUsersStore(
+    (state) => state,
+  );
   const { userMediaStream } = userMediaStreamStore((state) => state);
   const { uid, nickname, avatar } = UserStore((state) => state);
+
+  const getAudioTrack = (stream: MediaStream) => {
+    return stream?.getAudioTracks().length > 0;
+  };
 
   return (
     <Component>
@@ -20,11 +26,13 @@ export default function Participants({ moderator }: { moderator: number }) {
           uid={uid}
           avatar={avatar}
           isAudioEnabled={
-            userMediaStream.getAudioTracks().length > 0
+            getAudioTrack(userMediaStream)
               ? userMediaStream.getAudioTracks()[0].enabled
               : false
           }
           moderator={moderator}
+          volume={0.5}
+          setVolumeByUid={setVolumeByUid}
         />
         {connectedUsers.map((user) => (
           <SingleParticipant
@@ -34,11 +42,13 @@ export default function Participants({ moderator }: { moderator: number }) {
             uid={user.uid}
             avatar={user.avatar}
             isAudioEnabled={
-              userStream[user?.socketId]?.getAudioTracks().length > 0
+              getAudioTrack(userStream[user?.socketId])
                 ? user.enabledAudio
                 : false
             }
             moderator={moderator}
+            volume={user.volume}
+            setVolumeByUid={setVolumeByUid}
           />
         ))}
       </UserList>
