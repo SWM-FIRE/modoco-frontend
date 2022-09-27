@@ -1,32 +1,45 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as VolumeOn } from '../../../assets/svg/VolumeOn.svg';
 import { ReactComponent as VolumeOff } from '../../../assets/svg/VolumeOff.svg';
 
-export default function ControlVolume({ uid }: { uid: number }) {
-  const [userSpeaker, setSpeaker] = useState(true);
-  const [volume, setVolume] = useState<number>(0.5);
-
-  console.log(uid);
+export default function ControlVolume({
+  isAudioEnabled,
+  uid,
+  volume,
+  setVolumeByUid,
+}: {
+  isAudioEnabled: boolean;
+  uid: number;
+  volume: number;
+  setVolumeByUid: (_uid: number, _volume: number) => void;
+}) {
+  const [userSpeaker, setSpeaker] = useState(isAudioEnabled);
+  const [newVolume, setNewVolume] = useState<number>(
+    isAudioEnabled ? volume : 0,
+  );
   const onClickVolume = () => {
     setSpeaker((prev) => !prev);
+  };
+  const onChangeVolume = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewVolume(event.target.valueAsNumber);
+    setVolumeByUid(uid, event.target.valueAsNumber);
   };
 
   return (
     <Container>
       <Volume onClick={onClickVolume}>
-        {userSpeaker && volume !== 0 ? <VolumeOn /> : <VolumeOff />}
+        {userSpeaker && newVolume !== 0 ? <VolumeOn /> : <VolumeOff />}
       </Volume>
-      <VolumeControl volume={volume * 100} speaker={userSpeaker}>
+      <VolumeControl volume={newVolume * 100} speaker={userSpeaker}>
         <input
           type="range"
           min={0}
           max={1}
-          step={0.03}
-          value={volume}
-          onChange={(event) => {
-            setVolume(event.target.valueAsNumber);
-          }}
+          step={0.02}
+          value={newVolume}
+          onChange={onChangeVolume}
+          disabled={!userSpeaker}
         />
       </VolumeControl>
     </Container>

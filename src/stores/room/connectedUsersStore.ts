@@ -9,6 +9,7 @@ interface VideoUserInterface {
   enabledVideo: boolean;
   enabledAudio: boolean;
   isAlreadyEntered: boolean;
+  volume: number;
 }
 
 const initUser = {
@@ -19,6 +20,7 @@ const initUser = {
   enabledVideo: false,
   enabledAudio: false,
   isAlreadyEntered: false,
+  volume: 0.5,
 };
 
 interface connectedUsers {
@@ -36,6 +38,7 @@ interface connectedUsers {
   removeUser: (_user: string) => void;
   findUserBySid: (_socketId: string) => VideoUserInterface;
   findUserByUid: (_uid: number) => VideoUserInterface;
+  setVolumeByUid: (_uid: number, _volume: number) => void;
 }
 const connectedUsersStore = create<connectedUsers>((set, get) => ({
   connectedUsers: [],
@@ -68,6 +71,16 @@ const connectedUsersStore = create<connectedUsers>((set, get) => ({
     const returnUser = get().connectedUsers.find((user) => user.uid === by);
     if (!returnUser) return initUser;
     return returnUser;
+  },
+  setVolumeByUid: (uid, volume) => {
+    set((state) => ({
+      connectedUsers: state.connectedUsers.map((user) => {
+        if (user.uid === uid) {
+          return { ...user, volume };
+        }
+        return user;
+      }),
+    }));
   },
 }));
 
