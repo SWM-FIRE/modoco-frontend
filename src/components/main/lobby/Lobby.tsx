@@ -1,23 +1,14 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ModalPortal from '../../atoms/ModalPortal';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
 import Participants from './Participants';
 import Chatting from './Chatting';
-import LobbyCanvas from './LobbyCanvas';
+import Canvas from './Canvas';
 import { disableScroll, enableScroll } from '../../atoms/scrollPrevent';
 
 export default function Lobby({ toggleModal }: { toggleModal: () => void }) {
   const [isChat, setChat] = useState<boolean>(true);
-  const [canvasHeight, setCanvasHeight] = useState(0);
-  const [canvasWidth, setCanvasWidth] = useState(0);
-
-  const canvasRef = useCallback((node) => {
-    if (node !== null) {
-      setCanvasHeight(node.getBoundingClientRect().height);
-      setCanvasWidth(node.getBoundingClientRect().width);
-    }
-  }, []);
 
   useEffect(() => {
     disableScroll();
@@ -30,9 +21,7 @@ export default function Lobby({ toggleModal }: { toggleModal: () => void }) {
     <ModalPortal>
       <Outside onClick={toggleModal}>
         <Container onClick={(e) => e.stopPropagation()}>
-          <CanvasArea ref={canvasRef}>
-            <LobbyCanvas width={canvasWidth} height={canvasHeight} />
-          </CanvasArea>
+          <Canvas />
           <ChatArea>
             <ExitButton onClick={toggleModal}>
               <X />
@@ -88,13 +77,6 @@ const ExitButton = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
-`;
-
-const CanvasArea = styled.div`
-  position: relative;
-  width: calc(100% - 30rem);
-  border-radius: 1rem;
-  background-color: rgba(255, 255, 255, 0.5);
 `;
 
 const ChatArea = styled.div`
