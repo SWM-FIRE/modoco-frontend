@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import connectedLobbyUsers from '../../stores/connectedLobbyUsers';
-import MyAvatar from '../../assets/avatar/MyAvatar';
+import connectedLobbyUsers from '../../../stores/connectedLobbyUsers';
+import MyAvatar from '../../../assets/avatar/MyAvatar';
 
 export default function Participants() {
   const { connectedUsers } = connectedLobbyUsers();

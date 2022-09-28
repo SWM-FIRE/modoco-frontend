@@ -6,7 +6,7 @@ export default function ModalTitle() {
   return (
     <Message>
       <TitleLogo>
-        모여서 도란도란 코딩, <span>Modoco</span>
+        모여서 도란도란 코딩, <span>modoco</span>
       </TitleLogo>
       <TitleStart>시작하기</TitleStart>
     </Message>
