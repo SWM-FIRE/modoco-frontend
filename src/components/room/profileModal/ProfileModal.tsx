@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ModalPortal from 'src/components/atoms/ModalPortal';
 import Header from './Header';
 import Contents from '../../profile/Contents';
 import userStore from '../../../stores/userStore';
@@ -14,14 +15,16 @@ export default function ProfileModal({ toggle }: { toggle: () => void }) {
   const { profileUid } = roomModalStore();
 
   return (
-    <Screen onClick={closeModalBackground}>
-      <Container onClick={(e) => e.stopPropagation()}>
-        <Header toggle={toggle} />
-        <CenterContent>
-          <Contents isMe={uid === profileUid} />
-        </CenterContent>
-      </Container>
-    </Screen>
+    <ModalPortal>
+      <Screen onClick={closeModalBackground}>
+        <Container onClick={(e) => e.stopPropagation()}>
+          <Header toggle={toggle} />
+          <CenterContent>
+            <Contents isMe={uid === profileUid} />
+          </CenterContent>
+        </Container>
+      </Screen>
+    </ModalPortal>
   );
 }
 

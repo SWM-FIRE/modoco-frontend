@@ -1,5 +1,9 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import useSingleFriend from 'src/hooks/friend/useSingleFriend';
+import userStore from 'src/stores/userStore';
+import useKickUser from './useKickUser';
 import ProfileModalHeader from './SideProfileModalHeader';
 import UserInfo from './UserInfo';
 import Buttons from './Buttons';
@@ -10,20 +14,34 @@ import VideoUserInterface from '../../../interface/VideoUser.interface';
 export default function SideProfileModal({
   toggle,
   isMe,
-  isFriend,
   user,
   moderator,
 }: {
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
   isMe: boolean;
-  isFriend: boolean;
   user: VideoUserInterface;
   moderator: number;
 }) {
+  const { roomId } = useParams();
+  const { kickUser } = useKickUser({
+    roomId,
+    targetUid: user.uid,
+  });
+  const { uid: myUID } = userStore();
+  const isModerator = moderator === myUID;
+
   const toggleModal = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     toggle(false);
   };
+
+  const { isLoading, error, data } = useSingleFriend(user.uid);
+  if (isLoading) return <>loading</>;
+  if (error) return <>error</>;
+
+  const isFriend = !(
+    Object.keys(data).length === 0 && data.constructor === Object
+  );
 
   return (
     <>
@@ -40,10 +58,11 @@ export default function SideProfileModal({
             />
             {!isMe && <ControlVolume user={user} />}
             {isFriend ? (
-              <FriendButtons />
+              <FriendButtons data={data} />
             ) : (
-              <Buttons isMe={isMe} moderator={moderator} uid={user.uid} />
+              <Buttons isMe={isMe} toggle={toggle} uid={user.uid} />
             )}
+            {!isMe && isModerator && <Kick onClick={kickUser}>내보내기</Kick>}
           </Body>
         </Inner>
       </Container>
@@ -52,9 +71,10 @@ export default function SideProfileModal({
 }
 
 const Screen = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  width: 300vw;
+  height: 140vh;
+  z-index: 1;
 `;
 
 const Body = styled.div`
@@ -76,8 +96,23 @@ const Container = styled.div`
   background-color: #23262f;
   top: 8rem;
   left: -30rem;
-  z-index: 1;
+  z-index: 2;
   padding: 2rem 2.4rem 3.2rem 2.4rem;
   border-radius: 2rem;
   box-shadow: 0px 4px 103px rgba(50, 50, 71, 0.4);
+`;
+
+const Kick = styled.button`
+  margin-top: 1.2rem;
+  width: 9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5rem;
+  padding: 1.2rem 1.6rem;
+  font-weight: 500;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border: 1px solid #fb7185;
+  color: #fb7185;
 `;
