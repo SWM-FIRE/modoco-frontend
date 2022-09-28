@@ -1,19 +1,31 @@
 /* eslint-disable no-undef */
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { SOCKET_EVENT } from 'src/adapters/event.enum';
 import roomSocket from '../adapters/roomSocket';
 import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
 import connectedUsersStore from '../stores/room/connectedUsersStore';
 import userPcStore from '../stores/room/userPcStore';
 import messageStore from '../stores/room/messagesStore';
+import mediaStateChange from '../adapters/mediaStateChange';
 import { API } from '../config';
 
 const usePeerConnection = () => {
-  const { userMediaStream } = UserMediaStreamStore();
-  const { connectedUsers, appendUser, setUserStream } = connectedUsersStore();
+  const { roomId } = useParams();
+  const { userMediaStream, userMic } = UserMediaStreamStore();
+  const {
+    connectedUsers,
+    appendUser,
+    setUserStream,
+    setNicknameByUid,
+    setAvatarByUid,
+    setSidByUid,
+    findUserByUid,
+  } = connectedUsersStore();
   const { pcs, setPc } = userPcStore();
   const { appendMessages } = messageStore();
+  const { emitAudioStateChange } = mediaStateChange();
   const newSocket = roomSocket.socket;
 
   const RTCConfig = {
@@ -138,6 +150,8 @@ const usePeerConnection = () => {
     };
 
     const onNewUser = async ({ sid, uid }) => {
+      emitAudioStateChange(roomId, userMic);
+
       axios
         .get((API.USER as string) + uid, {
           headers: {
@@ -145,17 +159,22 @@ const usePeerConnection = () => {
           },
         })
         .then((res) => {
-          if (!connectedUsers.includes(uid)) {
+          const newUser = findUserByUid(uid);
+          if (!newUser) {
             appendUser({
               nickname: res.data.nickname,
               uid,
               avatar: res.data.avatar,
-              socketId: sid,
+              sid,
               enabledVideo: true,
               enabledAudio: true,
               isAlreadyEntered: false,
               volume: 0.5,
             });
+          } else if (newUser) {
+            setNicknameByUid(uid, res.data.nickname);
+            setAvatarByUid(uid, res.data.avatar);
+            setSidByUid(uid, sid);
           } else {
             console.log('already connected');
           }
@@ -164,7 +183,7 @@ const usePeerConnection = () => {
             nickname: res.data.nickname,
             avatar: res.data.avatar,
             message: `${res.data.nickname}님이 입장하셨습니다.`,
-            createdAt: '',
+            createdAt: new Date().toString(),
             type: 'join',
             isHideTime: false,
             isHideNicknameAndAvatar: false,
@@ -197,7 +216,7 @@ const usePeerConnection = () => {
       newSocket.off(SOCKET_EVENT.ANSWER_MADE);
       newSocket.off(SOCKET_EVENT.ICE_CANDIDATE);
     };
-  }, [userMediaStream, pcs]);
+  }, [userMediaStream, pcs, connectedUsers]);
 };
 
 export default usePeerConnection;

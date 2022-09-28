@@ -23,18 +23,15 @@ export default function TitleContainer() {
     setLobby(!isLobby);
   };
 
-  const { connectedUsers, appendUser, findUserBySid, removeUser } =
-    connectedLobbyUsers();
+  const { connectedUsers, appendUser, removeUser } = connectedLobbyUsers();
 
   if (!lobbySocket.socket) {
     generateSocket();
-    console.log(lobbySocket.socket);
   }
   onChatMessage('lobby');
   useEffect(() => {
     // send my info
     lobbySocket.socket?.on('connect', () => {
-      console.log('connected');
       const token = localStorage.getItem('access_token');
       axios
         .get(API.ME, {
@@ -48,9 +45,9 @@ export default function TitleContainer() {
     });
 
     // check if joined successfully
-    lobbySocket.socket?.off('joinedLobby').on('joinedLobby', () => {
-      console.log('[roomConnection] joinedLobby');
-    });
+    // lobbySocket.socket?.off('joinedLobby').on('joinedLobby', () => {
+
+    // });
 
     // get new user info
     lobbySocket.socket
@@ -69,7 +66,7 @@ export default function TitleContainer() {
                 nickname: res.data.nickname,
                 uid,
                 avatar: res.data.avatar,
-                socketId: sid,
+                sid,
               });
             } else {
               console.log('already connected');
@@ -81,8 +78,7 @@ export default function TitleContainer() {
     lobbySocket.socket
       ?.off('existingUsers')
       .on('existingUsers', ({ users, current }) => {
-        console.log('existing users', users);
-        console.log('i am ', current);
+        console.log(current);
         users.map((user) => {
           axios
             .get((API.USER as string) + user.uid, {
@@ -96,9 +92,8 @@ export default function TitleContainer() {
                   nickname: res.data.nickname,
                   uid: user.uid,
                   avatar: res.data.avatar,
-                  socketId: user.sid,
+                  sid: user.sid,
                 });
-                console.log('appendedUser', user.uid, res);
               } else {
                 console.log('already connected');
               }
@@ -110,13 +105,9 @@ export default function TitleContainer() {
     lobbySocket.socket
       ?.off('leftLobby')
       .on('leftLobby', ({ sid }: { sid: string }) => {
-        console.log('got left lobby msg');
         if (lobbySocket.socket.id === sid) {
-          console.log('i left room');
           return;
         }
-        const userInfo = findUserBySid(sid);
-        console.log(userInfo.nickname, 'left room');
         removeUser(sid);
       });
   }, []);

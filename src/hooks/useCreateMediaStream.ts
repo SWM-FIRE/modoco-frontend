@@ -125,10 +125,12 @@ export const useCreateMediaStream = () => {
       setUserMediaStream(myStream.localStream);
 
       Object.keys(pcs).forEach((pc) => {
-        const sender = pcs[pc]
-          .getSenders()
-          .find((s) => s.track.kind === 'video');
-        sender.replaceTrack(videoStream.getVideoTracks()[0]);
+        if (pcs[pc]) {
+          const sender = pcs[pc]
+            .getSenders()
+            .find((s) => s.track.kind === 'video');
+          sender.replaceTrack(videoStream.getVideoTracks()[0]);
+        }
       });
     } catch (error) {
       console.log('failed to get display stream', error);

@@ -6,49 +6,35 @@ import UserStore from '../../../stores/userStore';
 import userMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 
 export default function Participants({ moderator }: { moderator: number }) {
-  const { connectedUsers, userStream, setVolumeByUid } = connectedUsersStore(
-    (state) => state,
-  );
-  const { userMediaStream } = userMediaStreamStore((state) => state);
-  const { uid, nickname, avatar } = UserStore((state) => state);
-
+  const { connectedUsers } = connectedUsersStore();
+  const { uid, nickname, avatar } = UserStore();
+  const { userMediaStream } = userMediaStreamStore();
   const getAudioTrack = (stream: MediaStream) => {
     return stream?.getAudioTracks().length > 0;
   };
-
+  const me = {
+    nickname,
+    uid,
+    avatar,
+    sid: '',
+    enabledVideo: true,
+    enabledAudio: getAudioTrack(userMediaStream)
+      ? userMediaStream.getAudioTracks()[0].enabled
+      : false,
+    isAlreadyEntered: true,
+    volume: 0.5,
+  };
   return (
     <Component>
       <Title>참여자 목록</Title>
       <UserList>
-        <SingleParticipant
-          isMe
-          nickname={nickname}
-          uid={uid}
-          avatar={avatar}
-          isAudioEnabled={
-            getAudioTrack(userMediaStream)
-              ? userMediaStream.getAudioTracks()[0].enabled
-              : false
-          }
-          moderator={moderator}
-          volume={0.5}
-          setVolumeByUid={setVolumeByUid}
-        />
+        <SingleParticipant isMe moderator={moderator} user={me} />
         {connectedUsers.map((user) => (
           <SingleParticipant
             key={user.uid}
             isMe={false}
-            nickname={user.nickname}
-            uid={user.uid}
-            avatar={user.avatar}
-            isAudioEnabled={
-              getAudioTrack(userStream[user?.socketId])
-                ? user.enabledAudio
-                : false
-            }
             moderator={moderator}
-            volume={user.volume}
-            setVolumeByUid={setVolumeByUid}
+            user={user}
           />
         ))}
       </UserList>

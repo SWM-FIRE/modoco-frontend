@@ -5,23 +5,12 @@ interface VideoUserInterface {
   nickname: string;
   uid: number;
   avatar: number;
-  socketId: string;
+  sid: string;
   enabledVideo: boolean;
   enabledAudio: boolean;
   isAlreadyEntered: boolean;
   volume: number;
 }
-
-const initUser = {
-  nickname: '',
-  uid: -1,
-  avatar: 0,
-  socketId: '',
-  enabledVideo: false,
-  enabledAudio: false,
-  isAlreadyEntered: false,
-  volume: 0.5,
-};
 
 interface connectedUsers {
   connectedUsers: VideoUserInterface[];
@@ -36,9 +25,13 @@ interface connectedUsers {
   setUsers: (_users: VideoUserInterface[]) => void;
   appendUser: (_user: VideoUserInterface) => void;
   removeUser: (_user: string) => void;
-  findUserBySid: (_socketId: string) => VideoUserInterface;
-  findUserByUid: (_uid: number) => VideoUserInterface;
+  findUserBySid: (_sid: string) => VideoUserInterface | null;
+  findUserByUid: (_uid: number) => VideoUserInterface | null;
+  setEnabledAudioByUid: (_uid: number, _enabled: boolean) => void;
   setVolumeByUid: (_uid: number, _volume: number) => void;
+  setNicknameByUid: (_uid: number, _nickname: string) => void;
+  setAvatarByUid: (_uid: number, _avatar: number) => void;
+  setSidByUid: (_uid: number, _sid: string) => void;
 }
 const connectedUsersStore = create<connectedUsers>((set, get) => ({
   connectedUsers: [],
@@ -56,27 +49,63 @@ const connectedUsersStore = create<connectedUsers>((set, get) => ({
     set((state) => ({ connectedUsers: [...state.connectedUsers, by] })),
   removeUser: (by) =>
     set((state) => ({
-      connectedUsers: state.connectedUsers.filter(
-        (user) => user.socketId !== by,
-      ),
+      connectedUsers: state.connectedUsers.filter((user) => user.sid !== by),
     })),
   findUserBySid: (by) => {
-    const returnUser = get().connectedUsers.find(
-      (user) => user.socketId === by,
-    );
-    if (!returnUser) return initUser;
+    const returnUser = get().connectedUsers.find((user) => user.sid === by);
+    if (!returnUser) return null;
     return returnUser;
   },
   findUserByUid: (by) => {
     const returnUser = get().connectedUsers.find((user) => user.uid === by);
-    if (!returnUser) return initUser;
+    if (!returnUser) return null;
     return returnUser;
+  },
+  setEnabledAudioByUid: (uid, enabled) => {
+    set((state) => ({
+      connectedUsers: state.connectedUsers.map((user) => {
+        if (user.uid === uid) {
+          return { ...user, enabledAudio: enabled };
+        }
+        return user;
+      }),
+    }));
   },
   setVolumeByUid: (uid, volume) => {
     set((state) => ({
       connectedUsers: state.connectedUsers.map((user) => {
         if (user.uid === uid) {
           return { ...user, volume };
+        }
+        return user;
+      }),
+    }));
+  },
+  setNicknameByUid: (uid, nickname) => {
+    set((state) => ({
+      connectedUsers: state.connectedUsers.map((user) => {
+        if (user.uid === uid) {
+          return { ...user, nickname };
+        }
+        return user;
+      }),
+    }));
+  },
+  setAvatarByUid: (uid, avatar) => {
+    set((state) => ({
+      connectedUsers: state.connectedUsers.map((user) => {
+        if (user.uid === uid) {
+          return { ...user, avatar };
+        }
+        return user;
+      }),
+    }));
+  },
+  setSidByUid: (uid, sid) => {
+    set((state) => ({
+      connectedUsers: state.connectedUsers.map((user) => {
+        if (user.uid === uid) {
+          return { ...user, sid };
         }
         return user;
       }),
