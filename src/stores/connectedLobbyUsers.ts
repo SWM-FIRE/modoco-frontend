@@ -5,7 +5,7 @@ interface User {
   nickname: string;
   uid: number;
   avatar: number;
-  socketId: string;
+  sid: string;
 }
 
 interface connectedUsers {
@@ -13,7 +13,7 @@ interface connectedUsers {
   setUsers: (_users: User[]) => void;
   appendUser: (_user: User) => void;
   removeUser: (_user: string) => void;
-  findUserBySid: (_socketId: string) => User;
+  findUserBySid: (_sid: string) => User;
   findUserByUid: (_uid: number) => User;
 }
 const connectedLobbyUsers = create<connectedUsers>((set, get) => ({
@@ -23,19 +23,17 @@ const connectedLobbyUsers = create<connectedUsers>((set, get) => ({
     set((state) => ({ connectedUsers: [...state.connectedUsers, by] })),
   removeUser: (by) =>
     set((state) => ({
-      connectedUsers: state.connectedUsers.filter(
-        (user) => user.socketId !== by,
-      ),
+      connectedUsers: state.connectedUsers.filter((user) => user.sid !== by),
     })),
   findUserBySid: (by) => {
-    const returnUser = get().connectedUsers.find(
-      (user) => user.socketId === by,
-    );
-    return returnUser;
+    const returnUser = get().connectedUsers.find((user) => user.sid === by);
+    if (returnUser) return returnUser;
+    return null;
   },
   findUserByUid: (by) => {
     const returnUser = get().connectedUsers.find((user) => user.uid === by);
-    return returnUser;
+    if (returnUser) return returnUser;
+    return null;
   },
 }));
 

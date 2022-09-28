@@ -50,7 +50,7 @@ export default function Chat() {
       <ChattingList ref={chatWindow}>
         {messages.map((message) => (
           <ChattingItem
-            key={message.uid + message.createdAt}
+            key={message.uid + message.createdAt + message.type}
             user={{
               nickname: message.nickname,
               avatar: message.avatar,

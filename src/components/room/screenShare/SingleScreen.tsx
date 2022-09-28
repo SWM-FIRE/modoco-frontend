@@ -14,7 +14,7 @@ export default function SingleScreen({ connectedUser, stream }) {
   const { setScreenUid, toggleScreenModal } = roomModalStore();
   const { uid } = userStore();
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const volumeRef = useRef<HTMLAudioElement>(null);
+  const alarmRef = useRef<HTMLAudioElement>(null);
   const isNewUser =
     connectedUser.uid &&
     connectedUser.uid !== uid &&
@@ -29,11 +29,16 @@ export default function SingleScreen({ connectedUser, stream }) {
   useEffect(() => {
     if (videoRef.current && stream) {
       videoRef.current.srcObject = stream;
-      if (connectedUser.volume) videoRef.current.volume = connectedUser.volume;
     }
     const newRef = videoRef.current;
     (newRef as any).setSinkId(userAudioOutputDevice?.deviceId);
-  }, [stream, videoRef, userAudioOutputDevice, connectedUser.volume]);
+  }, [stream, videoRef, userAudioOutputDevice]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (connectedUser.volume) videoRef.current.volume = connectedUser.volume;
+    }
+  }, [connectedUser.volume, videoRef]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -45,12 +50,13 @@ export default function SingleScreen({ connectedUser, stream }) {
   const newMessages = messages.filter(
     (message) =>
       message.uid === connectedUser.uid &&
+      message.type === 'message' &&
       new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
   );
 
   return (
     <>
-      {isNewUser && <NewUserAlarm volumeRef={volumeRef} />}
+      {isNewUser && <NewUserAlarm volumeRef={alarmRef} />}
       <Container onClick={openScreenModal}>
         {uid === connectedUser.uid ? (
           <Video ref={videoRef} autoPlay playsInline muted />
