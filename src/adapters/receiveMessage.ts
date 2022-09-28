@@ -76,6 +76,8 @@ const onChatMessage = (roomId: string) => {
           isHideNicknameAndAvatar = false;
         } else if (msg[msg.length - 1].uid !== receiveMsg.sender) {
           isHideNicknameAndAvatar = false;
+        } else if (msg[msg.length - 1].type !== 'message') {
+          isHideNicknameAndAvatar = false;
         }
       } else isHideNicknameAndAvatar = false;
       return isHideNicknameAndAvatar;
