@@ -1,31 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
 import moment from 'moment';
-import connectedUsersStore from '../stores/room/connectedUsersStore';
-import messageStore from '../stores/room/messagesStore';
-import lobbyMessageStore from '../stores/lobbyMessageStore';
-import connectedLobbyUsers from '../stores/connectedLobbyUsers';
-import roomSocket from './roomSocket';
-import lobbySocket from './lobbySocket';
+import getSocketData from './getSocketData';
 import userStore from '../stores/userStore';
 import receiveNewMessageStore from '../stores/room/receiveNewMessageStore';
+import { SOCKET_EVENT } from './event.enum';
 
 const onChatMessage = (roomId: string) => {
-  const { connectedUsers: roomConnected } = connectedUsersStore();
-  const { connectedUsers: lobbyConnected } = connectedLobbyUsers();
-  const connectedUsers = roomId === 'lobby' ? lobbyConnected : roomConnected;
-
+  const { connectedUsers, messages, setMessages, newSocket } =
+    getSocketData(roomId);
   const { setIsReceiveNewMessage, setIsAlarmToggle } = receiveNewMessageStore();
-
-  const { messages: roomMessages, setMessages: setRoomMessages } =
-    messageStore();
-  const { messages: lobbyMessages, setMessages: setLobbyMessages } =
-    lobbyMessageStore();
-  const messages = roomId === 'lobby' ? lobbyMessages : roomMessages;
-  const setMessages = roomId === 'lobby' ? setLobbyMessages : setRoomMessages;
-
   const { uid, nickname, avatar } = userStore();
-  const newSocket = roomId === 'lobby' ? lobbySocket.socket : roomSocket.socket;
 
   useEffect(() => {
     const receiveMessage = (receiveMsg) => {
@@ -72,7 +57,7 @@ const onChatMessage = (roomId: string) => {
       ]);
     };
 
-    newSocket.off('chatMessage').on('chatMessage', (message) => {
+    newSocket?.on(SOCKET_EVENT.CHAT_MESSAGE, (message) => {
       if (roomId !== 'lobby') {
         setIsReceiveNewMessage(true);
         setIsAlarmToggle();
@@ -94,6 +79,9 @@ const onChatMessage = (roomId: string) => {
         }
       } else isHideNicknameAndAvatar = false;
       return isHideNicknameAndAvatar;
+    };
+    return () => {
+      newSocket?.off(SOCKET_EVENT.CHAT_MESSAGE);
     };
   }, [connectedUsers, messages]);
 };

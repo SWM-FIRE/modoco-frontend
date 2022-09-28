@@ -6,6 +6,7 @@ import userStore from '../stores/userStore';
 import messageStore from '../stores/room/messagesStore';
 import userPcStore from '../stores/room/userPcStore';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
+import { SOCKET_EVENT } from './event.enum';
 
 const mediaStateChange = () => {
   const newSocket = roomSocket.socket;
@@ -22,12 +23,12 @@ const mediaStateChange = () => {
   const { appendMessages } = messageStore();
 
   const emitAudioStateChange = (room: string, enabled: boolean) => {
-    newSocket.emit('audioStateChange', { room, enabled });
+    newSocket.emit(SOCKET_EVENT.AUDIO_STATE_CHANGE, { room, enabled });
     toggleAudioStream(enabled);
   };
 
   useEffect(() => {
-    newSocket?.off('audioStateChange').on('audioStateChange', (data) => {
+    newSocket.on(SOCKET_EVENT.AUDIO_STATE_CHANGE, (data) => {
       const { uid, enabled } = data;
       const isMe = uid === userId;
       const audioStateUser = findUserByUid(uid);
@@ -47,7 +48,7 @@ const mediaStateChange = () => {
       }
     });
 
-    newSocket?.off('kickUser').on('kickUser', (data) => {
+    newSocket.on(SOCKET_EVENT.KICK_USER, (data) => {
       const { kickUser } = data;
       if (kickUser.uid === userId) {
         alert('방장에 의해 강퇴당하였습니다.');
@@ -71,6 +72,10 @@ const mediaStateChange = () => {
         });
       }
     });
+    return () => {
+      newSocket?.off(SOCKET_EVENT.AUDIO_STATE_CHANGE);
+      newSocket?.off(SOCKET_EVENT.KICK_USER);
+    };
   }, [newSocket, connectedUsers]);
 
   return {
