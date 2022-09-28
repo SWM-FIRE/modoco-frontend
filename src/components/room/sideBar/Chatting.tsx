@@ -61,6 +61,7 @@ export default function Chat() {
             type={message.type}
             isHideTime={message.isHideTime}
             isHideNicknameAndAvatar={message.isHideNicknameAndAvatar}
+            isLobby={false}
           />
         ))}
       </ChattingList>

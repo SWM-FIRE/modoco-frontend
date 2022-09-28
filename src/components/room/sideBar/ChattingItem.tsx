@@ -2,8 +2,13 @@ import styled from 'styled-components';
 import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
-import messageInterface from '../../../interface/message.interface';
 import userStore from '../../../stores/userStore';
+
+interface User {
+  nickname: string;
+  avatar: number;
+  uid: number;
+}
 
 export default function ChattingItem({
   user,
@@ -12,7 +17,16 @@ export default function ChattingItem({
   type,
   isHideTime,
   isHideNicknameAndAvatar,
-}: messageInterface) {
+  isLobby,
+}: {
+  user: User;
+  msg: string;
+  time: string;
+  type: string;
+  isHideTime: boolean;
+  isHideNicknameAndAvatar: boolean;
+  isLobby: boolean;
+}) {
   const { uid } = userStore();
   const isMe = user.uid === uid;
   const entrance = type === 'join' || type === 'leave';
@@ -54,7 +68,7 @@ export default function ChattingItem({
               </Nickname>
             )}
             <MessageBox isMe={isMe}>
-              <Message isMe={isMe} ref={msgRef} />
+              <Message isLobby={isLobby} isMe={isMe} ref={msgRef} />
               {!isHideTime && <Time>{moment(time).format('LT')}</Time>}
             </MessageBox>
           </MessageComponent>
@@ -127,11 +141,11 @@ const MessageBox = styled.div<userInterface>`
   word-break: break-all;
 `;
 
-const Message = styled.div<userInterface>`
+const Message = styled.div<{ isMe: boolean; isLobby: boolean }>`
   color: rgb(255, 255, 255);
   font-size: 1.5rem;
   padding: 1.6rem;
-  max-width: 32rem;
+  max-width: ${({ isLobby }) => (isLobby ? '100%' : '32rem')};
   border-radius: ${({ isMe }) =>
     isMe ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
   background-color: ${({ isMe, theme }) =>
