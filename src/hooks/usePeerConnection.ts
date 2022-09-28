@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { useEffect } from 'react';
 import axios from 'axios';
+import { SOCKET_EVENT } from 'src/adapters/event.enum';
 import roomSocket from '../adapters/roomSocket';
 import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
 import connectedUsersStore from '../stores/room/connectedUsersStore';
@@ -86,7 +87,7 @@ const usePeerConnection = () => {
           new RTCSessionDescription(offer),
         );
         console.debug(`[SOCKET] call user(${sid}) with offer`, offer);
-        newSocket.emit('call-user', { to: sid, offer });
+        newSocket.emit(SOCKET_EVENT.CALL_USER, { to: sid, offer });
       }
     };
 
@@ -104,7 +105,7 @@ const usePeerConnection = () => {
         await peerConnection.setLocalDescription(answer);
         // send answer to other user
         console.debug('[SOCKET] answer to user(', sid, ')');
-        newSocket.emit('make-answer', { to: sid, answer });
+        newSocket.emit(SOCKET_EVENT.MAKE_ANSWER, { to: sid, answer });
       }
     };
 
@@ -186,10 +187,16 @@ const usePeerConnection = () => {
       }
     };
 
-    newSocket.off('newUser').on('newUser', onNewUser);
-    newSocket.off('call-made').on('call-made', onCallMade);
-    newSocket.off('answer-made').on('answer-made', onAnswerMade);
-    newSocket.off('ice-candidate').on('ice-candidate', onIceCandidateReceived);
+    newSocket.on(SOCKET_EVENT.NEW_USER, onNewUser);
+    newSocket.on(SOCKET_EVENT.CALL_MADE, onCallMade);
+    newSocket.on(SOCKET_EVENT.ANSWER_MADE, onAnswerMade);
+    newSocket.on(SOCKET_EVENT.ICE_CANDIDATE, onIceCandidateReceived);
+    return () => {
+      newSocket.off(SOCKET_EVENT.NEW_USER);
+      newSocket.off(SOCKET_EVENT.CALL_MADE);
+      newSocket.off(SOCKET_EVENT.ANSWER_MADE);
+      newSocket.off(SOCKET_EVENT.ICE_CANDIDATE);
+    };
   }, [userMediaStream, pcs]);
 };
 
