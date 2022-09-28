@@ -12,7 +12,12 @@ export default function ControlVolume({ user }: { user: VideoUserInterface }) {
     user.enabledAudio ? user.volume : 0,
   );
   const onClickVolume = () => {
-    setUserSpeaker((prev) => !prev);
+    if (userSpeaker) {
+      setVolumeByUid(user.uid, 0);
+    } else {
+      setVolumeByUid(user.uid, newVolume);
+    }
+    setUserSpeaker(!userSpeaker);
   };
   const onChangeVolume = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewVolume(event.target.valueAsNumber);
