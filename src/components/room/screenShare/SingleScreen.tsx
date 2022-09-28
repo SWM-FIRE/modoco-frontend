@@ -35,8 +35,16 @@ export default function SingleScreen({ connectedUser, stream }) {
   }, [stream, videoRef, userAudioOutputDevice]);
 
   useEffect(() => {
+    if (connectedUser.uid === uid) return;
     if (videoRef.current) {
-      if (connectedUser.volume) videoRef.current.volume = connectedUser.volume;
+      if (connectedUser.volume === 0) {
+        videoRef.current.muted = true;
+        console.log('mute!!!!!!!!!!!');
+      } else if (connectedUser.volume) {
+        videoRef.current.muted = false;
+        videoRef.current.volume = connectedUser.volume;
+        console.log('보륨!!1 ', connectedUser.volume);
+      }
     }
   }, [connectedUser.volume, videoRef]);
 

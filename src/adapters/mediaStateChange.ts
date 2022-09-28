@@ -23,12 +23,12 @@ const mediaStateChange = () => {
   const { appendMessages } = messageStore();
 
   const emitAudioStateChange = (room: string, enabled: boolean) => {
-    newSocket.emit(SOCKET_EVENT.AUDIO_STATE_CHANGE, { room, enabled });
+    newSocket?.emit(SOCKET_EVENT.AUDIO_STATE_CHANGE, { room, enabled });
     toggleAudioStream(enabled);
   };
 
   useEffect(() => {
-    newSocket.on(SOCKET_EVENT.AUDIO_STATE_CHANGE, (data) => {
+    newSocket?.on(SOCKET_EVENT.AUDIO_STATE_CHANGE, (data) => {
       const { uid, enabled } = data;
       const isMe = uid === userId;
       const audioStateUser = findUserByUid(uid);
@@ -48,7 +48,7 @@ const mediaStateChange = () => {
       }
     });
 
-    newSocket.on(SOCKET_EVENT.KICK_USER, (data) => {
+    newSocket?.on(SOCKET_EVENT.KICK_USER, (data) => {
       const { kickUser } = data;
       if (kickUser.uid === userId) {
         alert('방장에 의해 강퇴당하였습니다.');
