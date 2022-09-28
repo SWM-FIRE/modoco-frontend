@@ -32,11 +32,9 @@ export default function SingleParticipant({
     setShowSideProfile(!showSideProfile);
   };
 
-  const friendState = false;
-
   return (
-    <Container>
-      <AvatarContainer onClick={toggleProfile}>
+    <Container onClick={toggleProfile}>
+      <AvatarContainer>
         <MyAvatar num={Number(avatar)} />
         <MicContainer>{isAudioEnabled ? <MicOn /> : <MicOff />}</MicContainer>
       </AvatarContainer>
@@ -51,7 +49,6 @@ export default function SingleParticipant({
           uid={uid}
           avatar={avatar}
           isMe={isMe}
-          isFriend={friendState}
           moderator={moderator}
           isAudioEnabled={isAudioEnabled}
           volume={volume}
@@ -64,7 +61,6 @@ export default function SingleParticipant({
 
 const AvatarContainer = styled.div`
   position: relative;
-  cursor: pointer;
   width: 4.3rem;
   height: 4.3rem;
   svg {
@@ -94,6 +90,11 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.4rem;
+  cursor: pointer;
+  &:hover {
+    // underline font
+    text-decoration: underline;
+  }
 `;
 
 // const CrownContainer = styled.div``;
