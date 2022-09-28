@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import MyAvatar from '../../atoms/Avatar';
-import connectedLobbyUsers from '../../../stores/connectedLobbyUsers';
+import MyAvatar from '../atoms/Avatar';
+import connectedLobbyUsers from '../../stores/connectedLobbyUsers';
 
 export default function LobbyCanvas({
   width,
