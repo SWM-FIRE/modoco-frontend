@@ -37,7 +37,7 @@ const onChatMessage = (roomId: string) => {
               avatar: m.avatar,
               message: m.message,
               createdAt: m.createdAt,
-              type: 'message',
+              type: m.type,
               isHideTime: true,
               isHideNicknameAndAvatar: m.isHideNicknameAndAvatar,
             };
