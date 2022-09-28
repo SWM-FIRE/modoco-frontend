@@ -14,7 +14,7 @@ const useKickUser = ({
 
   const kickUser = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const targetSid = findUserByUid(targetUid)?.socketId;
+    const targetSid = findUserByUid(targetUid)?.sid;
     const userToKick = {
       uid: targetUid,
       sid: targetSid,
