@@ -71,6 +71,7 @@ export const roomConnection = (roomId: string) => {
                   enabledVideo: true,
                   enabledAudio: true,
                   isAlreadyEntered: true,
+                  volume: 0.5,
                 });
                 console.log('appendUser', user.uid, res);
               } else {

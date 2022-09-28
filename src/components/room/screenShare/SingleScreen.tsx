@@ -29,10 +29,11 @@ export default function SingleScreen({ connectedUser, stream }) {
   useEffect(() => {
     if (videoRef.current && stream) {
       videoRef.current.srcObject = stream;
+      if (connectedUser.volume) videoRef.current.volume = connectedUser.volume;
     }
     const newRef = videoRef.current;
     (newRef as any).setSinkId(userAudioOutputDevice?.deviceId);
-  }, [stream, videoRef, userAudioOutputDevice]);
+  }, [stream, videoRef, userAudioOutputDevice, connectedUser.volume]);
 
   useEffect(() => {
     const timer = setInterval(() => {
