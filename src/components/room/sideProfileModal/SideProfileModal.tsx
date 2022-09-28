@@ -4,6 +4,7 @@ import ProfileModalHeader from './SideProfileModalHeader';
 import UserInfo from './UserInfo';
 import Buttons from './Buttons';
 import FriendButtons from './FriendButtons';
+import ControlVolume from './ControlVolume';
 
 export default function SideProfileModal({
   toggle,
@@ -13,6 +14,9 @@ export default function SideProfileModal({
   isFriend,
   moderator,
   uid,
+  isAudioEnabled,
+  volume,
+  setVolumeByUid,
 }: {
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
   nickname: string;
@@ -21,6 +25,9 @@ export default function SideProfileModal({
   isFriend: boolean;
   moderator: number;
   uid: number;
+  isAudioEnabled: boolean;
+  volume: number;
+  setVolumeByUid: (_uid: number, _volume: number) => void;
 }) {
   const toggleModal = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -40,6 +47,14 @@ export default function SideProfileModal({
               toggle={toggle}
               uid={uid}
             />
+            {!isMe && (
+              <ControlVolume
+                isAudioEnabled={isAudioEnabled}
+                uid={uid}
+                volume={volume}
+                setVolumeByUid={setVolumeByUid}
+              />
+            )}
             {isFriend ? (
               <FriendButtons />
             ) : (
@@ -80,4 +95,5 @@ const Container = styled.div`
   z-index: 1;
   padding: 2rem 2.4rem 3.2rem 2.4rem;
   border-radius: 2rem;
+  box-shadow: 0px 4px 103px rgba(50, 50, 71, 0.4);
 `;

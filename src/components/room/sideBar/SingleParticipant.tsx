@@ -13,6 +13,8 @@ export default function SingleParticipant({
   isAudioEnabled,
   moderator,
   uid,
+  volume,
+  setVolumeByUid,
 }: {
   isMe: boolean;
   nickname: string;
@@ -20,6 +22,8 @@ export default function SingleParticipant({
   isAudioEnabled: boolean;
   moderator: number;
   uid: number;
+  volume: number;
+  setVolumeByUid: (_uid: number, _volume: number) => void;
 }) {
   const [showSideProfile, setShowSideProfile] = useState<boolean>(false);
 
@@ -49,6 +53,9 @@ export default function SingleParticipant({
           isMe={isMe}
           isFriend={friendState}
           moderator={moderator}
+          isAudioEnabled={isAudioEnabled}
+          volume={volume}
+          setVolumeByUid={setVolumeByUid}
         />
       ) : null}
     </Container>

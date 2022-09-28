@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, { useCallback, useRef, useEffect } from 'react';
-import ChattingItem from '../room/sideBar/ChattingItem';
-import lobbyMessageStore from '../../stores/lobbyMessageStore';
-import userStore from '../../stores/userStore';
-import SendChat from '../atoms/chatting/SendChat';
+import ChattingItem from '../../room/sideBar/ChattingItem';
+import lobbyMessageStore from '../../../stores/lobbyMessageStore';
+import userStore from '../../../stores/userStore';
+import SendChat from '../../atoms/chatting/SendChat';
 
 export default function Chat() {
   const chatWindow = useRef(null);
@@ -53,6 +53,7 @@ export default function Chat() {
             type={message.type}
             isHideTime={message.isHideTime}
             isHideNicknameAndAvatar={message.isHideNicknameAndAvatar}
+            isLobby
           />
         ))}
       </ChattingList>
@@ -69,7 +70,7 @@ const Component = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  height: calc(100% - 5.8rem);
+  height: 100%;
   font-family: IBMPlexSansKRRegular;
   font-size: 1.3rem;
   color: #9ca3af;

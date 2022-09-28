@@ -1,3 +1,4 @@
+import { toast } from 'react-hot-toast';
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -13,12 +14,12 @@ import { API } from '../config';
 
 export const roomConnection = (roomId: string) => {
   const navigate = useNavigate();
-  const { connectedUsers, appendUser, removeUser, findUserBySid } =
+  const { connectedUsers, appendUser, removeUser, findUserBySid, setUsers } =
     connectedUsersStore();
   const { userMediaStream } = UserMediaStreamStore();
-  const { appendMessages } = messageStore();
-  const { setPc } = userPcStore();
-  const { createAll } = useCreateMediaStream();
+  const { appendMessages, setMessages } = messageStore();
+  const { setPc, emptyPc } = userPcStore();
+  const { createAll, stopMediaStream } = useCreateMediaStream();
   const { uid } = userStore();
   const newSocket = roomSocket.socket;
 
@@ -61,7 +62,7 @@ export const roomConnection = (roomId: string) => {
               },
             })
             .then((res) => {
-              if (!connectedUsers.includes(user.uid)) {
+              if (!connectedUsers.includes(user.uid) && user.uid !== uid) {
                 appendUser({
                   nickname: res.data.nickname,
                   uid: user.uid,
@@ -70,10 +71,17 @@ export const roomConnection = (roomId: string) => {
                   enabledVideo: true,
                   enabledAudio: true,
                   isAlreadyEntered: true,
+                  volume: 0.5,
                 });
                 console.log('appendUser', user.uid, res);
               } else {
-                console.log('already connected');
+                toast.error('이미 접속중인 유저입니다.');
+                newSocket.emit('leaveRoom', { room: roomId });
+                setUsers([]);
+                emptyPc();
+                setMessages([]);
+                stopMediaStream();
+                navigate('/main');
               }
             });
           return user;

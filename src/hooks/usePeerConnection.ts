@@ -153,6 +153,7 @@ const usePeerConnection = () => {
               enabledVideo: true,
               enabledAudio: true,
               isAlreadyEntered: false,
+              volume: 0.5,
             });
           } else {
             console.log('already connected');

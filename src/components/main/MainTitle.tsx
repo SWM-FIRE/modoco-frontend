@@ -6,7 +6,7 @@ import { API } from 'src/config';
 import connectedLobbyUsers from '../../stores/connectedLobbyUsers';
 import onChatMessage from '../../adapters/receiveMessage';
 import Search from './Search';
-import Lobby from './Lobby';
+import Lobby from './lobby/Lobby';
 import { ReactComponent as MainFire } from '../../assets/svg/MainFire.svg';
 import CheckInvite from './CheckInvite';
 

@@ -6,6 +6,7 @@ import UserStore from '../../stores/userStore';
 import Profile from './Profile';
 import HeaderProfileModal from '../HeaderProfile/HeaderProfileModal';
 import useSetSelf from '../../hooks/useSetSelf';
+import ModocoLogo from '../atoms/ModocoLogo';
 
 export default function Header() {
   const { isLogin } = UserStore();
@@ -30,9 +31,7 @@ export default function Header() {
     <>
       {headerProfileModal && <Screen onClick={toggleModal} />}
       <Container>
-        <Logo onClick={clickLogo} data-cy="modoco-logo">
-          modoco
-        </Logo>
+        <ModocoLogo event={clickLogo} />
         {isLogin ? (
           <Profile
             toggleModal={toggleModal}
@@ -63,17 +62,6 @@ const Screen = styled.div`
   width: 100vw;
   height: 100vh;
   z-index: 1;
-`;
-
-const Logo = styled.h1`
-  cursor: pointer;
-  font-size: 3.2rem;
-  font-family: IBMPlexSansKRRegular, Arial;
-  color: white;
-  font-weight: 700;
-  ${media.small} {
-    font-size: 2.4rem;
-  }
 `;
 
 const Container = styled.div`

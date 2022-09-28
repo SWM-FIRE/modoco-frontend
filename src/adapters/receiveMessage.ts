@@ -28,7 +28,6 @@ const onChatMessage = (roomId: string) => {
   const newSocket = roomId === 'lobby' ? lobbySocket.socket : roomSocket.socket;
 
   useEffect(() => {
-    console.log('ready to get message');
     const receiveMessage = (receiveMsg) => {
       const isMe = receiveMsg.sender === uid;
       const userInfo = isMe
@@ -74,7 +73,6 @@ const onChatMessage = (roomId: string) => {
     };
 
     newSocket.off('chatMessage').on('chatMessage', (message) => {
-      console.log('got message');
       if (roomId !== 'lobby') {
         setIsReceiveNewMessage(true);
         setIsAlarmToggle();

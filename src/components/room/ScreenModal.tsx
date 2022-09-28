@@ -25,7 +25,10 @@ export default function ScreenModal() {
     if (videoRef.current) {
       videoRef.current.srcObject = newStream;
     }
-  }, [videoRef, userMediaStream]);
+    if (!isMe && user.uid === -1) {
+      toggleScreenModal();
+    }
+  }, [videoRef, userMediaStream, user]);
 
   const onClickExpandButton = () => {
     if (!videoRef.current) return;
