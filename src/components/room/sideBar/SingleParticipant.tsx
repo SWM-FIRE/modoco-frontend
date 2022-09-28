@@ -5,25 +5,16 @@ import MyAvatar from '../../../assets/avatar/MyAvatar';
 import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
 import { ReactComponent as MicOff } from '../../../assets/svg/SmallMicOff.svg';
 import { ReactComponent as Crown } from '../../../assets/svg/Crown.svg';
+import VideoUserInterface from '../../../interface/VideoUser.interface';
 
 export default function SingleParticipant({
   isMe,
-  nickname,
-  avatar,
-  isAudioEnabled,
   moderator,
-  uid,
-  volume,
-  setVolumeByUid,
+  user,
 }: {
   isMe: boolean;
-  nickname: string;
-  avatar: number;
-  isAudioEnabled: boolean;
   moderator: number;
-  uid: number;
-  volume: number;
-  setVolumeByUid: (_uid: number, _volume: number) => void;
+  user: VideoUserInterface;
 }) {
   const [showSideProfile, setShowSideProfile] = useState<boolean>(false);
 
@@ -33,26 +24,23 @@ export default function SingleParticipant({
   };
 
   return (
-    <Container onClick={toggleProfile}>
-      <AvatarContainer>
-        <MyAvatar num={Number(avatar)} />
-        <MicContainer>{isAudioEnabled ? <MicOn /> : <MicOff />}</MicContainer>
+    <Container>
+      <AvatarContainer onClick={toggleProfile}>
+        <MyAvatar num={user.avatar} />
+        <MicContainer>
+          {user.enabledAudio ? <MicOn /> : <MicOff />}
+        </MicContainer>
       </AvatarContainer>
-      <NameContainer isMe={isMe} nicknameLength={nickname?.length}>
-        {nickname}
-        {moderator === uid && <Crown />}
+      <NameContainer isMe={isMe} nicknameLength={user.nickname?.length}>
+        {user.nickname}
+        {moderator === user.uid && <Crown />}
       </NameContainer>
       {showSideProfile ? (
         <SideProfileModal
           toggle={setShowSideProfile}
-          nickname={nickname}
-          uid={uid}
-          avatar={avatar}
           isMe={isMe}
+          user={user}
           moderator={moderator}
-          isAudioEnabled={isAudioEnabled}
-          volume={volume}
-          setVolumeByUid={setVolumeByUid}
         />
       ) : null}
     </Container>

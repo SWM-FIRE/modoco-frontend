@@ -9,32 +9,23 @@ import UserInfo from './UserInfo';
 import Buttons from './Buttons';
 import FriendButtons from './FriendButtons';
 import ControlVolume from './ControlVolume';
+import VideoUserInterface from '../../../interface/VideoUser.interface';
 
 export default function SideProfileModal({
   toggle,
-  nickname,
-  avatar,
   isMe,
+  user,
   moderator,
-  uid,
-  isAudioEnabled,
-  volume,
-  setVolumeByUid,
 }: {
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
-  nickname: string;
-  avatar: number;
   isMe: boolean;
+  user: VideoUserInterface;
   moderator: number;
-  uid: number;
-  isAudioEnabled: boolean;
-  volume: number;
-  setVolumeByUid: (_uid: number, _volume: number) => void;
 }) {
   const { roomId } = useParams();
   const { kickUser } = useKickUser({
     roomId,
-    targetUid: uid,
+    targetUid: user.uid,
   });
   const { uid: myUID } = userStore();
   const isModerator = moderator === myUID;
@@ -44,7 +35,7 @@ export default function SideProfileModal({
     toggle(false);
   };
 
-  const { isLoading, error, data } = useSingleFriend(uid);
+  const { isLoading, error, data } = useSingleFriend(user.uid);
   if (isLoading) return <>loading</>;
   if (error) return <>error</>;
 
@@ -60,23 +51,16 @@ export default function SideProfileModal({
           <ProfileModalHeader profileToggle={toggle} />
           <Body>
             <UserInfo
-              avatarNo={avatar}
-              nickname={nickname}
+              avatarNo={user.avatar}
+              nickname={user.nickname}
               toggle={toggle}
-              uid={uid}
+              uid={user.uid}
             />
-            {!isMe && (
-              <ControlVolume
-                isAudioEnabled={isAudioEnabled}
-                uid={uid}
-                volume={volume}
-                setVolumeByUid={setVolumeByUid}
-              />
-            )}
+            {!isMe && <ControlVolume user={user} />}
             {isFriend ? (
               <FriendButtons data={data} />
             ) : (
-              <Buttons isMe={isMe} uid={uid} toggle={toggle} />
+              <Buttons isMe={isMe} toggle={toggle} uid={user.uid} />
             )}
             {!isMe && isModerator && <Kick onClick={kickUser}>내보내기</Kick>}
           </Body>

@@ -20,7 +20,7 @@ export default function ScreenModal() {
   const isMe = uid === screenUid;
   const newStream = isMe
     ? userMediaStream
-    : findStream({ sid: user?.socketId, connectedUsers, userStream });
+    : findStream({ sid: user?.sid, connectedUsers, userStream });
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.srcObject = newStream;

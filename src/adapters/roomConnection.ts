@@ -10,18 +10,29 @@ import userPcStore from '../stores/room/userPcStore';
 import userStore from '../stores/userStore';
 import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
+import mediaStateChange from './mediaStateChange';
 import { API } from '../config';
 import { SOCKET_EVENT } from './event.enum';
 
 export const roomConnection = (roomId: string) => {
   const navigate = useNavigate();
-  const { connectedUsers, appendUser, removeUser, findUserBySid, setUsers } =
-    connectedUsersStore();
-  const { userMediaStream } = UserMediaStreamStore();
+  const {
+    connectedUsers,
+    appendUser,
+    removeUser,
+    findUserByUid,
+    findUserBySid,
+    setUsers,
+    setNicknameByUid,
+    setAvatarByUid,
+    setSidByUid,
+  } = connectedUsersStore();
+  const { userMediaStream, userMic } = UserMediaStreamStore();
   const { appendMessages, setMessages } = messageStore();
   const { setPc, emptyPc } = userPcStore();
   const { createAll, stopMediaStream } = useCreateMediaStream();
   const { uid } = userStore();
+  const { emitAudioStateChange } = mediaStateChange();
   const newSocket = roomSocket.socket;
 
   useEffect(() => {
@@ -44,6 +55,7 @@ export const roomConnection = (roomId: string) => {
 
     newSocket?.on(SOCKET_EVENT.JOINED_ROOM, (room) => {
       console.log('[roomConnection] joinedRoom', room);
+      emitAudioStateChange(roomId, userMic);
     });
 
     newSocket?.on(SOCKET_EVENT.ROOM_FULL, () => {
@@ -53,6 +65,7 @@ export const roomConnection = (roomId: string) => {
 
     newSocket?.on(SOCKET_EVENT.EXISTING_ROOM_USERS, ({ users, current }) => {
       console.log('i am ', current.sid);
+
       users.map((user) => {
         axios
           .get((API.USER as string) + user.uid, {
@@ -61,26 +74,30 @@ export const roomConnection = (roomId: string) => {
             },
           })
           .then((res) => {
-            if (!connectedUsers.includes(user.uid) && user.uid !== uid) {
-              appendUser({
-                nickname: res.data.nickname,
-                uid: user.uid,
-                avatar: res.data.avatar,
-                socketId: user.sid,
-                enabledVideo: true,
-                enabledAudio: true,
-                isAlreadyEntered: true,
-                volume: 0.5,
-              });
-              console.log('appendUser', user.uid, res);
-            } else {
+            const existingUser = findUserByUid(user.uid);
+            if (user.uid === uid) {
               toast.error('이미 접속중인 유저입니다.');
-              newSocket?.emit(SOCKET_EVENT.LEAVE_ROOM, { room: roomId });
+              newSocket.emit('leaveRoom', { room: roomId });
               setUsers([]);
               emptyPc();
               setMessages([]);
               stopMediaStream();
               navigate('/main');
+            } else if (!existingUser) {
+              appendUser({
+                nickname: res.data.nickname,
+                uid: user.uid,
+                avatar: res.data.avatar,
+                sid: user.sid,
+                enabledVideo: true,
+                enabledAudio: true,
+                isAlreadyEntered: true,
+                volume: 0.5,
+              });
+            } else if (existingUser) {
+              setNicknameByUid(user.uid, res.data.nickname);
+              setAvatarByUid(user.uid, res.data.avatar);
+              setSidByUid(user.uid, user.sid);
             }
           });
         return user;
@@ -93,19 +110,21 @@ export const roomConnection = (roomId: string) => {
         return;
       }
       const userInfo = findUserBySid(sid);
-      console.log(userInfo.nickname, 'left room');
-      setPc({ sid, peerConnection: null });
-      removeUser(sid);
-      appendMessages({
-        uid: userInfo.uid,
-        nickname: userInfo.nickname,
-        avatar: userInfo.avatar,
-        message: `${userInfo.nickname}님이 퇴장하셨습니다.`,
-        createdAt: '',
-        type: 'leave',
-        isHideTime: false,
-        isHideNicknameAndAvatar: false,
-      });
+      if (userInfo) {
+        console.log(userInfo.nickname, 'left room');
+        setPc({ sid, peerConnection: null });
+        removeUser(sid);
+        appendMessages({
+          uid: userInfo.uid,
+          nickname: userInfo.nickname,
+          avatar: userInfo.avatar,
+          message: `${userInfo.nickname}님이 퇴장하셨습니다.`,
+          createdAt: new Date().toString(),
+          type: 'leave',
+          isHideTime: false,
+          isHideNicknameAndAvatar: false,
+        });
+      }
     });
 
     newSocket?.on(SOCKET_EVENT.DISCONNECT, () => {
@@ -122,5 +141,5 @@ export const roomConnection = (roomId: string) => {
       newSocket?.off('joinedRoom');
       newSocket?.off('roomFull');
     };
-  }, []);
+  }, [connectedUsers]);
 };

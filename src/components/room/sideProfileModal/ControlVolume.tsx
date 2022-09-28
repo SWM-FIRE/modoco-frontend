@@ -1,30 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as VolumeOn } from '../../../assets/svg/VolumeOn.svg';
 import { ReactComponent as VolumeOff } from '../../../assets/svg/VolumeOff.svg';
+import VideoUserInterface from '../../../interface/VideoUser.interface';
+import connectedUsersStore from '../../../stores/room/connectedUsersStore';
 
-export default function ControlVolume({
-  isAudioEnabled,
-  uid,
-  volume,
-  setVolumeByUid,
-}: {
-  isAudioEnabled: boolean;
-  uid: number;
-  volume: number;
-  setVolumeByUid: (_uid: number, _volume: number) => void;
-}) {
-  const [userSpeaker, setSpeaker] = useState(isAudioEnabled);
+export default function ControlVolume({ user }: { user: VideoUserInterface }) {
+  const { setVolumeByUid } = connectedUsersStore();
+  const [userSpeaker, setUserSpeaker] = useState(user.enabledAudio);
   const [newVolume, setNewVolume] = useState<number>(
-    isAudioEnabled ? volume : 0,
+    user.enabledAudio ? user.volume : 0,
   );
   const onClickVolume = () => {
-    setSpeaker((prev) => !prev);
+    if (userSpeaker) {
+      setVolumeByUid(user.uid, 0);
+    } else {
+      setVolumeByUid(user.uid, newVolume);
+    }
+    setUserSpeaker(!userSpeaker);
   };
   const onChangeVolume = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewVolume(event.target.valueAsNumber);
-    setVolumeByUid(uid, event.target.valueAsNumber);
+    setVolumeByUid(user.uid, event.target.valueAsNumber);
   };
+
+  useEffect(() => {
+    setUserSpeaker(user.enabledAudio);
+  }, [user.enabledAudio]);
 
   return (
     <Container>
