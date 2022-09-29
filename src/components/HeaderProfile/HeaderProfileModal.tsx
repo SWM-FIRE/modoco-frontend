@@ -7,6 +7,7 @@ import mainModalStore from 'src/stores/mainModalStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import UserStore from '../../stores/userStore';
 import Friends from './Friends';
+import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
 
 export default function HeaderProfileModal() {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ export default function HeaderProfileModal() {
   const { closeProfileModal } = mainModalStore();
 
   const onLogOut = () => {
+    lobbySocket.socket?.emit('leaveLobby');
+    deleteSocket();
     localStorage.removeItem('access_token');
     closeProfileModal();
     setClear();
