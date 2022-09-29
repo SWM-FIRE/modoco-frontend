@@ -4,7 +4,7 @@ import { ReactComponent as X } from '../../../assets/svg/X.svg';
 import Participants from './Participants';
 import Chatting from './Chatting';
 
-export default function Lobby({ toggleModal }: { toggleModal: () => void }) {
+export default function Lobby({ toggleModal, connectedUsers }) {
   return (
     <ModalPortal>
       <Outside onClick={toggleModal}>
@@ -18,7 +18,7 @@ export default function Lobby({ toggleModal }: { toggleModal: () => void }) {
             </ChattingArea>
             <ParticipantsArea>
               실시간 참여자들
-              <Participants />
+              <Participants connectedUsers={connectedUsers} />
             </ParticipantsArea>
           </MainArea>
         </Container>
