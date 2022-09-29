@@ -13,17 +13,11 @@ export const calculateLabels = (type: string) => {
       }
     }
   } else if (type === 'Week') {
-    let temp = 0;
     for (let i = 48; i > 0; i -= 7) {
       const last = moment(now)
-        .subtract(i + 6 - temp, 'days')
+        .subtract(i + 6, 'days')
         .format('M월 D일');
-      labels.push(
-        moment(now)
-          .subtract(i - temp, 'days')
-          .format(`${last} ~ M월 D일`),
-      );
-      temp += 1;
+      labels.push(moment(now).subtract(i, 'days').format(`${last} ~ M월 D일`));
     }
   } else {
     for (let i = 29; i >= 0; i -= 1) {
