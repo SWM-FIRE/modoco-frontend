@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import AcceptOrDecline from './AcceptOrDecline';
 import { ReactComponent as ShowFriendState } from '../../../assets/svg/ShowFriendState.svg';
 
-export default function DecidedFriend({ data }) {
+export default function DecidedFriend({ data, toggle }) {
   const RECV = 'RECEIVER';
   const SEND = 'SENDER';
   const PENDING = 'PENDING';
   const ACCEPT = 'ACCEPTED';
 
   if (data.status === PENDING && data.role === RECV) {
-    return <AcceptOrDecline data={data} />;
+    return <AcceptOrDecline data={data} toggle={toggle} />;
   }
   if (data.status === PENDING && data.role === SEND) {
     return (
@@ -27,7 +27,7 @@ export default function DecidedFriend({ data }) {
       </Friend>
     );
   }
-  return <>error</>;
+  return null;
 }
 
 const Container = styled.div`

@@ -1,18 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
 import useAcceptFriendRequest from 'src/hooks/friend/useAcceptFriendRequest';
+import useDeleteFriendRequest from 'src/hooks/friend/useDeleteFriendRequest';
 
-export default function AcceptOrDecline({ data }) {
-  const { mutate, isLoading, isError, isSuccess } = useAcceptFriendRequest(
-    data?.sender.uid,
-  );
+export default function AcceptOrDecline({ data, toggle }) {
+  const {
+    mutate: acceptMutate,
+    isLoading: acceptLoading,
+    isError: acceptError,
+    isSuccess: acceptSuccess,
+  } = useAcceptFriendRequest(data?.sender.uid);
 
-  if (isLoading) return <>loading</>;
-  if (isError) return <>error</>;
-  if (isSuccess) console.log('success');
+  const {
+    mutate: deleteMutate,
+    isLoading: deleteLoading,
+    isError: deleteError,
+    isSuccess: deleteSuccess,
+  } = useDeleteFriendRequest(data?.sender.uid);
+
+  if (acceptLoading || deleteLoading) return null;
+  if (acceptError || deleteError) return null;
+  if (acceptSuccess || deleteSuccess) {
+    console.log('success request');
+    toggle();
+  }
+
   const acceptRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    mutate();
+    acceptMutate();
+  };
+
+  const deleteRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    deleteMutate();
   };
 
   return (
@@ -24,7 +44,9 @@ export default function AcceptOrDecline({ data }) {
         님이 친구 요청을 전송하였습니다
       </Text>
       <Buttons>
-        <Button color="#ff8e89">거절하기</Button>
+        <Button onClick={deleteRequest} color="#ff8e89">
+          거절하기
+        </Button>
         <Button onClick={acceptRequest} color="#76e8ad">
           수락하기
         </Button>

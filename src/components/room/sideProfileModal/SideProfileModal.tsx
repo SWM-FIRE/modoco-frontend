@@ -58,7 +58,7 @@ export default function SideProfileModal({
             />
             {!isMe && <ControlVolume user={user} />}
             {isFriend ? (
-              <FriendButtons data={data} />
+              <FriendButtons data={data} toggle={toggle} />
             ) : (
               <Buttons isMe={isMe} toggle={toggle} uid={user.uid} />
             )}
