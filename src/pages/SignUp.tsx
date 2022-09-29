@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import SignUpForm from '../components/signUp/SignUpForm';
-import LoginModalStore from '../stores/loginModalStore';
+import mainModalStore from '../stores/mainModalStore';
 import LoginModal from '../components/login/LoginModal';
 
 export default function SignUp() {
-  const { isOpenLoginModal } = LoginModalStore();
+  const { isOpenLoginModal } = mainModalStore();
   return (
     <>
       <Component>

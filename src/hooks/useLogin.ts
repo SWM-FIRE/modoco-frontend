@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { API } from '../config';
-import LoginModalStore from '../stores/loginModalStore';
+import mainModalStore from '../stores/mainModalStore';
 import userStore from '../stores/userStore';
 
 export default function useLogin() {
   const navigate = useNavigate();
   const { setNickname, setAvatar, setUid } = userStore();
-  const { closeLoginModal, openLoginModal } = LoginModalStore();
+  const { closeLoginModal, openLoginModal } = mainModalStore();
   const [inputs, setInputs] = useState({
     email: localStorage.getItem('email') ?? '',
     password: '',
