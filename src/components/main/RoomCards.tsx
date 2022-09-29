@@ -44,7 +44,7 @@ const Container = styled.div`
     width: 940px;
   }
   ${media.medium} {
-    width: 700px;
+    width: 618px;
   }
   ${media.small} {
     margin: 3rem 0;
@@ -52,10 +52,10 @@ const Container = styled.div`
     width: 360px;
   }
   ${media.xsmall} {
-    width: 260px;
+    width: 256px;
   }
   ${media.xxsmall} {
-    width: 120px;
+    width: 115px;
   }
 `;
 

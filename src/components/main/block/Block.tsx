@@ -127,7 +127,7 @@ const Container = styled.div<{ main: boolean }>`
   padding: 4.3rem 1rem;
 
   // margin
-  margin: 1.4rem 2.8rem 1.4rem 0;
+  margin: ${({ main }) => (main ? '1.4rem' : '1.4rem 2.8rem 1.4rem 0')};
   ${media.xlarge} {
     width: 29.4rem;
   }
@@ -137,7 +137,7 @@ const Container = styled.div<{ main: boolean }>`
   ${media.small} {
     height: 26rem;
     width: 18rem;
-    margin: 0.7rem 1.4rem 0.7rem 0;
+    margin: 0.7rem;
     padding: 3rem 0.7rem;
   }
   ${media.xsmall} {
