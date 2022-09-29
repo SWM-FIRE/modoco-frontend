@@ -13,9 +13,9 @@ export default function Buttons({
 }) {
   const { mutate, isLoading, isError, isSuccess } = useRequestFriend(targetUid);
 
-  if (isLoading) return <>loading</>;
-  if (isError) return <>error</>;
-  if (isSuccess) return <>success</>;
+  if (isLoading) return null;
+  if (isError) return null;
+  if (isSuccess) return null;
   const sendRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     toggle(false);
