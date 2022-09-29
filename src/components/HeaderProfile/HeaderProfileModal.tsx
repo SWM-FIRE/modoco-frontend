@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import UserStore from '../../stores/userStore';
 import Friends from './Friends';
+import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
 
 export default function HeaderProfileModal({
   toggleModal,
@@ -16,6 +17,8 @@ export default function HeaderProfileModal({
 
   const { nickname, avatar, uid, setClear } = UserStore();
   const onLogOut = () => {
+    lobbySocket.socket?.emit('leaveLobby');
+    deleteSocket();
     localStorage.removeItem('access_token');
     toggleModal();
     setClear();

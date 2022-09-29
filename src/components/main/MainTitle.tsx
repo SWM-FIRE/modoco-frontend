@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import lobbySocket, {
-  generateSocket,
-  deleteSocket,
-} from 'src/adapters/lobbySocket';
+import lobbySocket, { generateSocket } from 'src/adapters/lobbySocket';
 import { API } from 'src/config';
 import connectedLobbyUsers from '../../stores/connectedLobbyUsers';
 import onChatMessage from '../../adapters/receiveMessage';
@@ -111,12 +108,10 @@ export default function TitleContainer() {
       removeUser(sid);
     });
     return () => {
-      lobbySocket.socket?.emit('leaveLobby');
       lobbySocket.socket?.off('LeftLobby');
       lobbySocket.socket?.off('existingUsers');
       lobbySocket.socket?.off('newUserJoinedLobby');
       lobbySocket.socket?.off('connect');
-      deleteSocket();
     };
   }, [lobbySocket.socket]);
 
