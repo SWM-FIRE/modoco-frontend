@@ -1,20 +1,36 @@
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import addFriendJson from '../../../addFriend.json';
+import useFriends from 'src/hooks/friend/useFriends';
 import Avatar from '../../atoms/Avatar';
+import AcceptOrDecline from './AcceptOrDecline';
 
 export default function AddFriend() {
+  const { isLoading, error, data } = useFriends();
+  if (isLoading) return <>loading</>;
+  if (error) return <>error</>;
+  const pendingFriends = data.filter((friend) => friend.status === 'PENDING');
+  const RECV = 'RECEIVER';
+
   return (
     <>
-      {addFriendJson.map((friend) => (
-        <Component key={friend.requestDate}>
-          <Avatar avatar={friend.avatar} size={4} />
+      {pendingFriends.map((friend, index) => (
+        <Component key={Symbol(index).toString()}>
+          {friend.role === RECV ? (
+            <Avatar avatar={friend.sender.avatar} size={4} />
+          ) : (
+            <Avatar avatar={friend.receiver.avatar} size={4} />
+          )}
           <Contents>
-            <Nickname>{friend.nickname}</Nickname>
-            <Buttons>
-              <AcceptButton>수락</AcceptButton>
-              <RejectButton>거절</RejectButton>
-            </Buttons>
+            <Nickname>
+              {friend.role === RECV
+                ? friend.sender.nickname
+                : friend.receiver.nickname}
+            </Nickname>
+            {friend.role === RECV ? (
+              <AcceptOrDecline friend={friend.sender} />
+            ) : (
+              <Text>친구신청 보냄</Text>
+            )}
           </Contents>
         </Component>
       ))}
@@ -36,33 +52,13 @@ const Nickname = styled.div`
   color: #f9fafb;
 `;
 
-const Buttons = styled.div`
-  margin-top: 0.8rem;
-`;
-
-const AcceptButton = styled.button`
-  color: #34d399;
-  border: 1px solid #34d399;
-  border-radius: 5rem;
-  padding: 0.4rem 1.6rem;
+const Text = styled.p`
+  margin-top: 0.2rem;
+  margin-left: 0.5rem;
   font-size: 1.5rem;
-  cursor: pointer;
+  color: rgba(255, 255, 255, 0.6);
   ${media.small} {
-    padding: 0.2rem 1rem;
-    font-size: 1.2rem;
-  }
-`;
-
-const RejectButton = styled.button`
-  color: #fb7185;
-  border: 1px solid #fb7185;
-  border-radius: 5rem;
-  padding: 0.4rem 1.6rem;
-  font-size: 1.5rem;
-  margin-left: 1rem;
-  cursor: pointer;
-  ${media.small} {
-    padding: 0.2rem 1rem;
-    font-size: 1.2rem;
+    margin-left: 0.4rem;
+    font-size: 1.4rem;
   }
 `;

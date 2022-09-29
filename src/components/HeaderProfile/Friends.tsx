@@ -49,7 +49,7 @@ const Components = styled.div`
 
 const FriendComponent = styled.div`
   width: 100%;
-  height: 38.3rem;
+  max-height: 38.3rem;
   overflow-y: auto;
   ::-webkit-scrollbar {
     display: none;

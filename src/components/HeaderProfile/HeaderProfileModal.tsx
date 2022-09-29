@@ -3,21 +3,19 @@ import styled from 'styled-components';
 import media from 'src/styles/media';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import mainModalStore from 'src/stores/mainModalStore';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import UserStore from '../../stores/userStore';
 import Friends from './Friends';
 
-export default function HeaderProfileModal({
-  toggleModal,
-}: {
-  toggleModal: () => void;
-}) {
+export default function HeaderProfileModal() {
   const navigate = useNavigate();
-
   const { nickname, avatar, uid, setClear } = UserStore();
+  const { closeProfileModal } = mainModalStore();
+
   const onLogOut = () => {
     localStorage.removeItem('access_token');
-    toggleModal();
+    closeProfileModal();
     setClear();
     toast.success('로그아웃 되었습니다');
     navigate(`/`);
@@ -25,7 +23,7 @@ export default function HeaderProfileModal({
 
   const onProfile = () => {
     navigate(`/profile/${uid}`);
-    toggleModal();
+    closeProfileModal();
   };
 
   return (

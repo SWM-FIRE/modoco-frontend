@@ -3,31 +3,22 @@ import styled from 'styled-components';
 import media from 'src/styles/media';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import userStore from '../../stores/userStore';
-import LoginModalStore from '../../stores/loginModalStore';
+import mainModalStore from '../../stores/mainModalStore';
 import { ReactComponent as TopArrow } from '../../assets/svg/topArrow.svg';
 import { ReactComponent as BottomArrow } from '../../assets/svg/bottomArrow.svg';
 
-export default function Profile({
-  toggleModal,
-  headerProfile,
-}: {
-  toggleModal: () => void;
-  headerProfile: boolean;
-}) {
+export default function Profile() {
   const { nickname, avatar } = userStore();
-  const { openLoginModal } = LoginModalStore();
-  const closeHeaderProfile = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    toggleModal();
-  };
+  const { isOpenProfileModal, openProfileModal, openLoginModal } =
+    mainModalStore();
 
   return nickname ? (
-    <ProfileContainer onClick={closeHeaderProfile} data-cy="main-profile">
+    <ProfileContainer onClick={openProfileModal} data-cy="main-profile">
       <AvatarContainer>
         <MyAvatar num={avatar} />
       </AvatarContainer>
       <SvgComponent>
-        {headerProfile ? <TopArrow /> : <BottomArrow />}
+        {isOpenProfileModal ? <TopArrow /> : <BottomArrow />}
       </SvgComponent>
     </ProfileContainer>
   ) : (

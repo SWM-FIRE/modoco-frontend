@@ -6,10 +6,10 @@ import Title from '../components/main/TitleContainer';
 import LoginModal from '../components/login/LoginModal';
 
 import LandingPage from '../components/main/landingPage/LandingPage';
-import LoginModalStore from '../stores/loginModalStore';
+import mainModalStore from '../stores/mainModalStore';
 
 export default function Landing() {
-  const { isOpenLoginModal } = LoginModalStore();
+  const { isOpenLoginModal } = mainModalStore();
   const navigate = useNavigate();
 
   useEffect(() => {
