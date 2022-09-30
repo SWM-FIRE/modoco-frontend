@@ -1,12 +1,11 @@
-import axios from 'axios';
 import { useQuery } from 'react-query';
-import { API } from '../config';
+import { getUser } from '../api/main';
 
-const getUser = async (senderUid: string) => {
-  const { data } = await axios.get((API.USER as string) + senderUid);
+const getAUser = async (senderUid: number) => {
+  const { data } = await getUser(senderUid);
   return data;
 };
 
-export default function useUserInfo(senderUid: string) {
-  return useQuery(['userData', 'getOne'], () => getUser(senderUid));
+export default function useUserInfo(senderUid: number) {
+  return useQuery(['userData', 'getOne'], () => getAUser(senderUid));
 }

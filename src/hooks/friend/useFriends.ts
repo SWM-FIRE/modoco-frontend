@@ -1,16 +1,11 @@
 import { useQuery } from 'react-query';
-import axios from 'axios';
-import { API } from '../../config';
+import { getAllFriends } from '../../api/main';
 
-const getAllFriends = async () => {
-  const { data } = await axios.get(`${API.FRIEND}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  });
+const getFriends = async () => {
+  const { data } = await getAllFriends();
   return data;
 };
 
 export default function useFriends() {
-  return useQuery(['Friend', 'all'], () => getAllFriends());
+  return useQuery(['Friend', 'all'], () => getFriends());
 }

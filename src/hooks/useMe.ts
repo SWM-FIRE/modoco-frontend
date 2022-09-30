@@ -1,16 +1,11 @@
-import axios from 'axios';
 import { useQuery } from 'react-query';
-import { API } from '../config';
+import { getMeWithToken } from '../api/main';
 
-const getUser = async (token: string) => {
-  const { data } = await axios.get(API.ME, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+const getUser = async () => {
+  const { data } = await getMeWithToken(localStorage.getItem('access_token'));
   return data;
 };
 
-export default function useMe(token: string) {
-  return useQuery(['userData', 'getOne'], () => getUser(token), { retry: 0 });
+export default function useMe() {
+  return useQuery(['userData', 'getOne'], () => getUser, { retry: 0 });
 }

@@ -1,12 +1,11 @@
 import { useQuery } from 'react-query';
-import axios from 'axios';
-import { API } from '../config';
+import { getRooms } from '../api/main';
 
-const getRooms = async () => {
-  const { data } = await axios.get(API.ROOM);
+const getAllRooms = async () => {
+  const { data } = await getRooms();
   return data;
 };
 
 export default function useRooms() {
-  return useQuery(['roomData', 'getAll'], getRooms);
+  return useQuery(['roomData', 'getAll'], getAllRooms);
 }

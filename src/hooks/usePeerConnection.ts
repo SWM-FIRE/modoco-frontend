@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import { useEffect } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { SOCKET_EVENT } from 'src/adapters/event.enum';
 import roomSocket from '../adapters/roomSocket';
@@ -9,7 +8,7 @@ import connectedUsersStore from '../stores/room/connectedUsersStore';
 import userPcStore from '../stores/room/userPcStore';
 import messageStore from '../stores/room/messagesStore';
 import mediaStateChange from '../adapters/mediaStateChange';
-import { API } from '../config';
+import { getUser } from '../api/main';
 
 const usePeerConnection = () => {
   const { roomId } = useParams();
@@ -151,45 +150,38 @@ const usePeerConnection = () => {
 
     const onNewUser = async ({ sid, uid }) => {
       emitAudioStateChange(roomId, userMic);
-
-      axios
-        .get((API.USER as string) + uid, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-        })
-        .then((res) => {
-          const newUser = findUserByUid(uid);
-          if (!newUser) {
-            appendUser({
-              nickname: res.data.nickname,
-              uid,
-              avatar: res.data.avatar,
-              sid,
-              enabledVideo: true,
-              enabledAudio: true,
-              isAlreadyEntered: false,
-              volume: 0.5,
-            });
-          } else if (newUser) {
-            setNicknameByUid(uid, res.data.nickname);
-            setAvatarByUid(uid, res.data.avatar);
-            setSidByUid(uid, sid);
-          } else {
-            console.log('already connected');
-          }
-          appendMessages({
-            uid,
+      getUser(uid).then((res) => {
+        const newUser = findUserByUid(uid);
+        if (!newUser) {
+          appendUser({
             nickname: res.data.nickname,
+            uid,
             avatar: res.data.avatar,
-            message: `${res.data.nickname}님이 입장하셨습니다.`,
-            createdAt: new Date().toString(),
-            type: 'join',
-            isHideTime: false,
-            isHideNicknameAndAvatar: false,
+            sid,
+            enabledVideo: true,
+            enabledAudio: true,
+            isAlreadyEntered: false,
+            volume: 0.5,
           });
-          // console.log('new', res.data.nickname, 'joined');
+        } else if (newUser) {
+          setNicknameByUid(uid, res.data.nickname);
+          setAvatarByUid(uid, res.data.avatar);
+          setSidByUid(uid, sid);
+        } else {
+          console.log('already connected');
+        }
+        appendMessages({
+          uid,
+          nickname: res.data.nickname,
+          avatar: res.data.avatar,
+          message: `${res.data.nickname}님이 입장하셨습니다.`,
+          createdAt: new Date().toString(),
+          type: 'join',
+          isHideTime: false,
+          isHideNicknameAndAvatar: false,
         });
+        // console.log('new', res.data.nickname, 'joined');
+      });
       await createOffer(sid);
     };
 

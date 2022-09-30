@@ -7,12 +7,15 @@ import EditGroup from './EditUserProfile/EditGroup';
 import useChangeProfile from '../../hooks/useChangeProfile';
 import EditNickname from './EditUserProfile/EditNickname';
 import EditDescription from './EditUserProfile/EditDescription';
+import UserStore from '../../stores/userStore';
+import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
 
 export default function EditUserProfile() {
   const { userId } = useParams();
   const { inputs, onChange, onSubmit, onChangeAvatar, isDisable } =
     useChangeProfile();
   const { avatar, nickname, description } = inputs;
+  const { setClear } = UserStore();
 
   const navigate = useNavigate();
 
@@ -21,9 +24,12 @@ export default function EditUserProfile() {
   };
 
   const onLogOut = () => {
+    lobbySocket.socket?.emit('leaveLobby');
+    deleteSocket();
     localStorage.removeItem('access_token');
-    navigate(`/`);
+    setClear();
     toast.success('로그아웃 되었습니다');
+    navigate(`/`);
   };
 
   return (

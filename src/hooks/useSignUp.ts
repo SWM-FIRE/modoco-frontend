@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { API } from '../config';
+import { signUp } from '../api/main';
 
 export default function useSignUp() {
   const navigate = useNavigate();
@@ -50,13 +49,7 @@ export default function useSignUp() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(API.USER, {
-        avatar,
-        nickname,
-        email,
-        password,
-      })
+    signUp(avatar, nickname, email, password)
       .then((res) => {
         console.debug('[success]', res);
         navigate(`/`);

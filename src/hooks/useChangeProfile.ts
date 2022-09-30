@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { API } from '../config';
 import userStore from '../stores/userStore';
+import { changeMe } from '../api/main';
 
 export default function useChangeProfile() {
   const navigate = useNavigate();
@@ -41,19 +40,7 @@ export default function useChangeProfile() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    axios
-      .put(
-        API.USER,
-        {
-          avatar,
-          nickname,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-        },
-      )
+    changeMe(uid, nickname, avatar)
       .then((res) => {
         console.debug('[success]', res);
         setAvatar(avatar);

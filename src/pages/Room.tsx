@@ -31,6 +31,7 @@ export default function Room() {
     toggleProfileModal,
     toggleInviteModal,
   } = roomModalStore();
+
   const theme = getTheme(data?.theme);
 
   roomConnection(roomId);
