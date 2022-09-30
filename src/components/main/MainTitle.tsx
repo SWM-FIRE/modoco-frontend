@@ -93,7 +93,7 @@ export default function TitleContainer() {
       lobbySocket.socket?.off('newUserJoinedLobby');
       lobbySocket.socket?.off('connect');
     };
-  }, []);
+  }, [lobbySocket.socket]);
 
   // invite code
   const inviteCode = localStorage.getItem('inviteId');
