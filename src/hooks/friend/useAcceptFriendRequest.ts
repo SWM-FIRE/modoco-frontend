@@ -1,24 +1,13 @@
 import { useMutation } from 'react-query';
-import axios from 'axios';
-import { API } from '../../config';
+import { acceptFriend } from '../../api/main';
 
-const acceptFriend = async (uid: number) => {
-  const { data } = await axios.put(
-    API.FRIEND,
-    {
-      friend: uid,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      },
-    },
-  );
+const acceptAFriend = async (uid: number) => {
+  const { data } = await acceptFriend(uid);
   return data;
 };
 
 export default function useAcceptFriendRequest(uid: number) {
-  return useMutation(['friend', 'request'], () => acceptFriend(uid), {
+  return useMutation(['friend', 'request'], () => acceptAFriend(uid), {
     onSuccess: () => {
       console.log('Friend request sent');
     },

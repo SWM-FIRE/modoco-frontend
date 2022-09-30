@@ -1,11 +1,9 @@
-import axios from 'axios';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { API } from '../../../config';
-
+import { getInviteCode } from '../../../api/main';
 import roomModalStore from '../../../stores/room/roomModalStore';
 
 export default function Invite() {
@@ -13,8 +11,8 @@ export default function Invite() {
   const { roomId } = useParams();
 
   useEffect(() => {
-    axios.get((API.INVITE as string) + roomId).then((res) => {
-      setInviteCode(`${process.env.REACT_APP_LAMBDA_INVITE}/${res.data}`);
+    getInviteCode(parseInt(roomId, 10)).then((res) => {
+      setInviteCode(`${process.env.REACT_APP_LAMBDA_INVITE}/${res}`);
     });
   }, []);
 

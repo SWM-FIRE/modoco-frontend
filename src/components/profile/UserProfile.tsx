@@ -8,9 +8,10 @@ import Badge from './UserProfile/Badge';
 // import Edit from './UserProfile/Edit';
 import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessageBlack.svg';
 import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
+import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
 
 export default function UserProfile({ isMe }: { isMe: boolean }) {
-  const { nickname, avatar, description } = userStore();
+  const { nickname, avatar, description, setClear } = userStore();
   const { userId } = useParams();
   let userNickname: string;
   let userAvatar: number;
@@ -34,9 +35,12 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
   };
 
   const onLogOut = () => {
+    lobbySocket.socket?.emit('leaveLobby');
+    deleteSocket();
     localStorage.removeItem('access_token');
-    navigate(`/`);
+    setClear();
     toast.success('로그아웃 되었습니다');
+    navigate(`/`);
   };
 
   return (

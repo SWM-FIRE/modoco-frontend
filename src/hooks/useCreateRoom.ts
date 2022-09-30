@@ -1,16 +1,17 @@
+import { useQueryClient } from 'react-query';
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useMutation } from 'react-query';
 import toast from 'react-hot-toast';
 import userStore from '../stores/userStore';
-import { API } from '../config';
+import { createRoom } from '../api/main';
 
 export default function useCreateRoom({
   closeCreateRoom,
 }: {
   closeCreateRoom: () => void;
 }) {
+  const queryClient = useQueryClient();
   const [inputs, setInputs] = useState({
     title: '',
     details: '',
@@ -100,31 +101,15 @@ export default function useCreateRoom({
 
   const useRoomCreator = () => {
     const mutation = useMutation(
-      () =>
-        axios.post(
-          API.ROOM,
-          {
-            moderator: { uid },
-            title,
-            details,
-            tags,
-            total: Number(total),
-            theme,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-            },
-          },
-        ),
-
+      () => createRoom({ uid }, title, details, tags, Number(total), theme),
       {
         onSuccess: () => {
           closeCreateRoom();
           toast.success('방이 생성되었습니다.');
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
+        },
+        // 새로고침하지 않아도 바로 반영되게 쿼리 invalidate
+        onSettled: () => {
+          queryClient.invalidateQueries('roomData');
         },
       },
     );

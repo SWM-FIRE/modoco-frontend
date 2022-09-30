@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import lobbySocket, { generateSocket } from 'src/adapters/lobbySocket';
-import { API } from 'src/config';
 import connectedLobbyUsers from '../../stores/connectedLobbyUsers';
 import onChatMessage from '../../adapters/receiveMessage';
 import Search from './Search';
 import Lobby from './lobby/Lobby';
 import { ReactComponent as MainFire } from '../../assets/svg/MainFire.svg';
 import CheckInvite from './CheckInvite';
+import { getMeWithToken, getUser } from '../../api/main';
 
 export default function TitleContainer() {
   const [isLobby, setLobby] = useState<boolean>(false);
@@ -33,16 +32,9 @@ export default function TitleContainer() {
   useEffect(() => {
     // send my info
     lobbySocket.socket?.on('connect', () => {
-      const token = localStorage.getItem('access_token');
-      axios
-        .get(API.ME, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          lobbySocket.socket?.emit('joinLobby', { uid: res.data.uid });
-        });
+      getMeWithToken(localStorage.getItem('access_token')).then((res) => {
+        lobbySocket.socket?.emit('joinLobby', { uid: res.data.uid });
+      });
     });
 
     // check if joined successfully
@@ -53,50 +45,38 @@ export default function TitleContainer() {
     // get new user info
     lobbySocket.socket?.on('newUserJoinedLobby', ({ sid, uid }) => {
       console.log('new user joined lobby', sid, uid);
-      axios
-        .get((API.USER as string) + uid, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-        })
-        .then((res) => {
-          const newUser = findUserByUid(uid);
-          if (!newUser) {
-            appendUser({
-              nickname: res.data.nickname,
-              uid,
-              avatar: res.data.avatar,
-              sid,
-            });
-          } else {
-            console.log('already connected');
-          }
-        });
+      getUser(uid).then((res) => {
+        const newUser = findUserByUid(uid);
+        if (!newUser) {
+          appendUser({
+            nickname: res.data.nickname,
+            uid,
+            avatar: res.data.avatar,
+            sid,
+          });
+        } else {
+          console.log('already connected');
+        }
+      });
     });
 
     // get existing users info
     lobbySocket.socket?.on('existingUsers', ({ users, current }) => {
       console.log(current);
       users.map((user) => {
-        axios
-          .get((API.USER as string) + user.uid, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-            },
-          })
-          .then((res) => {
-            const existingUser = findUserByUid(user.uid);
-            if (!existingUser) {
-              appendUser({
-                nickname: res.data.nickname,
-                uid: user.uid,
-                avatar: res.data.avatar,
-                sid: user.sid,
-              });
-            } else {
-              console.log('already connected');
-            }
-          });
+        getUser(user.uid).then((res) => {
+          const existingUser = findUserByUid(user.uid);
+          if (!existingUser) {
+            appendUser({
+              nickname: res.data.nickname,
+              uid: user.uid,
+              avatar: res.data.avatar,
+              sid: user.sid,
+            });
+          } else {
+            console.log('already connected');
+          }
+        });
         return user;
       });
     });
