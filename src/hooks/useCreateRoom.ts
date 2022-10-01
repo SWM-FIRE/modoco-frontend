@@ -1,7 +1,6 @@
-import { useQueryClient } from 'react-query';
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import toast from 'react-hot-toast';
 import userStore from '../stores/userStore';
 import { createRoom } from '../api/main';

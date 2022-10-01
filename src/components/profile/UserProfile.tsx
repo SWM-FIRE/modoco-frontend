@@ -1,37 +1,60 @@
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import useUser from 'src/hooks/useUser';
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import useSingleFriend from 'src/hooks/friend/useSingleFriend';
+import useRequestFriend from 'src/hooks/friend/useRequestFriend';
+import userStore from 'src/stores/userStore';
 import Avatar from '../atoms/Avatar';
-import userStore from '../../stores/userStore';
 import Group from './UserProfile/Group';
 import Badge from './UserProfile/Badge';
-// import Edit from './UserProfile/Edit';
+import Pending from './UserProfile/Pending';
 import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessageBlack.svg';
 import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
 import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
 
 export default function UserProfile({ isMe }: { isMe: boolean }) {
-  const { nickname, avatar, description, setClear } = userStore();
+  const { setClear } = userStore();
   const { userId } = useParams();
-  let userNickname: string;
-  let userAvatar: number;
-  let userDescription: string;
-  let isFriend = false;
-  if (isMe) {
-    userNickname = nickname;
-    userAvatar = avatar;
-    userDescription = description;
-  } else {
-    // TODO: get user info from server
-    userNickname = '임시 닉네임';
-    userAvatar = 10;
-    userDescription = '임시 설명';
-    isFriend = false;
-  }
   const navigate = useNavigate();
+  const userDescription = '임시 설명입니다! 추후에 수정 예정';
+  const { isLoading, error, data, refetch } = useUser(Number(userId));
+
+  const {
+    isLoading: friendLoading,
+    error: friendError,
+    data: friendData,
+  } = useSingleFriend(Number(userId));
+  const {
+    mutate: requestMutate,
+    isLoading: requestLoading,
+    isError: requestError,
+    isSuccess: requestSuccess,
+  } = useRequestFriend(Number(userId));
+
+  useEffect(() => {
+    refetch();
+  }, [userId, refetch]);
+
+  const isFriend = friendData?.status === 'ACCEPTED';
+  const isPending = friendData?.status === 'PENDING';
+
+  if (isLoading || friendLoading || requestLoading) {
+    return <>loading</>;
+  }
+  if (error || friendError || requestError) return <>error</>;
 
   const onClickEditProfile = () => {
     navigate(`/editProfile/${userId}`);
+  };
+
+  const sendRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    requestMutate();
+    if (requestSuccess) {
+      console.log('request success');
+    }
   };
 
   const onLogOut = () => {
@@ -45,10 +68,10 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
 
   return (
     <Components isMe={isMe}>
-      <Avatar avatar={userAvatar} size={12} />
+      <Avatar avatar={data?.avatar} size={12} />
       <Contents>
         <NicknameComponent>
-          <Nickname>{userNickname}</Nickname>
+          <Nickname>{data?.nickname}</Nickname>
           {isFriend && (
             <FriendComponent>
               <ShowFriendState />
@@ -67,7 +90,17 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
             채팅하기
           </Button>
         ) : (
-          !isMe && <Button>친구신청</Button>
+          !isMe &&
+          isPending && (
+            <Pending
+              friendId={Number(userId)}
+              friend={friendData}
+              refetch={refetch}
+            />
+          )
+        )}
+        {!isMe && !isFriend && !isPending && (
+          <Button onClick={sendRequest}>친구요청</Button>
         )}
       </Contents>
       {isMe && (

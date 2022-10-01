@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { deleteFriend } from '../../api/main';
 
 const deleteAFriend = async (uid: number) => {
@@ -7,9 +7,10 @@ const deleteAFriend = async (uid: number) => {
 };
 
 export default function useDeleteFriendRequest(uid: number) {
+  const queryClient = useQueryClient();
   return useMutation(['friend', 'request'], () => deleteAFriend(uid), {
-    onSuccess: () => {
-      console.log('Friend request sent');
+    onSettled: () => {
+      queryClient.invalidateQueries(['Friend', 'personal']);
     },
   });
 }
