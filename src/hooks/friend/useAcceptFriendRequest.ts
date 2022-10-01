@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { acceptFriend } from '../../api/main';
 
 const acceptAFriend = async (uid: number) => {
@@ -7,9 +7,10 @@ const acceptAFriend = async (uid: number) => {
 };
 
 export default function useAcceptFriendRequest(uid: number) {
+  const queryClient = useQueryClient();
   return useMutation(['friend', 'request'], () => acceptAFriend(uid), {
-    onSuccess: () => {
-      console.log('Friend request sent');
+    onSettled: () => {
+      queryClient.invalidateQueries(['Friend', 'personal']);
     },
   });
 }
