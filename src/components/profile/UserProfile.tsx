@@ -1,8 +1,11 @@
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import useUser from 'src/hooks/useUser';
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import useRequestFriend from 'src/hooks/friend/useRequestFriend';
+import useSingleFriend from 'src/hooks/friend/useSingleFriend';
 import Avatar from '../atoms/Avatar';
-import userStore from '../../stores/userStore';
 import Group from './UserProfile/Group';
 import Badge from './UserProfile/Badge';
 // import Edit from './UserProfile/Edit';
@@ -10,24 +13,36 @@ import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessage
 import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
 
 export default function UserProfile({ isMe }: { isMe: boolean }) {
-  const { nickname, avatar, description } = userStore();
   const { userId } = useParams();
-  let userNickname: string;
-  let userAvatar: number;
-  let userDescription: string;
-  let isFriend = false;
-  if (isMe) {
-    userNickname = nickname;
-    userAvatar = avatar;
-    userDescription = description;
-  } else {
-    // TODO: get user info from server
-    userNickname = '임시 닉네임';
-    userAvatar = 10;
-    userDescription = '임시 설명';
-    isFriend = false;
-  }
   const navigate = useNavigate();
+  const userDescription = '임시 설명입니다! 추후에 수정 예정';
+  const { isLoading, error, data, refetch } = useUser(userId);
+
+  useEffect(() => {
+    refetch();
+  }, [userId, refetch]);
+
+  const {
+    isLoading: friendLoading,
+    error: friendError,
+    data: friendData,
+  } = useSingleFriend(Number(userId));
+
+  const isFriend = friendData?.status === 'ACCEPTED';
+  // const isPending = friendData?.status === 'PENDING';
+
+  const {
+    mutate,
+    isLoading: requestLoading,
+    isError: requestError,
+    isSuccess: requestSuccess,
+  } = useRequestFriend(Number(userId));
+
+  console.log('reload');
+  if (isLoading || friendLoading || requestLoading) {
+    return <>loading</>;
+  }
+  if (error || friendError || requestError) return <>error</>;
 
   const onClickEditProfile = () => {
     navigate(`/editProfile/${userId}`);
@@ -39,12 +54,20 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
     toast.success('로그아웃 되었습니다');
   };
 
+  const sendRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    mutate();
+    if (requestSuccess) {
+      toast.success('친구 요청을 보냈습니다');
+    }
+  };
+
   return (
     <Components isMe={isMe}>
-      <Avatar avatar={userAvatar} size={12} />
+      <Avatar avatar={data?.avatar} size={12} />
       <Contents>
         <NicknameComponent>
-          <Nickname>{userNickname}</Nickname>
+          <Nickname>{data?.nickname}</Nickname>
           {isFriend && (
             <FriendComponent>
               <ShowFriendState />
@@ -63,7 +86,7 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
             채팅하기
           </Button>
         ) : (
-          !isMe && <Button>친구신청</Button>
+          !isMe && <Button onClick={sendRequest}>친구신청</Button>
         )}
       </Contents>
       {isMe && (
