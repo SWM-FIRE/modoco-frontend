@@ -5,14 +5,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import useRequestFriend from 'src/hooks/friend/useRequestFriend';
 import useSingleFriend from 'src/hooks/friend/useSingleFriend';
+import userStore from 'src/stores/userStore';
 import Avatar from '../atoms/Avatar';
 import Group from './UserProfile/Group';
 import Badge from './UserProfile/Badge';
 // import Edit from './UserProfile/Edit';
 import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessageBlack.svg';
 import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
+import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
 
 export default function UserProfile({ isMe }: { isMe: boolean }) {
+  const { setClear } = userStore();
   const { userId } = useParams();
   const navigate = useNavigate();
   const userDescription = '임시 설명입니다! 추후에 수정 예정';
@@ -49,9 +52,12 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
   };
 
   const onLogOut = () => {
+    lobbySocket.socket?.emit('leaveLobby');
+    deleteSocket();
     localStorage.removeItem('access_token');
-    navigate(`/`);
+    setClear();
     toast.success('로그아웃 되었습니다');
+    navigate(`/`);
   };
 
   const sendRequest = (event: React.MouseEvent<HTMLButtonElement>) => {

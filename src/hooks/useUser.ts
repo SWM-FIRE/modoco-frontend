@@ -1,18 +1,11 @@
-import axios from 'axios';
 import { useQuery } from 'react-query';
-import { API } from '../config';
+import { getUser } from '../api/main';
 
-const getUser = async (senderUid: string) => {
-  const { data } = await axios.get((API.USER as string) + senderUid, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  });
+const getAUser = async (senderUid: number) => {
+  const { data } = await getUser(senderUid);
   return data;
 };
 
-export default function useUser(senderUid: string) {
-  return useQuery(['userData', 'getOne'], () => getUser(senderUid), {
-    cacheTime: 0,
-  });
+export default function useUserInfo(senderUid: number) {
+  return useQuery(['userData', 'getOne'], () => getAUser(senderUid));
 }

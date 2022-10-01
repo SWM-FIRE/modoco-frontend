@@ -12,7 +12,7 @@ export default function Invite() {
   const token = localStorage.getItem('access_token');
 
   localStorage.setItem('inviteId', inviteId);
-  const { isLoading, error, data } = useMe(token);
+  const { isLoading, error, data } = useMe();
 
   // loading to fetch
   if (isLoading) return <Container />;
@@ -38,9 +38,8 @@ export default function Invite() {
       </Container>
     );
   }
-
   // when fetched data is valid
-  if (data.uid) {
+  if (data) {
     navigate(`/ready/${inviteId}`);
   }
   return <Container />;
