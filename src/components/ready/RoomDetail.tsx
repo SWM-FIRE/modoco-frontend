@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Card from './card/Card';
 
 export default function RoomDetail({ roomNo: roomId }) {
   const navigate = useNavigate();
+  const [disableButton, setDisableButton] = useState(true);
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (localStorage.getItem('access_token')) {
@@ -12,10 +13,26 @@ export default function RoomDetail({ roomNo: roomId }) {
     }
   };
 
+  // eslint-disable-next-line no-undef
+  const permissionName = 'microphone' as PermissionName;
+  navigator.permissions.query({ name: permissionName }).then((result) => {
+    if (result.state === 'granted') {
+      setDisableButton(false);
+    } else if (result.state === 'prompt') {
+      setDisableButton(true);
+    } else if (result.state === 'denied') {
+      setDisableButton(false);
+    }
+  });
+
   return (
     <Container>
       <Card room={roomId} />
-      <EnterButton onClick={enterRoom} data-cy="ready-enter-button">
+      <EnterButton
+        onClick={enterRoom}
+        disabled={disableButton}
+        data-cy="ready-enter-button"
+      >
         입장하기 →
       </EnterButton>
     </Container>
@@ -39,4 +56,8 @@ const EnterButton = styled.button`
   width: 100%;
   height: 5.5rem;
   cursor: pointer;
+  :disabled {
+    cursor: default;
+    background-color: #bababa;
+  }
 `;
