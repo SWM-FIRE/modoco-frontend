@@ -1,31 +1,23 @@
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import useFriends from 'src/hooks/friend/useFriends';
+import { detailedFriend } from 'src/interface/singleFriend.interface';
 import { ReactComponent as SendImage } from '../../../assets/svg/MessageSend.svg';
-import MyAvatar from '../../../assets/avatar/MyAvatar';
+import FriendIcon from './FriendIcon';
 
-export default function FriendList() {
-  const { isLoading, error, data } = useFriends();
-  if (isLoading) return <>loading</>;
-  if (error) return <>error</>;
-  const acceptedFriends = data.filter((friend) => friend.status === 'ACCEPTED');
-  const filteredFriends = acceptedFriends.map((friend) =>
+export default function FriendList({
+  friendList,
+}: {
+  friendList: detailedFriend[];
+}) {
+  const filteredFriends = friendList.map((friend) =>
     friend.role === 'RECEIVER' ? friend.sender : friend.receiver,
   );
+
   return (
     <>
       {filteredFriends.map((friend) => (
-        <Component key={friend.id}>
-          <AvatarContainer>
-            <MyAvatar num={friend.avatar} />
-          </AvatarContainer>
-          <Information>
-            <Nickname>{friend.nickname}</Nickname>
-            {/* <FriendStatus>
-              <OnlineStatus isOnline={friend.state !== ''} />
-              {friend.state !== '' ? friend.state : '오프라인'}
-            </FriendStatus> */}
-          </Information>
+        <Component key={friend?.uid}>
+          <FriendIcon friend={friend} />
           <SendMessage>
             <SendButton>
               <SendImage />
@@ -40,6 +32,7 @@ export default function FriendList() {
 const Component = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   color: #f9fafb;
   font-size: 1.5rem;
   margin-top: 2.8rem;
@@ -50,24 +43,6 @@ const Component = styled.div`
     justify-content: space-between;
     width: 100%;
   }
-`;
-
-const Nickname = styled.div`
-  font-size: 1.5rem;
-  width: 100%;
-  overflow: auto;
-  white-space: nowrap;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  ${media.small} {
-    font-size: 1.5rem;
-  }
-`;
-
-const Information = styled.div`
-  margin-left: 1rem;
-  flex-grow: 1;
 `;
 
 // const FriendStatus = styled.div`
@@ -116,17 +91,5 @@ const SendButton = styled.button`
   svg {
     width: 80%;
     height: 80%;
-  }
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 4rem;
-  width: 4rem;
-  svg {
-    height: 100%;
-    width: 100%;
   }
 `;
