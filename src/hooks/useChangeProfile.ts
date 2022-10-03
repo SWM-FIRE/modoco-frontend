@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 import userStore from '../stores/userStore';
 import { changeMe } from '../api/main';
 
 export default function useChangeProfile() {
-  const navigate = useNavigate();
   const { setAvatar, setNickname, setDescription, uid } = userStore();
   const {
     avatar: myAvatar,
@@ -38,7 +36,7 @@ export default function useChangeProfile() {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     changeMe(uid, nickname, avatar)
       .then((res) => {
@@ -46,7 +44,6 @@ export default function useChangeProfile() {
         setAvatar(avatar);
         setNickname(nickname);
         setDescription(description);
-        navigate(`/profile/${uid}`);
         toast.success('유저 정보가 변경되었습니다');
       })
       .catch((err) => {
