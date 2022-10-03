@@ -1,16 +1,24 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import UserProfile from './UserProfile';
 import Friends from './Friends';
 import Statistics from './Statistics';
 import Overall from './Overall';
 import roomModalStore from '../../stores/room/roomModalStore';
+import EditUserProfile from './EditUserProfile';
 
 export default function Contents({ isMe }: { isMe: boolean }) {
   const { profileModal } = roomModalStore();
+  const [isEdit, setIsEdit] = useState(false);
+
   return (
     <Container isMe={isMe}>
       <UserInformation isModal={profileModal}>
-        <UserProfile isMe={isMe} />
+        {isEdit ? (
+          <EditUserProfile setIsEdit={setIsEdit} />
+        ) : (
+          <UserProfile isMe={isMe} setIsEdit={setIsEdit} />
+        )}
         {isMe && <Friends isModal={profileModal} />}
       </UserInformation>
       <Statistics isMe={isMe} />

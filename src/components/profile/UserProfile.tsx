@@ -14,7 +14,7 @@ import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessage
 import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
 import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
 
-export default function UserProfile({ isMe }: { isMe: boolean }) {
+export default function UserProfile({ isMe, setIsEdit }) {
   const { setClear } = userStore();
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -46,7 +46,8 @@ export default function UserProfile({ isMe }: { isMe: boolean }) {
   if (error || friendError || requestError) return <>error</>;
 
   const onClickEditProfile = () => {
-    navigate(`/editProfile/${userId}`);
+    setIsEdit(true);
+    // navigate(`/editProfile/${userId}`);
   };
 
   const sendRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
