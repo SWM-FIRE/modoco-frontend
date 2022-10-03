@@ -1,31 +1,26 @@
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import useFriends from 'src/hooks/friend/useFriends';
-import Avatar from '../../atoms/Avatar';
+import { detailedFriend } from 'src/interface/singleFriend.interface';
+import FriendIcon from './FriendIcon';
 import AcceptOrDecline from './AcceptOrDecline';
 
-export default function AddFriend() {
-  const { isLoading, error, data } = useFriends();
-  if (isLoading) return <>loading</>;
-  if (error) return <>error</>;
-  const pendingFriends = data.filter((friend) => friend.status === 'PENDING');
+export default function AddFriend({
+  friendList,
+}: {
+  friendList: detailedFriend[];
+}) {
   const RECV = 'RECEIVER';
 
   return (
     <>
-      {pendingFriends.map((friend, index) => (
+      {friendList.map((friend, index) => (
         <Component key={Symbol(index).toString()}>
           {friend.role === RECV ? (
-            <Avatar avatar={friend.sender.avatar} size={4} />
+            <FriendIcon friend={friend.sender} />
           ) : (
-            <Avatar avatar={friend.receiver.avatar} size={4} />
+            <FriendIcon friend={friend.receiver} />
           )}
           <Contents>
-            <Nickname>
-              {friend.role === RECV
-                ? friend.sender.nickname
-                : friend.receiver.nickname}
-            </Nickname>
             {friend.role === RECV ? (
               <AcceptOrDecline friend={friend.sender} />
             ) : (
@@ -40,16 +35,17 @@ export default function AddFriend() {
 
 const Component = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-top: 2.8rem;
 `;
 
 const Contents = styled.div`
   margin-left: 1rem;
-`;
-
-const Nickname = styled.div`
-  font-size: 1.5rem;
-  color: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
 `;
 
 const Text = styled.p`
