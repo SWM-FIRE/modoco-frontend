@@ -1,10 +1,21 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import useFriends from 'src/hooks/friend/useFriends';
+import { detailedFriend } from 'src/interface/singleFriend.interface';
 import FriendList from './Friends/FriendList';
 import AddFriend from './Friends/AddFriend';
 
 export default function Friends({ isModal }: { isModal: boolean }) {
   const [categoryType, setCategoryType] = useState('friendList');
+  const { isLoading, error, data } = useFriends();
+  if (isLoading) return <>loading</>;
+  if (error) return <>error</>;
+  const acceptedFriends = data.filter(
+    (friend: detailedFriend) => friend.status === 'ACCEPTED',
+  );
+  const pendingFriends = data.filter(
+    (friend: detailedFriend) => friend.status === 'PENDING',
+  );
 
   const onClickFriendList = () => {
     setCategoryType('friendList');
@@ -31,7 +42,11 @@ export default function Friends({ isModal }: { isModal: boolean }) {
         </CategoryButton>
       </Category>
       <FriendComponent isModal={isModal}>
-        {categoryType === 'friendList' ? <FriendList /> : <AddFriend />}
+        {categoryType === 'friendList' ? (
+          <FriendList friendList={acceptedFriends} />
+        ) : (
+          <AddFriend friendList={pendingFriends} />
+        )}
       </FriendComponent>
     </Components>
   );

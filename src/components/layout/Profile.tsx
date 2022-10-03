@@ -38,6 +38,9 @@ const ProfileContainer = styled.div`
   border: 1px solid #4b5563;
   border-radius: 5rem;
   cursor: pointer;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
   ${media.small} {
     font-size: 1.2rem;
   }
@@ -53,6 +56,9 @@ const Login = styled.button`
   font-size: 1.6rem;
   font-family: IBMPlexSansKRRegular;
   font-weight: 700;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
   ${media.small} {
     width: 7.4rem;
     height: 3.8rem;
