@@ -15,7 +15,7 @@ describe('check ready page modals', () => {
     );
 
     cy.intercept(
-      { method: 'GET', url: `${API.ROOM}1` },
+      { method: 'GET', url: `${API.ROOM}3` },
       { fixture: 'singleRoom.json' },
     );
 

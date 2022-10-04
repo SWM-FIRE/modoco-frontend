@@ -19,7 +19,7 @@ describe('open main page', () => {
   // render Main Page
   it('render Main Props', () => {
     // check if title is visible
-    cy.title().should('include', 'MODOCO');
+    cy.title().should('include', 'modoco');
 
     // check if login button is visible and clickable
     cy.get('[data-cy="main-login-button"]')
@@ -31,7 +31,7 @@ describe('open main page', () => {
 
     // check if all footer props are visible
     cy.get('[data-cy="main-footer"]').should('be.visible');
-    cy.get('[data-cy="footer-title').should('contain', 'Modoco');
+    cy.get('[data-cy="footer-title').should('contain', 'modoco');
     cy.get('[data-cy="footer-detail"]').should('contain', '아남타워');
     cy.get('button')
       .should('contain', 'Terms')
@@ -152,7 +152,7 @@ describe('open main page', () => {
     // check landing footer
     cy.get('[data-cy="main-footer"]').scrollIntoView();
     cy.wait(500);
-    cy.get('[data-cy="footer-title').should('contain', 'Modoco');
+    cy.get('[data-cy="footer-title').should('contain', 'modoco');
     cy.get('[data-cy="footer-detail"]').should('contain', '아남타워');
   });
 });
