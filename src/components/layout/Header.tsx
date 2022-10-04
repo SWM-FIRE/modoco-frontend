@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
+import mainModalStore from 'src/stores/mainModalStore';
 import { useNavigate } from 'react-router-dom';
 import UserStore from '../../stores/userStore';
 import Profile from './Profile';
@@ -10,9 +11,8 @@ import ModocoLogo from '../atoms/ModocoLogo';
 
 export default function Header() {
   const { isLogin } = UserStore();
-  const [headerProfileModal, toggleHeaderProfileModal] =
-    useState<boolean>(false);
   const navigate = useNavigate();
+  const { isOpenProfileModal, closeProfileModal } = mainModalStore();
 
   useSetSelf();
   const clickLogo = () => {
@@ -23,24 +23,13 @@ export default function Header() {
     }
   };
 
-  const toggleModal = () => {
-    toggleHeaderProfileModal(!headerProfileModal);
-  };
-
   return (
     <>
-      {headerProfileModal && <Screen onClick={toggleModal} />}
+      {isOpenProfileModal && <Screen onClick={closeProfileModal} />}
       <Container>
         <ModocoLogo event={clickLogo} />
-        {isLogin ? (
-          <Profile
-            toggleModal={toggleModal}
-            headerProfile={headerProfileModal}
-          />
-        ) : (
-          <ProfileSkeleton />
-        )}
-        {headerProfileModal && <HeaderProfileModal toggleModal={toggleModal} />}
+        {isLogin ? <Profile /> : <ProfileSkeleton />}
+        {isOpenProfileModal && <HeaderProfileModal />}
       </Container>
     </>
   );

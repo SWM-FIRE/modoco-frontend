@@ -1,6 +1,6 @@
 import blockInterface from '../../interface/block.interface';
 
-export const filterData = (data: blockInterface[], searchInput: string) => {
+export const filterData = (data, searchInput: string) => {
   const newData = searchInput
     ? data.filter((block: blockInterface) =>
         // eslint-disable-next-line no-nested-ternary
@@ -14,5 +14,14 @@ export const filterData = (data: blockInterface[], searchInput: string) => {
       )
     : data;
 
+  newData?.sort((a, b) => {
+    if (a.current > b.current) {
+      return -1;
+    }
+    if (a.current < b.current) {
+      return 1;
+    }
+    return 0;
+  });
   return newData;
 };

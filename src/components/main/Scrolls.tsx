@@ -13,7 +13,6 @@ export default function Scrolls() {
   const { isLoading, error, data } = useRooms();
   const { searchInput } = TagStore();
   if (error) return <div>An error has occurred: </div>;
-
   const newData = filterData(data, searchInput);
 
   return (

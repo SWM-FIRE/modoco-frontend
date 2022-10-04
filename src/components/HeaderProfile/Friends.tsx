@@ -1,11 +1,22 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
+import { detailedFriend } from 'src/interface/singleFriend.interface';
+import useFriends from 'src/hooks/friend/useFriends';
 import FriendList from '../profile/Friends/FriendList';
 import AddFriend from '../profile/Friends/AddFriend';
 
 export default function Friends() {
   const [categoryType, setCategoryType] = useState('friendList');
+  const { isLoading, error, data } = useFriends();
+  if (isLoading) return <>loading</>;
+  if (error) return <>error</>;
+  const acceptedFriends = data.filter(
+    (friend: detailedFriend) => friend.status === 'ACCEPTED',
+  );
+  const pendingFriends = data.filter(
+    (friend: detailedFriend) => friend.status === 'PENDING',
+  );
 
   const onClickFriendList = () => {
     setCategoryType('friendList');
@@ -32,7 +43,11 @@ export default function Friends() {
         </CategoryButton>
       </Category>
       <FriendComponent>
-        {categoryType === 'friendList' ? <FriendList /> : <AddFriend />}
+        {categoryType === 'friendList' ? (
+          <FriendList friendList={acceptedFriends} />
+        ) : (
+          <AddFriend friendList={pendingFriends} />
+        )}
       </FriendComponent>
     </Components>
   );
@@ -49,7 +64,7 @@ const Components = styled.div`
 
 const FriendComponent = styled.div`
   width: 100%;
-  height: 38.3rem;
+  max-height: 38.3rem;
   overflow-y: auto;
   ::-webkit-scrollbar {
     display: none;

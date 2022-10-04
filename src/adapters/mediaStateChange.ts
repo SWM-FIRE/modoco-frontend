@@ -6,54 +6,76 @@ import userStore from '../stores/userStore';
 import messageStore from '../stores/room/messagesStore';
 import userPcStore from '../stores/room/userPcStore';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
+import { SOCKET_EVENT } from './event.enum';
 
 const mediaStateChange = () => {
   const newSocket = roomSocket.socket;
-  const { connectedUsers, removeUser, findUserBySid, findUserByUid } =
-    connectedUsersStore();
+  const {
+    connectedUsers,
+    removeUser,
+    setEnabledAudioByUid,
+    findUserByUid,
+    appendUser,
+  } = connectedUsersStore();
   const { setPc } = userPcStore();
-  const { uid } = userStore();
+  const userId = userStore().uid;
   const { toggleAudioStream } = useCreateMediaStream();
   const { appendMessages } = messageStore();
 
   const emitAudioStateChange = (room: string, enabled: boolean) => {
-    newSocket.emit('audioStateChange', { room, enabled });
+    newSocket?.emit(SOCKET_EVENT.AUDIO_STATE_CHANGE, { room, enabled });
     toggleAudioStream(enabled);
   };
 
   useEffect(() => {
-    newSocket?.off('audioStateChange').on('audioStateChange', (data) => {
-      const { sid, enabled } = data;
-      const user = findUserBySid(sid);
-      if (user) {
-        user.enabledAudio = enabled;
+    newSocket?.on(SOCKET_EVENT.AUDIO_STATE_CHANGE, (data) => {
+      const { uid, enabled } = data;
+      const isMe = uid === userId;
+      const audioStateUser = findUserByUid(uid);
+      if (!audioStateUser && !isMe) {
+        appendUser({
+          nickname: '',
+          uid,
+          avatar: 0,
+          sid: '',
+          enabledVideo: true,
+          enabledAudio: enabled,
+          isAlreadyEntered: true,
+          volume: enabled ? 0.5 : 0,
+        });
+      } else if (audioStateUser && !isMe) {
+        setEnabledAudioByUid(uid, enabled);
       }
     });
 
-    newSocket?.off('kickUser').on('kickUser', (data) => {
+    newSocket?.on(SOCKET_EVENT.KICK_USER, (data) => {
       const { kickUser } = data;
-      if (kickUser.uid === uid) {
+      if (kickUser.uid === userId) {
         alert('방장에 의해 강퇴당하였습니다.');
         newSocket.close();
       } else {
         const kickedUser = findUserByUid(kickUser.uid);
         console.log(kickedUser);
-        if (kickedUser?.socketId) {
-          setPc({ sid: kickedUser?.socketId, peerConnection: null });
-          removeUser(kickedUser?.socketId);
+        if (kickedUser?.sid) {
+          setPc({ sid: kickedUser?.sid, peerConnection: null });
+          removeUser(kickedUser?.sid);
         }
         appendMessages({
           uid: kickedUser.uid,
           nickname: kickedUser.nickname,
           avatar: kickedUser.avatar,
           message: `${kickedUser.nickname}님이 강퇴당하였습니다.`,
-          createdAt: '',
+          createdAt: new Date().toString(),
           type: 'leave',
           isHideTime: false,
           isHideNicknameAndAvatar: false,
         });
       }
     });
+    return () => {
+      newSocket?.off(SOCKET_EVENT.AUDIO_STATE_CHANGE);
+      newSocket?.off(SOCKET_EVENT.KICK_USER);
+    };
   }, [newSocket, connectedUsers]);
 
   return {

@@ -1,7 +1,6 @@
 import { toast } from 'react-hot-toast';
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import connectedUsersStore from '../stores/room/connectedUsersStore';
 import roomSocket from './roomSocket';
@@ -10,17 +9,29 @@ import userPcStore from '../stores/room/userPcStore';
 import userStore from '../stores/userStore';
 import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
-import { API } from '../config';
+import mediaStateChange from './mediaStateChange';
+import { SOCKET_EVENT } from './event.enum';
+import { getUser } from '../api/main';
 
 export const roomConnection = (roomId: string) => {
   const navigate = useNavigate();
-  const { connectedUsers, appendUser, removeUser, findUserBySid, setUsers } =
-    connectedUsersStore();
-  const { userMediaStream } = UserMediaStreamStore();
+  const {
+    connectedUsers,
+    appendUser,
+    removeUser,
+    findUserByUid,
+    findUserBySid,
+    setUsers,
+    setNicknameByUid,
+    setAvatarByUid,
+    setSidByUid,
+  } = connectedUsersStore();
+  const { userMediaStream, userMic } = UserMediaStreamStore();
   const { appendMessages, setMessages } = messageStore();
   const { setPc, emptyPc } = userPcStore();
   const { createAll, stopMediaStream } = useCreateMediaStream();
   const { uid } = userStore();
+  const { emitAudioStateChange } = mediaStateChange();
   const newSocket = roomSocket.socket;
 
   useEffect(() => {
@@ -30,7 +41,7 @@ export const roomConnection = (roomId: string) => {
           await createAll();
         }
         const payload = { room: roomId, uid };
-        newSocket.emit('joinRoom', payload);
+        newSocket?.emit(SOCKET_EVENT.JOIN_ROOM, payload);
       } else {
         console.log('[roomConnection] UID가 존재하지 않음');
         alert('잘못된 접근입니다.');
@@ -41,78 +52,87 @@ export const roomConnection = (roomId: string) => {
 
     joinSuccess();
 
-    newSocket?.off('joinedRoom').on('joinedRoom', (room) => {
+    newSocket?.on(SOCKET_EVENT.JOINED_ROOM, (room) => {
       console.log('[roomConnection] joinedRoom', room);
+      emitAudioStateChange(roomId, userMic);
     });
 
-    newSocket?.off('roomFull').on('roomFull', () => {
+    newSocket?.on(SOCKET_EVENT.ROOM_FULL, () => {
       alert(`해당 방이 꽉 찼습니다.`);
       navigate('/main');
     });
 
-    newSocket
-      ?.off('existingRoomUsers')
-      .on('existingRoomUsers', ({ users, current }) => {
-        console.log('i am ', current.sid);
-        users.map((user) => {
-          axios
-            .get((API.USER as string) + user.uid, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-              },
-            })
-            .then((res) => {
-              if (!connectedUsers.includes(user.uid) && user.uid !== uid) {
-                appendUser({
-                  nickname: res.data.nickname,
-                  uid: user.uid,
-                  avatar: res.data.avatar,
-                  socketId: user.sid,
-                  enabledVideo: true,
-                  enabledAudio: true,
-                  isAlreadyEntered: true,
-                  volume: 0.5,
-                });
-                console.log('appendUser', user.uid, res);
-              } else {
-                toast.error('이미 접속중인 유저입니다.');
-                newSocket.emit('leaveRoom', { room: roomId });
-                setUsers([]);
-                emptyPc();
-                setMessages([]);
-                stopMediaStream();
-                navigate('/main');
-              }
-            });
-          return user;
-        });
-      });
+    newSocket?.on(SOCKET_EVENT.EXISTING_ROOM_USERS, ({ users, current }) => {
+      console.log('i am ', current.sid);
 
-    newSocket?.off('leftRoom').on('leftRoom', ({ sid }) => {
-      if (newSocket.id === sid) {
+      users.map((user) => {
+        getUser(user.uid).then((res) => {
+          const existingUser = findUserByUid(user.uid);
+          if (user.uid === uid) {
+            toast.error('이미 접속중인 유저입니다.');
+            newSocket.emit('leaveRoom', { room: roomId });
+            setUsers([]);
+            emptyPc();
+            setMessages([]);
+            stopMediaStream();
+            navigate('/main');
+          } else if (!existingUser) {
+            appendUser({
+              nickname: res.data.nickname,
+              uid: user.uid,
+              avatar: res.data.avatar,
+              sid: user.sid,
+              enabledVideo: true,
+              enabledAudio: true,
+              isAlreadyEntered: true,
+              volume: 0.5,
+            });
+          } else if (existingUser) {
+            setNicknameByUid(user.uid, res.data.nickname);
+            setAvatarByUid(user.uid, res.data.avatar);
+            setSidByUid(user.uid, user.sid);
+          }
+        });
+        return user;
+      });
+    });
+
+    newSocket?.on(SOCKET_EVENT.LEFT_ROOM, ({ sid }) => {
+      if (newSocket?.id === sid) {
         console.log('i left room');
         return;
       }
       const userInfo = findUserBySid(sid);
-      console.log(userInfo.nickname, 'left room');
-      setPc({ sid, peerConnection: null });
-      removeUser(sid);
-      appendMessages({
-        uid: userInfo.uid,
-        nickname: userInfo.nickname,
-        avatar: userInfo.avatar,
-        message: `${userInfo.nickname}님이 퇴장하셨습니다.`,
-        createdAt: '',
-        type: 'leave',
-        isHideTime: false,
-        isHideNicknameAndAvatar: false,
-      });
+      if (userInfo) {
+        console.log(userInfo.nickname, 'left room');
+        setPc({ sid, peerConnection: null });
+        removeUser(sid);
+        appendMessages({
+          uid: userInfo.uid,
+          nickname: userInfo.nickname,
+          avatar: userInfo.avatar,
+          message: `${userInfo.nickname}님이 퇴장하셨습니다.`,
+          createdAt: new Date().toString(),
+          type: 'leave',
+          isHideTime: false,
+          isHideNicknameAndAvatar: false,
+        });
+      }
     });
 
-    newSocket?.off('disconnect').on('disconnect', () => {
+    newSocket?.on(SOCKET_EVENT.DISCONNECT, () => {
       console.log('disconnect');
       navigate('/');
       window.location.reload();
     });
-  }, []);
+
+    return () => {
+      newSocket?.off('joinedRoom');
+      newSocket?.off('disconnect');
+      newSocket?.off('leftRoom');
+      newSocket?.off('existingRoomUsers');
+      newSocket?.off('joinedRoom');
+      newSocket?.off('roomFull');
+    };
+  }, [connectedUsers]);
 };

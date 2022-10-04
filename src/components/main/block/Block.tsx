@@ -8,10 +8,12 @@ import UserStore from '../../../stores/userStore';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import RoomDetail from '../../atoms/RoomDetail';
 import BlockDetail from './BlockDetail';
+import useEnterProfile from '../useEnterProfile';
 
 export default function Block({ isMain, data }) {
   const navigate = useNavigate();
   const { nickname } = UserStore();
+  const { enterProfile } = useEnterProfile(data.moderator.uid);
 
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -32,7 +34,7 @@ export default function Block({ isMain, data }) {
   };
   return (
     <Container main={isMain} data-cy="main-room-cards">
-      <AvatarContainer data-cy="main-room-moderator">
+      <AvatarContainer data-cy="main-room-moderator" onClick={enterProfile}>
         <MyAvatar num={Number(data.moderator.avatar)} />
         <Moderator>
           방장<Nickname>{data.moderator.nickname}</Nickname>
@@ -73,6 +75,10 @@ const Enter = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+  }
   ${media.small} {
     width: 8.6rem;
     height: 3.2rem;
@@ -88,6 +94,12 @@ const AvatarContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  &:hover {
+    cursor: pointer;
+    span:nth-child(1) {
+      text-decoration: underline;
+    }
+  }
   ${media.small} {
     height: 5.4rem;
     margin-bottom: 1.6rem;
@@ -127,7 +139,7 @@ const Container = styled.div<{ main: boolean }>`
   padding: 4.3rem 1rem;
 
   // margin
-  margin: 1.4rem 2.8rem 1.4rem 0;
+  margin: ${({ main }) => (main ? '1.4rem' : '1.4rem 2.8rem 1.4rem 0')};
   ${media.xlarge} {
     width: 29.4rem;
   }
@@ -137,7 +149,7 @@ const Container = styled.div<{ main: boolean }>`
   ${media.small} {
     height: 26rem;
     width: 18rem;
-    margin: 0.7rem 1.4rem 0.7rem 0;
+    margin: 0.7rem;
     padding: 3rem 0.7rem;
   }
   ${media.xsmall} {

@@ -1,26 +1,23 @@
 import styled from 'styled-components';
 import media from 'src/styles/media';
+import { detailedFriend } from 'src/interface/singleFriend.interface';
 import { ReactComponent as SendImage } from '../../../assets/svg/MessageSend.svg';
-import friendJson from '../../../friend.json';
-import MyAvatar from '../../../assets/avatar/MyAvatar';
+import FriendIcon from './FriendIcon';
 
-export default function FriendList() {
-  const friendList = friendJson;
+export default function FriendList({
+  friendList,
+}: {
+  friendList: detailedFriend[];
+}) {
+  const filteredFriends = friendList.map((friend) =>
+    friend.role === 'RECEIVER' ? friend.sender : friend.receiver,
+  );
 
   return (
     <>
-      {friendList.map((friend) => (
-        <Component key={friend.id}>
-          <AvatarContainer>
-            <MyAvatar num={friend.avatar} />
-          </AvatarContainer>
-          <Information>
-            <Nickname>{friend.nickname}</Nickname>
-            <FriendStatus>
-              <OnlineStatus isOnline={friend.state !== ''} />
-              {friend.state !== '' ? friend.state : '오프라인'}
-            </FriendStatus>
-          </Information>
+      {filteredFriends.map((friend) => (
+        <Component key={friend?.uid}>
+          <FriendIcon friend={friend} />
           <SendMessage>
             <SendButton>
               <SendImage />
@@ -35,6 +32,7 @@ export default function FriendList() {
 const Component = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   color: #f9fafb;
   font-size: 1.5rem;
   margin-top: 2.8rem;
@@ -47,46 +45,28 @@ const Component = styled.div`
   }
 `;
 
-const Nickname = styled.div`
-  font-size: 1.5rem;
-  width: 100%;
-  overflow: auto;
-  white-space: nowrap;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  ${media.small} {
-    font-size: 1.5rem;
-  }
-`;
+// const FriendStatus = styled.div`
+//   font-size: 1.2rem;
+//   font-family: IBMPlexSansKRRegular;
+//   display: flex;
+//   align-items: center;
+//   gap: 0.5rem;
+//   background-color: rgba(248, 250, 252, 0.1);
+//   border-radius: 5rem;
+//   margin-top: 0.8rem;
+//   padding: 0.2rem 0.8rem;
+//   width: max-content;
+//   ${media.small} {
+//     margin-top: 0.3rem;
+//   }
+// `;
 
-const Information = styled.div`
-  margin-left: 1rem;
-  flex-grow: 1;
-`;
-
-const FriendStatus = styled.div`
-  font-size: 1.2rem;
-  font-family: IBMPlexSansKRRegular;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: rgba(248, 250, 252, 0.1);
-  border-radius: 5rem;
-  margin-top: 0.8rem;
-  padding: 0.2rem 0.8rem;
-  width: max-content;
-  ${media.small} {
-    margin-top: 0.3rem;
-  }
-`;
-
-const OnlineStatus = styled.div<{ isOnline: boolean }>`
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 50%;
-  background-color: ${(props) => (props.isOnline ? '#45B26B' : '#a5a5a5')};
-`;
+// const OnlineStatus = styled.div<{ isOnline: boolean }>`
+//   width: 0.8rem;
+//   height: 0.8rem;
+//   border-radius: 50%;
+//   background-color: ${(props) => (props.isOnline ? '#45B26B' : '#a5a5a5')};
+// `;
 
 const SendMessage = styled.div`
   width: 4rem;
@@ -111,20 +91,5 @@ const SendButton = styled.button`
   svg {
     width: 80%;
     height: 80%;
-  }
-`;
-
-const AvatarContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 4rem;
-  width: 4rem;
-  svg {
-    height: 100%;
-    width: 100%;
-  }
-  ${media.small} {
-    display: none;
   }
 `;

@@ -12,7 +12,7 @@ export default function UserInput() {
     if (!email) {
       errorMsg.current.style.display = 'block';
       errorMsg.current.innerText = '이메일을 입력해주세요.';
-    } else if (!password) {
+    } else if (!password && isDisable) {
       errorMsg.current.style.display = 'block';
       errorMsg.current.innerText = '비밀번호를 입력해주세요.';
     } else {
@@ -47,7 +47,7 @@ export default function UserInput() {
       <Error ref={errorMsg} />
       {isError ? (
         <Error style={{ display: 'block' }}>
-          이메일또는 비밀번호를 확인해주세요
+          이메일 또는 비밀번호를 확인해주세요
         </Error>
       ) : (
         <Empty />

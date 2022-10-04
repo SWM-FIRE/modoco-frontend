@@ -91,7 +91,7 @@ const Container = styled.div`
   position: relative;
 
   // margin
-  margin: 1.4rem 2.8rem 1.4rem 0;
+  margin: 1.4rem;
   ${media.xlarge} {
     width: 29.4rem;
   }
@@ -101,7 +101,7 @@ const Container = styled.div`
   ${media.small} {
     height: 26rem;
     width: 18rem;
-    margin: 0.7rem 1.4rem 0.7rem 0;
+    margin: 0.7rem;
     padding: 3rem 0.7rem;
   }
   ${media.xsmall} {

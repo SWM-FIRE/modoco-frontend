@@ -12,6 +12,10 @@ const generateSocket = () => {
     : null;
 };
 
+const deleteSocket = () => {
+  lobbySocket.socket = null;
+};
+
 export default lobbySocket;
 
-export { generateSocket };
+export { generateSocket, deleteSocket };

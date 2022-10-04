@@ -1,42 +1,32 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import UserStore from '../../../stores/userStore';
-import roomSocket from '../../../adapters/roomSocket';
-import connectedUsersStore from '../../../stores/room/connectedUsersStore';
+import useRequestFriend from 'src/hooks/friend/useRequestFriend';
 
 export default function Buttons({
   isMe,
-  moderator,
   uid: targetUid,
+  toggle,
 }: {
   isMe: boolean;
-  moderator: number;
   uid: number;
+  toggle: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { uid } = UserStore();
-  const { roomId } = useParams();
-  const isCaptain = moderator === uid;
-  const newSocket = roomSocket.socket;
-  const { findUserByUid } = connectedUsersStore();
+  const { mutate, isLoading, isError, isSuccess } = useRequestFriend(targetUid);
 
-  const kickUser = (event: React.MouseEvent<HTMLButtonElement>) => {
+  if (isLoading) return null;
+  if (isError) return null;
+  if (isSuccess) return null;
+  const sendRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const targetSid = findUserByUid(targetUid)?.socketId;
-    const userToKick = {
-      uid: targetUid,
-      sid: targetSid,
-    };
-    newSocket.emit('kickUser', { room: roomId, userToKick });
-    console.log('kicked user');
+    toggle(false);
+    mutate();
   };
 
   return (
     <Container>
       {!isMe && (
         <FriendComponent>
-          <FriendRequest>친구요청</FriendRequest>
-          {isCaptain && <Kick onClick={kickUser}>내보내기</Kick>}
+          <FriendRequest onClick={sendRequest}>친구요청</FriendRequest>
         </FriendComponent>
       )}
     </Container>
@@ -46,12 +36,6 @@ export default function Buttons({
 const FriendRequest = styled.button`
   background-color: #ffffff;
   color: #111827;
-  flex-grow: 1;
-`;
-
-const Kick = styled.button`
-  border: 1px solid #fb7185;
-  color: #fb7185;
   flex-grow: 1;
 `;
 

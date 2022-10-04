@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { API } from '../config';
-import LoginModalStore from '../stores/loginModalStore';
+import mainModalStore from '../stores/mainModalStore';
 import userStore from '../stores/userStore';
+import { login, getMeWithToken } from '../api/main';
 
 export default function useLogin() {
   const navigate = useNavigate();
   const { setNickname, setAvatar, setUid } = userStore();
-  const { closeLoginModal, openLoginModal } = LoginModalStore();
+  const { closeLoginModal, openLoginModal } = mainModalStore();
   const [inputs, setInputs] = useState({
     email: localStorage.getItem('email') ?? '',
     password: '',
@@ -32,27 +31,17 @@ export default function useLogin() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(API.SESSION, {
-        email,
-        password,
-      })
+    login(email, password)
       .then((res) => {
         localStorage.setItem('access_token', res.data.access_token);
         localStorage.setItem('email', inputs.email);
-        axios
-          .get(API.ME, {
-            headers: {
-              Authorization: `Bearer ${res.data.access_token}`,
-            },
-          })
-          .then((res) => {
-            setNickname(res.data.nickname);
-            setAvatar(res.data.avatar);
-            setUid(res.data.uid);
-            toast.success('로그인이 완료되었습니다');
-            navigate(`/main`);
-          });
+        getMeWithToken(res.data.access_token).then((res) => {
+          setNickname(res.data.nickname);
+          setAvatar(res.data.avatar);
+          setUid(res.data.uid);
+          toast.success('로그인이 완료되었습니다');
+          navigate(`/main`);
+        });
         closeLoginModal();
       })
       .catch((err) => {

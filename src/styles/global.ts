@@ -7,7 +7,7 @@ body {
   font-size: 62.5%;
   padding: 0;
   margin: 0;
-  scroll-behavior: smooth;
+  scroll-behavior: instant;
 }
 a {
   color: inherit;

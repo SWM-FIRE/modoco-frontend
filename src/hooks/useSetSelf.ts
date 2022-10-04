@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { API } from '../config';
 import UserStore from '../stores/userStore';
+import { getMeWithToken, getRecords } from '../api/main';
 
 const useSetSelf = () => {
   const { setNickname, setAvatar, setUid, setClear, setTime, setLogin, uid } =
@@ -16,28 +15,17 @@ const useSetSelf = () => {
       return;
     }
     if (token) {
-      axios
-        .get(API.ME, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+      getMeWithToken(localStorage.getItem('access_token'))
         .then((res) => {
           setNickname(res.data.nickname);
           setAvatar(res.data.avatar);
           setUid(res.data.uid);
-          axios
-            .get(API.RECORDS, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then((res) => {
-              if (res.data.length !== 0) {
-                setTime(Number(res.data[0].duration) * 60);
-              }
-              setLogin(true);
-            });
+          getRecords().then((res) => {
+            if (res.data.length !== 0) {
+              setTime(Number(res.data[0].duration) * 60);
+            }
+            setLogin(true);
+          });
         })
         .catch(() => {
           if (localStorage.getItem('access_token')) {

@@ -1,33 +1,44 @@
+import React from 'react';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import EditAvatar from './EditUserProfile/EditAvatar';
-import Badge from '../profile/UserProfile/Badge';
+import Badge from './UserProfile/Badge';
 import EditGroup from './EditUserProfile/EditGroup';
 import useChangeProfile from '../../hooks/useChangeProfile';
 import EditNickname from './EditUserProfile/EditNickname';
 import EditDescription from './EditUserProfile/EditDescription';
+import UserStore from '../../stores/userStore';
+import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
 
-export default function EditUserProfile() {
-  const { userId } = useParams();
+export default function EditUserProfile({ setIsEdit }) {
   const { inputs, onChange, onSubmit, onChangeAvatar, isDisable } =
     useChangeProfile();
   const { avatar, nickname, description } = inputs;
+  const { setClear } = UserStore();
 
   const navigate = useNavigate();
 
   const onClickButton = () => {
-    navigate(`/profile/${userId}`);
+    setIsEdit(false);
   };
 
   const onLogOut = () => {
+    lobbySocket.socket?.emit('leaveLobby');
+    deleteSocket();
     localStorage.removeItem('access_token');
-    navigate(`/`);
+    setClear();
     toast.success('로그아웃 되었습니다');
+    navigate(`/`);
+  };
+
+  const onSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    onSubmit(event);
+    setIsEdit(false);
   };
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmitForm}>
       <EditAvatar avatar={avatar} onChangeAvatar={onChangeAvatar} />
       <Contents>
         <EditNickname nickname={nickname} onChange={onChange} />
@@ -35,7 +46,9 @@ export default function EditUserProfile() {
         <EditGroup />
         <EditDescription description={description} onChange={onChange} />
         <Badge />
-        <Logout onClick={onLogOut}>로그아웃</Logout>
+        <Logout onClick={onLogOut} type="button">
+          로그아웃
+        </Logout>
       </Contents>
       <Buttons>
         <Button onClick={onClickButton} type="button">

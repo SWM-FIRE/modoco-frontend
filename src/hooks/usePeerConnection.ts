@@ -1,18 +1,30 @@
 /* eslint-disable no-undef */
 import { useEffect } from 'react';
-import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { SOCKET_EVENT } from 'src/adapters/event.enum';
 import roomSocket from '../adapters/roomSocket';
 import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
 import connectedUsersStore from '../stores/room/connectedUsersStore';
 import userPcStore from '../stores/room/userPcStore';
 import messageStore from '../stores/room/messagesStore';
-import { API } from '../config';
+import mediaStateChange from '../adapters/mediaStateChange';
+import { getUser } from '../api/main';
 
 const usePeerConnection = () => {
-  const { userMediaStream } = UserMediaStreamStore();
-  const { connectedUsers, appendUser, setUserStream } = connectedUsersStore();
+  const { roomId } = useParams();
+  const { userMediaStream, userMic } = UserMediaStreamStore();
+  const {
+    connectedUsers,
+    appendUser,
+    setUserStream,
+    setNicknameByUid,
+    setAvatarByUid,
+    setSidByUid,
+    findUserByUid,
+  } = connectedUsersStore();
   const { pcs, setPc } = userPcStore();
   const { appendMessages } = messageStore();
+  const { emitAudioStateChange } = mediaStateChange();
   const newSocket = roomSocket.socket;
 
   const RTCConfig = {
@@ -86,7 +98,7 @@ const usePeerConnection = () => {
           new RTCSessionDescription(offer),
         );
         console.debug(`[SOCKET] call user(${sid}) with offer`, offer);
-        newSocket.emit('call-user', { to: sid, offer });
+        newSocket.emit(SOCKET_EVENT.CALL_USER, { to: sid, offer });
       }
     };
 
@@ -104,7 +116,7 @@ const usePeerConnection = () => {
         await peerConnection.setLocalDescription(answer);
         // send answer to other user
         console.debug('[SOCKET] answer to user(', sid, ')');
-        newSocket.emit('make-answer', { to: sid, answer });
+        newSocket.emit(SOCKET_EVENT.MAKE_ANSWER, { to: sid, answer });
       }
     };
 
@@ -137,39 +149,39 @@ const usePeerConnection = () => {
     };
 
     const onNewUser = async ({ sid, uid }) => {
-      axios
-        .get((API.USER as string) + uid, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-        })
-        .then((res) => {
-          if (!connectedUsers.includes(uid)) {
-            appendUser({
-              nickname: res.data.nickname,
-              uid,
-              avatar: res.data.avatar,
-              socketId: sid,
-              enabledVideo: true,
-              enabledAudio: true,
-              isAlreadyEntered: false,
-              volume: 0.5,
-            });
-          } else {
-            console.log('already connected');
-          }
-          appendMessages({
-            uid,
+      emitAudioStateChange(roomId, userMic);
+      getUser(uid).then((res) => {
+        const newUser = findUserByUid(uid);
+        if (!newUser) {
+          appendUser({
             nickname: res.data.nickname,
+            uid,
             avatar: res.data.avatar,
-            message: `${res.data.nickname}님이 입장하셨습니다.`,
-            createdAt: '',
-            type: 'join',
-            isHideTime: false,
-            isHideNicknameAndAvatar: false,
+            sid,
+            enabledVideo: true,
+            enabledAudio: true,
+            isAlreadyEntered: false,
+            volume: 0.5,
           });
-          // console.log('new', res.data.nickname, 'joined');
+        } else if (newUser) {
+          setNicknameByUid(uid, res.data.nickname);
+          setAvatarByUid(uid, res.data.avatar);
+          setSidByUid(uid, sid);
+        } else {
+          console.log('already connected');
+        }
+        appendMessages({
+          uid,
+          nickname: res.data.nickname,
+          avatar: res.data.avatar,
+          message: `${res.data.nickname}님이 입장하셨습니다.`,
+          createdAt: new Date().toString(),
+          type: 'join',
+          isHideTime: false,
+          isHideNicknameAndAvatar: false,
         });
+        // console.log('new', res.data.nickname, 'joined');
+      });
       await createOffer(sid);
     };
 
@@ -186,11 +198,17 @@ const usePeerConnection = () => {
       }
     };
 
-    newSocket.off('newUser').on('newUser', onNewUser);
-    newSocket.off('call-made').on('call-made', onCallMade);
-    newSocket.off('answer-made').on('answer-made', onAnswerMade);
-    newSocket.off('ice-candidate').on('ice-candidate', onIceCandidateReceived);
-  }, [userMediaStream, pcs]);
+    newSocket.on(SOCKET_EVENT.NEW_USER, onNewUser);
+    newSocket.on(SOCKET_EVENT.CALL_MADE, onCallMade);
+    newSocket.on(SOCKET_EVENT.ANSWER_MADE, onAnswerMade);
+    newSocket.on(SOCKET_EVENT.ICE_CANDIDATE, onIceCandidateReceived);
+    return () => {
+      newSocket.off(SOCKET_EVENT.NEW_USER);
+      newSocket.off(SOCKET_EVENT.CALL_MADE);
+      newSocket.off(SOCKET_EVENT.ANSWER_MADE);
+      newSocket.off(SOCKET_EVENT.ICE_CANDIDATE);
+    };
+  }, [userMediaStream, pcs, connectedUsers]);
 };
 
 export default usePeerConnection;

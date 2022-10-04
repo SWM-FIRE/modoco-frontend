@@ -9,7 +9,7 @@ import PositionInterface from '../../interface/position.interface';
 export default function TitleContainer() {
   const randomEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    toast.error('준비중입니다.');
+    toast.error('로그인 후 입장 가능합니다.');
   };
 
   return (
