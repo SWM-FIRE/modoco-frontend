@@ -1,2 +1,2 @@
 export { awsRequest } from './awsLambdaAxios';
-export { request } from './backendAxios';
+export { authorizationRequest, unAuthorizationRequest } from './backendAxios';

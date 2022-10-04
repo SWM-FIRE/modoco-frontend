@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import mainModalStore from '../stores/mainModalStore';
 import userStore from '../stores/userStore';
-import { login, getMeWithToken } from '../api/main';
+import { login, getMe } from '../api/main';
 
 export default function useLogin() {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ export default function useLogin() {
       .then((res) => {
         localStorage.setItem('access_token', res.data.access_token);
         localStorage.setItem('email', inputs.email);
-        getMeWithToken(res.data.access_token).then((res) => {
+        getMe().then((res) => {
           setNickname(res.data.nickname);
           setAvatar(res.data.avatar);
           setUid(res.data.uid);

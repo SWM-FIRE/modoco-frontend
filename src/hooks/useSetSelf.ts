@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import UserStore from '../stores/userStore';
-import { getMeWithToken, getRecords } from '../api/main';
+import { getMe, getRecords } from '../api/main';
 
 const useSetSelf = () => {
   const { setNickname, setAvatar, setUid, setClear, setTime, setLogin, uid } =
@@ -15,7 +15,7 @@ const useSetSelf = () => {
       return;
     }
     if (token) {
-      getMeWithToken(localStorage.getItem('access_token'))
+      getMe()
         .then((res) => {
           setNickname(res.data.nickname);
           setAvatar(res.data.avatar);

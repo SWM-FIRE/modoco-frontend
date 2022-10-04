@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
-import { getMeWithToken } from '../api/main';
+import { getMe } from '../api/main';
 
 const getUser = async () => {
-  const { data } = await getMeWithToken(localStorage.getItem('access_token'));
+  const { data } = await getMe();
   return data;
 };
 
