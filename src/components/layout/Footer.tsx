@@ -1,6 +1,19 @@
+import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 export default function Footer() {
+  const navigate = useNavigate();
+
+  const navigateTerms = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigate('/support/terms');
+  };
+  const navigatePrivacy = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigate('/support/privacy');
+  };
+
   return (
     <Container data-cy="main-footer">
       <FooterWrapper>
@@ -19,8 +32,15 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} All rights reserved
           </Copyright>
           <Other>
-            <OtherButton data-cy="footer-terms">Terms</OtherButton>
-            <OtherButton data-cy="footer-privacy-policy">
+            <OtherButton data-cy="footer-terms" onClick={navigateTerms}>
+              Terms
+            </OtherButton>
+            |
+            <OtherButton
+              data-cy="footer-privacy-policy"
+              style={{ fontWeight: 600 }}
+              onClick={navigatePrivacy}
+            >
               Privacy Policy
             </OtherButton>
           </Other>
@@ -30,7 +50,12 @@ export default function Footer() {
   );
 }
 
-const OtherButton = styled.button``;
+const OtherButton = styled.button`
+  color: #93989a;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const Other = styled.div`
   gap: 5rem;

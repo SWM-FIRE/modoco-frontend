@@ -15,6 +15,8 @@ import Loading from './pages/Loading';
 import NoExist from './pages/NoExist';
 import Invite from './pages/Invite';
 import Error from './pages/Error';
+import Terms from './components/support/Terms';
+import Privacy from './components/support/Privacy';
 
 const queryClient = new QueryClient();
 
@@ -49,6 +51,10 @@ function App() {
           </Route>
           <Route path="/loading">
             <Route index element={<Loading />} />
+          </Route>
+          <Route path="/support" element={<MainLayout />}>
+            <Route path="terms" element={<Terms />} />
+            <Route path="privacy" element={<Privacy />} />
           </Route>
           <Route path="/error">
             <Route index element={<Error />} />
