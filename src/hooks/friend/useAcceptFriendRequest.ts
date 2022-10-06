@@ -8,9 +8,9 @@ const acceptAFriend = async (uid: number) => {
 
 export default function useAcceptFriendRequest(uid: number) {
   const queryClient = useQueryClient();
-  return useMutation(['friend', 'request'], () => acceptAFriend(uid), {
+  return useMutation(['friend', 'request', uid], () => acceptAFriend(uid), {
     onSettled: () => {
-      queryClient.invalidateQueries(['Friend', 'personal']);
+      queryClient.invalidateQueries(['Friend', 'personal', uid]);
     },
   });
 }
