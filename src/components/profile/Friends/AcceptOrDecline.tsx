@@ -61,12 +61,14 @@ const Button = styled.button<{ color: string }>`
   border-radius: 5rem;
   padding: 0.4rem 1.6rem;
   font-size: 1.5rem;
+  min-width: 6rem;
   cursor: pointer;
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
   ${media.small} {
     padding: 0.5rem;
+    min-width: 3rem;
     font-size: 0.8rem;
   }
 `;

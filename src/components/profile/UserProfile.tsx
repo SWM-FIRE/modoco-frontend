@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import useSingleFriend from 'src/hooks/friend/useSingleFriend';
 import useRequestFriend from 'src/hooks/friend/useRequestFriend';
+import useDeleteFriendRequest from 'src/hooks/friend/useDeleteFriendRequest';
 import userStore from 'src/stores/userStore';
 import Avatar from '../atoms/Avatar';
 import Group from './UserProfile/Group';
@@ -32,6 +33,12 @@ export default function UserProfile({ isMe, setIsEdit }) {
     isError: requestError,
     isSuccess: requestSuccess,
   } = useRequestFriend(Number(userId));
+  const {
+    mutate: deleteMutate,
+    isLoading: deleteLoading,
+    isError: deleteError,
+    isSuccess: deleteSuccess,
+  } = useDeleteFriendRequest(Number(userId));
 
   useEffect(() => {
     refetch();
@@ -40,10 +47,10 @@ export default function UserProfile({ isMe, setIsEdit }) {
   const isFriend = friendData?.status === 'ACCEPTED';
   const isPending = friendData?.status === 'PENDING';
 
-  if (isLoading || friendLoading || requestLoading) {
+  if (isLoading || friendLoading || requestLoading || deleteLoading) {
     return <>loading</>;
   }
-  if (error || friendError || requestError) return <>error</>;
+  if (error || friendError || requestError || deleteError) return <>error</>;
 
   const onClickEditProfile = () => {
     setIsEdit(true);
@@ -55,6 +62,14 @@ export default function UserProfile({ isMe, setIsEdit }) {
     requestMutate();
     if (requestSuccess) {
       console.log('request success');
+    }
+  };
+
+  const onDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    deleteMutate();
+    if (deleteSuccess) {
+      console.log('delete success');
     }
   };
 
@@ -86,10 +101,13 @@ export default function UserProfile({ isMe, setIsEdit }) {
         <Badge />
         {isMe && <Logout onClick={onLogOut}>로그아웃</Logout>}
         {isFriend ? (
-          <Button>
-            <SendMessageBlack />
-            채팅하기
-          </Button>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button>
+              <SendMessageBlack />
+              채팅하기
+            </Button>
+            <DeleteFriend onClick={onDelete}>친구 삭제</DeleteFriend>
+          </div>
         ) : (
           !isMe &&
           isPending && (
@@ -207,6 +225,24 @@ const Logout = styled.button`
   font-size: 1.5rem;
   margin-top: 2rem;
   width: 8.6rem;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+`;
+
+const DeleteFriend = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #fb7185;
+  color: #fb7185;
+  border-radius: 5rem;
+  padding: 1.6rem 5.7rem;
+  font-size: 1.5rem;
+  font-family: IBMPlexSansKRRegular;
+  cursor: pointer;
+  gap: 0.4rem;
+  margin-top: 2rem;
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }

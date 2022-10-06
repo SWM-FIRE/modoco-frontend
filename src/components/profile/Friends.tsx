@@ -90,9 +90,9 @@ const Category = styled.div`
 const CategoryButton = styled.button<{ isOnClick: boolean }>`
   font-family: IBMPlexSansKRRegular;
   font-size: 2rem;
-  color: ${({ isOnClick }) => (isOnClick ? '#111827' : '#9CA3AF')};
-  background-color: ${({ isOnClick }) => (isOnClick ? '#FFFFFF' : 'none')};
-  border-radius: ${({ isOnClick }) => (isOnClick ? '5rem' : 'none')};
-  padding: ${({ isOnClick }) => (isOnClick ? '0.8rem 1.2rem' : 'none')};
+  color: ${({ isOnClick }) => (isOnClick ? '#F9FAFB' : '#9CA3AF')};
   cursor: pointer;
+  &:hover {
+    color: #f9fafb;
+  }
 `;
