@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 
 export default function EditDescription({ description, onChange }) {
   return (
@@ -20,6 +21,9 @@ const Section = styled.p`
   flex-direction: column;
   width: 60%;
   padding-top: 2rem;
+  ${media.small} {
+    width: 100%;
+  }
 `;
 
 const Input = styled.input`

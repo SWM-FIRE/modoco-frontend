@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 
 export default function EditNickname({ nickname, onChange }) {
   const errorMsg = useRef(null);
@@ -34,6 +35,9 @@ const Section = styled.p`
   display: flex;
   flex-direction: column;
   width: 60%;
+  ${media.small} {
+    width: 100%;
+  }
 `;
 
 const Input = styled.input`

@@ -46,7 +46,6 @@ const Container = styled.div`
 
 const Nickname = styled.p`
   font-size: 1.5rem;
-  width: 8rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -55,7 +54,6 @@ const Nickname = styled.p`
   }
   ${media.small} {
     font-size: 1.5rem;
-    width: 5rem;
   }
 `;
 
@@ -73,8 +71,5 @@ const AvatarContainer = styled.div`
   svg {
     height: 100%;
     width: 100%;
-  }
-  ${media.small} {
-    display: none;
   }
 `;

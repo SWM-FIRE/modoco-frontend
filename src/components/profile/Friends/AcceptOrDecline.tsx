@@ -67,8 +67,6 @@ const Button = styled.button<{ color: string }>`
     background-color: rgba(255, 255, 255, 0.1);
   }
   ${media.small} {
-    padding: 0.5rem;
-    min-width: 3rem;
-    font-size: 0.8rem;
+    display: none;
   }
 `;

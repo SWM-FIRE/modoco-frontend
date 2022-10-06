@@ -8,7 +8,7 @@ export default function Badge() {
       <Level level={2} lowerLevel={2} />
       <Level level={3} lowerLevel={3} />
       <Level level={4} lowerLevel={4} />
-      <Level level={5} lowerLevel={5} />
+      {/* <Level level={5} lowerLevel={5} /> */}
     </Components>
   );
 }

@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import useUser from 'src/hooks/useUser';
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import media from 'src/styles/media';
 import useSingleFriend from 'src/hooks/friend/useSingleFriend';
 import useRequestFriend from 'src/hooks/friend/useRequestFriend';
 import useDeleteFriendRequest from 'src/hooks/friend/useDeleteFriendRequest';
@@ -84,20 +86,30 @@ export default function UserProfile({ isMe, setIsEdit }) {
 
   return (
     <Components isMe={isMe}>
-      <Avatar avatar={data?.avatar} size={12} />
-      <Contents>
-        <NicknameComponent>
-          <Nickname>{data?.nickname}</Nickname>
-          {isFriend && (
-            <FriendComponent>
-              <ShowFriendState />
-              나와 친구입니다
-            </FriendComponent>
-          )}
-        </NicknameComponent>
-        <OAuthId>@tempOAuth</OAuthId>
-        <Group />
-        <Description>{userDescription}</Description>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+        }}
+      >
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <Avatar avatar={data?.avatar} size={12} />
+          <Contents>
+            <NicknameComponent>
+              <Nickname>{data?.nickname}</Nickname>
+              {isFriend && (
+                <FriendComponent>
+                  <ShowFriendState />
+                  나와 친구입니다
+                </FriendComponent>
+              )}
+            </NicknameComponent>
+            <OAuthId>@tempOAuth</OAuthId>
+            <Group />
+            <Description>{userDescription}</Description>
+          </Contents>
+        </div>
         <Badge />
         {isMe && <Logout onClick={onLogOut}>로그아웃</Logout>}
         {isFriend ? (
@@ -121,10 +133,10 @@ export default function UserProfile({ isMe, setIsEdit }) {
         {!isMe && !isFriend && !isPending && (
           <Button onClick={sendRequest}>친구요청</Button>
         )}
-      </Contents>
-      {isMe && (
-        <EditButton onClick={onClickEditProfile}>프로필 수정</EditButton>
-      )}
+        {isMe && (
+          <EditButton onClick={onClickEditProfile}>프로필 수정</EditButton>
+        )}
+      </div>
     </Components>
   );
 }
@@ -138,14 +150,12 @@ const Components = styled.div<{ isMe: boolean }>`
   justify-content: flex-start;
   padding: 3.2rem;
   gap: 5.6rem;
-  min-width: 55rem;
   @media (max-width: 1020px) {
     width: 100%;
   }
-`;
-
-const Contents = styled.div`
-  flex-grow: 1;
+  ${media.small} {
+    padding: 1.6rem;
+  }
 `;
 
 const EditButton = styled.button`
@@ -161,6 +171,20 @@ const EditButton = styled.button`
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
+  ${media.small} {
+    top: unset;
+    right: 1.6rem;
+    bottom: 1.6rem;
+    padding: 0.8rem 1.6rem;
+  }
+`;
+
+const Contents = styled.div`
+  margin-left: 4rem;
+  width: 100%;
+  ${media.small} {
+    margin-left: 1rem;
+  }
 `;
 
 const OAuthId = styled.span`
@@ -173,7 +197,6 @@ const NicknameComponent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
 `;
 
 const FriendComponent = styled.div`
@@ -187,12 +210,18 @@ const FriendComponent = styled.div`
   font-family: IBMPlexSansKRRegular;
   gap: 1rem;
   height: 4.4rem;
+  ${media.small} {
+    display: none;
+  }
 `;
 
 const Nickname = styled.h1`
   font-size: 4rem;
   font-family: IBMPlexMonoRegular;
   color: #f1f5f9;
+  ${media.small} {
+    font-size: 2rem;
+  }
 `;
 
 const Description = styled.p`
@@ -214,22 +243,10 @@ const Button = styled.button`
   cursor: pointer;
   gap: 0.4rem;
   margin-top: 2rem;
-`;
-
-const Logout = styled.button`
-  color: #f9fafb;
-  border-radius: 5rem;
-  border: 1px solid #f9fafb;
-  padding: 0.8rem 1.6rem;
-  cursor: pointer;
-  font-size: 1.5rem;
-  margin-top: 2rem;
-  width: 8.6rem;
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+  ${media.small} {
+    padding: 0.8rem 1.2rem;
   }
 `;
-
 const DeleteFriend = styled.button`
   display: flex;
   align-items: center;
@@ -243,6 +260,23 @@ const DeleteFriend = styled.button`
   cursor: pointer;
   gap: 0.4rem;
   margin-top: 2rem;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  ${media.small} {
+    padding: 1.6rem 2.7rem;
+  }
+`;
+
+const Logout = styled.button`
+  color: #f9fafb;
+  border-radius: 5rem;
+  border: 1px solid #f9fafb;
+  padding: 0.8rem 1.6rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  width: 8.6rem;
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }

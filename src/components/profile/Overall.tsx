@@ -12,7 +12,6 @@ export default function Overall({ isMe }) {
 const Components = styled.div`
   width: 100%;
   color: #f9fafb;
-  min-width: 55rem;
 `;
 
 const Title = styled.h1`
