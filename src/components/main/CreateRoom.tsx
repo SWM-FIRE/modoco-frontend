@@ -10,7 +10,7 @@ export default function CreateRoom({
 }) {
   return (
     <Container>
-      <Enter onClick={openCreateRoom}>
+      <Enter onClick={openCreateRoom} data-cy="create-room-modal-open">
         <Plus />
       </Enter>
       <Title>모도코 방을 만들어 보세요!</Title>

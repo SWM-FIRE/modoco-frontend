@@ -15,7 +15,7 @@ describe('open main page', () => {
     );
 
     cy.intercept(
-      { method: 'GET', url: `${API.ROOM}3` },
+      { method: 'GET', url: `${API.ROOM}2` },
       { fixture: 'singleRoom.json' },
     );
 
