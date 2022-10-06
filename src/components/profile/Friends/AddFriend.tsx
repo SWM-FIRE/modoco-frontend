@@ -38,6 +38,7 @@ const Component = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 2.8rem;
+  max-width: 28rem;
 `;
 
 const Contents = styled.div`
