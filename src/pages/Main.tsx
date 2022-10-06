@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast';
 import { themeFire } from '../styles/theme';
 import RoomCards from '../components/main/RoomCards';
 import MainTitle from '../components/main/MainTitle';
-import CreateRoomModal from '../components/main/CreateRoomModal/CreateRoomModal';
+import CreateRoomModal from '../components/main/createRoomModal/CreateRoomModal';
 
 export default function Main() {
   const [isCreateRoomModal, setIsCreateRoomModal] = useState(false);
@@ -17,6 +17,7 @@ export default function Main() {
     }
     setIsCreateRoomModal(true);
   };
+
   const closeCreateRoom = () => {
     setIsCreateRoomModal(false);
   };

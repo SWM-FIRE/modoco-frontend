@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
+import { ReactComponent as Plus } from '../../assets/svg/Plus.svg';
 
 export default function CreateRoom({
   openCreateRoom,
@@ -9,72 +10,41 @@ export default function CreateRoom({
 }) {
   return (
     <Container>
-      <DetailContainer>
-        <Title>새로 방 생성</Title>
-        <Detail>우리모두 모여서 도란도란 코딩해요.</Detail>
-      </DetailContainer>
-      <Enter onClick={openCreateRoom} data-cy="create-room-modal-open">
-        방 만들기 →
+      <Enter onClick={openCreateRoom}>
+        <Plus />
       </Enter>
+      <Title>모도코 방을 만들어 보세요!</Title>
     </Container>
   );
 }
 
 const Enter = styled.button`
-  width: 12.6rem;
-  height: 4.8rem;
-  font-size: 1.6rem;
-  font-family: SFProDisplayRegular;
-  color: #fcfcfd;
-  border: solid 0.2rem #777e90;
-  border-radius: 9rem;
+  width: 4rem;
+  height: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #e24934;
+  border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s;
+  svg {
+    width: 70%;
+    height: 70%;
+  }
 
   &:hover {
-    transform: scale(1.05, 1.05);
-    -ms-transform: scale(1.05, 1.05);
-    -webkit-transform: scale(1.05, 1.05);
+    background-color: #e24834b9;
   }
-
-  ${media.small} {
-    width: 8.6rem;
-    height: 4rem;
-    font-size: 1.2rem;
-  }
-`;
-
-const DetailContainer = styled.div`
-  position: relative;
-  margin-top: 3.2rem;
-  width: 29.3rem;
-  height: 9.6rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  ${media.small} {
-    width: 100%;
-    margin-top: 2.2rem;
-  }
-`;
-
-const Detail = styled.div`
-  margin-top: 1.6rem;
-  color: #777e90;
-  font-size: 1.4rem;
-  text-align: center;
-  height: 5rem;
 `;
 
 const Title = styled.div`
   color: #fcfcfd;
-  font-size: 2.4rem;
+  font-size: 2rem;
   font-weight: 600;
+  font-family: IBMPlexSansKRRegular, Arial;
   ${media.small} {
-    font-size: 2rem;
+    font-size: 1rem;
   }
 `;
 
@@ -83,30 +53,20 @@ const Container = styled.div`
   border-radius: 2rem;
   border: 1px dashed rgba(107, 114, 128, 1);
   width: 29.4rem;
-  height: 50rem;
+  height: 30rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-
-  // margin
-  margin: 1.4rem;
-  ${media.xlarge} {
-    width: 29.4rem;
-  }
+  gap: 1rem;
   ${media.medium} {
-    width: 29.4rem;
+    min-width: 29.8rem;
   }
   ${media.small} {
-    height: 26rem;
-    width: 18rem;
-    margin: 0.7rem;
-    padding: 3rem 0.7rem;
+    min-width: 18rem;
+    height: 20rem;
   }
   ${media.xsmall} {
-    height: 20rem;
-    width: 12.8rem;
-    padding: 2rem 0.7rem;
+    min-width: 12.8rem;
   }
 `;
