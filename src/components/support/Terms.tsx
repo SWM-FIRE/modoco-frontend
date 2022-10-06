@@ -9,22 +9,28 @@ function PrivacyPolicy() {
   const [response, setResponse] = useState({});
 
   useEffect(() => {
-    const NOTION_PAGE_ID = 'ee81d6e524fb4c58ae42a4832d1c7cc2';
+    const NOTION_PAGE_ID = 'Terms-88ee4697e836439b9e75af45a69e7de7';
     fetch(`https://notion-api.splitbee.io/v1/page/${NOTION_PAGE_ID}`)
       .then((res) => res.json())
       .then((resJson) => {
-        console.log('setted good');
-        console.log(resJson);
         setResponse(resJson);
       });
   }, []);
 
   return (
     <Container>
-      <NotionRenderer blockMap={response} />
+      <Background>
+        <NotionRenderer blockMap={response} />
+      </Background>
     </Container>
   );
 }
+
+const Background = styled.div`
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 4% 5%;
+`;
 
 const Container = styled.div`
   width: 100%;
