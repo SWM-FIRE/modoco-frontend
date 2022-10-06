@@ -15,7 +15,7 @@ describe('check ready page modals', () => {
     );
 
     cy.intercept(
-      { method: 'GET', url: `${API.ROOM}3` },
+      { method: 'GET', url: `${API.ROOM}2` },
       { fixture: 'singleRoom.json' },
     );
 
@@ -34,6 +34,7 @@ describe('check ready page modals', () => {
     cy.get(
       ':nth-child(2) > [data-cy="main-room-entering"] > [data-cy="main-room-enter"]',
     ).click();
+    cy.wait(500);
 
     cy.get('[data-cy="ready-card-container"]').should('be.visible');
     cy.wait(500);

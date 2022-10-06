@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import media from 'src/styles/media';
 import EditAvatar from './EditUserProfile/EditAvatar';
 import Badge from './UserProfile/Badge';
 import EditGroup from './EditUserProfile/EditGroup';
@@ -70,13 +71,12 @@ const Form = styled.form`
   display: flex;
   justify-content: flex-start;
   padding: 3.2rem;
-  gap: 5.6rem;
-  min-width: 55rem;
-  @media (max-width: 1200px) {
-    gap: 3rem;
-  }
+  gap: 3rem;
   @media (max-width: 1020px) {
     width: 100%;
+  }
+  ${media.small} {
+    padding-bottom: 10rem;
   }
 `;
 
@@ -90,6 +90,11 @@ const Buttons = styled.div`
   top: 3.2rem;
   #accept {
     margin-left: 0.8rem;
+  }
+  ${media.small} {
+    top: unset;
+    left: 2.5rem;
+    bottom: 3.2rem;
   }
 `;
 
@@ -122,5 +127,10 @@ const Logout = styled.button`
   width: 8.6rem;
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
+  }
+  ${media.small} {
+    position: absolute;
+    bottom: 3.2rem;
+    right: 3.2rem;
   }
 `;
