@@ -13,7 +13,7 @@ export default function CreateRoom({
       <Enter onClick={openCreateRoom}>
         <Plus />
       </Enter>
-      <Title>모도코 방을 만들어 보세요!</Title>
+      <Title>새로운 방 만들기</Title>
     </Container>
   );
 }
@@ -59,14 +59,23 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  ${media.xlarge} {
+    width: 29.4rem;
+  }
   ${media.medium} {
-    min-width: 29.8rem;
+    width: 29.4rem;
   }
   ${media.small} {
-    min-width: 18rem;
-    height: 20rem;
+    height: 18rem;
+    width: 17.4rem;
+    padding: 3rem 0.7rem;
   }
   ${media.xsmall} {
-    min-width: 12.8rem;
+    height: 13rem;
+    width: 12.3rem;
+    padding: 2rem 0.7rem;
+  }
+  ${media.xxsmall} {
+    width: 11rem;
   }
 `;
