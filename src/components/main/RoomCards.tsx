@@ -60,16 +60,11 @@ export default function RoomCards({
       <Title>내가 만든 모도코</Title>
       <MyRoomContainer>
         <ItemsCarousel
-          infiniteLoop={false}
           chevronWidth={50}
           gutter={gutter}
-          disableSwipe={false}
-          alwaysShowChevrons={false}
           numberOfCards={numOfCards}
           slidesToScroll={numOfCards}
           outsideChevron={TRUE}
-          showSlither={false}
-          firstAndLastGutter={false}
           activeItemIndex={activeItemIndex}
           requestToChangeActive={(value) => setActiveItemIndex(value)}
           rightChevron={
@@ -146,23 +141,10 @@ const BlockContainer = styled.div`
 `;
 
 const MyRoomContainer = styled.div`
-  /* display: flex; */
-  /* gap: 2.8rem; */
   width: 100%;
-  /* overflow-y: scroll; */
-
   ::-webkit-scrollbar {
     display: none;
   }
-  /* ${media.large} {
-    gap: 2rem;
-  }
-  ${media.medium} {
-    gap: 2.8rem;
-  }
-  ${media.small} {
-    gap: 1.3rem;
-  } */
 `;
 
 const Title = styled.h2`
