@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import useUser from 'src/hooks/useUser';
@@ -16,6 +15,7 @@ import Pending from './UserProfile/Pending';
 import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessageBlack.svg';
 import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
 import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
+import SkeletonProfile from './SkeletonProfile';
 
 export default function UserProfile({ isMe, setIsEdit }) {
   const { setClear } = userStore();
@@ -50,7 +50,7 @@ export default function UserProfile({ isMe, setIsEdit }) {
   const isPending = friendData?.status === 'PENDING';
 
   if (isLoading || friendLoading || requestLoading || deleteLoading) {
-    return <>loading</>;
+    return <SkeletonProfile />;
   }
   if (error || friendError || requestError || deleteError) return <>error</>;
 
