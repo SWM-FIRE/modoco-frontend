@@ -31,8 +31,10 @@ export default function RoomCards({
       setGutter(0);
     } else if (width < 500) {
       setNumOfCards(2);
+      setGutter(13);
     } else if (width < 768) {
-      setGutter(14);
+      setGutter(13);
+      setNumOfCards(2);
     } else if (width < 1024) {
       setNumOfCards(2);
     } else if (width < 1300) {
@@ -43,6 +45,7 @@ export default function RoomCards({
   };
 
   useEffect(() => {
+    resize();
     window.addEventListener('resize', resize);
     return () => {
       window.removeEventListener('resize', resize);

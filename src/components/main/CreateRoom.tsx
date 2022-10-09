@@ -59,6 +59,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  box-sizing: border-box;
   ${media.xlarge} {
     width: 29.4rem;
   }
@@ -67,12 +68,12 @@ const Container = styled.div`
   }
   ${media.small} {
     height: 18rem;
-    width: 17.4rem;
+    width: 17rem;
     padding: 3rem 0.7rem;
   }
   ${media.xsmall} {
     height: 13rem;
-    width: 12.3rem;
+    width: 12rem;
     padding: 2rem 0.7rem;
   }
   ${media.xxsmall} {
