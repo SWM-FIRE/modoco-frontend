@@ -50,7 +50,7 @@ const Contents = styled.div`
   margin-left: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   width: 15rem;
 `;
 

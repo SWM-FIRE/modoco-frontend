@@ -15,7 +15,7 @@ export default function Contents({ isMe }: { isMe: boolean }) {
   return (
     <Container isMe={isMe}>
       <UserInformation isModal={profileModal}>
-        {isEdit ? (
+        {isEdit && isMe ? (
           <EditUserProfile setIsEdit={setIsEdit} />
         ) : (
           <UserProfile isMe={isMe} setIsEdit={setIsEdit} />
