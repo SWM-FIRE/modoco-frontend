@@ -7,5 +7,5 @@ const getUser = async () => {
 };
 
 export default function useMe() {
-  return useQuery(['userData', 'getOne'], () => getUser, { retry: 0 });
+  return useQuery(['userData', 'getOne', 'me'], () => getUser, { retry: 0 });
 }

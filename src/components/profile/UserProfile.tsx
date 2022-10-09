@@ -22,7 +22,7 @@ export default function UserProfile({ isMe, setIsEdit }) {
   const { userId } = useParams();
   const navigate = useNavigate();
   const userDescription = '임시 설명입니다! 추후에 수정 예정';
-  const { isLoading, error, data, refetch } = useUser(Number(userId));
+  const { isLoading, error, refetch, data } = useUser(Number(userId));
 
   const {
     isLoading: friendLoading,
@@ -44,7 +44,8 @@ export default function UserProfile({ isMe, setIsEdit }) {
 
   useEffect(() => {
     refetch();
-  }, [userId, refetch]);
+    if (!isMe) setIsEdit(false);
+  }, [refetch, isMe]);
 
   const isFriend = friendData?.status === 'ACCEPTED';
   const isPending = friendData?.status === 'PENDING';
@@ -247,6 +248,7 @@ const Button = styled.button`
     padding: 0.8rem 1.2rem;
   }
 `;
+
 const DeleteFriend = styled.button`
   display: flex;
   align-items: center;
