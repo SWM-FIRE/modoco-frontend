@@ -104,7 +104,7 @@
 
 ### Room UML Diagram
 
-![front-uml](https://user-images.githubusercontent.com/66371206/185362989-de738d7f-dbce-43d1-9a73-b2cb75eb804b.png)
+![front-uml](https://user-images.githubusercontent.com/66371206/194737818-1ac02b91-7861-4983-8bc5-b00c2e55d7c8.jpeg)
 
 ## 개발로그 ✏️
 
