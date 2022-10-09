@@ -23,7 +23,10 @@ export default function Theme({ theme }) {
       volumeRef.current.volume = volume;
     }
     const newAudio = volumeRef.current;
-    (newAudio as any)?.setSinkId(userAudioOutputDevice?.deviceId);
+    const isValid = !!(newAudio as any)?.setSinkId;
+    if (isValid) {
+      (newAudio as any)?.setSinkId(userAudioOutputDevice);
+    }
   }, [volume, userSpeaker, userAudioOutputDevice]);
 
   return (
