@@ -32,20 +32,29 @@ export default function ChattingItem({
   const entrance = type === 'join' || type === 'leave';
   const msgRef = useRef(null);
 
-  const onCheckUrl = (message: string) => {
+  const onCheckUrl = (message: string, loc: string) => {
     const urlReg =
       /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi;
-    const text1 = message.replace(
-      urlReg,
-      "<a href='$1' target='_blank'>$1</a>",
-    );
-    const exp2 = /(^|[^/])(www\.[\S]+(\b|$))/gim;
-    return text1.replace(exp2, '$1<a href="http://$2" target="_blank">$2</a>');
+    if (loc === 'url') return message.split(urlReg)[1];
+    if (loc === 'front') return message.split(urlReg)[0];
+    if (loc === 'back') return message.split(urlReg)[3];
+    return null;
   };
 
   useEffect(() => {
     if (msgRef.current) {
-      msgRef.current.innerHTML = onCheckUrl(msg);
+      const url = onCheckUrl(msg, 'url');
+      if (url) {
+        const front = onCheckUrl(msg, 'front');
+        const back = onCheckUrl(msg, 'back');
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.innerText = url;
+        msgRef.current.innerHTML = `${front}${a.outerHTML}${back}`;
+      } else {
+        msgRef.current.innerText = msg;
+      }
     }
   }, []);
   return (
