@@ -16,12 +16,16 @@ export default function SkeletonProfile() {
           <AvatarContainer />
           <Contents>
             <Nickname />
-            <OAuthId />
+            <Links>
+              <MyLink />
+              <MyLink />
+            </Links>
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'flex-start',
                 gap: '0.5rem',
+                marginTop: '0.5rem',
               }}
             >
               <Group />
@@ -35,7 +39,8 @@ export default function SkeletonProfile() {
           style={{
             display: 'flex',
             justifyContent: 'flex-start',
-            gap: '0.5rem',
+            gap: '1rem',
+            marginTop: '2rem',
           }}
         >
           <Badge />
@@ -69,7 +74,7 @@ const AvatarContainer = styled.div`
 const Description = styled.div`
   width: 30rem;
   height: 2rem;
-  border-radius: 1rem;
+  border-radius: 0.4rem;
   margin-top: 2rem;
   background-color: ${openColor.gray7};
 `;
@@ -87,14 +92,6 @@ const Group = styled.div`
   height: 2rem;
   border-radius: 0.5rem;
   margin-top: 0.3rem;
-  background-color: ${openColor.gray7};
-`;
-
-const OAuthId = styled.div`
-  width: 10rem;
-  height: 2rem;
-  border-radius: 0.5rem;
-  margin-top: 0.4rem;
   background-color: ${openColor.gray7};
 `;
 
@@ -136,4 +133,30 @@ const Button = styled.div`
   height: 4rem;
   width: 8.6rem;
   background-color: ${openColor.gray7};
+`;
+
+const Links = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1.6rem;
+  margin-top: 1rem;
+  ${media.small} {
+    margin-top: 0.2rem;
+    gap: 0.8rem;
+  }
+`;
+
+const MyLink = styled.div`
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: ${openColor.gray7};
+  border-radius: 0.5rem;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
