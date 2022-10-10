@@ -56,7 +56,7 @@ export default function Chat() {
               avatar: message.avatar,
               uid: message.uid,
             }}
-            msg={message.message}
+            msg={message.message.toString()}
             time={message.createdAt}
             type={message.type}
             isHideTime={message.isHideTime}
