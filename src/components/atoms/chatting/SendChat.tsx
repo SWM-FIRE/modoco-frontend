@@ -30,11 +30,8 @@ export default function SendChat({
     }
   };
 
-  const onSubmit = (
-    event: React.FormEvent<HTMLFormElement> | KeyboardEvent,
-  ) => {
+  const onSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    // console.log('new 메세지 : ', newMessage);
     if (newMessage.trim() === '') return;
     newSocket.emit('chatMessage', {
       room: roomId,
@@ -42,21 +39,23 @@ export default function SendChat({
       message: newMessage,
       createdAt: new Date(),
     });
-    setNewMessage('');
+    setNewMessage(() => '');
     if (inputRef.current) {
       inputRef.current.style.height = '2rem';
     }
   };
 
-  const onKeyDown = (event) => {
+  const onKeyPress = (event) => {
     if (event.key === 'Enter') {
-      event.preventDefault();
-      onSubmit(event);
+      if (!event.shiftKey) {
+        event.preventDefault();
+        onSubmit(event);
+      }
     }
   };
 
   return (
-    <SubmitMessage onSubmit={onSubmit} roomId={roomId}>
+    <SubmitMessage roomId={roomId}>
       <Input
         placeholder="Write your message...."
         value={newMessage}
@@ -64,9 +63,9 @@ export default function SendChat({
         ref={inputRef}
         rows={1}
         onChange={onMessageChange}
-        onKeyDown={onKeyDown}
+        onKeyPress={onKeyPress}
       />
-      <Button>
+      <Button onClick={onSubmit}>
         <MessageSend />
       </Button>
     </SubmitMessage>
