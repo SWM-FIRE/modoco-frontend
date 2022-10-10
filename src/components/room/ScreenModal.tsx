@@ -115,13 +115,20 @@ const ModalBox = styled.div<{ isOpen: boolean }>`
 
 const ExpandButton = styled.div`
   position: absolute;
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 4.2rem;
+  height: 4.2rem;
   cursor: pointer;
   right: 3rem;
   bottom: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   svg {
-    width: 100%;
-    height: 100%;
+    width: 50%;
+    height: 50%;
+  }
+  &:hover {
+    background-color: rgb(103, 103, 103);
+    border-radius: 50%;
   }
 `;
