@@ -12,6 +12,7 @@ import EmptyBlock from './block/EmptyBlock';
 import { filterMyData } from './filterMyData';
 import MyBlock from './block/MyBlock';
 import CreateRoom from './CreateRoom';
+import MyEmptyBlock from './block/MyEmptyBlock';
 
 export default function RoomCards({
   openCreateRoom,
@@ -82,8 +83,8 @@ export default function RoomCards({
           }
         >
           {isLoading
-            ? [...Array(3)].map((no, index) => (
-                <EmptyBlock key={Symbol(index).toString()} isMain={false} />
+            ? [...Array(1)].map((no, index) => (
+                <MyEmptyBlock key={Symbol(index).toString()} />
               ))
             : newMyData.map((data) => {
                 return (

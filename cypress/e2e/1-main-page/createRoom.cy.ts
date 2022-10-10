@@ -32,7 +32,9 @@ describe('open create room modal in main page', () => {
     localStorage.setItem('access_token', 'mock_access_token');
     cy.visit('http://localhost:3000');
     cy.viewport(1536, 960);
-    cy.wait(100);
+
+    // wait for render
+    cy.wait(1000);
 
     // check if room modal is opened
     cy.get('[data-cy="create-room-modal-open"]').click();
