@@ -102,10 +102,10 @@ const Container = styled.div`
 
 const Text = styled.div`
   font-size: 1.4rem;
-  margin-top: 2rem;
   border-radius: 1rem;
   padding: 2rem;
   background-color: rgba(255, 255, 255, 0.3);
+  max-width: 20rem;
   color: #fff;
 `;
 

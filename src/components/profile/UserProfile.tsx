@@ -12,10 +12,14 @@ import Avatar from '../atoms/Avatar';
 import Group from './UserProfile/Group';
 import Badge from './UserProfile/Badge';
 import Pending from './UserProfile/Pending';
+import { ReactComponent as Github } from '../../assets/svg/Github.svg';
+import { ReactComponent as Mail } from '../../assets/svg/Mail.svg';
+import { ReactComponent as Globe } from '../../assets/svg/Globe.svg';
 import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessageBlack.svg';
 import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
 import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
 import SkeletonProfile from './SkeletonProfile';
+import userAPI from './UserAPI.json';
 
 export default function UserProfile({ isMe, setIsEdit }) {
   const { setClear } = userStore();
@@ -85,6 +89,22 @@ export default function UserProfile({ isMe, setIsEdit }) {
     navigate(`/`);
   };
 
+  const onGithub = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    window.open(`https://github.com/${userAPI.github_link}`).focus();
+  };
+
+  const onMail = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    window.open(`mailto:${userAPI.email}`, '_self');
+  };
+
+  const onBlog = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    console.log('hi');
+    window.open(`${userAPI.blog_link}`).focus();
+  };
+
   return (
     <Components isMe={isMe}>
       <div
@@ -106,7 +126,21 @@ export default function UserProfile({ isMe, setIsEdit }) {
                 </FriendComponent>
               )}
             </NicknameComponent>
-            <OAuthId>@tempOAuth</OAuthId>
+            <Links>
+              <MyLink onClick={onMail}>
+                <Mail />
+              </MyLink>
+              {userAPI.github_link && (
+                <MyLink onClick={onGithub}>
+                  <Github style={{ width: '90%', height: '90%' }} />
+                </MyLink>
+              )}
+              {userAPI.blog_link && (
+                <MyLink onClick={onBlog}>
+                  <Globe />
+                </MyLink>
+              )}
+            </Links>
             <Group />
             <Description>{userDescription}</Description>
           </Contents>
@@ -188,10 +222,33 @@ const Contents = styled.div`
   }
 `;
 
-const OAuthId = styled.span`
-  color: #f9fafb;
-  font-family: IBMPlexMonoRegular;
-  font-size: 1.4rem;
+const Links = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1.6rem;
+  margin-top: 0.4rem;
+  ${media.small} {
+    margin-top: 0.2rem;
+    gap: 0.8rem;
+  }
+`;
+
+const MyLink = styled.div`
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  border-radius: 0.5rem;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const NicknameComponent = styled.div`
@@ -244,6 +301,7 @@ const Button = styled.button`
   cursor: pointer;
   gap: 0.4rem;
   margin-top: 2rem;
+  max-width: 20rem;
   ${media.small} {
     padding: 0.8rem 1.2rem;
   }

@@ -1,0 +1,12 @@
+{
+  "uid": 15,
+  "nickname": "test_user",
+  "avatar": 10,
+  "description": "hihi",
+  "github_link": "071yoon",
+  "blog_link": "https://velog.io/@071yoon",
+  "email": "yeonggi@kakao.com",
+  "group": ["SWM"],
+  "badge": ["1"],
+  "online": ""
+}
