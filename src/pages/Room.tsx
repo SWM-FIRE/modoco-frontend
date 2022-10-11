@@ -16,6 +16,7 @@ import roomModalStore from '../stores/room/roomModalStore';
 import ScreenShareModal from '../components/room/ScreenModal';
 import ProfileModal from '../components/room/profileModal/ProfileModal';
 import InviteModal from '../components/room/InviteModal/InviteModal';
+import CodeModal from '../components/room/codeModal/CodeModal';
 
 export default function Room() {
   const { roomId } = useParams();
@@ -26,10 +27,12 @@ export default function Room() {
     sidebarModal,
     profileModal,
     inviteModal,
+    codeModal,
     toggleSettingModal,
     toggleSidebarModal,
     toggleProfileModal,
     toggleInviteModal,
+    toggleCodeModal,
   } = roomModalStore();
 
   const theme = getTheme(data?.theme);
@@ -57,6 +60,7 @@ export default function Room() {
       {profileModal && <ProfileModal toggle={toggleProfileModal} />}
       {screenModal && <ScreenShareModal />}
       {inviteModal && <InviteModal toggle={toggleInviteModal} />}
+      {codeModal && <CodeModal toggle={toggleCodeModal} />}
       <Component>
         <Header theme={data?.theme} />
         <Contents isOpen={sidebarModal}>
