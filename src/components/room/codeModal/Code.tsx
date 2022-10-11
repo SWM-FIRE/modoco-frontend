@@ -23,13 +23,15 @@ export default function Code() {
 
 const Component = styled.div`
   font-size: 1.3rem;
-  /* background-color: black; */
+  background-color: #0f0f0f;
+
   font-family: IBMPlexSansKRRegular;
   color: rgba(255, 255, 255, 1);
   min-height: 60rem;
   max-height: 60rem;
   white-space: pre;
   overflow: auto;
+  margin-top: 1rem;
 
   ::-webkit-scrollbar {
     width: 0.3rem;
