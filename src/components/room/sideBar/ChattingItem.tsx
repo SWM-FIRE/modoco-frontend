@@ -118,16 +118,17 @@ const Entrance = styled.div`
 const Component = styled.li<componentInterface>`
   display: flex;
   flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
-  gap: 1.6rem;
+  gap: 1rem;
   margin-top: ${({ isHide }) => (isHide ? '1rem' : '2rem')};
 `;
 
 const AvatarComponent = styled.div<hideInterface>`
-  margin-left: ${({ isHide }) => (isHide ? '4.8rem' : '0')};
+  width: 4rem;
+  height: 4rem;
   svg {
     display: ${({ isHide }) => (isHide ? 'none' : 'block')};
-    width: 4.8rem;
-    height: 4.8rem;
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -153,7 +154,7 @@ const MessageBox = styled.div<userInterface>`
 const Message = styled.div<{ isMe: boolean; isLobby: boolean }>`
   color: rgb(255, 255, 255);
   font-size: 1.5rem;
-  padding: 1.6rem;
+  padding: 1rem;
   max-width: ${({ isLobby }) => (isLobby ? '100%' : '32rem')};
   border-radius: ${({ isMe }) =>
     isMe ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};
