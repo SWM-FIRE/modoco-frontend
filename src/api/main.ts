@@ -1,3 +1,4 @@
+import newUser from 'src/interface/newUser.interface';
 import {
   authorizationRequest,
   unAuthorizationRequest,
@@ -22,6 +23,13 @@ const changeMe = (uid: number, nickname: string, avatar: number) => {
     uid,
     avatar,
     nickname,
+  });
+};
+
+// change profile
+const changeProfile = (user: newUser) => {
+  return authorizationRequest.put(API.USER, {
+    user,
   });
 };
 
@@ -141,4 +149,5 @@ export {
   getAllFriends,
   getFriend,
   getRecords,
+  changeProfile,
 };

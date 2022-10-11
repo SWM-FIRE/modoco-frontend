@@ -22,15 +22,17 @@ const SetupButton = styled.button`
   cursor: pointer;
   width: 12rem;
   height: 12rem;
+  min-width: 12rem;
   &:hover {
     #backgroundContainer {
       background-color: #00000080;
     }
   }
-  min-width: 12rem;
   ${media.small} {
     width: 8rem;
+    height: 8rem;
     min-width: 8rem;
+    margin-left: 10rem;
   }
 `;
 

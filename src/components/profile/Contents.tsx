@@ -6,7 +6,7 @@ import Friends from './Friends';
 import Statistics from './Statistics';
 import Overall from './Overall';
 import roomModalStore from '../../stores/room/roomModalStore';
-import EditUserProfile from './EditUserProfile';
+import EditUserProfile from './EditUserProfile/EditUserProfile';
 
 export default function Contents({ isMe }: { isMe: boolean }) {
   const { profileModal } = roomModalStore();

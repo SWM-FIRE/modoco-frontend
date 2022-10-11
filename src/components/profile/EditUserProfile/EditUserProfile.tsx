@@ -1,21 +1,38 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import media from 'src/styles/media';
-import EditAvatar from './EditUserProfile/EditAvatar';
-import Badge from './UserProfile/Badge';
-import EditGroup from './EditUserProfile/EditGroup';
-import useChangeProfile from '../../hooks/useChangeProfile';
-import EditNickname from './EditUserProfile/EditNickname';
-import EditDescription from './EditUserProfile/EditDescription';
-import UserStore from '../../stores/userStore';
-import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
+import EditAvatar from './EditAvatar';
+import Badge from '../UserProfile/Badge';
+import EditGroup from './EditGroup';
+import useChangeProfile from '../../../hooks/useChangeProfile';
+import EditNickname from './EditNickname';
+import EditDescription from './EditDescription';
+import UserStore from '../../../stores/userStore';
+import EditLinks from './EditLinks';
+import lobbySocket, { deleteSocket } from '../../../adapters/lobbySocket';
 
 export default function EditUserProfile({ setIsEdit }) {
-  const { inputs, onChange, onSubmit, onChangeAvatar, isDisable } =
-    useChangeProfile();
-  const { avatar, nickname, description } = inputs;
+  const {
+    inputs,
+    onChange,
+    onSubmit,
+    onChangeAvatar,
+    isDisable,
+    onEnterGroup,
+  } = useChangeProfile();
+  const {
+    avatar,
+    nickname,
+    description,
+    group,
+    github_link,
+    blog_link,
+    email,
+    newGroup,
+  } = inputs;
   const { setClear } = UserStore();
 
   const navigate = useNavigate();
@@ -40,17 +57,29 @@ export default function EditUserProfile({ setIsEdit }) {
 
   return (
     <Form onSubmit={onSubmitForm}>
-      <EditAvatar avatar={avatar} onChangeAvatar={onChangeAvatar} />
-      <Contents>
-        <EditNickname nickname={nickname} onChange={onChange} />
-        <OAuthId>@tempOAuth</OAuthId>
-        <EditGroup />
-        <EditDescription description={description} onChange={onChange} />
-        <Badge />
-        <Logout onClick={onLogOut} type="button">
-          로그아웃
-        </Logout>
-      </Contents>
+      <Profile>
+        <EditAvatar avatar={avatar} onChangeAvatar={onChangeAvatar} />
+        <ProfileDetail>
+          <EditNickname nickname={nickname} onChange={onChange} />
+          <EditLinks
+            email={email}
+            github_link={github_link}
+            blog_link={blog_link}
+            onChange={onChange}
+          />
+          <EditGroup
+            group={group}
+            onChange={onChange}
+            onEnterGroup={onEnterGroup}
+            newGroup={newGroup}
+          />
+        </ProfileDetail>
+      </Profile>
+      <EditDescription description={description} onChange={onChange} />
+      <Badge />
+      <Logout onClick={onLogOut} type="button">
+        로그아웃
+      </Logout>
       <Buttons>
         <Button onClick={onClickButton} type="button">
           취소
@@ -68,8 +97,6 @@ const Form = styled.form`
   width: 70%;
   border-radius: 2rem;
   position: relative;
-  display: flex;
-  justify-content: flex-start;
   padding: 3.2rem;
   gap: 3rem;
   @media (max-width: 1020px) {
@@ -77,11 +104,27 @@ const Form = styled.form`
   }
   ${media.small} {
     padding-bottom: 10rem;
+    padding: 1.6rem;
   }
 `;
 
-const Contents = styled.div`
-  flex-grow: 1;
+const ProfileDetail = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 12rem);
+  ${media.small} {
+    width: 100%;
+  }
+`;
+
+const Profile = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 4rem;
+  ${media.small} {
+    flex-direction: column;
+    gap: 2rem;
+  }
 `;
 
 const Buttons = styled.div`
@@ -108,12 +151,6 @@ const Button = styled.button`
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
-`;
-
-const OAuthId = styled.span`
-  color: #f9fafb;
-  font-family: IBMPlexMonoRegular;
-  font-size: 1.4rem;
 `;
 
 const Logout = styled.button`

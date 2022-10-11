@@ -34,9 +34,9 @@ export default function EditNickname({ nickname, onChange }) {
 const Section = styled.p`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  max-width: 28rem;
   ${media.small} {
-    width: 100%;
+    width: 28rem;
   }
 `;
 
@@ -44,7 +44,7 @@ const Input = styled.input`
   height: 4.9rem;
   padding: 1.2rem 0.8rem;
   color: #f1f5f9;
-  background-color: #191f28;
+  background-color: rgba(0, 0, 0, 0.4);
   font-size: 3rem;
   font-family: IBMPlexMonoRegular;
   border-radius: 0.6rem;

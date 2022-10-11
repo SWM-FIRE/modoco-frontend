@@ -19,7 +19,7 @@ export default function EditDescription({ description, onChange }) {
 const Section = styled.p`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 100%;
   padding-top: 2rem;
   ${media.small} {
     width: 100%;
@@ -30,7 +30,7 @@ const Input = styled.input`
   height: 4.9rem;
   padding: 1.2rem 0.8rem;
   color: #e2e8f0;
-  background-color: #191f28;
+  background-color: rgba(0, 0, 0, 0.4);
   font-size: 1.4rem;
   font-family: IBMPlexMonoRegular;
   border-radius: 0.6rem;
