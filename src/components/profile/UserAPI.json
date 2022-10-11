@@ -2,11 +2,11 @@
   "uid": 15,
   "nickname": "test_user",
   "avatar": 10,
-  "description": "hihi",
+  "description": "this is description test",
   "github_link": "071yoon",
   "blog_link": "https://velog.io/@071yoon",
   "email": "yeonggi@kakao.com",
-  "group": ["SWM"],
+  "group": ["SWM", "Konkuk University", "test", "really-long-test"],
   "badge": ["1"],
   "online": ""
 }

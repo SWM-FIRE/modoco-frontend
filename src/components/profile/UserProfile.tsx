@@ -25,7 +25,6 @@ export default function UserProfile({ isMe, setIsEdit }) {
   const { setClear } = userStore();
   const { userId } = useParams();
   const navigate = useNavigate();
-  const userDescription = '임시 설명입니다! 추후에 수정 예정';
   const { isLoading, error, refetch, data } = useUser(Number(userId));
 
   const {
@@ -57,7 +56,10 @@ export default function UserProfile({ isMe, setIsEdit }) {
   if (isLoading || friendLoading || requestLoading || deleteLoading) {
     return <SkeletonProfile />;
   }
-  if (error || friendError || requestError || deleteError) return <>error</>;
+  if (error || friendError || requestError || deleteError) {
+    console.log('error occured');
+    return <SkeletonProfile />;
+  }
 
   const onClickEditProfile = () => {
     setIsEdit(true);
@@ -101,7 +103,6 @@ export default function UserProfile({ isMe, setIsEdit }) {
 
   const onBlog = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-    console.log('hi');
     window.open(`${userAPI.blog_link}`).focus();
   };
 
@@ -141,8 +142,8 @@ export default function UserProfile({ isMe, setIsEdit }) {
                 </MyLink>
               )}
             </Links>
-            <Group />
-            <Description>{userDescription}</Description>
+            <Group groups={userAPI.group} />
+            <Description>{userAPI.description}</Description>
           </Contents>
         </div>
         <Badge />

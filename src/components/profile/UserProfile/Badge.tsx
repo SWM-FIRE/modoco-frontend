@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import Level from './Level';
 
 export default function Badge() {
@@ -17,4 +18,7 @@ const Components = styled.div`
   display: flex;
   gap: 2rem;
   margin-top: 3.2rem;
+  ${media.small} {
+    margin-bottom: 6.4rem;
+  }
 `;
