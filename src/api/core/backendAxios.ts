@@ -1,5 +1,4 @@
 import axios from 'axios';
-import toast from 'react-hot-toast';
 import { API } from '../../config';
 
 // 인증된 요청
@@ -36,9 +35,6 @@ unAuthorizationRequest.interceptors.response.use(
   },
   (error) => {
     console.warn('[Axios] ', error);
-    if (error.response.status === 403) {
-      toast.error('이메일 인증을 완료해주세요');
-    }
     return Promise.reject(error);
   },
 );
