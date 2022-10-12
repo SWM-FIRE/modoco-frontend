@@ -27,11 +27,13 @@ const useSetSelf = () => {
             setLogin(true);
           });
         })
-        .catch(() => {
-          if (localStorage.getItem('access_token')) {
+        .catch((err) => {
+          if (err.response.status === 403) {
+            toast.error('이메일 인증을 완료해주세요.');
+          } else if (localStorage.getItem('access_token')) {
             toast.error('로그인 시간이 만료되었습니다.');
-            localStorage.removeItem('access_token');
           }
+          localStorage.removeItem('access_token');
           navigate(`/`);
           setClear();
           setLogin(true);

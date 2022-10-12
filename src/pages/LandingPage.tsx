@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Scrolls from '../components/main/Scrolls';
 import Title from '../components/main/TitleContainer';
 import LoginModal from '../components/login/LoginModal';
-
+import { getMe } from '../api/main';
 import LandingPage from '../components/main/landingPage/LandingPage';
 import mainModalStore from '../stores/mainModalStore';
 
@@ -13,10 +13,12 @@ export default function Landing() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem('access_token')) {
-      navigate('/main');
-    }
-  });
+    getMe().then((res) => {
+      if (res.data) {
+        navigate('/main');
+      }
+    });
+  }, []);
 
   return (
     <>
