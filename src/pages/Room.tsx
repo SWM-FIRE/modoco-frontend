@@ -28,6 +28,7 @@ export default function Room() {
     profileModal,
     inviteModal,
     codeModal,
+    codeModalType,
     toggleSettingModal,
     toggleSidebarModal,
     toggleProfileModal,
@@ -60,7 +61,9 @@ export default function Room() {
       {profileModal && <ProfileModal toggle={toggleProfileModal} />}
       {screenModal && <ScreenShareModal />}
       {inviteModal && <InviteModal toggle={toggleInviteModal} />}
-      {codeModal && <CodeModal toggle={toggleCodeModal} />}
+      {codeModal && (
+        <CodeModal toggle={toggleCodeModal} codeModalType={codeModalType} />
+      )}
       <Component>
         <Header theme={data?.theme} />
         <Contents isOpen={sidebarModal}>

@@ -6,7 +6,7 @@ export default function ChatMenu({ roomId }: { roomId: string }) {
   const { toggleCodeModal } = roomModalStore();
   return (
     <Component roomId={roomId}>
-      <Icon type="button" onClick={toggleCodeModal}>
+      <Icon type="button" onClick={() => toggleCodeModal('SEND')}>
         <Code />
       </Icon>
     </Component>

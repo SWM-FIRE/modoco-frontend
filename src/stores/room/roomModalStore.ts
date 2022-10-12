@@ -20,7 +20,8 @@ interface Modal {
   screenUid: number;
   setScreenUid: (_uid: number) => void;
   codeModal: boolean;
-  toggleCodeModal: () => void;
+  codeModalType: string;
+  toggleCodeModal: (_type: string) => void;
 }
 
 const roomModalStore = create<Modal>((set) => ({
@@ -49,7 +50,11 @@ const roomModalStore = create<Modal>((set) => ({
   screenUid: 0,
   setScreenUid: (by) => set(() => ({ screenUid: by })),
   codeModal: false,
-  toggleCodeModal: () => set((state) => ({ codeModal: !state.codeModal })),
+  codeModalType: '',
+  toggleCodeModal: (by) => {
+    set((state) => ({ codeModal: !state.codeModal }));
+    set(() => ({ codeModalType: by }));
+  },
 }));
 
 export default roomModalStore;

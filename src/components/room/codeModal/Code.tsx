@@ -4,7 +4,7 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/vs2015.css';
 import codeChatStore from '../../../stores/room/codeChatStore';
 
-export default function Code() {
+export default function Code({ codeModalType }: { codeModalType: string }) {
   const { code } = codeChatStore();
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function Code() {
   }, []);
 
   return (
-    <Component>
+    <Component codeModalType={codeModalType}>
       <pre>
         <code>{code}</code>
       </pre>
@@ -21,14 +21,16 @@ export default function Code() {
   );
 }
 
-const Component = styled.div`
+const Component = styled.div<{ codeModalType: string }>`
   font-size: 1.3rem;
   background-color: #0f0f0f;
 
   font-family: IBMPlexSansKRRegular;
   color: rgba(255, 255, 255, 1);
-  min-height: 60rem;
-  max-height: 60rem;
+  min-height: ${(props) =>
+    props.codeModalType === 'READ' ? '75rem' : '60rem'};
+  max-height: ${(props) =>
+    props.codeModalType === 'READ' ? '75rem' : '60rem'};
   white-space: pre;
   overflow: auto;
   margin-top: 1rem;
