@@ -3,29 +3,28 @@ import styled from 'styled-components';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
 
 export default function EditGroup({
-  group,
+  groups,
   onChange,
   onEnterGroup,
   newGroup,
 }: {
-  group: string[];
+  groups: string[];
   onChange: (_e: any) => void;
   onEnterGroup: (_e: React.KeyboardEvent<HTMLElement>) => void;
   newGroup: string;
 }) {
-  console.log(group);
-
-  const onRemoveGroup = (event: React.MouseEvent<HTMLDivElement>) => {
+  const onRemoveGroup = (event: React.MouseEvent<SVGElement>, removeGroup) => {
     event.preventDefault();
-    console.log('remove group');
+    const newGroups = groups.filter((group) => group !== removeGroup);
+    onChange({ target: { name: 'groups', value: newGroups } });
   };
 
   return (
     <Components>
-      {group.map((item, index) => (
-        <GroupItem key={Symbol(index).toString()} onClick={onRemoveGroup}>
-          {item}
-          <X />
+      {groups?.map((group, index) => (
+        <GroupItem key={Symbol(index).toString()}>
+          {group}
+          <X onClick={(event) => onRemoveGroup(event, group)} />
         </GroupItem>
       ))}
       <AddGroup

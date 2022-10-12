@@ -21,7 +21,7 @@ export default function EditNickname({ nickname, onChange }) {
         id="nickname"
         type="text"
         name="nickname"
-        value={nickname}
+        value={nickname || ''}
         onChange={onChange}
         onBlur={onBlur}
         placeholder="닉네임을 입력해주세요."
@@ -48,6 +48,9 @@ const Input = styled.input`
   font-size: 3rem;
   font-family: IBMPlexMonoRegular;
   border-radius: 0.6rem;
+  &::placeholder {
+    font-size: 2rem;
+  }
 `;
 
 const Error = styled.span`

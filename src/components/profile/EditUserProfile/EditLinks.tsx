@@ -27,7 +27,7 @@ export default function EditLinks({
           id="email"
           type="text"
           name="email"
-          value={email}
+          value={email || ''}
           onChange={onChange}
           placeholder="이메일을 입력해주세요"
         />

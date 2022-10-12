@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import toast from 'react-hot-toast';
 import userStore from '../stores/userStore';
-import { changeMe } from '../api/main';
-import userAPI from '../components/profile/UserAPI.json';
+import { changeProfile } from '../api/main';
 
 export default function useChangeProfile() {
   const { setAvatar, setNickname, uid } = userStore();
+
   const queryClient = useQueryClient();
 
   const { avatar: myAvatar, nickname: myNickname } = userStore();
@@ -14,27 +14,15 @@ export default function useChangeProfile() {
   const [inputs, setInputs] = useState({
     avatar: myAvatar,
     nickname: myNickname,
-    group: [],
+    groups: [],
     github_link: '',
     blog_link: '',
     email: '',
-    description: '',
+    status_quo: '',
     newGroup: '',
   });
 
-  useEffect(() => {
-    // setInput state
-    setInputs({
-      ...inputs,
-      group: userAPI.group,
-      github_link: userAPI.github_link,
-      blog_link: userAPI.blog_link,
-      email: userAPI.email,
-      description: userAPI.description,
-    });
-  }, []);
-
-  const { avatar, nickname, group, newGroup } = inputs;
+  const { avatar, nickname, groups, newGroup } = inputs;
 
   const onChange = (e) => {
     setInputs({
@@ -46,7 +34,7 @@ export default function useChangeProfile() {
   const onAddGroup = () => {
     setInputs({
       ...inputs,
-      group: [...group, newGroup.trim()],
+      groups: [...groups, newGroup.trim()],
     });
     setInputs((prev) => {
       return {
@@ -59,7 +47,7 @@ export default function useChangeProfile() {
   const onEnterGroup = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      if (group.includes(newGroup)) {
+      if (groups.includes(newGroup)) {
         toast.error('이미 추가된 그룹입니다.');
         setInputs((prev) => {
           return {
@@ -87,25 +75,7 @@ export default function useChangeProfile() {
     });
   };
 
-  // const { mutate: mutateProfile } = useMutation(() => changeProfile(inputs), {
-  //   onSuccess: (res) => {
-  //     console.debug('[success]', res);
-  //     setAvatar(avatar);
-  //     setNickname(nickname);
-  //     toast.success('유저 정보가 변경되었습니다');
-  //   },
-  //   onError: (err) => {
-  //     console.debug('[error] ', err);
-  //     setInputs({
-  //       ...inputs,
-  //     });
-  //   },
-  //   onSettled: () => {
-  //     queryClient.invalidateQueries(['userData', 'getOne', uid]);
-  //   },
-  // });
-
-  const { mutate } = useMutation(() => changeMe(uid, nickname, avatar), {
+  const { mutate: mutateProfile } = useMutation(() => changeProfile(inputs), {
     onSuccess: (res) => {
       console.debug('[success]', res);
       setAvatar(avatar);
@@ -125,8 +95,22 @@ export default function useChangeProfile() {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate();
-    // mutateProfile();
+    // mutate();
+    mutateProfile();
+  };
+
+  const initInputs = ({ data }) => {
+    const githubId = data.github_link.split('github.com/').pop();
+    setInputs({
+      ...inputs,
+      avatar: data.avatar,
+      nickname: data.nickname,
+      groups: data.groups,
+      github_link: githubId,
+      blog_link: data.blog_link,
+      email: data.email,
+      status_quo: data.status_quo,
+    });
   };
 
   return {
@@ -136,5 +120,6 @@ export default function useChangeProfile() {
     onSubmit,
     onChangeAvatar,
     isDisable,
+    initInputs,
   };
 }

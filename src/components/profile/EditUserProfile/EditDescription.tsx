@@ -1,14 +1,15 @@
+/* eslint-disable camelcase */
 import styled from 'styled-components';
 import media from 'src/styles/media';
 
-export default function EditDescription({ description, onChange }) {
+export default function EditDescription({ status_quo, onChange }) {
   return (
     <Section>
       <Input
-        id="description"
+        id="status_quo"
         type="text"
-        name="description"
-        value={description}
+        name="status_quo"
+        value={status_quo || ''}
         onChange={onChange}
         placeholder="자기소개를 입력해주세요."
       />

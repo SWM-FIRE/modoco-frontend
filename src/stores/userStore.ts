@@ -18,9 +18,6 @@ const userStore = create<User>((set) => ({
   uid: -1,
   avatar: 1,
   time: 0,
-  description: 'this is description test',
-  group: ['soma'],
-  badge: ['씨앗1'],
   isLogin: false,
   setTime: (_by: number) => set(() => ({ time: _by })),
   setNickname: (by) => {
