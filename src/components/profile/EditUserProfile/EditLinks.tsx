@@ -22,15 +22,7 @@ export default function EditLinks({
         <IconSize>
           <Mail />
         </IconSize>
-        <Inputs
-          style={{ width: '25rem' }}
-          id="email"
-          type="text"
-          name="email"
-          value={email || ''}
-          onChange={onChange}
-          placeholder="이메일을 입력해주세요"
-        />
+        <Text>{email}</Text>
       </LinkItem>
       <LinkItem>
         <IconSize>
