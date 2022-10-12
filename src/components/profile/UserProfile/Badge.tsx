@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import Level from './Level';
 
 export default function Badge() {
@@ -8,7 +9,7 @@ export default function Badge() {
       <Level level={2} lowerLevel={2} />
       <Level level={3} lowerLevel={3} />
       <Level level={4} lowerLevel={4} />
-      <Level level={5} lowerLevel={5} />
+      {/* <Level level={5} lowerLevel={5} /> */}
     </Components>
   );
 }
@@ -17,4 +18,7 @@ const Components = styled.div`
   display: flex;
   gap: 2rem;
   margin-top: 3.2rem;
+  ${media.small} {
+    margin-bottom: 6.4rem;
+  }
 `;

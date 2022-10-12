@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-hot-toast';
+import media from 'src/styles/media';
 import useDeleteFriendRequest from 'src/hooks/friend/useDeleteFriendRequest';
 import useAcceptFriendRequest from 'src/hooks/friend/useAcceptFriendRequest';
 import {
@@ -77,14 +78,19 @@ export default function Pending({
     <Container>
       {friend?.role === 'SENDER' && <Text>친구 요청을 보냈습니다</Text>}
       {friend?.role === 'RECEIVER' && (
-        <Buttons>
-          <Button onClick={sendDelete} color="#ff8e89">
-            거절하기
-          </Button>
-          <Button onClick={sendAccept} color="#76e8ad">
-            수락하기
-          </Button>
-        </Buttons>
+        <>
+          <p style={{ color: 'white', marginBottom: '2rem' }}>
+            유효한 친구요청이 있습니다
+          </p>
+          <Buttons>
+            <Button onClick={sendDelete} color="#ff8e89">
+              거절하기
+            </Button>
+            <Button onClick={sendAccept} color="#76e8ad">
+              수락하기
+            </Button>
+          </Buttons>
+        </>
       )}
     </Container>
   );
@@ -96,10 +102,10 @@ const Container = styled.div`
 
 const Text = styled.div`
   font-size: 1.4rem;
-  margin-top: 2rem;
   border-radius: 1rem;
   padding: 2rem;
   background-color: rgba(255, 255, 255, 0.3);
+  max-width: 20rem;
   color: #fff;
 `;
 
@@ -121,4 +127,9 @@ const Buttons = styled.div`
   justify-content: flex-start;
   gap: 5rem;
   align-items: center;
+  ${media.small} {
+    gap: 0;
+    margin: 0 2rem;
+    justify-content: space-between;
+  }
 `;

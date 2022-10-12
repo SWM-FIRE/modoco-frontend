@@ -38,13 +38,19 @@ const Component = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 2.8rem;
+  max-width: 28rem;
+  ${media.small} {
+    margin-top: 2rem;
+    justify-content: space-between;
+    width: 100%;
+  }
 `;
 
 const Contents = styled.div`
   margin-left: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   width: 15rem;
 `;
 
@@ -54,7 +60,6 @@ const Text = styled.p`
   font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.6);
   ${media.small} {
-    margin-left: 0.4rem;
-    font-size: 1.4rem;
+    display: none;
   }
 `;

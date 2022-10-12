@@ -176,7 +176,7 @@ const usePeerConnection = () => {
           avatar: res.data.avatar,
           message: `${res.data.nickname}님이 입장하셨습니다.`,
           createdAt: new Date().toString(),
-          type: 'join',
+          type: 'JOIN',
           isHideTime: false,
           isHideNicknameAndAvatar: false,
         });

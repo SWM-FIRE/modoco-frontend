@@ -7,7 +7,7 @@ import Search from './Search';
 import Lobby from './lobby/Lobby';
 import { ReactComponent as MainFire } from '../../assets/svg/MainFire.svg';
 import CheckInvite from './CheckInvite';
-import { getMeWithToken, getUser } from '../../api/main';
+import { getMe, getUser } from '../../api/main';
 
 export default function TitleContainer() {
   const [isLobby, setLobby] = useState<boolean>(false);
@@ -32,7 +32,7 @@ export default function TitleContainer() {
   useEffect(() => {
     // send my info
     lobbySocket.socket?.on('connect', () => {
-      getMeWithToken(localStorage.getItem('access_token')).then((res) => {
+      getMe().then((res) => {
         lobbySocket.socket?.emit('joinLobby', { uid: res.data.uid });
       });
     });

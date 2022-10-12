@@ -7,3 +7,4 @@ declare module '*.svg' {
 }
 declare module '*.gif';
 declare module '*.mp3';
+declare module 'react-items-carousel';

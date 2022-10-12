@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import { ReactComponent as RefreshIcon } from '../../../assets/svg/RefreshIcon.svg';
 
@@ -21,10 +22,17 @@ const SetupButton = styled.button`
   cursor: pointer;
   width: 12rem;
   height: 12rem;
+  min-width: 12rem;
   &:hover {
     #backgroundContainer {
       background-color: #00000080;
     }
+  }
+  ${media.small} {
+    width: 8rem;
+    height: 8rem;
+    min-width: 8rem;
+    margin-left: 10rem;
   }
 `;
 
@@ -39,13 +47,14 @@ const AvatarContainer = styled.div`
   justify-content: flex-start;
   width: 100%;
   /* height: 100%; */
+  min-width: 12rem;
   svg {
     height: 100%;
     width: 100%;
   }
-  @media (max-width: 1120px) {
-    min-width: 80%;
-    /* min-height: 80%; */
+  ${media.small} {
+    width: 8rem;
+    min-width: 8rem;
   }
 `;
 
@@ -74,8 +83,4 @@ const Background = styled.div`
   top: 0;
   left: 0;
   border-radius: 100%;
-  @media (max-width: 1120px) {
-    min-width: 80%;
-    /* min-height: 80%; */
-  }
 `;

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import UserStore from '../stores/userStore';
-import { getMeWithToken, getRecords } from '../api/main';
+import { getMe, getRecords } from '../api/main';
 
 const useSetSelf = () => {
   const { setNickname, setAvatar, setUid, setClear, setTime, setLogin, uid } =
@@ -15,7 +15,7 @@ const useSetSelf = () => {
       return;
     }
     if (token) {
-      getMeWithToken(localStorage.getItem('access_token'))
+      getMe()
         .then((res) => {
           setNickname(res.data.nickname);
           setAvatar(res.data.avatar);
@@ -27,11 +27,13 @@ const useSetSelf = () => {
             setLogin(true);
           });
         })
-        .catch(() => {
-          if (localStorage.getItem('access_token')) {
+        .catch((err) => {
+          if (err.response.status === 403) {
+            toast.error('이메일 인증을 완료해주세요.');
+          } else if (localStorage.getItem('access_token')) {
             toast.error('로그인 시간이 만료되었습니다.');
-            localStorage.removeItem('access_token');
           }
+          localStorage.removeItem('access_token');
           navigate(`/`);
           setClear();
           setLogin(true);

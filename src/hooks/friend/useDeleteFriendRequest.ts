@@ -8,9 +8,9 @@ const deleteAFriend = async (uid: number) => {
 
 export default function useDeleteFriendRequest(uid: number) {
   const queryClient = useQueryClient();
-  return useMutation(['friend', 'request'], () => deleteAFriend(uid), {
+  return useMutation(['friend', 'request', uid], () => deleteAFriend(uid), {
     onSettled: () => {
-      queryClient.invalidateQueries(['Friend', 'personal']);
+      queryClient.invalidateQueries(['Friend', 'personal', uid]);
     },
   });
 }

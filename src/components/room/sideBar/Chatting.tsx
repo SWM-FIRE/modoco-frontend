@@ -7,6 +7,7 @@ import userStore from '../../../stores/userStore';
 import receiveNewMessageStore from '../../../stores/room/receiveNewMessageStore';
 import SendChat from '../../atoms/chatting/SendChat';
 import NewMessage from './NewMessage';
+import ChatMenu from '../../atoms/chatting/ChatMenu';
 
 export default function Chat() {
   const { setIsReceiveNewMessage } = receiveNewMessageStore();
@@ -56,7 +57,7 @@ export default function Chat() {
               avatar: message.avatar,
               uid: message.uid,
             }}
-            msg={message.message}
+            msg={message.message.toString()}
             time={message.createdAt}
             type={message.type}
             isHideTime={message.isHideTime}
@@ -66,6 +67,7 @@ export default function Chat() {
         ))}
       </ChattingList>
       <NewMessage chatWindow={chatWindow} />
+      <ChatMenu roomId={roomId} />
       <SendChat roomId={roomId} uid={uid} />
     </Component>
   );

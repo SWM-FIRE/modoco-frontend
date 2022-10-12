@@ -31,7 +31,10 @@ export default function SingleScreen({ connectedUser, stream }) {
       videoRef.current.srcObject = stream;
     }
     const newRef = videoRef.current;
-    (newRef as any).setSinkId(userAudioOutputDevice?.deviceId);
+    const isValid = !!(newRef as any)?.setSinkId;
+    if (isValid) {
+      (newRef as any)?.setSinkId(userAudioOutputDevice);
+    }
   }, [stream, videoRef, userAudioOutputDevice]);
 
   useEffect(() => {

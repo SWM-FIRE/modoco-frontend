@@ -19,6 +19,9 @@ interface Modal {
   toggleSideProfileModal: () => void;
   screenUid: number;
   setScreenUid: (_uid: number) => void;
+  codeModal: boolean;
+  codeModalType: string;
+  toggleCodeModal: (_type: string) => void;
 }
 
 const roomModalStore = create<Modal>((set) => ({
@@ -46,6 +49,12 @@ const roomModalStore = create<Modal>((set) => ({
     set((state) => ({ sideProfileModal: !state.sideProfileModal })),
   screenUid: 0,
   setScreenUid: (by) => set(() => ({ screenUid: by })),
+  codeModal: false,
+  codeModalType: '',
+  toggleCodeModal: (by) => {
+    set((state) => ({ codeModal: !state.codeModal }));
+    set(() => ({ codeModalType: by }));
+  },
 }));
 
 export default roomModalStore;

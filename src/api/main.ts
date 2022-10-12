@@ -1,53 +1,47 @@
-import { request, awsRequest } from './core/index';
+import newUser from 'src/interface/newUser.interface';
+import {
+  authorizationRequest,
+  unAuthorizationRequest,
+  awsRequest,
+} from './core/index';
 import { API } from '../config';
-// import * as axiosI from '../interface/axios/index';
 
 // get a user inform
 const getUser = (uid: number) => {
-  return request.get((API.USER as string) + uid, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  });
+  return authorizationRequest.get((API.USER as string) + uid);
 };
 
 // get me
-const getMe = (token: string) => {
-  return request.get(API.ME, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-
-const getMeWithToken = (token: string) => {
-  return request.get(API.ME, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+const getMe = () => {
+  return authorizationRequest.get(API.ME as string);
 };
 
 // change me
 const changeMe = (uid: number, nickname: string, avatar: number) => {
-  return request.put(
-    API.USER,
-    {
-      uid,
-      avatar,
-      nickname,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      },
-    },
-  );
+  return authorizationRequest.put(API.USER, {
+    uid,
+    avatar,
+    nickname,
+  });
+};
+
+// change profile
+const changeProfile = (user: newUser) => {
+  const newGithubLink = `https://github.com/${user.github_link}`;
+  return authorizationRequest.put(API.USER, {
+    avatar: user.avatar,
+    nickname: user.nickname,
+    groups: user.groups,
+    github_link: newGithubLink,
+    blog_link: user.blog_link,
+    email: user.email,
+    status_quo: user.status_quo,
+  });
 };
 
 // login
 const login = (email: string, password: string) => {
-  return request.post(API.SESSION, {
+  return unAuthorizationRequest.post(API.SESSION, {
     email,
     password,
   });
@@ -60,7 +54,7 @@ const signUp = (
   email: string,
   password: string,
 ) => {
-  return request.post(API.USER, {
+  return unAuthorizationRequest.post(API.USER, {
     avatar,
     nickname,
     email,
@@ -90,103 +84,64 @@ const createRoom = (
     total,
     theme,
   };
-  return request.post(API.ROOM, room, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  });
+  return authorizationRequest.post(API.ROOM, room);
 };
 
 // get rooms
 const getRooms = () => {
-  return request.get(API.ROOM);
+  return unAuthorizationRequest.get(API.ROOM);
 };
 
 // get a room
 const getRoom = (roomId: string) => {
-  return request.get((API.ROOM as string) + roomId, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  });
+  return authorizationRequest.get((API.ROOM as string) + roomId);
 };
 
 // request friend
 const requestFriend = (friendUid: number) => {
-  return request.post(
-    API.FRIEND,
-    {
-      friend: friendUid,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      },
-    },
-  );
+  return authorizationRequest.post(API.FRIEND, {
+    friend: friendUid,
+  });
 };
 
 // accept friend
 const acceptFriend = (friendUid: number) => {
-  return request.put(
-    API.FRIEND,
-    {
-      friend: friendUid,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      },
-    },
-  );
+  return authorizationRequest.put(API.FRIEND, {
+    friend: friendUid,
+  });
 };
 
 // delete friend
 const deleteFriend = (friendUid: number) => {
-  return request.delete(API.FRIEND, {
+  return authorizationRequest.delete(API.FRIEND, {
     data: {
       friend: friendUid,
-    },
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     },
   });
 };
 
 // get All friends
 const getAllFriends = () => {
-  return request.get(API.FRIEND, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  });
+  return authorizationRequest.get(API.FRIEND);
 };
 
 // get a friend
 const getFriend = (friendUid: number) => {
-  return request.get(API.FRIEND, {
+  return authorizationRequest.get(API.FRIEND, {
     params: {
       friend: friendUid,
-    },
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
     },
   });
 };
 
 // get records
 const getRecords = () => {
-  return request.get(API.RECORDS, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    },
-  });
+  return authorizationRequest.get(API.RECORDS);
 };
 
 export {
   getUser,
   getMe,
-  getMeWithToken,
   getInviteCode,
   createRoom,
   getRooms,
@@ -200,4 +155,5 @@ export {
   getAllFriends,
   getFriend,
   getRecords,
+  changeProfile,
 };

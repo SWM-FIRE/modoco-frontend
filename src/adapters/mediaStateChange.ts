@@ -66,7 +66,7 @@ const mediaStateChange = () => {
           avatar: kickedUser.avatar,
           message: `${kickedUser.nickname}님이 강퇴당하였습니다.`,
           createdAt: new Date().toString(),
-          type: 'leave',
+          type: 'LEAVE',
           isHideTime: false,
           isHideNicknameAndAvatar: false,
         });

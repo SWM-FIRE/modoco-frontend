@@ -109,6 +109,12 @@ const Nickname = styled.span`
   color: #f9fafb;
   font-size: 2.4rem;
   font-family: IBMPlexSansKRRegular;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ${media.small} {
+    font-size: 1.6rem;
+  }
 `;
 
 const Button = styled.button`

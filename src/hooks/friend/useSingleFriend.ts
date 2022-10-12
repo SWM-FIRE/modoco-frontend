@@ -7,5 +7,5 @@ const getAFriend = async (uid: number) => {
 };
 
 export default function useSingleFriend(uid: number) {
-  return useQuery(['Friend', 'personal'], () => getAFriend(uid));
+  return useQuery(['Friend', 'personal', uid], () => getAFriend(uid));
 }

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import UserProfile from './UserProfile';
+import media from 'src/styles/media';
+import UserProfile from './UserProfile/UserProfile';
 import Friends from './Friends';
 import Statistics from './Statistics';
 import Overall from './Overall';
 import roomModalStore from '../../stores/room/roomModalStore';
-import EditUserProfile from './EditUserProfile';
+import EditUserProfile from './EditUserProfile/EditUserProfile';
 
 export default function Contents({ isMe }: { isMe: boolean }) {
   const { profileModal } = roomModalStore();
@@ -14,7 +15,7 @@ export default function Contents({ isMe }: { isMe: boolean }) {
   return (
     <Container isMe={isMe}>
       <UserInformation isModal={profileModal}>
-        {isEdit ? (
+        {isEdit && isMe ? (
           <EditUserProfile setIsEdit={setIsEdit} />
         ) : (
           <UserProfile isMe={isMe} setIsEdit={setIsEdit} />
@@ -34,7 +35,10 @@ const Container = styled.div<{ isMe: boolean }>`
   align-items: center;
   gap: 4.5rem;
   padding: 4.4rem 10rem;
-  width: ${(props) => (props.isMe ? '100%' : '80%')};
+  width: 100%;
+  ${media.small} {
+    padding: 4.4rem 2rem;
+  }
 `;
 
 const UserInformation = styled.div<{ isModal: boolean }>`
@@ -44,5 +48,4 @@ const UserInformation = styled.div<{ isModal: boolean }>`
     display: flex;
     flex-direction: column;
   }
-  min-width: 55rem;
 `;

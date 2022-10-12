@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
 
-export default function Header({ toggle }: { toggle: () => void }) {
+export default function Header({ toggle }: { toggle: (_type) => void }) {
   return (
     <ModalTitle>
       <ExitButton onClick={toggle}>

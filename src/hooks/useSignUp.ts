@@ -53,7 +53,7 @@ export default function useSignUp() {
       .then((res) => {
         console.debug('[success]', res);
         navigate(`/`);
-        toast.success('회원가입이 완료되었습니다');
+        toast.success('가입된 이메일로 인증 메일을 발송했습니다.');
       })
       .catch((err) => {
         console.debug('[error] ', err);

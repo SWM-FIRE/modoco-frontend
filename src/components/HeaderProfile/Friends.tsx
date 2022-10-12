@@ -83,6 +83,9 @@ const CategoryButton = styled.button<{ isOnClick: boolean }>`
   font-size: 2rem;
   color: ${({ isOnClick }) => (isOnClick ? '#F9FAFB' : '#9CA3AF')};
   cursor: pointer;
+  &:hover {
+    color: #f9fafb;
+  }
   ${media.small} {
     font-size: 1.6rem;
   }

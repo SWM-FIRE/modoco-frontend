@@ -7,5 +7,5 @@ const getAUser = async (senderUid: number) => {
 };
 
 export default function useUserInfo(senderUid: number) {
-  return useQuery(['userData', 'getOne'], () => getAUser(senderUid));
+  return useQuery(['userData', 'getOne', senderUid], () => getAUser(senderUid));
 }

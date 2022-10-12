@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import ItemsCarousel from 'react-items-carousel';
 import media from 'src/styles/media';
 import Block from './block/Block';
 import useRooms from '../../hooks/useRooms';
-import CreateRoom from './CreateRoom';
 import { filterData } from './filterData';
+import { ReactComponent as LeftArrow } from '../../assets/svg/Left.svg';
+import { ReactComponent as RightArrow } from '../../assets/svg/Right.svg';
 import searchInputStore from '../../stores/searchInputStore';
 import EmptyBlock from './block/EmptyBlock';
+import { filterMyData } from './filterMyData';
+import MyBlock from './block/MyBlock';
+import CreateRoom from './CreateRoom';
+import MyEmptyBlock from './block/MyEmptyBlock';
 
 export default function RoomCards({
   openCreateRoom,
@@ -15,15 +21,84 @@ export default function RoomCards({
 }) {
   const { searchInput } = searchInputStore();
   const { isLoading, error, data } = useRooms();
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const [numOfCards, setNumOfCards] = useState(4);
+  const [gutter, setGutter] = useState(28);
+
+  const resize = () => {
+    const width = window.innerWidth;
+    if (width < 300) {
+      setNumOfCards(1);
+      setGutter(0);
+    } else if (width < 500) {
+      setNumOfCards(2);
+      setGutter(13);
+    } else if (width < 768) {
+      setGutter(13);
+      setNumOfCards(2);
+    } else if (width < 1024) {
+      setNumOfCards(2);
+    } else if (width < 1300) {
+      setNumOfCards(3);
+    } else {
+      setNumOfCards(4);
+    }
+  };
+
+  useEffect(() => {
+    resize();
+    window.addEventListener('resize', resize);
+    return () => {
+      window.removeEventListener('resize', resize);
+    };
+  }, []);
 
   if (error) return <div>An error has occurred: </div>;
 
   const newData = filterData(data, searchInput);
+  const newMyData = filterMyData(data);
+  const TRUE = true;
 
   return (
     <Container>
+      <Title>내가 만든 모도코</Title>
+      <MyRoomContainer>
+        <ItemsCarousel
+          chevronWidth={50}
+          gutter={gutter}
+          numberOfCards={numOfCards}
+          slidesToScroll={numOfCards}
+          outsideChevron={TRUE}
+          activeItemIndex={activeItemIndex}
+          requestToChangeActive={(value) => setActiveItemIndex(value)}
+          rightChevron={
+            <Button type="button">
+              <RightArrow />
+            </Button>
+          }
+          leftChevron={
+            <Button type="button">
+              <LeftArrow />
+            </Button>
+          }
+        >
+          {isLoading
+            ? [...Array(1)].map((no, index) => (
+                <MyEmptyBlock key={Symbol(index).toString()} />
+              ))
+            : newMyData.map((data) => {
+                return (
+                  <MyBlock
+                    key={data.itemId.toString().concat('my')}
+                    data={data}
+                  />
+                );
+              })}
+          <CreateRoom openCreateRoom={openCreateRoom} />
+        </ItemsCarousel>
+      </MyRoomContainer>
+      <Title>공개</Title>
       <BlockContainer>
-        <CreateRoom openCreateRoom={openCreateRoom} />
         {isLoading
           ? [...Array(3)].map((no, index) => (
               <EmptyBlock key={Symbol(index).toString()} isMain={false} />
@@ -39,7 +114,8 @@ export default function RoomCards({
 const Container = styled.div`
   width: 1260px;
   display: flex;
-  margin: 10rem auto;
+  flex-direction: column;
+  margin: 0 auto 10rem auto;
   ${media.large} {
     width: 940px;
   }
@@ -48,7 +124,6 @@ const Container = styled.div`
   }
   ${media.small} {
     margin: 3rem 0;
-    align-items: center;
     width: 360px;
   }
   ${media.xsmall} {
@@ -63,8 +138,41 @@ const BlockContainer = styled.div`
   display: flex;
   margin: -1.4rem;
   flex-wrap: wrap;
-  row-gap: 7rem;
+  row-gap: 5rem;
   ${media.large} {
     row-gap: 2rem;
+  }
+`;
+
+const MyRoomContainer = styled.div`
+  width: 100%;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const Title = styled.h2`
+  color: #fcfcfd;
+  font-size: 2rem;
+  font-family: IBMPlexSansKRRegular, Arial;
+  margin: 5rem 0 2rem 0;
+`;
+
+const Button = styled.button`
+  background-color: #23262f9b;
+  color: white;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  &:hover {
+    background-color: #23262f;
+  }
+  svg {
+    width: 70%;
+    height: 70%;
   }
 `;

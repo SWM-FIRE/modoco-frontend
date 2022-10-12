@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
+import media from 'src/styles/media';
 
 export default function EditNickname({ nickname, onChange }) {
   const errorMsg = useRef(null);
@@ -20,7 +21,7 @@ export default function EditNickname({ nickname, onChange }) {
         id="nickname"
         type="text"
         name="nickname"
-        value={nickname}
+        value={nickname || ''}
         onChange={onChange}
         onBlur={onBlur}
         placeholder="닉네임을 입력해주세요."
@@ -33,17 +34,23 @@ export default function EditNickname({ nickname, onChange }) {
 const Section = styled.p`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  max-width: 28rem;
+  ${media.small} {
+    width: 28rem;
+  }
 `;
 
 const Input = styled.input`
   height: 4.9rem;
   padding: 1.2rem 0.8rem;
   color: #f1f5f9;
-  background-color: #191f28;
+  background-color: rgba(0, 0, 0, 0.4);
   font-size: 3rem;
   font-family: IBMPlexMonoRegular;
   border-radius: 0.6rem;
+  &::placeholder {
+    font-size: 2rem;
+  }
 `;
 
 const Error = styled.span`

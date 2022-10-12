@@ -5,7 +5,7 @@ import Card from './card/Card';
 
 export default function RoomDetail({ roomNo: roomId }) {
   const navigate = useNavigate();
-  const [disableButton, setDisableButton] = useState(true);
+  const [disableButton, setDisableButton] = useState(false);
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (localStorage.getItem('access_token')) {
@@ -15,15 +15,18 @@ export default function RoomDetail({ roomNo: roomId }) {
 
   // eslint-disable-next-line no-undef
   const permissionName = 'microphone' as PermissionName;
-  navigator.permissions.query({ name: permissionName }).then((result) => {
-    if (result.state === 'granted') {
-      setDisableButton(false);
-    } else if (result.state === 'prompt') {
-      setDisableButton(true);
-    } else if (result.state === 'denied') {
-      setDisableButton(false);
-    }
-  });
+  const checkValid = !!navigator.permissions?.query;
+  if (checkValid) {
+    navigator.permissions.query({ name: permissionName }).then((result) => {
+      if (result.state === 'granted') {
+        setDisableButton(false);
+      } else if (result.state === 'prompt') {
+        setDisableButton(true);
+      } else if (result.state === 'denied') {
+        setDisableButton(false);
+      }
+    });
+  }
 
   return (
     <Container>

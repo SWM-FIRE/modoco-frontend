@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import userStore from '../../../stores/userStore';
+import CodeItem from './CodeItem';
 
 interface User {
   nickname: string;
@@ -29,23 +30,33 @@ export default function ChattingItem({
 }) {
   const { uid } = userStore();
   const isMe = user.uid === uid;
-  const entrance = type === 'join' || type === 'leave';
+  const entrance = type === 'JOIN' || type === 'LEAVE';
+  const isCode = type === 'CODE';
   const msgRef = useRef(null);
 
-  const onCheckUrl = (message: string) => {
+  const onCheckUrl = (message: string, loc: string) => {
     const urlReg =
       /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi;
-    const text1 = message.replace(
-      urlReg,
-      "<a href='$1' target='_blank'>$1</a>",
-    );
-    const exp2 = /(^|[^/])(www\.[\S]+(\b|$))/gim;
-    return text1.replace(exp2, '$1<a href="http://$2" target="_blank">$2</a>');
+    if (loc === 'url') return message.split(urlReg)[1];
+    if (loc === 'front') return message.split(urlReg)[0];
+    if (loc === 'back') return message.split(urlReg)[3];
+    return null;
   };
 
   useEffect(() => {
     if (msgRef.current) {
-      msgRef.current.innerHTML = onCheckUrl(msg);
+      const url = onCheckUrl(msg, 'url');
+      if (url) {
+        const front = onCheckUrl(msg, 'front');
+        const back = onCheckUrl(msg, 'back');
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.innerText = url;
+        msgRef.current.innerHTML = `${front}${a.outerHTML}${back}`;
+      } else {
+        msgRef.current.innerText = msg;
+      }
     }
   }, []);
   return (
@@ -68,7 +79,11 @@ export default function ChattingItem({
               </Nickname>
             )}
             <MessageBox isMe={isMe}>
-              <Message isLobby={isLobby} isMe={isMe} ref={msgRef} />
+              {isCode ? (
+                <CodeItem code={msg} isMe={isMe} isLobby={isLobby} />
+              ) : (
+                <Message isLobby={isLobby} isMe={isMe} ref={msgRef} />
+              )}
               {!isHideTime && <Time>{moment(time).format('LT')}</Time>}
             </MessageBox>
           </MessageComponent>
@@ -109,16 +124,17 @@ const Entrance = styled.div`
 const Component = styled.li<componentInterface>`
   display: flex;
   flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
-  gap: 1.6rem;
+  gap: 1rem;
   margin-top: ${({ isHide }) => (isHide ? '1rem' : '2rem')};
 `;
 
 const AvatarComponent = styled.div<hideInterface>`
-  margin-left: ${({ isHide }) => (isHide ? '4.8rem' : '0')};
+  width: 4rem;
+  height: 4rem;
   svg {
     display: ${({ isHide }) => (isHide ? 'none' : 'block')};
-    width: 4.8rem;
-    height: 4.8rem;
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -144,7 +160,7 @@ const MessageBox = styled.div<userInterface>`
 const Message = styled.div<{ isMe: boolean; isLobby: boolean }>`
   color: rgb(255, 255, 255);
   font-size: 1.5rem;
-  padding: 1.6rem;
+  padding: 1rem;
   max-width: ${({ isLobby }) => (isLobby ? '100%' : '32rem')};
   border-radius: ${({ isMe }) =>
     isMe ? '0.8rem 0 0.8rem 0.8rem' : '0 0.8rem 0.8rem 0.8rem'};

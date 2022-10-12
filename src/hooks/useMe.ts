@@ -1,11 +1,11 @@
 import { useQuery } from 'react-query';
-import { getMeWithToken } from '../api/main';
+import { getMe } from '../api/main';
 
 const getUser = async () => {
-  const { data } = await getMeWithToken(localStorage.getItem('access_token'));
+  const { data } = await getMe();
   return data;
 };
 
 export default function useMe() {
-  return useQuery(['userData', 'getOne'], () => getUser, { retry: 0 });
+  return useQuery(['userData', 'getOne', 'me'], () => getUser, { retry: 0 });
 }
