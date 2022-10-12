@@ -24,13 +24,12 @@ export default function Code({ codeModalType }: { codeModalType: string }) {
 const Component = styled.div<{ codeModalType: string }>`
   font-size: 1.3rem;
   background-color: #0f0f0f;
-
   font-family: IBMPlexSansKRRegular;
   color: rgba(255, 255, 255, 1);
   min-height: ${(props) =>
-    props.codeModalType === 'READ' ? '75rem' : '60rem'};
+    props.codeModalType === 'READ' ? '72rem' : '60rem'};
   max-height: ${(props) =>
-    props.codeModalType === 'READ' ? '75rem' : '60rem'};
+    props.codeModalType === 'READ' ? '72rem' : '60rem'};
   white-space: pre;
   overflow: auto;
   margin-top: 1rem;

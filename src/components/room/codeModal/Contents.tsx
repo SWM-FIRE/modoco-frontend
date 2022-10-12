@@ -14,7 +14,7 @@ export default function Contents({
   toggle: (_type) => void;
   codeModalType: string;
 }) {
-  const { code, setCode } = codeChatStore();
+  const { code } = codeChatStore();
   const { roomId } = useParams();
   const { uid } = userStore();
   const newSocket = roomSocket.socket;
@@ -30,7 +30,6 @@ export default function Contents({
       message: code,
       createdAt: new Date(),
     });
-    setCode('');
     toggle(codeModalType);
   };
 

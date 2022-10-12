@@ -13,7 +13,6 @@ export default function CodeItem({ code, isMe, isLobby }) {
   useEffect(() => {
     hljs.initHighlightingOnLoad();
     hljs.highlightAll();
-    setCode(code);
   }, []);
 
   const onClick = () => {
@@ -58,6 +57,6 @@ const Component = styled.button<{ isMe: boolean; isLobby: boolean }>`
 
 const Further = styled.div`
   color: white;
-  padding: 1rem 0;
+  padding: 1rem;
   background-color: #58585870;
 `;
