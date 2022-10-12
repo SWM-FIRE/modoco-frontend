@@ -32,16 +32,23 @@ export default function useLogin() {
   const onSubmit = (e) => {
     e.preventDefault();
     login(email, password)
-      .then((res) => {
-        localStorage.setItem('access_token', res.data.access_token);
+      .then((result) => {
         localStorage.setItem('email', inputs.email);
-        getMe().then((res) => {
-          setNickname(res.data.nickname);
-          setAvatar(res.data.avatar);
-          setUid(res.data.uid);
-          toast.success('로그인이 완료되었습니다');
-          navigate(`/main`);
-        });
+        localStorage.setItem('access_token', result.data.access_token);
+        getMe()
+          .then((res) => {
+            setNickname(res.data.nickname);
+            setAvatar(res.data.avatar);
+            setUid(res.data.uid);
+            toast.success('로그인이 완료되었습니다');
+            navigate(`/main`);
+          })
+          .catch((err) => {
+            if (err.response.status === 403) {
+              toast.error('이메일 인증을 완료해주세요');
+            }
+            localStorage.removeItem('access_token');
+          });
         closeLoginModal();
       })
       .catch((err) => {
