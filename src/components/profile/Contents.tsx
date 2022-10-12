@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import UserProfile from './UserProfile';
+import UserProfile from './UserProfile/UserProfile';
 import Friends from './Friends';
 import Statistics from './Statistics';
 import Overall from './Overall';

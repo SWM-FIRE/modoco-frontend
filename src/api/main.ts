@@ -5,7 +5,6 @@ import {
   awsRequest,
 } from './core/index';
 import { API } from '../config';
-// import * as axiosI from '../interface/axios/index';
 
 // get a user inform
 const getUser = (uid: number) => {
@@ -14,7 +13,7 @@ const getUser = (uid: number) => {
 
 // get me
 const getMe = () => {
-  return authorizationRequest.get(API.ME);
+  return authorizationRequest.get(API.ME as string);
 };
 
 // change me
@@ -28,8 +27,15 @@ const changeMe = (uid: number, nickname: string, avatar: number) => {
 
 // change profile
 const changeProfile = (user: newUser) => {
+  const newGithubLink = `https://github.com/${user.github_link}`;
   return authorizationRequest.put(API.USER, {
-    user,
+    avatar: user.avatar,
+    nickname: user.nickname,
+    groups: user.groups,
+    github_link: newGithubLink,
+    blog_link: user.blog_link,
+    email: user.email,
+    status_quo: user.status_quo,
   });
 };
 

@@ -2,11 +2,11 @@
   "uid": 15,
   "nickname": "test_user",
   "avatar": 10,
-  "description": "this is description test",
+  "status_quo": "this is status_quo test",
   "github_link": "071yoon",
   "blog_link": "https://velog.io/@071yoon",
   "email": "yeonggi@kakao.com",
-  "group": ["SWM", "Konkuk University", "test", "really-long-test"],
+  "groups": ["SWM", "Konkuk University", "test", "really-long-test"],
   "badge": ["1"],
   "online": ""
 }

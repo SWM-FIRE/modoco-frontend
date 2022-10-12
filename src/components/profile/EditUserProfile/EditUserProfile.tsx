@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import media from 'src/styles/media';
+import useUser from 'src/hooks/useUser';
 import EditAvatar from './EditAvatar';
 import Badge from '../UserProfile/Badge';
 import EditGroup from './EditGroup';
@@ -15,6 +16,7 @@ import EditLinks from './EditLinks';
 import lobbySocket, { deleteSocket } from '../../../adapters/lobbySocket';
 
 export default function EditUserProfile({ setIsEdit }) {
+  const navigate = useNavigate();
   const {
     inputs,
     onChange,
@@ -22,20 +24,26 @@ export default function EditUserProfile({ setIsEdit }) {
     onChangeAvatar,
     isDisable,
     onEnterGroup,
+    initInputs,
   } = useChangeProfile();
+  const { setClear, uid } = UserStore();
+
+  const { data } = useUser(Number(uid));
+  useEffect(() => {
+    // setInput state
+    if (data) initInputs({ data });
+  }, [data]);
+
   const {
     avatar,
     nickname,
-    description,
-    group,
+    status_quo,
+    groups,
     github_link,
     blog_link,
     email,
     newGroup,
   } = inputs;
-  const { setClear } = UserStore();
-
-  const navigate = useNavigate();
 
   const onClickButton = () => {
     setIsEdit(false);
@@ -68,14 +76,14 @@ export default function EditUserProfile({ setIsEdit }) {
             onChange={onChange}
           />
           <EditGroup
-            group={group}
+            groups={groups}
             onChange={onChange}
             onEnterGroup={onEnterGroup}
             newGroup={newGroup}
           />
         </ProfileDetail>
       </Profile>
-      <EditDescription description={description} onChange={onChange} />
+      <EditDescription status_quo={status_quo} onChange={onChange} />
       <Badge />
       <Logout onClick={onLogOut} type="button">
         로그아웃

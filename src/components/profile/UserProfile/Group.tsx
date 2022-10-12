@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export default function Group({ groups }: { groups: string[] }) {
   return (
     <Components>
-      {groups.map((item, index) => (
-        <GroupItem key={Symbol(index).toString()}>{item}</GroupItem>
+      {groups.map((group, index) => (
+        <GroupItem key={Symbol(index).toString()}>{group}</GroupItem>
       ))}
     </Components>
   );

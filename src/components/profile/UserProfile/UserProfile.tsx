@@ -8,18 +8,17 @@ import useSingleFriend from 'src/hooks/friend/useSingleFriend';
 import useRequestFriend from 'src/hooks/friend/useRequestFriend';
 import useDeleteFriendRequest from 'src/hooks/friend/useDeleteFriendRequest';
 import userStore from 'src/stores/userStore';
-import Avatar from '../atoms/Avatar';
-import Group from './UserProfile/Group';
-import Badge from './UserProfile/Badge';
-import Pending from './UserProfile/Pending';
-import { ReactComponent as Github } from '../../assets/svg/Github.svg';
-import { ReactComponent as Mail } from '../../assets/svg/Mail.svg';
-import { ReactComponent as Globe } from '../../assets/svg/Globe.svg';
-import { ReactComponent as SendMessageBlack } from '../../assets/svg/SendMessageBlack.svg';
-import { ReactComponent as ShowFriendState } from '../../assets/svg/ShowFriendState.svg';
-import lobbySocket, { deleteSocket } from '../../adapters/lobbySocket';
-import SkeletonProfile from './SkeletonProfile';
-import userAPI from './UserAPI.json';
+import Avatar from '../../atoms/Avatar';
+import Group from './Group';
+import Badge from './Badge';
+import Pending from './Pending';
+import { ReactComponent as Github } from '../../../assets/svg/Github.svg';
+import { ReactComponent as Mail } from '../../../assets/svg/Mail.svg';
+import { ReactComponent as Globe } from '../../../assets/svg/Globe.svg';
+import { ReactComponent as SendMessageBlack } from '../../../assets/svg/SendMessageBlack.svg';
+import { ReactComponent as ShowFriendState } from '../../../assets/svg/ShowFriendState.svg';
+import lobbySocket, { deleteSocket } from '../../../adapters/lobbySocket';
+import SkeletonProfile from '../SkeletonProfile';
 
 export default function UserProfile({ isMe, setIsEdit }) {
   const { setClear } = userStore();
@@ -63,7 +62,6 @@ export default function UserProfile({ isMe, setIsEdit }) {
 
   const onClickEditProfile = () => {
     setIsEdit(true);
-    // navigate(`/editProfile/${userId}`);
   };
 
   const sendRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -93,18 +91,20 @@ export default function UserProfile({ isMe, setIsEdit }) {
 
   const onGithub = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-    window.open(`https://github.com/${userAPI.github_link}`).focus();
+    window.open(`${data.github_link}`).focus();
   };
 
   const onMail = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-    window.open(`mailto:${userAPI.email}`, '_self');
+    window.open(`mailto:${data.email}`, '_self');
   };
 
   const onBlog = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-    window.open(`${userAPI.blog_link}`).focus();
+    window.open(`${data.blog_link}`).focus();
   };
+
+  const githubId = data.github_link.split('github.com/').pop();
 
   return (
     <Components isMe={isMe}>
@@ -131,19 +131,19 @@ export default function UserProfile({ isMe, setIsEdit }) {
               <MyLink onClick={onMail}>
                 <Mail />
               </MyLink>
-              {userAPI.github_link && (
+              {githubId && (
                 <MyLink onClick={onGithub}>
                   <Github style={{ width: '90%', height: '90%' }} />
                 </MyLink>
               )}
-              {userAPI.blog_link && (
+              {data.blog_link && (
                 <MyLink onClick={onBlog}>
                   <Globe />
                 </MyLink>
               )}
             </Links>
-            <Group groups={userAPI.group} />
-            <Description>{userAPI.description}</Description>
+            <Group groups={data.groups} />
+            <Description>{data.status_quo}</Description>
           </Contents>
         </div>
         <Badge />
