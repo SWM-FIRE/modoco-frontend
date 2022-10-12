@@ -19,6 +19,7 @@ import { ReactComponent as SendMessageBlack } from '../../../assets/svg/SendMess
 import { ReactComponent as ShowFriendState } from '../../../assets/svg/ShowFriendState.svg';
 import lobbySocket, { deleteSocket } from '../../../adapters/lobbySocket';
 import SkeletonProfile from '../SkeletonProfile';
+import NoUser from './NoUser';
 
 export default function UserProfile({ isMe, setIsEdit }) {
   const { setClear } = userStore();
@@ -56,8 +57,12 @@ export default function UserProfile({ isMe, setIsEdit }) {
     return <SkeletonProfile />;
   }
   if (error || friendError || requestError || deleteError) {
-    console.log('error occured');
+    console.log('error occurred');
     return <SkeletonProfile />;
+  }
+
+  if (!data) {
+    return <NoUser />;
   }
 
   const onClickEditProfile = () => {
