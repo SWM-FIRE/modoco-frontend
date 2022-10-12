@@ -45,7 +45,7 @@ export default function useChangeProfile() {
   };
 
   const onEnterGroup = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === 'Enter') {
       e.preventDefault();
       if (groups.includes(newGroup)) {
         toast.error('이미 추가된 그룹입니다.');

@@ -82,4 +82,8 @@ const AddGroup = styled.input`
   &:hover {
     cursor: pointer;
   }
+  &:focus {
+    background-color: rgba(248, 250, 252, 0.2);
+    cursor: text;
+  }
 `;
