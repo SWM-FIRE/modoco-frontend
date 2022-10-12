@@ -113,7 +113,7 @@ export const roomConnection = (roomId: string) => {
           avatar: userInfo.avatar,
           message: `${userInfo.nickname}님이 퇴장하셨습니다.`,
           createdAt: new Date().toString(),
-          type: 'leave',
+          type: 'LEAVE',
           isHideTime: false,
           isHideNicknameAndAvatar: false,
         });

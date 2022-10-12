@@ -50,7 +50,7 @@ const onChatMessage = (roomId: string) => {
           avatar: userInfo.avatar,
           message: receiveMsg.message,
           createdAt: receiveMsg.createdAt,
-          type: 'message',
+          type: receiveMsg.type,
           isHideTime: false,
           isHideNicknameAndAvatar: isHide(messages, receiveMsg),
         },
@@ -76,7 +76,7 @@ const onChatMessage = (roomId: string) => {
           isHideNicknameAndAvatar = false;
         } else if (msg[msg.length - 1].uid !== receiveMsg.sender) {
           isHideNicknameAndAvatar = false;
-        } else if (msg[msg.length - 1].type !== 'message') {
+        } else if (msg[msg.length - 1].type !== 'MESSAGE') {
           isHideNicknameAndAvatar = false;
         }
       } else isHideNicknameAndAvatar = false;

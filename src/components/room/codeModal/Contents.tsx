@@ -7,42 +7,57 @@ import codeChatStore from '../../../stores/room/codeChatStore';
 import Code from './Code';
 import Input from './Input';
 
-export default function Contents({ toggle }: { toggle: () => void }) {
+export default function Contents({
+  toggle,
+  codeModalType,
+}: {
+  toggle: (_type) => void;
+  codeModalType: string;
+}) {
   const { code, setCode } = codeChatStore();
   const { roomId } = useParams();
   const { uid } = userStore();
-  const [isInput, setIsInput] = useState(true);
   const newSocket = roomSocket.socket;
+  const [isInput, setIsInput] = useState(true && codeModalType === 'SEND');
 
   const onSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (code.trim() === '') return;
     newSocket.emit('chatMessage', {
       room: roomId,
+      type: 'CODE',
       sender: uid,
       message: code,
       createdAt: new Date(),
     });
     setCode('');
-    toggle();
+    toggle(codeModalType);
   };
 
   return (
     <Component>
-      <TypeComponent>
-        <Type type="button" onClick={() => setIsInput(true)} isClick={isInput}>
-          입력
-        </Type>
-        <Type
-          type="button"
-          onClick={() => setIsInput(false)}
-          isClick={!isInput}
-        >
-          코드
-        </Type>
-      </TypeComponent>
-      {isInput ? <Input /> : <Code />}
-      <Button onClick={onSubmit}>코드 보내기</Button>
+      {codeModalType === 'SEND' && (
+        <TypeComponent>
+          <Type
+            type="button"
+            onClick={() => setIsInput(true)}
+            isClick={isInput}
+          >
+            입력
+          </Type>
+          <Type
+            type="button"
+            onClick={() => setIsInput(false)}
+            isClick={!isInput}
+          >
+            코드
+          </Type>
+        </TypeComponent>
+      )}
+      {isInput ? <Input /> : <Code codeModalType={codeModalType} />}
+      {codeModalType === 'SEND' && (
+        <Button onClick={onSubmit}>코드 보내기</Button>
+      )}
     </Component>
   );
 }

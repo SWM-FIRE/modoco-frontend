@@ -35,6 +35,7 @@ export default function SendChat({
     if (newMessage.trim() === '') return;
     newSocket.emit('chatMessage', {
       room: roomId,
+      type: 'MESSAGE',
       sender: uid,
       message: newMessage,
       createdAt: new Date(),

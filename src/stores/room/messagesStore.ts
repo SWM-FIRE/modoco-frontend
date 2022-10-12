@@ -1,15 +1,5 @@
 import create from 'zustand';
-
-interface MessageInterface {
-  uid: number;
-  nickname: string;
-  avatar: number;
-  message: string;
-  createdAt: string;
-  type: string; // 'message' || 'join' || 'leave'
-  isHideTime: boolean;
-  isHideNicknameAndAvatar: boolean;
-}
+import MessageInterface from '../../interface/message.interface';
 
 interface Messages {
   messages: MessageInterface[];

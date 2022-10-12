@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import userStore from '../../../stores/userStore';
+import CodeItem from './CodeItem';
 
 interface User {
   nickname: string;
@@ -29,7 +30,8 @@ export default function ChattingItem({
 }) {
   const { uid } = userStore();
   const isMe = user.uid === uid;
-  const entrance = type === 'join' || type === 'leave';
+  const entrance = type === 'JOIN' || type === 'LEAVE';
+  const isCode = type === 'CODE';
   const msgRef = useRef(null);
 
   const onCheckUrl = (message: string, loc: string) => {
@@ -77,7 +79,11 @@ export default function ChattingItem({
               </Nickname>
             )}
             <MessageBox isMe={isMe}>
-              <Message isLobby={isLobby} isMe={isMe} ref={msgRef} />
+              {isCode ? (
+                <CodeItem code={msg} isMe={isMe} isLobby={isLobby} />
+              ) : (
+                <Message isLobby={isLobby} isMe={isMe} ref={msgRef} />
+              )}
               {!isHideTime && <Time>{moment(time).format('LT')}</Time>}
             </MessageBox>
           </MessageComponent>
