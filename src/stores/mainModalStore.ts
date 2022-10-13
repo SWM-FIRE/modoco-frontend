@@ -7,7 +7,11 @@ interface Modal {
   isOpenProfileModal: boolean;
   closeProfileModal: () => void;
   openProfileModal: () => void;
+  isOpenNoticeModal: boolean;
+  closeNoticeModal: () => void;
+  openNoticeModal: () => void;
 }
+
 const mainModalStore = create<Modal>((set) => ({
   isOpenLoginModal: false,
   closeLoginModal: () => set(() => ({ isOpenLoginModal: false })),
@@ -15,6 +19,9 @@ const mainModalStore = create<Modal>((set) => ({
   isOpenProfileModal: false,
   closeProfileModal: () => set(() => ({ isOpenProfileModal: false })),
   openProfileModal: () => set(() => ({ isOpenProfileModal: true })),
+  isOpenNoticeModal: true,
+  closeNoticeModal: () => set(() => ({ isOpenNoticeModal: false })),
+  openNoticeModal: () => set(() => ({ isOpenNoticeModal: true })),
 }));
 
 export default mainModalStore;
