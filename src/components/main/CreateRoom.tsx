@@ -9,8 +9,8 @@ export default function CreateRoom({
   openCreateRoom: () => void;
 }) {
   return (
-    <Container>
-      <Enter onClick={openCreateRoom} data-cy="create-room-modal-open">
+    <Container onClick={openCreateRoom}>
+      <Enter data-cy="create-room-modal-open">
         <Plus />
       </Enter>
       <Title>새로운 방 만들기</Title>
@@ -26,15 +26,11 @@ const Enter = styled.button`
   align-items: center;
   background-color: #e24934;
   border-radius: 50%;
-  cursor: pointer;
   transition: all 0.2s;
+  cursor: pointer;
   svg {
     width: 70%;
     height: 70%;
-  }
-
-  &:hover {
-    background-color: #e24834b9;
   }
 `;
 
@@ -60,6 +56,14 @@ const Container = styled.div`
   justify-content: center;
   gap: 1rem;
   box-sizing: border-box;
+
+  &:hover {
+    cursor: pointer;
+    border: 1px dashed rgba(107, 114, 128, 0.5);
+    ${Enter} {
+      background-color: #e24834b9;
+    }
+  }
   ${media.xlarge} {
     width: 29.4rem;
   }
