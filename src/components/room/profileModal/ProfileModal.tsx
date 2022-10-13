@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import ModalPortal from 'src/components/atoms/ModalPortal';
 import Header from './Header';
 import Contents from '../../profile/Contents';
-import userStore from '../../../stores/userStore';
 import roomModalStore from '../../../stores/room/roomModalStore';
 
 export default function ProfileModal({ toggle }: { toggle: () => void }) {
@@ -11,7 +10,6 @@ export default function ProfileModal({ toggle }: { toggle: () => void }) {
     event.preventDefault();
     toggle();
   };
-  const { uid } = userStore();
   const { profileUid } = roomModalStore();
 
   return (
@@ -20,7 +18,7 @@ export default function ProfileModal({ toggle }: { toggle: () => void }) {
         <Container onClick={(e) => e.stopPropagation()}>
           <Header toggle={toggle} />
           <CenterContent>
-            <Contents isMe={uid === profileUid} />
+            <Contents userId={profileUid} isModal />
           </CenterContent>
         </Container>
       </Screen>

@@ -73,7 +73,7 @@ export default function SideProfileModal({
 const Screen = styled.div`
   position: absolute;
   width: 300vw;
-  height: 140vh;
+  height: 130vh;
   z-index: 1;
 `;
 
