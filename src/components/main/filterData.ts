@@ -14,14 +14,14 @@ export const filterData = (data, searchInput: string) => {
       )
     : data;
 
-  newData?.sort((a, b) => {
+  newData?.sort((a: blockInterface, b: blockInterface) => {
     if (a.current > b.current) {
       return -1;
     }
     if (a.current < b.current) {
       return 1;
     }
-    return 0;
+    return b.itemId - a.itemId;
   });
   return newData;
 };
