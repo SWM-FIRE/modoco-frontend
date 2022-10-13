@@ -72,7 +72,7 @@ const AvatarContainer = styled.div`
 `;
 
 const Description = styled.div`
-  width: 30rem;
+  width: 80%;
   height: 2rem;
   border-radius: 0.4rem;
   margin-top: 2rem;

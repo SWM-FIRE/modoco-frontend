@@ -1,17 +1,13 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import Contents from '../components/profile/Contents';
-import userStore from '../stores/userStore';
 
 export default function Profile() {
   const { userId } = useParams();
-  const { uid } = userStore();
-
-  const isMe = Number(userId) === uid;
 
   return (
     <Container>
-      <Contents isMe={isMe} />
+      <Contents userId={Number(userId)} isModal={false} />
     </Container>
   );
 }
