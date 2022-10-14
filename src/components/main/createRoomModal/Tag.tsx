@@ -30,7 +30,7 @@ export default function TagsComponent({
           value={newTag}
           onChange={onChange}
           onKeyPress={onKeyPress}
-          placeholder="태그를 입력하세요."
+          placeholder="태그 입력 후 엔터"
         />
       </TagComponent>
     </>
