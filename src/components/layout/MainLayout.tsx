@@ -2,12 +2,15 @@ import React from 'react';
 import { ReactChannelIO } from 'react-channel-plugin';
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import mainModalStore from 'src/stores/mainModalStore';
 import Header from './Header';
 import Footer from './Footer';
 import userStore from '../../stores/userStore';
+import NoticeModal from '../notice/NoticeModal';
 
 export default function MainLayout() {
-  const { uid, nickname } = userStore((state) => state);
+  const { uid, nickname } = userStore();
+  const { isOpenNoticeModal } = mainModalStore();
   const profile = uid
     ? {
         email: localStorage.getItem('email'),
@@ -35,6 +38,7 @@ export default function MainLayout() {
           autoBootTimeout={2000}
         />
       )}
+      {isOpenNoticeModal && <NoticeModal />}
       <Toaster />
       <Header />
       <Outlet />

@@ -7,10 +7,9 @@ import LoginModal from '../components/login/LoginModal';
 import { getMe } from '../api/main';
 import LandingPage from '../components/main/landingPage/LandingPage';
 import mainModalStore from '../stores/mainModalStore';
-import NoticeModal from '../components/notice/NoticeModal';
 
 export default function Landing() {
-  const { isOpenLoginModal, isOpenNoticeModal } = mainModalStore();
+  const { isOpenLoginModal } = mainModalStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +22,6 @@ export default function Landing() {
 
   return (
     <>
-      {isOpenNoticeModal && <NoticeModal />}
       {isOpenLoginModal && <LoginModal />}
       <Container>
         <Title />
