@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import media from 'src/styles/media';
 import useUser from 'src/hooks/useUser';
 import EditAvatar from './EditAvatar';
-import Badge from '../UserProfile/Badge';
+import Badge from '../userProfile/Badge';
 import EditGroup from './EditGroup';
 import useChangeProfile from '../../../hooks/useChangeProfile';
 import EditNickname from './EditNickname';

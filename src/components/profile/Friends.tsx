@@ -2,8 +2,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import useFriends from 'src/hooks/friend/useFriends';
 import { detailedFriend } from 'src/interface/singleFriend.interface';
-import FriendList from './Friends/FriendList';
-import AddFriend from './Friends/AddFriend';
+import FriendList from './friends/FriendList';
+import AddFriend from './friends/AddFriend';
 
 export default function Friends({ isModal }: { isModal: boolean }) {
   const [categoryType, setCategoryType] = useState('friendList');

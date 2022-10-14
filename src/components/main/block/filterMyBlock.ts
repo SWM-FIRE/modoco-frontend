@@ -1,7 +1,7 @@
-import blockInterface from '../../interface/block.interface';
-import userStore from '../../stores/userStore';
+import blockInterface from '../../../interface/block.interface';
+import userStore from '../../../stores/userStore';
 
-export const filterMyData = (data) => {
+export const filterMyBlock = (data) => {
   const { uid } = userStore();
   const newData = data?.filter(
     (block: blockInterface) => block.moderator.uid === uid,

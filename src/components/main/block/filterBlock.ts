@@ -1,6 +1,6 @@
-import blockInterface from '../../interface/block.interface';
+import blockInterface from '../../../interface/block.interface';
 
-export const filterData = (data, searchInput: string) => {
+export const filterBlock = (data, searchInput: string) => {
   const newData = searchInput
     ? data.filter((block: blockInterface) =>
         // eslint-disable-next-line no-nested-ternary

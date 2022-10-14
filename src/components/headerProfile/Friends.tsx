@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import media from 'src/styles/media';
 import { detailedFriend } from 'src/interface/singleFriend.interface';
 import useFriends from 'src/hooks/friend/useFriends';
-import FriendList from '../profile/Friends/FriendList';
-import AddFriend from '../profile/Friends/AddFriend';
+import FriendList from '../profile/friends/FriendList';
+import AddFriend from '../profile/friends/AddFriend';
 
 export default function Friends() {
   const [categoryType, setCategoryType] = useState('friendList');
