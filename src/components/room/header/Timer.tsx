@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import roomSocket from '../../../adapters/roomSocket';
+import { ReactComponent as TimerIcon } from '../../../assets/svg/Timer.svg';
 import { ReactComponent as Divide } from '../../../assets/svg/Divide.svg';
 import userStore from '../../../stores/userStore';
 
@@ -56,7 +57,7 @@ export default function Timer() {
 
   return (
     <Component>
-      <Status />
+      <TimerIcon />
       <Hour>{TimerHour}</Hour> :<Minute>{TimerMinute}</Minute> :
       <Second>{TimerSecond}</Second>
       <Divide />
@@ -70,16 +71,8 @@ const Component = styled.div`
   justify-content: center;
 `;
 
-const Status = styled.div`
-  width: 1.6rem;
-  height: 1.6rem;
-  background-color: #ef4444;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 0.8rem;
-`;
-
 const Hour = styled.span`
+  margin-left: 1rem;
   margin-right: 0.3rem;
 `;
 
