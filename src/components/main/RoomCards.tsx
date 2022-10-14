@@ -4,12 +4,12 @@ import ItemsCarousel from 'react-items-carousel';
 import media from 'src/styles/media';
 import Block from './block/Block';
 import useRooms from '../../hooks/useRooms';
-import { filterData } from './filterData';
+import { filterBlock } from './block/filterBlock';
 import { ReactComponent as LeftArrow } from '../../assets/svg/Left.svg';
 import { ReactComponent as RightArrow } from '../../assets/svg/Right.svg';
 import searchInputStore from '../../stores/searchInputStore';
 import EmptyBlock from './block/EmptyBlock';
-import { filterMyData } from './filterMyData';
+import { filterMyBlock } from './block/filterMyBlock';
 import MyBlock from './block/MyBlock';
 import CreateRoom from './CreateRoom';
 import MyEmptyBlock from './block/MyEmptyBlock';
@@ -55,8 +55,8 @@ export default function RoomCards({
 
   if (error) return <div>An error has occurred: </div>;
 
-  const newData = filterData(data, searchInput);
-  const newMyData = filterMyData(data);
+  const sortedBlock = filterBlock(data, searchInput);
+  const sortedMyBlock = filterMyBlock(data);
   const TRUE = true;
 
   return (
@@ -86,7 +86,7 @@ export default function RoomCards({
             ? [...Array(1)].map((no, index) => (
                 <MyEmptyBlock key={Symbol(index).toString()} />
               ))
-            : newMyData.map((data) => {
+            : sortedMyBlock.map((data) => {
                 return (
                   <MyBlock
                     key={data.itemId.toString().concat('my')}
@@ -103,7 +103,7 @@ export default function RoomCards({
           ? [...Array(3)].map((no, index) => (
               <EmptyBlock key={Symbol(index).toString()} isMain={false} />
             ))
-          : newData.map((data) => {
+          : sortedBlock.map((data) => {
               return <Block key={data.itemId} isMain data={data} />;
             })}
       </BlockContainer>

@@ -24,6 +24,7 @@ export default function ScreenModal() {
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.srcObject = newStream;
+      videoRef.current.muted = true;
     }
     if (!isMe && user.uid === -1) {
       toggleScreenModal();

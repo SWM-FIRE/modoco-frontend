@@ -131,6 +131,9 @@ const LobbyEnter = styled.button`
   font-size: 1.8rem;
   font-family: JostRegular;
   font-weight: 700;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
 `;
 
 const Container = styled.div`

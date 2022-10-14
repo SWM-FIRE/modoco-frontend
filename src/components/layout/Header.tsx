@@ -5,7 +5,7 @@ import mainModalStore from 'src/stores/mainModalStore';
 import { useNavigate } from 'react-router-dom';
 import UserStore from '../../stores/userStore';
 import Profile from './Profile';
-import HeaderProfileModal from '../HeaderProfile/HeaderProfileModal';
+import HeaderProfileModal from '../headerProfile/HeaderProfileModal';
 import useSetSelf from '../../hooks/useSetSelf';
 import ModocoLogo from '../atoms/ModocoLogo';
 

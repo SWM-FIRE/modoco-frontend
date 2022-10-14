@@ -5,7 +5,7 @@ import Details from './Details';
 import TagsComponent from './Tag';
 import Theme from './Theme';
 import Total from './Total';
-import Private from './Private';
+// import Private from './Private';
 
 export default function CreateRoomForm({
   inputs,
@@ -17,8 +17,7 @@ export default function CreateRoomForm({
   onClickTotal,
   isDisable,
 }) {
-  const { title, details, total, newTag, tags, isPrivate, roomPassword } =
-    inputs;
+  const { title, details, total, newTag, tags } = inputs;
 
   return (
     <Form onSubmit={mutate}>
@@ -39,11 +38,11 @@ export default function CreateRoomForm({
       </Section>
       <Total total={total} onClickTotal={onClickTotal} />
       <Theme onClickTheme={onClickTheme} />
-      <Private
+      {/* <Private
         isPrivate={isPrivate}
         roomPassword={roomPassword}
         onChange={onChange}
-      />
+      /> */}
       <Submit data-cy="create-room-modal-create" disabled={isDisable()}>
         방 생성하기
       </Submit>

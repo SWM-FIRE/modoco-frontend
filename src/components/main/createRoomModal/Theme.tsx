@@ -114,7 +114,7 @@ const DropDown = styled.div`
       transform: translateY(0);
     }
   }
-  height: 15rem;
+  height: 8.7rem;
   overflow-y: auto;
   animation: dropdown 0.4s ease;
 `;

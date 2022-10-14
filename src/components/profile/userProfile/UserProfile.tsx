@@ -1,7 +1,8 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import useUser from 'src/hooks/useUser';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import media from 'src/styles/media';
 import useSingleFriend from 'src/hooks/friend/useSingleFriend';
@@ -21,9 +22,8 @@ import lobbySocket, { deleteSocket } from '../../../adapters/lobbySocket';
 import SkeletonProfile from '../SkeletonProfile';
 import NoUser from './NoUser';
 
-export default function UserProfile({ isMe, setIsEdit }) {
+export default function UserProfile({ isMe, setIsEdit, userId, isModal }) {
   const { setClear } = userStore();
-  const { userId } = useParams();
   const navigate = useNavigate();
   const { isLoading, error, refetch, data } = useUser(Number(userId));
 
@@ -112,7 +112,7 @@ export default function UserProfile({ isMe, setIsEdit }) {
   const githubId = data.github_link.split('github.com/').pop();
 
   return (
-    <Components isMe={isMe}>
+    <Components isMe={isMe} isModal={isModal}>
       <div
         style={{
           display: 'flex',
@@ -122,17 +122,17 @@ export default function UserProfile({ isMe, setIsEdit }) {
       >
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Avatar avatar={data?.avatar} size={12} />
-          <Contents>
+          <Contents isModal={isModal}>
             <NicknameComponent>
-              <Nickname>{data?.nickname}</Nickname>
+              <Nickname isModal={isModal}>{data?.nickname}</Nickname>
               {isFriend && (
-                <FriendComponent>
+                <FriendComponent isModal={isModal}>
                   <ShowFriendState />
                   나와 친구입니다
                 </FriendComponent>
               )}
             </NicknameComponent>
-            <Links>
+            <Links isModal={isModal}>
               <MyLink onClick={onMail}>
                 <Mail />
               </MyLink>
@@ -152,14 +152,20 @@ export default function UserProfile({ isMe, setIsEdit }) {
           </Contents>
         </div>
         <Badge />
-        {isMe && <Logout onClick={onLogOut}>로그아웃</Logout>}
+        {isMe && (
+          <Logout onClick={onLogOut} isModal={isModal}>
+            로그아웃
+          </Logout>
+        )}
         {isFriend ? (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button>
+            <Button isModal={isModal}>
               <SendMessageBlack />
               채팅하기
             </Button>
-            <DeleteFriend onClick={onDelete}>친구 삭제</DeleteFriend>
+            <DeleteFriend onClick={onDelete} isModal={isModal}>
+              친구 삭제
+            </DeleteFriend>
           </div>
         ) : (
           !isMe &&
@@ -172,34 +178,42 @@ export default function UserProfile({ isMe, setIsEdit }) {
           )
         )}
         {!isMe && !isFriend && !isPending && (
-          <Button onClick={sendRequest}>친구요청</Button>
+          <Button onClick={sendRequest} isModal={isModal}>
+            친구요청
+          </Button>
         )}
         {isMe && (
-          <EditButton onClick={onClickEditProfile}>프로필 수정</EditButton>
+          <EditButton onClick={onClickEditProfile} isModal={isModal}>
+            프로필 수정
+          </EditButton>
         )}
       </div>
     </Components>
   );
 }
 
-const Components = styled.div<{ isMe: boolean }>`
+const Components = styled.div<{ isMe: boolean; isModal: boolean }>`
   background-color: #23262f;
-  width: ${(props) => (props.isMe ? '70%' : '100%')};
+  width: ${(props) => (props.isModal ? '100%' : props.isMe ? '70%' : '100%')};
   border-radius: 2rem;
   position: relative;
   display: flex;
   justify-content: flex-start;
   padding: 3.2rem;
   gap: 5.6rem;
-  @media (max-width: 1020px) {
+  ${media.large} {
+    padding: ${(props) => (props.isModal ? '1.6rem' : '3.2rem')};
+  }
+  ${media.medium} {
     width: 100%;
+    padding: ${(props) => (props.isModal ? '1.6rem' : '3.2rem')};
   }
   ${media.small} {
     padding: 1.6rem;
   }
 `;
 
-const EditButton = styled.button`
+const EditButton = styled.button<{ isModal: boolean }>`
   cursor: pointer;
   position: absolute;
   right: 3.2rem;
@@ -212,27 +226,38 @@ const EditButton = styled.button`
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
+  ${media.large} {
+    top: ${(props) => (props.isModal ? 'unset' : '4.4rem')};
+    right: ${(props) => (props.isModal ? '1.6rem' : '3.2rem')};
+    bottom: ${(props) => (props.isModal ? '1.6rem' : 'unset')};
+  }
   ${media.small} {
     top: unset;
     right: 1.6rem;
     bottom: 1.6rem;
-    padding: 0.8rem 1.6rem;
   }
 `;
 
-const Contents = styled.div`
+const Contents = styled.div<{ isModal: boolean }>`
   margin-left: 4rem;
   width: 100%;
+  ${media.large} {
+    margin-left: ${(props) => (props.isModal ? '1.6rem' : '4rem')};
+  }
   ${media.small} {
     margin-left: 1rem;
   }
 `;
 
-const Links = styled.div`
+const Links = styled.div<{ isModal: boolean }>`
   display: flex;
   flex-direction: row;
   gap: 1.6rem;
   margin-top: 0.4rem;
+  ${media.large} {
+    margin-top: ${(props) => (props.isModal ? '0.4rem' : '0.8rem')};
+    gap: ${(props) => (props.isModal ? '0.8rem' : '1.6rem')};
+  }
   ${media.small} {
     margin-top: 0.2rem;
     gap: 0.8rem;
@@ -263,7 +288,7 @@ const NicknameComponent = styled.div`
   justify-content: space-between;
 `;
 
-const FriendComponent = styled.div`
+const FriendComponent = styled.div<{ isModal: boolean }>`
   color: #f3f4f6;
   display: flex;
   align-items: center;
@@ -274,15 +299,21 @@ const FriendComponent = styled.div`
   font-family: IBMPlexSansKRRegular;
   gap: 1rem;
   height: 4.4rem;
+  ${media.large} {
+    display: ${(props) => (props.isModal ? 'none' : 'flex')};
+  }
   ${media.small} {
     display: none;
   }
 `;
 
-const Nickname = styled.h1`
+const Nickname = styled.h1<{ isModal: boolean }>`
   font-size: 4rem;
   font-family: IBMPlexMonoRegular;
   color: #f1f5f9;
+  ${media.large} {
+    font-size: ${(props) => (props.isModal ? '2.4rem' : '4rem')};
+  }
   ${media.small} {
     font-size: 2rem;
   }
@@ -295,7 +326,7 @@ const Description = styled.p`
   padding-top: 2rem;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ isModal: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -308,12 +339,15 @@ const Button = styled.button`
   gap: 0.4rem;
   margin-top: 2rem;
   max-width: 20rem;
+  ${media.large} {
+    padding: ${(props) => (props.isModal ? '0.8rem 1.2rem' : '1.6rem 5.7rem')};
+  }
   ${media.small} {
     padding: 0.8rem 1.2rem;
   }
 `;
 
-const DeleteFriend = styled.button`
+const DeleteFriend = styled.button<{ isModal: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -329,12 +363,15 @@ const DeleteFriend = styled.button`
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
+  ${media.large} {
+    padding: ${(props) => (props.isModal ? '1.6rem 2.7rem' : '1.6rem 5.7rem')};
+  }
   ${media.small} {
     padding: 1.6rem 2.7rem;
   }
 `;
 
-const Logout = styled.button`
+const Logout = styled.button<{ isModal: boolean }>`
   color: #f9fafb;
   border-radius: 5rem;
   border: 1px solid #f9fafb;
@@ -343,6 +380,7 @@ const Logout = styled.button`
   font-size: 1.5rem;
   margin-top: 2rem;
   width: 8.6rem;
+  display: ${(props) => (props.isModal ? 'none' : 'block')};
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }

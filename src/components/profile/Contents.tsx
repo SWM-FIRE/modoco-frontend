@@ -1,24 +1,38 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import userStore from 'src/stores/userStore';
 import media from 'src/styles/media';
-import UserProfile from './UserProfile/UserProfile';
+import UserProfile from './userProfile/UserProfile';
 import Friends from './Friends';
 import Statistics from './Statistics';
 import Overall from './Overall';
 import roomModalStore from '../../stores/room/roomModalStore';
-import EditUserProfile from './EditUserProfile/EditUserProfile';
+import EditUserProfile from './editUserProfile/EditUserProfile';
 
-export default function Contents({ isMe }: { isMe: boolean }) {
+export default function Contents({
+  userId,
+  isModal,
+}: {
+  userId: number;
+  isModal: boolean;
+}) {
   const { profileModal } = roomModalStore();
   const [isEdit, setIsEdit] = useState(false);
+  const { uid } = userStore();
+  const isMe = userId === uid;
 
   return (
-    <Container isMe={isMe}>
+    <Container isMe={isMe} isModal={isModal}>
       <UserInformation isModal={profileModal}>
         {isEdit && isMe ? (
-          <EditUserProfile setIsEdit={setIsEdit} />
+          <EditUserProfile setIsEdit={setIsEdit} isModal={isModal} />
         ) : (
-          <UserProfile isMe={isMe} setIsEdit={setIsEdit} />
+          <UserProfile
+            userId={userId}
+            isMe={isMe}
+            setIsEdit={setIsEdit}
+            isModal={isModal}
+          />
         )}
         {isMe && <Friends isModal={profileModal} />}
       </UserInformation>
@@ -28,7 +42,7 @@ export default function Contents({ isMe }: { isMe: boolean }) {
   );
 }
 
-const Container = styled.div<{ isMe: boolean }>`
+const Container = styled.div<{ isMe: boolean; isModal: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -36,6 +50,9 @@ const Container = styled.div<{ isMe: boolean }>`
   gap: 4.5rem;
   padding: 4.4rem 10rem;
   width: 100%;
+  ${media.large} {
+    padding: ${(props) => (props.isModal ? '4.4rem 5rem' : '4.4rem 10rem')};
+  }
   ${media.small} {
     padding: 4.4rem 2rem;
   }

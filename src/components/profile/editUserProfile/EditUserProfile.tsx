@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import media from 'src/styles/media';
 import useUser from 'src/hooks/useUser';
 import EditAvatar from './EditAvatar';
-import Badge from '../UserProfile/Badge';
+import Badge from '../userProfile/Badge';
 import EditGroup from './EditGroup';
 import useChangeProfile from '../../../hooks/useChangeProfile';
 import EditNickname from './EditNickname';
@@ -15,7 +15,7 @@ import UserStore from '../../../stores/userStore';
 import EditLinks from './EditLinks';
 import lobbySocket, { deleteSocket } from '../../../adapters/lobbySocket';
 
-export default function EditUserProfile({ setIsEdit }) {
+export default function EditUserProfile({ setIsEdit, isModal }) {
   const navigate = useNavigate();
   const {
     inputs,
@@ -64,7 +64,7 @@ export default function EditUserProfile({ setIsEdit }) {
   };
 
   return (
-    <Form onSubmit={onSubmitForm}>
+    <Form onSubmit={onSubmitForm} isModal={isModal}>
       <Profile>
         <EditAvatar avatar={avatar} onChangeAvatar={onChangeAvatar} />
         <ProfileDetail>
@@ -85,7 +85,7 @@ export default function EditUserProfile({ setIsEdit }) {
       </Profile>
       <EditDescription status_quo={status_quo} onChange={onChange} />
       <Badge />
-      <Logout onClick={onLogOut} type="button">
+      <Logout onClick={onLogOut} isModal={isModal} type="button">
         로그아웃
       </Logout>
       <Buttons>
@@ -100,9 +100,9 @@ export default function EditUserProfile({ setIsEdit }) {
   );
 }
 
-const Form = styled.form`
+const Form = styled.form<{ isModal: boolean }>`
   background-color: #23262f;
-  width: 70%;
+  width: ${(props) => (props.isModal ? '100%' : '70%')};
   border-radius: 2rem;
   position: relative;
   padding: 3.2rem;
@@ -111,8 +111,8 @@ const Form = styled.form`
     width: 100%;
   }
   ${media.small} {
-    padding-bottom: 10rem;
     padding: 1.6rem;
+    padding-bottom: 10rem;
   }
 `;
 
@@ -142,10 +142,10 @@ const Buttons = styled.div`
   #accept {
     margin-left: 0.8rem;
   }
-  ${media.small} {
+  ${media.xlarge} {
     top: unset;
-    left: 2.5rem;
     bottom: 3.2rem;
+    right: 3.2rem;
   }
 `;
 
@@ -161,7 +161,7 @@ const Button = styled.button`
   }
 `;
 
-const Logout = styled.button`
+const Logout = styled.button<{ isModal: boolean }>`
   color: #f9fafb;
   border-radius: 5rem;
   border: 1px solid #f9fafb;
@@ -173,9 +173,11 @@ const Logout = styled.button`
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
+  display: ${(props) => (props.isModal ? 'none' : 'block')};
   ${media.small} {
     position: absolute;
+    top: unset;
+    left: 2.5rem;
     bottom: 3.2rem;
-    right: 3.2rem;
   }
 `;

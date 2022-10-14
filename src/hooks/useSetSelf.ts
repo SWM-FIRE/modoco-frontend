@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import UserStore from '../stores/userStore';
-import { getMe, getRecords } from '../api/main';
+import { getMe } from '../api/main';
 
 const useSetSelf = () => {
-  const { setNickname, setAvatar, setUid, setClear, setTime, setLogin, uid } =
+  const { setNickname, setAvatar, setUid, setClear, setLogin, uid } =
     UserStore();
   const navigate = useNavigate();
   useEffect(() => {
@@ -20,12 +20,12 @@ const useSetSelf = () => {
           setNickname(res.data.nickname);
           setAvatar(res.data.avatar);
           setUid(res.data.uid);
-          getRecords().then((res) => {
-            if (res.data.length !== 0) {
-              setTime(Number(res.data[0].duration) * 60);
-            }
-            setLogin(true);
-          });
+          // getRecords().then((res) => {
+          //   if (res.data.length !== 0) {
+          //     setTime(Number(res.data[0].duration) * 60);
+          //   }
+          // });
+          setLogin(true);
         })
         .catch((err) => {
           if (err.response.status === 403) {

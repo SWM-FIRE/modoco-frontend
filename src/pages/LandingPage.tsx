@@ -22,12 +22,12 @@ export default function Landing() {
 
   return (
     <>
+      {isOpenLoginModal && <LoginModal />}
       <Container>
         <Title />
         <Scrolls />
         <LandingPage />
       </Container>
-      {isOpenLoginModal && <LoginModal />}
     </>
   );
 }

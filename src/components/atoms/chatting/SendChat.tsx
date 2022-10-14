@@ -76,7 +76,8 @@ export default function SendChat({
 const SubmitMessage = styled.form<{ roomId: string }>`
   width: 100%;
   max-height: 19rem;
-  border-radius: 0 0 1rem 1rem;
+  border-radius: ${(props) =>
+    props.roomId === 'lobby' ? '1rem' : '0 0 1rem 1rem'};
   padding: 1.5rem 2rem;
   background-color: ${(props) =>
     props.roomId !== 'lobby' ? ({ theme }) => theme.input : '#313540'};
