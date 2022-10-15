@@ -128,6 +128,12 @@
 
 [![071yoon's GitHub stats](https://velog-readme-stats.vercel.app/api?name=071yoon&slug=React로-오디오-비주얼라이저-만들기)](https://velog.io/@071yoon/React%EB%A1%9C-%EC%98%A4%EB%94%94%EC%98%A4-%EB%B9%84%EC%A3%BC%EC%96%BC%EB%9D%BC%EC%9D%B4%EC%A0%80-%EB%A7%8C%EB%93%A4%EA%B8%B0)
 
+[![071yoon's GitHub stats](https://velog-readme-stats.vercel.app/api?name=071yoon&slug=Cypress로-e2e-테스트-진행하기)](
+https://velog.io/@071yoon/Cypress%EB%A1%9C-e2e-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A7%84%ED%96%89%ED%95%98%EA%B8%B0)
+
+[![071yoon's GitHub stats](https://velog-readme-stats.vercel.app/api?name=071yoon&slug=APM-로그로-문제-해결하기)](
+https://velog.io/@071yoon/APM-%EB%A1%9C%EA%B7%B8%EB%A1%9C-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0)
+
 </details>
 
 <details>
