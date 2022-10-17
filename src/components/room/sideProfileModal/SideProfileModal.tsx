@@ -71,9 +71,11 @@ export default function SideProfileModal({
 }
 
 const Screen = styled.div`
-  position: absolute;
-  width: 300vw;
-  height: 130vh;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  height: 100vh;
   z-index: 1;
 `;
 
@@ -94,8 +96,8 @@ const Container = styled.div`
   position: absolute;
   width: 32rem;
   background-color: #23262f;
-  top: 8rem;
-  left: -30rem;
+  top: 20rem;
+
   z-index: 2;
   padding: 2rem 2.4rem 3.2rem 2.4rem;
   border-radius: 2rem;

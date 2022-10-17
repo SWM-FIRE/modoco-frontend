@@ -24,17 +24,7 @@ export default function SingleParticipant({
   };
 
   return (
-    <Container>
-      <AvatarContainer onClick={toggleProfile}>
-        <MyAvatar num={user.avatar} />
-        <MicContainer>
-          {user.enabledAudio ? <MicOn /> : <MicOff />}
-        </MicContainer>
-      </AvatarContainer>
-      <NameContainer isMe={isMe} nicknameLength={user.nickname?.length}>
-        {user.nickname}
-        {moderator === user.uid && <Crown />}
-      </NameContainer>
+    <>
       {showSideProfile ? (
         <SideProfileModal
           toggle={setShowSideProfile}
@@ -43,7 +33,19 @@ export default function SingleParticipant({
           moderator={moderator}
         />
       ) : null}
-    </Container>
+      <Container>
+        <AvatarContainer onClick={toggleProfile}>
+          <MyAvatar num={user.avatar} />
+          <MicContainer>
+            {user.enabledAudio ? <MicOn /> : <MicOff />}
+          </MicContainer>
+        </AvatarContainer>
+        <NameContainer isMe={isMe} nicknameLength={user.nickname?.length}>
+          {user.nickname}
+          {moderator === user.uid && <Crown />}
+        </NameContainer>
+      </Container>
+    </>
   );
 }
 

@@ -8,7 +8,6 @@ export default function Code({ codeModalType }: { codeModalType: string }) {
   const { code } = codeChatStore();
 
   useEffect(() => {
-    hljs.initHighlightingOnLoad();
     hljs.highlightAll();
   }, []);
 
