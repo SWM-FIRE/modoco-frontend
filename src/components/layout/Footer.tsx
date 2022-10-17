@@ -13,6 +13,17 @@ export default function Footer() {
     event.preventDefault();
     navigate('/support/privacy');
   };
+  const navigateFAQ = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    window.open(
+      'https://coding-groot.notion.site/coding-groot/477c523b4a1240a68833086969c2d62f?v=364afbf38869452292a06fd672db4357',
+      '_blank',
+    );
+  };
+  const navigateGit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    window.open('https://github.com/SWM-FIRE', '_blank');
+  };
 
   return (
     <Container data-cy="main-footer">
@@ -32,16 +43,18 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} All rights reserved
           </Copyright>
           <Other>
-            <OtherButton data-cy="footer-terms" onClick={navigateTerms}>
-              Terms
-            </OtherButton>
-            |
+            <OtherButton onClick={navigateGit}>Github</OtherButton>|
+            <OtherButton onClick={navigateFAQ}>F&Q</OtherButton>|
             <OtherButton
               data-cy="footer-privacy-policy"
               style={{ fontWeight: 600 }}
               onClick={navigatePrivacy}
             >
               Privacy Policy
+            </OtherButton>
+            |
+            <OtherButton data-cy="footer-terms" onClick={navigateTerms}>
+              Terms
             </OtherButton>
           </Other>
         </Lower>
