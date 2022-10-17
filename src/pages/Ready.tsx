@@ -9,6 +9,7 @@ import RoomDetail from '../components/ready/RoomDetail';
 import Screen from '../components/ready/Screen';
 import roomSocket, { generateSocket } from '../adapters/roomSocket';
 import useSetSelf from '../hooks/useSetSelf';
+import PromptModal from '../components/ready/promptModal/PromptModal';
 
 export default function ReadyPage() {
   const { createAll } = useCreateMediaStream();
@@ -16,6 +17,7 @@ export default function ReadyPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { roomId } = useParams();
   const navigate = useNavigate();
+  const [isPrompt, setIsPrompt] = useState(true);
   const [isSetting, setIsSetting] = useState(false);
 
   useEffect(() => {
@@ -47,6 +49,7 @@ export default function ReadyPage() {
 
   return (
     <>
+      {isPrompt && <PromptModal setIsPrompt={setIsPrompt} />}
       {isSetting ? (
         <SettingModal setting={isSetting} toggle={toggleSetting} />
       ) : null}
@@ -54,7 +57,7 @@ export default function ReadyPage() {
         <Header />
         <Main>
           <Screen videoRef={videoRef} setSetting={setIsSetting} />
-          <RoomDetail roomNo={roomId} />
+          <RoomDetail roomNo={roomId} setIsPrompt={setIsPrompt} />
         </Main>
       </Container>
     </>

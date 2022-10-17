@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Card from './card/Card';
 
-export default function RoomDetail({ roomNo: roomId }) {
+export default function RoomDetail({ roomNo: roomId, setIsPrompt }) {
   const navigate = useNavigate();
-  const [disableButton, setDisableButton] = useState(false);
+  const [disableButton, setDisableButton] = useState(true);
+
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (localStorage.getItem('access_token')) {
+    if (disableButton) {
+      setIsPrompt(true);
+    } else if (localStorage.getItem('access_token')) {
       navigate(`/room/${roomId}`);
     }
   };
@@ -18,12 +21,14 @@ export default function RoomDetail({ roomNo: roomId }) {
   const checkValid = !!navigator.permissions?.query;
   if (checkValid) {
     navigator.permissions.query({ name: permissionName }).then((result) => {
+      console.log(result);
       if (result.state === 'granted') {
+        setIsPrompt(false);
         setDisableButton(false);
       } else if (result.state === 'prompt') {
         setDisableButton(true);
       } else if (result.state === 'denied') {
-        setDisableButton(false);
+        setDisableButton(true);
       }
     });
   }
@@ -31,11 +36,7 @@ export default function RoomDetail({ roomNo: roomId }) {
   return (
     <Container>
       <Card room={roomId} />
-      <EnterButton
-        onClick={enterRoom}
-        disabled={disableButton}
-        data-cy="ready-enter-button"
-      >
+      <EnterButton onClick={enterRoom} data-cy="ready-enter-button">
         입장하기 →
       </EnterButton>
     </Container>
