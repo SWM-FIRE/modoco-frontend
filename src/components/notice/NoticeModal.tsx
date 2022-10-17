@@ -76,6 +76,6 @@ const Container = styled.div`
   width: fit-content;
   background-color: black;
   border-radius: 3rem;
-  padding: 4rem 4rem 2rem 4rem;
+  padding: 4rem;
   border: 3px solid rgba(255, 255, 255, 0.2);
 `;
