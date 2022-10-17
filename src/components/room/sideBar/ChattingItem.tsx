@@ -74,9 +74,7 @@ export default function ChattingItem({
           )}
           <MessageComponent isMe={isMe}>
             {!isHideNicknameAndAvatar && (
-              <Nickname isMe={isMe}>
-                {isMe ? '나' : `${user.nickname}`}
-              </Nickname>
+              <Nickname>{isMe ? '나' : `${user.nickname}`}</Nickname>
             )}
             <MessageBox isMe={isMe}>
               {isCode ? (
@@ -93,20 +91,7 @@ export default function ChattingItem({
   );
 }
 
-interface userInterface {
-  isMe: boolean;
-}
-
-interface hideInterface {
-  isHide: boolean;
-}
-
-interface componentInterface {
-  isMe: boolean;
-  isHide: boolean;
-}
-
-const EntranceComponent = styled.div<userInterface>`
+const EntranceComponent = styled.div<{ isMe: boolean }>`
   display: ${({ isMe }) => (isMe ? 'none' : 'flex')};
   align-items: center;
   justify-content: center;
@@ -121,14 +106,14 @@ const Entrance = styled.div`
   color: #bbbaba;
 `;
 
-const Component = styled.li<componentInterface>`
+const Component = styled.li<{ isMe: boolean; isHide: boolean }>`
   display: flex;
   flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
   gap: 1rem;
   margin-top: ${({ isHide }) => (isHide ? '1rem' : '2rem')};
 `;
 
-const AvatarComponent = styled.div<hideInterface>`
+const AvatarComponent = styled.div<{ isHide: boolean }>`
   width: 4rem;
   height: 4rem;
   svg {
@@ -138,22 +123,22 @@ const AvatarComponent = styled.div<hideInterface>`
   }
 `;
 
-const MessageComponent = styled.div<userInterface>`
+const MessageComponent = styled.div<{ isMe: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: ${({ isMe }) => (isMe ? 'flex-end' : 'flex-start')};
 `;
 
-const Nickname = styled.div<userInterface>``;
+const Nickname = styled.div``;
 
-const MessageBox = styled.div<userInterface>`
+const MessageBox = styled.div<{ isMe: boolean }>`
   display: flex;
   flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
   align-items: flex-end;
-  margin-top: 0.4rem;
+  margin-top: 0.2rem;
   width: 100%;
-  gap: 0.3rem;
+  gap: 0.2rem;
   word-break: break-all;
 `;
 
