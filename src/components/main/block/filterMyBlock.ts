@@ -4,7 +4,7 @@ import userStore from '../../../stores/userStore';
 export const filterMyBlock = (data) => {
   const { uid } = userStore();
   const newData = data?.filter(
-    (block: blockInterface) => block.moderator.uid === uid,
+    (block: blockInterface) => block.moderator?.uid === uid,
   );
 
   newData?.sort((a, b) => {

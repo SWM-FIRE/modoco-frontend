@@ -47,7 +47,7 @@ export default function LobbyCanvas({
             autoFocus
             type="button"
           >
-            <MyAvatar avatar={user.avatar} size={5} />
+            <MyAvatar avatar={user?.avatar} size={5} />
           </Component>
         );
       })}

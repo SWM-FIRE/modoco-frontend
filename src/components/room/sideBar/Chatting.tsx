@@ -53,9 +53,9 @@ export default function Chat() {
           <ChattingItem
             key={message.uid + message.createdAt + message.type}
             user={{
-              nickname: message.nickname,
-              avatar: message.avatar,
-              uid: message.uid,
+              nickname: message?.nickname,
+              avatar: message?.avatar,
+              uid: message?.uid,
             }}
             msg={message.message.toString()}
             time={message.createdAt}

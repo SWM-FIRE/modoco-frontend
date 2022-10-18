@@ -26,7 +26,7 @@ export default function ScreenShare({ theme }) {
           />
           {connectedUsers[0] ? (
             <SingleScreen
-              key={connectedUsers[0].uid}
+              key={connectedUsers[0]?.uid}
               connectedUser={connectedUsers[0]}
               stream={findStream({
                 sid: connectedUsers[0]?.sid,
@@ -44,7 +44,7 @@ export default function ScreenShare({ theme }) {
         <FlexRow>
           {connectedUsers[1] ? (
             <SingleScreen
-              key={connectedUsers[1].uid}
+              key={connectedUsers[1]?.uid}
               connectedUser={connectedUsers[1]}
               stream={findStream({
                 sid: connectedUsers[1]?.sid,
@@ -57,7 +57,7 @@ export default function ScreenShare({ theme }) {
           )}
           {connectedUsers[2] ? (
             <SingleScreen
-              key={connectedUsers[2].uid}
+              key={connectedUsers[2]?.uid}
               connectedUser={connectedUsers[2]}
               stream={findStream({
                 sid: connectedUsers[2]?.sid,

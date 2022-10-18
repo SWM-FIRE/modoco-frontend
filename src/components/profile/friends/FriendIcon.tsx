@@ -7,7 +7,7 @@ import MyAvatar from '../../../assets/avatar/MyAvatar';
 import singleFriend from '../../../interface/singleFriend.interface';
 
 export default function FriendIcon({ friend }: { friend: singleFriend }) {
-  const { enterProfile } = useEnterProfile(friend.uid);
+  const { enterProfile } = useEnterProfile(friend?.uid);
   const { closeProfileModal } = mainModalStore();
 
   const onFriendProfile = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -19,7 +19,7 @@ export default function FriendIcon({ friend }: { friend: singleFriend }) {
   return (
     <Container onClick={onFriendProfile}>
       <AvatarContainer>
-        <MyAvatar num={friend.avatar} />
+        <MyAvatar num={friend?.avatar} />
       </AvatarContainer>
       <Information>
         <Nickname>{friend.nickname}</Nickname>
