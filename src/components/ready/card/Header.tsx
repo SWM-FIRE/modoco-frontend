@@ -5,7 +5,7 @@ export default function Header({ data }) {
   return (
     <Container data-cy="ready-card-header">
       <AvatarControl>
-        <MyAvatar num={Number(data.moderator.avatar)} />
+        <MyAvatar num={Number(data?.moderator.avatar)} />
       </AvatarControl>
       <NameTag data-cy="ready-card-name">
         <Moderator isModerator={1}>방장</Moderator>
