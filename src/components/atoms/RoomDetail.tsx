@@ -5,7 +5,7 @@ import ThemeImage from './ThemeImages';
 export default function RoomDetail({ data }) {
   return (
     <Container data-cy="card-room-detail">
-      <ThemeImage theme={data.theme} />
+      <ThemeImage theme={data.theme} type="block" />
       <Attend>
         <div style={{ marginTop: '-0.3rem' }}>🔥</div>
         <div>{data.total}중</div>

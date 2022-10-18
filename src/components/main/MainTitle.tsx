@@ -33,7 +33,7 @@ export default function TitleContainer() {
     // send my info
     lobbySocket.socket?.on('connect', () => {
       getMe().then((res) => {
-        lobbySocket.socket?.emit('joinLobby', { uid: res.data.uid });
+        lobbySocket.socket?.emit('joinLobby', { uid: res?.data?.uid });
       });
     });
 
@@ -51,7 +51,7 @@ export default function TitleContainer() {
           appendUser({
             nickname: res.data.nickname,
             uid,
-            avatar: res.data.avatar,
+            avatar: res.data?.avatar,
             sid,
           });
         } else {
@@ -64,13 +64,13 @@ export default function TitleContainer() {
     lobbySocket.socket?.on('existingUsers', ({ users, current }) => {
       console.log(current);
       users.map((user) => {
-        getUser(user.uid).then((res) => {
+        getUser(user?.uid).then((res) => {
           const existingUser = findUserByUid(user.uid);
           if (!existingUser) {
             appendUser({
               nickname: res.data.nickname,
               uid: user.uid,
-              avatar: res.data.avatar,
+              avatar: res.data?.avatar,
               sid: user.sid,
             });
           } else {
@@ -82,7 +82,7 @@ export default function TitleContainer() {
     });
 
     lobbySocket.socket?.on('LeftLobby', ({ sid }: { sid: string }) => {
-      if (lobbySocket.socket.id === sid) {
+      if (lobbySocket.socket?.id === sid) {
         return;
       }
       removeUser(sid);

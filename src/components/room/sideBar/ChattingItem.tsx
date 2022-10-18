@@ -29,7 +29,7 @@ export default function ChattingItem({
   isLobby: boolean;
 }) {
   const { uid } = userStore();
-  const isMe = user.uid === uid;
+  const isMe = user?.uid === uid;
   const entrance = type === 'JOIN' || type === 'LEAVE';
   const isCode = type === 'CODE';
   const msgRef = useRef(null);
@@ -69,7 +69,7 @@ export default function ChattingItem({
         <Component isMe={isMe} isHide={isHideNicknameAndAvatar}>
           {!isMe && (
             <AvatarComponent isHide={isHideNicknameAndAvatar}>
-              <MyAvatar num={Number(user.avatar)} />
+              <MyAvatar num={Number(user?.avatar)} />
             </AvatarComponent>
           )}
           <MessageComponent isMe={isMe}>

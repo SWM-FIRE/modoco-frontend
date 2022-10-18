@@ -3,12 +3,12 @@ import MyAvatar from 'src/assets/avatar/MyAvatar';
 import useEnterProfile from '../useEnterProfile';
 
 export default function SingleParticipant({ user }) {
-  const { enterProfile } = useEnterProfile(user.uid);
+  const { enterProfile } = useEnterProfile(user?.uid);
 
   return (
     <User onClick={enterProfile}>
       <AvatarContainer>
-        <MyAvatar num={user.avatar} />
+        <MyAvatar num={user?.avatar} />
       </AvatarContainer>
       <Nickname>{user.nickname}</Nickname>
     </User>

@@ -5,7 +5,7 @@ export default function Participants({ connectedUsers }) {
   return (
     <Container>
       {connectedUsers.map((user) => {
-        return <SingleParticipant user={user} key={user.uid} />;
+        return <SingleParticipant user={user} key={user?.uid} />;
       })}
     </Container>
   );
