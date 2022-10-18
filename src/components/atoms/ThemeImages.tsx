@@ -7,13 +7,17 @@ import Travel from '../../assets/theme/travel.png';
 import Camping from '../../assets/theme/camp.png';
 import { ReactComponent as Bar } from '../../assets/svg/Room/Bar.svg';
 
-export default function ThemeImage({ theme }) {
+export default function ThemeImage({ theme, type }) {
   if (theme === 'cosmos') {
     return (
       <Component>
         <Img src={Cosmos} alt="cosmos" />
-        <Name>우주</Name>
-        <Bar />
+        {type === 'block' && (
+          <>
+            <Name>우주</Name>
+            <Bar />
+          </>
+        )}
       </Component>
     );
   }
@@ -21,8 +25,12 @@ export default function ThemeImage({ theme }) {
     return (
       <Component>
         <Img src={Fire} alt="fire" />
-        <Name>모닥불</Name>
-        <Bar />
+        {type === 'block' && (
+          <>
+            <Name>모닥불</Name>
+            <Bar />
+          </>
+        )}
       </Component>
     );
   }
@@ -30,8 +38,12 @@ export default function ThemeImage({ theme }) {
     return (
       <Component>
         <Img src={Ocean} alt="ocean" />
-        <Name>바다</Name>
-        <Bar />
+        {type === 'block' && (
+          <>
+            <Name>바다</Name>
+            <Bar />
+          </>
+        )}
       </Component>
     );
   }
@@ -39,8 +51,12 @@ export default function ThemeImage({ theme }) {
     return (
       <Component>
         <Img src={Travel} alt="travel" />
-        <Name>여행</Name>
-        <Bar />
+        {type === 'block' && (
+          <>
+            <Name>여행</Name>
+            <Bar />
+          </>
+        )}
       </Component>
     );
   }
@@ -48,8 +64,12 @@ export default function ThemeImage({ theme }) {
     return (
       <Component>
         <Img src={Camping} alt="camping" />
-        <Name>캠핑</Name>
-        <Bar />
+        {type === 'block' && (
+          <>
+            <Name>캠핑</Name>
+            <Bar />
+          </>
+        )}
       </Component>
     );
   }

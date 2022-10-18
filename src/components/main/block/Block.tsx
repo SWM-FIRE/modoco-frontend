@@ -13,7 +13,7 @@ import useEnterProfile from '../useEnterProfile';
 export default function Block({ isMain, data }) {
   const navigate = useNavigate();
   const { nickname } = UserStore();
-  const { enterProfile } = useEnterProfile(data.moderator.uid);
+  const { enterProfile } = useEnterProfile(data?.moderator.uid);
 
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -35,7 +35,7 @@ export default function Block({ isMain, data }) {
   return (
     <Container main={isMain} data-cy="main-room-cards">
       <AvatarContainer data-cy="main-room-moderator" onClick={enterProfile}>
-        <MyAvatar num={Number(data.moderator.avatar)} />
+        <MyAvatar num={Number(data?.moderator.avatar)} />
         <Moderator>
           방장<Nickname>{data.moderator.nickname}</Nickname>
         </Moderator>
