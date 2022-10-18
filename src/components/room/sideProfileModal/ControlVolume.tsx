@@ -21,7 +21,7 @@ export default function ControlVolume({ user }: { user: VideoUserInterface }) {
   };
   const onChangeVolume = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewVolume(event.target.valueAsNumber);
-    setVolumeByUid(user.uid, event.target.valueAsNumber);
+    if (userSpeaker) setVolumeByUid(user.uid, event.target.valueAsNumber);
   };
 
   useEffect(() => {

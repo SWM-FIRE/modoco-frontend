@@ -17,10 +17,25 @@ export default function ReadyPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const [isPrompt, setIsPrompt] = useState(true);
+  const [isPrompt, setIsPrompt] = useState(false);
   const [isSetting, setIsSetting] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line no-undef
+    const permissionName = 'microphone' as PermissionName;
+    const checkValid = !!navigator.permissions?.query;
+
+    if (checkValid) {
+      navigator.permissions.query({ name: permissionName }).then((result) => {
+        if (result.state === 'granted') {
+          setIsPrompt(false);
+        } else if (result.state === 'prompt') {
+          setIsPrompt(true);
+        } else if (result.state === 'denied') {
+          setIsPrompt(true);
+        }
+      });
+    }
     if (localStorage.getItem('inviteId') === roomId) {
       localStorage.removeItem('inviteId');
     }
