@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
@@ -17,10 +18,16 @@ import ScreenShareModal from '../components/room/ScreenModal';
 import ProfileModal from '../components/room/profileModal/ProfileModal';
 import InviteModal from '../components/room/InviteModal/InviteModal';
 import CodeModal from '../components/room/codeModal/CodeModal';
+import { deleteSocket } from '../adapters/roomSocket';
 
 export default function Room() {
   const { roomId } = useParams();
   const { isLoading, error, data } = useRoom(roomId);
+  useEffect(() => {
+    return () => {
+      deleteSocket();
+    };
+  }, []);
   const {
     screenModal,
     settingModal,
