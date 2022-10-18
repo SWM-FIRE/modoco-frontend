@@ -24,7 +24,6 @@ const mediaStateChange = () => {
 
   const emitAudioStateChange = (room: string, enabled: boolean) => {
     newSocket?.emit(SOCKET_EVENT.AUDIO_STATE_CHANGE, { room, enabled });
-    toggleAudioStream(enabled);
   };
 
   useEffect(() => {
@@ -32,6 +31,7 @@ const mediaStateChange = () => {
       const { uid, enabled } = data;
       const isMe = uid === userId;
       const audioStateUser = findUserByUid(uid);
+
       if (!audioStateUser && !isMe) {
         appendUser({
           nickname: '',
@@ -41,10 +41,12 @@ const mediaStateChange = () => {
           enabledVideo: true,
           enabledAudio: enabled,
           isAlreadyEntered: true,
-          volume: enabled ? 0.5 : 0,
+          volume: 0.5,
         });
       } else if (audioStateUser && !isMe) {
         setEnabledAudioByUid(uid, enabled);
+      } else if (isMe) {
+        toggleAudioStream(enabled);
       }
     });
 

@@ -1,37 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Card from './card/Card';
 
 export default function RoomDetail({ roomNo: roomId, setIsPrompt }) {
   const navigate = useNavigate();
-  const [disableButton, setDisableButton] = useState(true);
-
-  const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (disableButton) {
-      setIsPrompt(true);
-    } else if (localStorage.getItem('access_token')) {
-      navigate(`/room/${roomId}`);
-    }
-  };
 
   // eslint-disable-next-line no-undef
   const permissionName = 'microphone' as PermissionName;
   const checkValid = !!navigator.permissions?.query;
-  if (checkValid) {
-    navigator.permissions.query({ name: permissionName }).then((result) => {
-      console.log(result);
-      if (result.state === 'granted') {
-        setIsPrompt(false);
-        setDisableButton(false);
-      } else if (result.state === 'prompt') {
-        setDisableButton(true);
-      } else if (result.state === 'denied') {
-        setDisableButton(true);
-      }
-    });
-  }
+
+  const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (checkValid) {
+      navigator.permissions.query({ name: permissionName }).then((result) => {
+        if (result.state === 'granted') {
+          setIsPrompt(false);
+          if (localStorage.getItem('access_token')) {
+            navigate(`/room/${roomId}`);
+          }
+        } else if (result.state === 'prompt') {
+          setIsPrompt(true);
+        } else if (result.state === 'denied') {
+          setIsPrompt(true);
+        }
+      });
+    }
+  };
 
   return (
     <Container>

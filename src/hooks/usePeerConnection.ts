@@ -26,7 +26,6 @@ const usePeerConnection = () => {
   const { appendMessages } = messageStore();
   const { emitAudioStateChange } = mediaStateChange();
   const newSocket = roomSocket.socket;
-
   const RTCConfig = {
     iceServers: [
       {
@@ -151,8 +150,8 @@ const usePeerConnection = () => {
     const onNewUser = async ({ sid, uid }) => {
       emitAudioStateChange(roomId, userMic);
       getUser(uid).then((res) => {
-        const newUser = findUserByUid(uid);
-        if (!newUser) {
+        const existingUser = findUserByUid(uid);
+        if (!existingUser) {
           appendUser({
             nickname: res.data.nickname,
             uid,
@@ -163,7 +162,7 @@ const usePeerConnection = () => {
             isAlreadyEntered: false,
             volume: 0.5,
           });
-        } else if (newUser) {
+        } else if (existingUser) {
           setNicknameByUid(uid, res.data.nickname);
           setAvatarByUid(uid, res.data.avatar);
           setSidByUid(uid, sid);
@@ -208,7 +207,7 @@ const usePeerConnection = () => {
       newSocket.off(SOCKET_EVENT.ANSWER_MADE);
       newSocket.off(SOCKET_EVENT.ICE_CANDIDATE);
     };
-  }, [userMediaStream, pcs, connectedUsers]);
+  }, [userMediaStream, pcs, connectedUsers, userMic]);
 };
 
 export default usePeerConnection;
