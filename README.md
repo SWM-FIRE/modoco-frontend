@@ -10,15 +10,100 @@
 
 ## TEAM 🔥FIRE🔥 소개
 
-|윤영기 : FE|고주형 : BE|이하령 : FE|
-|:--:|:--:|:---:|
-|<img width="160px" src="https://avatars.githubusercontent.com/u/66371206?v=4"> | <img width="160px" src="https://user-images.githubusercontent.com/64428916/195526068-33be2cd0-066c-4584-9ae9-8c3344a60fb9.jpg" /> | <img width="160px" src="https://avatars.githubusercontent.com/u/64428916?v=4"> |
-|[@071yoon](https://github.com/071yoon)|[@IamGroooooot](https://github.com/IamGroooooot)|[@halang](https://github.com/haryung-lee)|
-| [![wakatime](https://wakatime.com/badge/user/4292264a-e9dd-4cc1-8ab6-1ada6ddb177a/project/79b7e168-b8e8-41f9-a790-c41967365f78.svg)](https://wakatime.com/badge/user/4292264a-e9dd-4cc1-8ab6-1ada6ddb177a/project/79b7e168-b8e8-41f9-a790-c41967365f78) |[![wakatime](https://wakatime.com/badge/user/95486c3b-017e-41e8-8d9c-20de1b876bf5/project/dabe2a55-4c66-49ab-ae59-8eba6b898e6f.svg)](https://wakatime.com/badge/user/95486c3b-017e-41e8-8d9c-20de1b876bf5/project/dabe2a55-4c66-49ab-ae59-8eba6b898e6f)|[![wakatime](https://wakatime.com/badge/user/02d79381-005e-489b-b7f0-5fdf9dc2a088/project/d5dd888b-da07-4723-bc9d-f7c07c44307a.svg)](https://wakatime.com/badge/user/02d79381-005e-489b-b7f0-5fdf9dc2a088/project/d5dd888b-da07-4723-bc9d-f7c07c44307a)| 
+|                                                                                                                       윤영기 : FE                                                                                                                       |                                                                                                                       고주형 : BE                                                                                                                       |                                                                                                                       이하령 : FE                                                                                                                       |
+| :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                                     <img width="160px" src="https://avatars.githubusercontent.com/u/66371206?v=4">                                                                                      |                                                            <img width="160px" src="https://user-images.githubusercontent.com/64428916/195526068-33be2cd0-066c-4584-9ae9-8c3344a60fb9.jpg" />                                                            |                                                                                     <img width="160px" src="https://avatars.githubusercontent.com/u/64428916?v=4">                                                                                      |
+|                                                                                                         [@071yoon](https://github.com/071yoon)                                                                                                          |                                                                                                    [@IamGroooooot](https://github.com/IamGroooooot)                                                                                                     |                                                                                                        [@halang](https://github.com/haryung-lee)                                                                                                        |
+| [![wakatime](https://wakatime.com/badge/user/4292264a-e9dd-4cc1-8ab6-1ada6ddb177a/project/79b7e168-b8e8-41f9-a790-c41967365f78.svg)](https://wakatime.com/badge/user/4292264a-e9dd-4cc1-8ab6-1ada6ddb177a/project/79b7e168-b8e8-41f9-a790-c41967365f78) | [![wakatime](https://wakatime.com/badge/user/95486c3b-017e-41e8-8d9c-20de1b876bf5/project/dabe2a55-4c66-49ab-ae59-8eba6b898e6f.svg)](https://wakatime.com/badge/user/95486c3b-017e-41e8-8d9c-20de1b876bf5/project/dabe2a55-4c66-49ab-ae59-8eba6b898e6f) | [![wakatime](https://wakatime.com/badge/user/02d79381-005e-489b-b7f0-5fdf9dc2a088/project/d5dd888b-da07-4723-bc9d-f7c07c44307a.svg)](https://wakatime.com/badge/user/02d79381-005e-489b-b7f0-5fdf9dc2a088/project/d5dd888b-da07-4723-bc9d-f7c07c44307a) |
 
 ## 프로젝트 소개
 
 **모도코**(모여서 도란도란 코딩) 프로젝트는 모각코를 하고 싶은 사람들이 모여 도란도란 코딩할 수 있게 해주는 플랫폼입니다. 개발자 친화적인 기능을 갖추고 모각코로 만들어진 인연이 이어질 수 있게 만들고자 합니다.
+
+---
+
+## 실행방법
+
+### Project Setting
+
+환경변수 세팅
+
+```shell
+# ************************************************* #
+#  This is an example env file for modoco frontend  #
+# ************************************************* #
+
+# backend server
+REACT_APP_BASE_URL=your_backend_server
+
+# channel talk key
+REACT_APP_CHANNEL_IO_KEY=your_channel_talk_key
+
+# oauth
+# oauth client id
+REACT_APP_GITHUB_CLIENT_ID=your_github_oauth_client_id
+REACT_APP_KAKAO_CLIENT_ID=your_kakao_oauth_client_id
+REACT_APP_GOOGLE_CLIENT_ID=your_google_oauth_client_id
+# oauth redirect uri
+REACT_APP_KAKAO_REDIRECT_URI=your_kakao_redirect_uri
+REACT_APP_GOOGLE_REDIRECT_URI=your_google_redirect_uri
+
+# turn server
+REACT_APP_TURN_URL=your_turn_server_url
+REACT_APP_TURN_CREDENTIAL=your_turn_server_credential
+REACT_APP_TURN_USERNAME=your_turn_server_username
+
+# lambda server
+REACT_APP_LAMBDA_INVITE=your_lambda_server_url
+```
+
+### Installation
+
+#### 1. Install npm dependency
+
+```shell
+# install packages
+$ yarn install
+
+# clean install packages
+$ yarn ci
+```
+
+#### 2. Run React
+
+```shell
+# run app
+yarn start
+
+# run app in https
+# need SSL_CRT_FILE=cert.pem SSL_KEY_FILE=key.pem in root
+yarn start:https
+
+# check style lint
+yarn lint:css
+```
+
+### Build
+
+```shell
+# build app
+yarn build
+```
+
+### Testing
+
+```shell
+# start test mode
+yarn test
+
+# run app and open cypress
+yarn cypress
+
+# open cypress without opening app
+npx cypress open
+```
+
+---
 
 ## Stacks 🚀
 
@@ -50,6 +135,8 @@
 
 ![GA](https://img.shields.io/badge/Google%20Analytics-E37400?style=for-the-badge&logo=google%20analytics&logoColor=white) ![Wakatime](https://img.shields.io/badge/WakaTime-000000?style=for-the-badge&logo=WakaTime&logoColor=white) ![NewRelic](https://img.shields.io/badge/New--Relic-008C99?style=for-the-badge&logo=NewRelic&logoColor=white)
 
+---
+
 ## 동작 화면 💻
 
 ### 화면 구성
@@ -65,6 +152,8 @@
 | <img src="https://user-images.githubusercontent.com/66371206/184503229-872ef0ec-eab2-4152-94a8-58bb7c28a75b.png" /> | <img src="https://user-images.githubusercontent.com/66371206/184503245-1f3b6c41-e327-413b-baeb-f879ca0fb410.png" /> | <img src="https://user-images.githubusercontent.com/66371206/184503291-2fee6898-2dc8-48cc-8d09-078f4d335431.png" /> | <img src="https://user-images.githubusercontent.com/66371206/184503310-6224d543-3bb3-4812-9f40-d2f66e431ee2.png" /> | <img src="https://user-images.githubusercontent.com/66371206/184503380-3f9eaaba-17d9-4889-8fc8-c6ff24c419a2.png" /> |
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 |                                                        바다                                                         |                                                        캠핑                                                         |                                                       모닥불                                                        |                                                        우주                                                         |                                                        여행                                                         |
+
+---
 
 ## 주요 기능 ✨
 
@@ -93,6 +182,8 @@
 - 얼마나 했는지 궁금하시다면, 통계 페이지를 참고하세요
 - 오늘, 이번주, 한달 등 다양한 통계 자료를 보여드려요
 
+---
+
 ## 아키텍쳐 ⚒
 
 ### Full Architecture
@@ -106,6 +197,8 @@
 ### Room UML Diagram
 
 ![front-uml](https://user-images.githubusercontent.com/66371206/194737818-1ac02b91-7861-4983-8bc5-b00c2e55d7c8.jpeg)
+
+---
 
 ## 개발로그 ✏️
 
@@ -128,11 +221,9 @@
 
 [![071yoon's GitHub stats](https://velog-readme-stats.vercel.app/api?name=071yoon&slug=React로-오디오-비주얼라이저-만들기)](https://velog.io/@071yoon/React%EB%A1%9C-%EC%98%A4%EB%94%94%EC%98%A4-%EB%B9%84%EC%A3%BC%EC%96%BC%EB%9D%BC%EC%9D%B4%EC%A0%80-%EB%A7%8C%EB%93%A4%EA%B8%B0)
 
-[![071yoon's GitHub stats](https://velog-readme-stats.vercel.app/api?name=071yoon&slug=Cypress로-e2e-테스트-진행하기)](
-https://velog.io/@071yoon/Cypress%EB%A1%9C-e2e-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A7%84%ED%96%89%ED%95%98%EA%B8%B0)
+[![071yoon's GitHub stats](https://velog-readme-stats.vercel.app/api?name=071yoon&slug=Cypress로-e2e-테스트-진행하기)](https://velog.io/@071yoon/Cypress%EB%A1%9C-e2e-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%A7%84%ED%96%89%ED%95%98%EA%B8%B0)
 
-[![071yoon's GitHub stats](https://velog-readme-stats.vercel.app/api?name=071yoon&slug=APM-로그로-문제-해결하기)](
-https://velog.io/@071yoon/APM-%EB%A1%9C%EA%B7%B8%EB%A1%9C-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0)
+[![071yoon's GitHub stats](https://velog-readme-stats.vercel.app/api?name=071yoon&slug=APM-로그로-문제-해결하기)](https://velog.io/@071yoon/APM-%EB%A1%9C%EA%B7%B8%EB%A1%9C-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0)
 
 </details>
 

@@ -24,7 +24,6 @@ const mediaStateChange = () => {
 
   const emitAudioStateChange = (room: string, enabled: boolean) => {
     newSocket?.emit(SOCKET_EVENT.AUDIO_STATE_CHANGE, { room, enabled });
-    toggleAudioStream(enabled);
   };
 
   useEffect(() => {
@@ -32,6 +31,7 @@ const mediaStateChange = () => {
       const { uid, enabled } = data;
       const isMe = uid === userId;
       const audioStateUser = findUserByUid(uid);
+
       if (!audioStateUser && !isMe) {
         appendUser({
           nickname: '',
@@ -41,20 +41,22 @@ const mediaStateChange = () => {
           enabledVideo: true,
           enabledAudio: enabled,
           isAlreadyEntered: true,
-          volume: enabled ? 0.5 : 0,
+          volume: 0.5,
         });
       } else if (audioStateUser && !isMe) {
         setEnabledAudioByUid(uid, enabled);
+      } else if (isMe) {
+        toggleAudioStream(enabled);
       }
     });
 
     newSocket?.on(SOCKET_EVENT.KICK_USER, (data) => {
       const { kickUser } = data;
-      if (kickUser.uid === userId) {
+      if (kickUser?.uid === userId) {
         alert('방장에 의해 강퇴당하였습니다.');
         newSocket.close();
       } else {
-        const kickedUser = findUserByUid(kickUser.uid);
+        const kickedUser = findUserByUid(kickUser?.uid);
         console.log(kickedUser);
         if (kickedUser?.sid) {
           setPc({ sid: kickedUser?.sid, peerConnection: null });

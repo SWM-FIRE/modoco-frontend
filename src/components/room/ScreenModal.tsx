@@ -51,7 +51,7 @@ export default function ScreenModal() {
           </>
         ) : (
           <>
-            <MyAvatar num={user.avatar} />
+            <MyAvatar num={user?.avatar} />
             <Nickname>{user.nickname}</Nickname>
           </>
         )}

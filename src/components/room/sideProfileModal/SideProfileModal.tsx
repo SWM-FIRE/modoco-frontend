@@ -25,7 +25,7 @@ export default function SideProfileModal({
   const { roomId } = useParams();
   const { kickUser } = useKickUser({
     roomId,
-    targetUid: user.uid,
+    targetUid: user?.uid,
   });
   const { uid: myUID } = userStore();
   const isModerator = moderator === myUID;
@@ -35,7 +35,7 @@ export default function SideProfileModal({
     toggle(false);
   };
 
-  const { isLoading, error, data } = useSingleFriend(user.uid);
+  const { isLoading, error, data } = useSingleFriend(user?.uid);
   if (isLoading) return <>loading</>;
   if (error) return <>error</>;
 
@@ -51,10 +51,10 @@ export default function SideProfileModal({
           <ProfileModalHeader profileToggle={toggle} />
           <Body>
             <UserInfo
-              avatarNo={user.avatar}
-              nickname={user.nickname}
+              avatarNo={user?.avatar}
+              nickname={user?.nickname}
               toggle={toggle}
-              uid={user.uid}
+              uid={user?.uid}
             />
             {!isMe && <ControlVolume user={user} />}
             {isFriend ? (

@@ -12,6 +12,10 @@ const generateSocket = () => {
     : null;
 };
 
+const deleteSocket = () => {
+  roomSocket.socket = null;
+};
+
 export default roomSocket;
 
-export { generateSocket };
+export { generateSocket, deleteSocket };

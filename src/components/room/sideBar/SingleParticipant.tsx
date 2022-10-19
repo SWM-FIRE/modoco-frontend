@@ -35,7 +35,7 @@ export default function SingleParticipant({
       ) : null}
       <Container>
         <AvatarContainer onClick={toggleProfile}>
-          <MyAvatar num={user.avatar} />
+          <MyAvatar num={user?.avatar} />
           <MicContainer>
             {user.enabledAudio ? <MicOn /> : <MicOff />}
           </MicContainer>

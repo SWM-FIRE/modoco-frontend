@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import MovingTheme from '../screenShare/MovingTheme';
+import ThemeImage from '../../atoms/ThemeImages';
 import { ReactComponent as VolumeOn } from '../../../assets/svg/VolumeOn.svg';
 import { ReactComponent as VolumeOff } from '../../../assets/svg/VolumeOff.svg';
 import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
@@ -32,7 +32,7 @@ export default function Theme({ theme }) {
   return (
     <Container>
       <ThemeSound volumeRef={volumeRef} theme={theme} />
-      <MovingTheme theme={theme} size="3.2" />
+      <ThemeImage theme={theme} type="header" />
       <Volume onClick={setSpeaker}>
         {userSpeaker && volume !== 0 ? <VolumeOn /> : <VolumeOff />}
       </Volume>

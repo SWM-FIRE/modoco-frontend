@@ -16,13 +16,13 @@ export default function SingleScreen({ connectedUser, stream }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const alarmRef = useRef<HTMLAudioElement>(null);
   const isNewUser =
-    connectedUser.uid &&
-    connectedUser.uid !== uid &&
+    connectedUser?.uid &&
+    connectedUser?.uid !== uid &&
     !connectedUser.isAlreadyEntered;
   const { userAudioOutputDevice } = UserMediaStreamStore();
 
   const openScreenModal = () => {
-    setScreenUid(connectedUser.uid);
+    setScreenUid(connectedUser?.uid);
     toggleScreenModal();
   };
 
@@ -38,7 +38,7 @@ export default function SingleScreen({ connectedUser, stream }) {
   }, [stream, videoRef, userAudioOutputDevice]);
 
   useEffect(() => {
-    if (connectedUser.uid === uid) return;
+    if (connectedUser?.uid === uid) return;
     if (videoRef.current) {
       if (connectedUser.volume === 0) {
         videoRef.current.muted = true;
@@ -58,7 +58,7 @@ export default function SingleScreen({ connectedUser, stream }) {
 
   const newMessages = messages.filter(
     (message) =>
-      message.uid === connectedUser.uid &&
+      message?.uid === connectedUser.uid &&
       message.type === 'message' &&
       new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
   );
@@ -67,7 +67,7 @@ export default function SingleScreen({ connectedUser, stream }) {
     <>
       {isNewUser && <NewUserAlarm volumeRef={alarmRef} />}
       <Container onClick={openScreenModal}>
-        {uid === connectedUser.uid ? (
+        {uid === connectedUser?.uid ? (
           <Video ref={videoRef} autoPlay playsInline muted />
         ) : (
           <Video ref={videoRef} autoPlay playsInline />
@@ -84,7 +84,7 @@ export default function SingleScreen({ connectedUser, stream }) {
           </ChatContainer>
           <AvatarPosition>
             <AudioTracking stream={stream} />
-            <MyAvatar num={Number(connectedUser.avatar)} />
+            <MyAvatar num={Number(connectedUser?.avatar)} />
             <NameContainer isMe={uid === connectedUser.uid}>
               {connectedUser.nickname}
             </NameContainer>
