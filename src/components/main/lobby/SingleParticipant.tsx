@@ -10,7 +10,7 @@ export default function SingleParticipant({ user }) {
       <AvatarContainer>
         <MyAvatar num={user?.avatar} />
       </AvatarContainer>
-      <Nickname>{user.nickname}</Nickname>
+      <Nickname>{user?.nickname}</Nickname>
     </User>
   );
 }

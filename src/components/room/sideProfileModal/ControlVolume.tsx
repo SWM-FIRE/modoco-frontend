@@ -13,15 +13,15 @@ export default function ControlVolume({ user }: { user: VideoUserInterface }) {
   );
   const onClickVolume = () => {
     if (userSpeaker) {
-      setVolumeByUid(user.uid, 0);
+      setVolumeByUid(user?.uid, 0);
     } else {
-      setVolumeByUid(user.uid, newVolume);
+      setVolumeByUid(user?.uid, newVolume);
     }
     setUserSpeaker(!userSpeaker);
   };
   const onChangeVolume = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewVolume(event.target.valueAsNumber);
-    if (userSpeaker) setVolumeByUid(user.uid, event.target.valueAsNumber);
+    if (userSpeaker) setVolumeByUid(user?.uid, event.target.valueAsNumber);
   };
 
   useEffect(() => {

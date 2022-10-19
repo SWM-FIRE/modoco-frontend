@@ -37,12 +37,12 @@ export default function SingleParticipant({
         <AvatarContainer onClick={toggleProfile}>
           <MyAvatar num={user?.avatar} />
           <MicContainer>
-            {user.enabledAudio ? <MicOn /> : <MicOff />}
+            {user?.enabledAudio ? <MicOn /> : <MicOff />}
           </MicContainer>
         </AvatarContainer>
-        <NameContainer isMe={isMe} nicknameLength={user.nickname?.length}>
+        <NameContainer isMe={isMe} nicknameLength={user?.nickname.length}>
           {user.nickname}
-          {moderator === user.uid && <Crown />}
+          {moderator === user?.uid && <Crown />}
         </NameContainer>
       </Container>
     </>
