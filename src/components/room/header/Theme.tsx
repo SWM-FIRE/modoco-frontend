@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import ThemeImage from '../../atoms/ThemeImages';
-import { ReactComponent as VolumeOn } from '../../../assets/svg/VolumeOn.svg';
-import { ReactComponent as VolumeOff } from '../../../assets/svg/VolumeOff.svg';
+import { ReactComponent as MusicOn } from '../../../assets/svg/MusicOn.svg';
+import { ReactComponent as MusicOff } from '../../../assets/svg/MusicOff.svg';
 import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import ThemeSound from './ThemeSound';
 
@@ -32,10 +31,9 @@ export default function Theme({ theme }) {
   return (
     <Container>
       <ThemeSound volumeRef={volumeRef} theme={theme} />
-      <ThemeImage theme={theme} type="header" />
-      <Volume onClick={setSpeaker}>
-        {userSpeaker && volume !== 0 ? <VolumeOn /> : <VolumeOff />}
-      </Volume>
+      <MusicButton onClick={setSpeaker}>
+        {userSpeaker && volume !== 0 ? <MusicOn /> : <MusicOff />}
+      </MusicButton>
       <VolumeControl volume={volume * 100} speaker={userSpeaker}>
         <input
           type="range"
@@ -118,7 +116,7 @@ const VolumeControl = styled.div<{ volume: number; speaker: boolean }>`
   }
 `;
 
-const Volume = styled.button`
+const MusicButton = styled.button`
   cursor: pointer;
   margin-left: 1.4rem;
 `;
