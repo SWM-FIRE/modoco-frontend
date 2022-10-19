@@ -114,8 +114,8 @@ export const useCreateMediaStream = () => {
     try {
       const videoStream = await navigator.mediaDevices.getDisplayMedia({
         video: {
-          width: { ideal: 640, max: 640 },
-          height: { ideal: 360, max: 360 },
+          width: { ideal: 1280, max: 1280 },
+          height: { ideal: 720, max: 720 },
         },
       });
       videoStream.getVideoTracks().forEach((track) => {
