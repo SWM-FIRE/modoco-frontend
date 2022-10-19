@@ -9,7 +9,7 @@ export default function Header({ data }) {
       </AvatarControl>
       <NameTag data-cy="ready-card-name">
         <Moderator isModerator={1}>방장</Moderator>
-        <Moderator isModerator={0}>{data.moderator.nickname}</Moderator>
+        <Moderator isModerator={0}>{data?.moderator.nickname}</Moderator>
       </NameTag>
     </Container>
   );

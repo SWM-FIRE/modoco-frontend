@@ -26,7 +26,7 @@ export default function ScreenModal() {
       videoRef.current.srcObject = newStream;
       videoRef.current.muted = true;
     }
-    if (!isMe && user.uid === -1) {
+    if (!isMe && user?.uid === -1) {
       toggleScreenModal();
     }
   }, [videoRef, userMediaStream, user]);
@@ -52,7 +52,7 @@ export default function ScreenModal() {
         ) : (
           <>
             <MyAvatar num={user?.avatar} />
-            <Nickname>{user.nickname}</Nickname>
+            <Nickname>{user?.nickname}</Nickname>
           </>
         )}
       </ModalController>
