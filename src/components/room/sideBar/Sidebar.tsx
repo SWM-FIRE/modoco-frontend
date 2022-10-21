@@ -27,7 +27,7 @@ export const Sidebar = React.memo(SidebarMemo);
 const Component = styled.div`
   position: absolute;
   background-color: ${({ theme }) => theme.chatBackground};
-  margin: 2rem 0 2rem 2rem;
+  margin: 1.6rem 0 2rem 2rem;
   border-radius: 1rem 0 0 1rem;
   padding: 2rem 1.4rem;
   width: 40rem;
