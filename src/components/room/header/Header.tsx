@@ -10,6 +10,7 @@ import messageStore from '../../../stores/room/messagesStore';
 import roomModalStore from '../../../stores/room/roomModalStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import userPcStore from '../../../stores/room/userPcStore';
+import MusicStore from '../../../stores/room/musicStore';
 
 export default function Header({ theme }) {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function Header({ theme }) {
   const { setUsers } = connectedUsersStore();
   const { stopMediaStream } = useCreateMediaStream();
   const { setMessages } = messageStore();
+  const { type } = MusicStore();
   const { emptyPc } = userPcStore();
   const newSocket = roomSocket.socket;
 
@@ -35,7 +37,7 @@ export default function Header({ theme }) {
 
   return (
     <Component>
-      <Theme theme={theme} />
+      <Theme theme={theme} type={type} />
       <Center>
         <Timer />
         <Settings setSetting={toggleSettingModal} />
