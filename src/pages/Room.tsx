@@ -11,14 +11,16 @@ import usePopHistory from '../hooks/usePopHistory';
 import SettingModal from '../components/atoms/settingModal/SettingModal';
 import Header from '../components/room/header/Header';
 import ScreenShare from '../components/room/screenShare/ScreenShare';
-import ControlSidebar from '../components/room/ControlSidebar';
+import ControlSidebar from '../components/room/controlSidebar/ControlSidebar';
 import Sidebar from '../components/room/sideBar/Sidebar';
 import roomModalStore from '../stores/room/roomModalStore';
 import ScreenShareModal from '../components/room/ScreenModal';
 import ProfileModal from '../components/room/profileModal/ProfileModal';
 import InviteModal from '../components/room/InviteModal/InviteModal';
 import CodeModal from '../components/room/codeModal/CodeModal';
+import YoutubeModal from '../components/room/youtubeModal/YoutubeModal';
 import { deleteSocket } from '../adapters/roomSocket';
+import musicStore from '../stores/room/musicStore';
 
 export default function Room() {
   const { roomId } = useParams();
@@ -36,12 +38,15 @@ export default function Room() {
     inviteModal,
     codeModal,
     codeModalType,
+    youtubeModal,
     toggleSettingModal,
     toggleSidebarModal,
     toggleProfileModal,
     toggleInviteModal,
     toggleCodeModal,
+    toggleYoutubeModal,
   } = roomModalStore();
+  const { type } = musicStore();
 
   const theme = getTheme(data?.theme);
 
@@ -74,6 +79,16 @@ export default function Room() {
       <Component>
         <Header theme={data?.theme} />
         <Contents isOpen={sidebarModal}>
+          {youtubeModal && type === 'youtube' && (
+            <YoutubeModal toggle={toggleYoutubeModal} />
+          )}
+          {!youtubeModal && type === 'youtube' && (
+            <ControlSidebar
+              toggle={toggleYoutubeModal}
+              backgroundColor={theme.chatBackground}
+              type="youtube"
+            />
+          )}
           <ScreenShare theme={data?.theme} />
           {sidebarModal ? (
             <Sidebar moderator={data?.moderator.uid} />
@@ -81,6 +96,7 @@ export default function Room() {
             <ControlSidebar
               backgroundColor={theme.chatBackground}
               toggle={onControlSidebarClick}
+              type="chatting"
             />
           )}
         </Contents>
