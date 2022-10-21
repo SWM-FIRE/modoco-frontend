@@ -46,7 +46,7 @@ export default function Room() {
     toggleCodeModal,
     toggleYoutubeModal,
   } = roomModalStore();
-  const { type } = musicStore();
+  const { type, searchList, setSearchList, isInPlaylist } = musicStore();
 
   const theme = getTheme(data?.theme);
 
@@ -80,7 +80,12 @@ export default function Room() {
         <Header theme={data?.theme} />
         <Contents isOpen={sidebarModal}>
           {youtubeModal && type === 'youtube' && (
-            <YoutubeModal toggle={toggleYoutubeModal} />
+            <YoutubeModal
+              toggle={toggleYoutubeModal}
+              searchList={searchList}
+              setSearchList={setSearchList}
+              isInPlaylist={isInPlaylist}
+            />
           )}
           {!youtubeModal && type === 'youtube' && (
             <ControlSidebar

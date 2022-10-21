@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import YoutubeModalHeader from './YoutubeModalHeader';
 import YoutubeModalInput from './YoutubeModalInput';
+import YoutubeModalPlaying from './YoutubeModalPlaying';
+import YoutubeModalPlaylist from './YoutubeModalSearchList';
 
-export default function YoutubeModal({ toggle }) {
-  const [input, setInput] = useState('');
-  console.log(input);
-
+export default function YoutubeModal({
+  toggle,
+  searchList,
+  setSearchList,
+  isInPlaylist,
+}) {
+  console.log('youtubeModal');
   return (
     <Component>
       <YoutubeModalHeader toggle={toggle} />
-      <YoutubeModalInput setInput={setInput} />
-      <Playing>
-        <Video />
-      </Playing>
-      <PlayList>
-        <Video />
-        <Video />
-        <Video />
-        <Video />
-        <Video />
-        <Video />
-      </PlayList>
+      <YoutubeModalInput setSearchList={setSearchList} />
+      <YoutubeModalPlaying />
+      <YoutubeModalPlaylist
+        searchList={searchList}
+        isInPlaylist={isInPlaylist}
+      />
     </Component>
   );
 }
@@ -41,33 +40,4 @@ const Component = styled.div`
   z-index: 2;
   box-shadow: 0px 4px 59px rgba(50, 50, 71, 0.3);
   font-family: IBMPlexSansKRRegular;
-`;
-
-const Playing = styled.div`
-  width: 100%;
-  height: 30rem;
-  border-top: 1px solid rgba(55, 65, 81, 1);
-  padding-top: 1rem;
-`;
-
-const Video = styled.video`
-  background-color: lightGray;
-  width: 100%;
-  height: 28rem;
-`;
-
-const PlayList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1rem;
-  width: 100%;
-  flex-shrink: 1;
-  overflow: scroll;
-  margin-top: 1rem;
-  video {
-    height: 14rem;
-  }
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;

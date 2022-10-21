@@ -1,25 +1,38 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Search } from '../../../assets/svg/Search.svg';
+import { searchYoutubeVideo } from '../../../api/main';
 
-export default function YoutubeModalInput({ setInput }) {
+export default function YoutubeModalInput({ setSearchList }) {
   const [newInput, setNewInput] = useState('');
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewInput(event.target.value);
-    setInput(event.target.value);
+  };
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    searchYoutubeVideo(newInput)
+      .then((res) => {
+        console.log(res.data);
+        setSearchList(res.data.items);
+        setNewInput('');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
-    <InputComponent>
+    <InputComponent onSubmit={onSubmit}>
       <SearchInput value={newInput} onChange={onChange} placeholder="검색" />
-      <SearchSvg>
+      <SearchButton>
         <Search />
-      </SearchSvg>
+      </SearchButton>
     </InputComponent>
   );
 }
 
-const InputComponent = styled.div`
+const InputComponent = styled.form`
   width: 100%;
   height: 4.8rem;
   display: flex;
@@ -45,14 +58,13 @@ const SearchInput = styled.input`
   }
 `;
 
-const SearchSvg = styled.button`
+const SearchButton = styled.button`
   width: 4.2rem;
   height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
   svg {
     width: 40%;
     height: 40%;
