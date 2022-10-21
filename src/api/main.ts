@@ -3,6 +3,8 @@ import {
   authorizationRequest,
   unAuthorizationRequest,
   awsRequest,
+  youtubeAxios,
+  thumbnailAxios,
 } from './core/index';
 import { API } from '../config';
 
@@ -139,6 +141,28 @@ const getRecords = () => {
   return authorizationRequest.get(API.RECORDS);
 };
 
+/**
+ * youtube
+ */
+
+// search youtube video
+const searchYoutubeVideo = (keyword: string) => {
+  return youtubeAxios.get(API.YOUTUBE_SEARCH, {
+    params: {
+      q: keyword,
+      part: 'snippet',
+    },
+  });
+};
+
+// get thumbnail img
+const getThumbnail = (videoId: string) => {
+  return thumbnailAxios.get(
+    // eslint-disable-next-line prefer-template
+    (API.YOUTUBE_THUMBNAIL as string) + videoId + '/default.jpg',
+  );
+};
+
 export {
   getUser,
   getMe,
@@ -156,4 +180,6 @@ export {
   getFriend,
   getRecords,
   changeProfile,
+  searchYoutubeVideo,
+  getThumbnail,
 };
