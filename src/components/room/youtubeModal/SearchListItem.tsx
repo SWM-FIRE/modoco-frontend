@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import styled from 'styled-components';
 import { ReactComponent as Check } from '../../../assets/svg/Check.svg';
 import { ReactComponent as Plus } from '../../../assets/svg/Plus.svg';
@@ -6,18 +7,31 @@ import youtubeSearch from '../../../interface/youtubeSearch.interface';
 export default function SearchListItem({
   item,
   isInPlaylist,
+  addPlaylist,
 }: {
   item: youtubeSearch;
   isInPlaylist: (_item: youtubeSearch) => boolean;
+  addPlaylist: (_item: youtubeSearch) => void;
 }) {
   const isAdded = isInPlaylist(item);
+
+  const onClick = () => {
+    if (!isAdded) {
+      addPlaylist(item);
+      toast.success('플레이리스트에 추가되었습니다.');
+    }
+  };
 
   return (
     <VideoComponent isAdded={isAdded}>
       <TitleComponent>
         <Title>{item.snippet.title}</Title>
       </TitleComponent>
-      <InnerComponent isAdded={isAdded} id={!isAdded ? 'addVideoButton' : ''}>
+      <InnerComponent
+        isAdded={isAdded}
+        id={!isAdded ? 'addVideoButton' : ''}
+        onClick={onClick}
+      >
         <SvgComponent isAdded={isAdded}>
           {isAdded ? <Check /> : <Plus />}
         </SvgComponent>
@@ -33,9 +47,11 @@ const VideoComponent = styled.div<{ isAdded: boolean }>`
   height: 12rem;
   background-color: ${({ isAdded }) =>
     isAdded ? 'rgba(55, 65, 81, 1)' : 'rgba(55, 65, 81, 0.5)'};
+  transition: all 0.3s ease-in-out;
+
   &:hover {
     #addVideoButton {
-      display: grid;
+      display: flex;
     }
   }
   #addVideoButton {
@@ -62,6 +78,7 @@ const SvgComponent = styled.div<{ isAdded: boolean }>`
   align-items: center;
   background-color: ${({ isAdded }) => (isAdded ? '#00c113' : '#3C3C3C')};
   border-radius: 50%;
+
   svg {
     width: 60%;
     height: 60%;

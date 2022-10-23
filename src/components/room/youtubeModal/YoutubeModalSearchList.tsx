@@ -2,7 +2,11 @@ import styled from 'styled-components';
 import youtubeSearch from '../../../interface/youtubeSearch.interface';
 import SearchListItem from './SearchListItem';
 
-export default function YoutubeModalSearchList({ searchList, isInPlaylist }) {
+export default function YoutubeModalSearchList({
+  searchList,
+  isInPlaylist,
+  addPlaylist,
+}) {
   return (
     <SearchList>
       {searchList.map((item: youtubeSearch) => (
@@ -10,6 +14,7 @@ export default function YoutubeModalSearchList({ searchList, isInPlaylist }) {
           key={item.id.videoId}
           item={item}
           isInPlaylist={isInPlaylist}
+          addPlaylist={addPlaylist}
         />
       ))}
     </SearchList>
