@@ -14,7 +14,6 @@ const LAMBDA_URL = process.env.REACT_APP_LAMBDA_INVITE;
 const INVITE = '/invite/';
 const FRIEND = '/friendships';
 const YOUTUBE = 'https://www.googleapis.com/youtube/v3';
-const THUMBNAIL = 'https://img.youtube.com/vi/';
 const SEARCH = '/search';
 
 export const API = {
@@ -33,5 +32,4 @@ export const API = {
   FRIEND: `${BASE_URL}${API_VER}${FRIEND}`,
   YOUTUBE: `${YOUTUBE}`,
   YOUTUBE_SEARCH: `${YOUTUBE}${SEARCH}`,
-  YOUTUBE_THUMBNAIL: `${THUMBNAIL}`,
 };

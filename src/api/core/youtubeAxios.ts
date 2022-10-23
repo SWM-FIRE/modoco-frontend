@@ -25,27 +25,4 @@ youtubeAxios.interceptors.response.use(
   },
 );
 
-const thumbnailAxios = axios.create({
-  baseURL: API.YOUTUBE_THUMBNAIL,
-});
-
-// thumbnailAxios.interceptors.request.use((config) => {
-//   return Object.assign(config, {
-//     params: {
-//       ...config.params,
-//       key: process.env.REACT_APP_YOUTUBE_KEY,
-//     },
-//   });
-// });
-
-thumbnailAxios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    console.warn('[Axios] ', error);
-    return Promise.reject(error);
-  },
-);
-
-export { youtubeAxios, thumbnailAxios };
+export { youtubeAxios };
