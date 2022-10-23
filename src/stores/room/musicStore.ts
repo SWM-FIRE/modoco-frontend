@@ -6,6 +6,7 @@ interface Music {
   setType: (_type: 'youtube' | 'theme') => void;
   playlist: youtubeSearch[];
   addPlaylist: (_item: youtubeSearch) => void;
+  removePlaylist: (_item: youtubeSearch) => void;
   isInPlaylist: (_item: youtubeSearch) => boolean;
   searchList: youtubeSearch[];
   setSearchList: (_searchList: youtubeSearch[]) => void;
@@ -17,6 +18,10 @@ const MusicStore = create<Music>((set, get) => ({
   playlist: [],
   addPlaylist: (item) =>
     set((state) => ({ playlist: [...state.playlist, item] })),
+  removePlaylist: (item) =>
+    set((state) => ({
+      playlist: state.playlist.filter((i) => i.id !== item.id),
+    })),
   isInPlaylist: (item) => {
     return get().playlist.findIndex((i) => i.id === item.id) !== -1;
   },

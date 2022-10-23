@@ -46,7 +46,14 @@ export default function Room() {
     toggleCodeModal,
     toggleYoutubeModal,
   } = roomModalStore();
-  const { type, searchList, setSearchList, isInPlaylist } = musicStore();
+  const {
+    type,
+    searchList,
+    setSearchList,
+    isInPlaylist,
+    addPlaylist,
+    playlist,
+  } = musicStore();
 
   const theme = getTheme(data?.theme);
 
@@ -85,6 +92,8 @@ export default function Room() {
               searchList={searchList}
               setSearchList={setSearchList}
               isInPlaylist={isInPlaylist}
+              addPlaylist={addPlaylist}
+              playlist={playlist}
             />
           )}
           {!youtubeModal && type === 'youtube' && (

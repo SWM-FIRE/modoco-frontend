@@ -13,7 +13,6 @@ export default function YoutubeModalInput({ setSearchList }) {
     event.preventDefault();
     searchYoutubeVideo(newInput)
       .then((res) => {
-        console.log(res.data);
         setSearchList(res.data.items);
         setNewInput('');
       })

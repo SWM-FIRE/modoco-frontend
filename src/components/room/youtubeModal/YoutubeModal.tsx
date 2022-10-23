@@ -3,22 +3,25 @@ import styled from 'styled-components';
 import YoutubeModalHeader from './YoutubeModalHeader';
 import YoutubeModalInput from './YoutubeModalInput';
 import YoutubeModalPlaying from './YoutubeModalPlaying';
-import YoutubeModalPlaylist from './YoutubeModalSearchList';
+import YoutubeModalSearchList from './YoutubeModalSearchList';
 
 export default function YoutubeModal({
   toggle,
   searchList,
   setSearchList,
   isInPlaylist,
+  addPlaylist,
+  playlist,
 }) {
   return (
     <Component>
       <YoutubeModalHeader toggle={toggle} />
       <YoutubeModalInput setSearchList={setSearchList} />
-      <YoutubeModalPlaying />
-      <YoutubeModalPlaylist
+      {playlist.length !== 0 && <YoutubeModalPlaying playlist={playlist} />}
+      <YoutubeModalSearchList
         searchList={searchList}
         isInPlaylist={isInPlaylist}
+        addPlaylist={addPlaylist}
       />
     </Component>
   );
