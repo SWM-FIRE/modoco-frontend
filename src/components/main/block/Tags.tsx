@@ -1,9 +1,13 @@
+import { useRef } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
 
 export default function Tags({ tags }) {
+  const ref = useRef(null);
+  const isOverflow = ref.current?.clientWidth < ref.current?.scrollWidth;
+
   return (
-    <TagContainer>
+    <TagContainer ref={ref} isOverflow={isOverflow}>
       {tags.map((myTag) => (
         <Tag key={Symbol(myTag).toString()}>#{myTag}</Tag>
       ))}
@@ -11,10 +15,11 @@ export default function Tags({ tags }) {
   );
 }
 
-const TagContainer = styled.div`
+const TagContainer = styled.div<{ isOverflow: boolean }>`
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: ${({ isOverflow }) =>
+    isOverflow ? 'flex-start' : 'center'};
   align-items: center;
   overflow-y: auto;
   width: 100%;
