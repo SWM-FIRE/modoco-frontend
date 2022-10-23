@@ -11,7 +11,6 @@ export default function YoutubeModal({
   setSearchList,
   isInPlaylist,
 }) {
-  console.log('youtubeModal');
   return (
     <Component>
       <YoutubeModalHeader toggle={toggle} />

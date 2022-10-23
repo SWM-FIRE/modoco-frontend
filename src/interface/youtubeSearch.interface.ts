@@ -29,5 +29,6 @@ export default interface youtubeSearch {
       };
       title: string;
     };
+    title: string;
   };
 }

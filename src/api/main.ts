@@ -4,7 +4,6 @@ import {
   unAuthorizationRequest,
   awsRequest,
   youtubeAxios,
-  thumbnailAxios,
 } from './core/index';
 import { API } from '../config';
 
@@ -151,16 +150,10 @@ const searchYoutubeVideo = (keyword: string) => {
     params: {
       q: keyword,
       part: 'snippet',
+      maxResults: 10,
+      type: 'video',
     },
   });
-};
-
-// get thumbnail img
-const getThumbnail = (videoId: string) => {
-  return thumbnailAxios.get(
-    // eslint-disable-next-line prefer-template
-    (API.YOUTUBE_THUMBNAIL as string) + videoId + '/default.jpg',
-  );
 };
 
 export {
@@ -181,5 +174,4 @@ export {
   getRecords,
   changeProfile,
   searchYoutubeVideo,
-  getThumbnail,
 };

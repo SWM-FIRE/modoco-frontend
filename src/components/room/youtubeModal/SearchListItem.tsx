@@ -1,9 +1,7 @@
-import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Check } from '../../../assets/svg/Check.svg';
 import { ReactComponent as Plus } from '../../../assets/svg/Plus.svg';
 import youtubeSearch from '../../../interface/youtubeSearch.interface';
-import { getThumbnail } from '../../../api/main';
 
 export default function SearchListItem({
   item,
@@ -13,35 +11,28 @@ export default function SearchListItem({
   isInPlaylist: (_item: youtubeSearch) => boolean;
 }) {
   const isAdded = isInPlaylist(item);
-  const imgRef = useRef(null);
-  useEffect(() => {
-    getThumbnail(item.id.videoId)
-      .then((res) => {
-        console.log(res);
-        if (imgRef.current) {
-          imgRef.current.src = res;
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
-    <VideoComponent isAdded={isAdded} key={item.id.videoId}>
+    <VideoComponent isAdded={isAdded}>
+      <TitleComponent>
+        <Title>{item.snippet.title}</Title>
+      </TitleComponent>
       <InnerComponent isAdded={isAdded} id={!isAdded ? 'addVideoButton' : ''}>
         <SvgComponent isAdded={isAdded}>
           {isAdded ? <Check /> : <Plus />}
         </SvgComponent>
       </InnerComponent>
-      <Image ref={imgRef} />
+      <Image src={item.snippet.thumbnails.medium.url} />
     </VideoComponent>
   );
 }
 
 const VideoComponent = styled.div<{ isAdded: boolean }>`
+  position: relative;
   width: 100%;
-  height: 14rem;
-  /* background-color: ${({ isAdded }) =>
-    isAdded ? 'rgba(55, 65, 81, 1)' : 'rgba(55, 65, 81, 0.5)'}; */
+  height: 12rem;
+  background-color: ${({ isAdded }) =>
+    isAdded ? 'rgba(55, 65, 81, 1)' : 'rgba(55, 65, 81, 0.5)'};
   &:hover {
     #addVideoButton {
       display: grid;
@@ -53,6 +44,7 @@ const VideoComponent = styled.div<{ isAdded: boolean }>`
 `;
 
 const InnerComponent = styled.div<{ isAdded: boolean }>`
+  position: absolute;
   width: 100%;
   height: 100%;
   display: ${({ isAdded }) => (isAdded ? 'flex' : 'none')};
@@ -76,7 +68,19 @@ const SvgComponent = styled.div<{ isAdded: boolean }>`
   }
 `;
 
-const Image = styled.image`
+const Image = styled.img`
   width: 100%;
   height: 100%;
+`;
+
+const TitleComponent = styled.div`
+  position: absolute;
+  background-color: #000000c6;
+  bottom: 0rem;
+  width: 100%;
+`;
+
+const Title = styled.div`
+  color: white;
+  font-size: 1rem;
 `;

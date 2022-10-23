@@ -3,8 +3,6 @@ import youtubeSearch from '../../../interface/youtubeSearch.interface';
 import SearchListItem from './SearchListItem';
 
 export default function YoutubeModalSearchList({ searchList, isInPlaylist }) {
-  console.log(searchList);
-
   return (
     <SearchList>
       {searchList.map((item: youtubeSearch) => (
@@ -26,9 +24,7 @@ const SearchList = styled.div`
   flex-shrink: 1;
   overflow: scroll;
   margin-top: 1rem;
-  video {
-    height: 14rem;
-  }
+
   ::-webkit-scrollbar {
     display: none;
   }
