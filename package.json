@@ -27,6 +27,7 @@
     "react-hot-toast": "^2.3.0",
     "react-items-carousel": "^2.8.0",
     "react-notion": "^0.10.0",
+    "react-player": "^2.11.0",
     "react-query": "^3.39.1",
     "react-router-dom": "6",
     "react-scripts": "5.0.1",
