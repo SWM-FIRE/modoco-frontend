@@ -14,6 +14,10 @@ export default function SearchListItem({
   addPlaylist: (_item: youtubeSearch) => void;
 }) {
   const isAdded = isInPlaylist(item);
+  const title =
+    item.snippet.title.length > 45
+      ? `${item.snippet.title.slice(0, 45)}...`
+      : item.snippet.title;
 
   const onClick = () => {
     if (!isAdded) {
@@ -23,37 +27,43 @@ export default function SearchListItem({
   };
 
   return (
-    <VideoComponent isAdded={isAdded}>
+    <Component>
+      <VideoComponent isAdded={isAdded}>
+        <InnerComponent
+          isAdded={isAdded}
+          id={!isAdded ? 'addVideoButton' : ''}
+          onClick={onClick}
+        >
+          <SvgComponent isAdded={isAdded}>
+            {isAdded ? <Check /> : <Plus />}
+          </SvgComponent>
+        </InnerComponent>
+        <Image src={item.snippet.thumbnails.medium.url} />
+      </VideoComponent>
       <TitleComponent>
-        <Title>{item.snippet.title}</Title>
+        <Title>{title}</Title>
       </TitleComponent>
-      <InnerComponent
-        isAdded={isAdded}
-        id={!isAdded ? 'addVideoButton' : ''}
-        onClick={onClick}
-      >
-        <SvgComponent isAdded={isAdded}>
-          {isAdded ? <Check /> : <Plus />}
-        </SvgComponent>
-      </InnerComponent>
-      <Image src={item.snippet.thumbnails.medium.url} />
-    </VideoComponent>
+    </Component>
   );
 }
+
+const Component = styled.div`
+  border-radius: 0.6rem;
+`;
 
 const VideoComponent = styled.div<{ isAdded: boolean }>`
   position: relative;
   width: 100%;
-  height: 12rem;
+  height: 10rem;
   background-color: ${({ isAdded }) =>
     isAdded ? 'rgba(55, 65, 81, 1)' : 'rgba(55, 65, 81, 0.5)'};
-  transition: all 0.3s ease-in-out;
-
   &:hover {
     #addVideoButton {
       display: flex;
     }
   }
+  border-radius: 0.6rem 0.6rem 0 0;
+
   #addVideoButton {
     cursor: pointer;
   }
@@ -68,6 +78,7 @@ const InnerComponent = styled.div<{ isAdded: boolean }>`
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
+  border-radius: 0.6rem 0.6rem 0 0;
 `;
 
 const SvgComponent = styled.div<{ isAdded: boolean }>`
@@ -88,16 +99,19 @@ const SvgComponent = styled.div<{ isAdded: boolean }>`
 const Image = styled.img`
   width: 100%;
   height: 100%;
+  border-radius: 0.6rem 0.6rem 0 0;
 `;
 
 const TitleComponent = styled.div`
-  position: absolute;
-  background-color: #000000c6;
-  bottom: 0rem;
+  background-color: #3b3a3a91;
+  padding: 0.5rem;
   width: 100%;
+  /* height: 4rem; */
+  border-radius: 0 0 0.6rem 0.6rem;
 `;
 
 const Title = styled.div`
   color: white;
   font-size: 1rem;
+  word-break: break-all;
 `;

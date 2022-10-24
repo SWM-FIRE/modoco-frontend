@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { ReactComponent as LeftTwoArrows } from '../../../assets/svg/Room/LeftTwoArrows.svg';
 import { ReactComponent as WhiteYoutube } from '../../../assets/svg/WhiteYoutube.svg';
 
-export default function YoutubeModalHeader({ toggle }) {
+export default function YoutubeModalHeader() {
   return (
     <Header>
       <SvgComponent>
         <WhiteYoutube />
       </SvgComponent>
       <Title>유튜브 목록</Title>
-      <ControlSidebar onClick={toggle} type="button">
+      <ControlSidebar type="button">
         <LeftTwoArrows />
       </ControlSidebar>
     </Header>
@@ -20,7 +20,7 @@ export default function YoutubeModalHeader({ toggle }) {
 const Header = styled.div`
   position: relative;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
   align-items: center;
 `;
 

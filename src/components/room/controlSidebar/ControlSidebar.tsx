@@ -1,33 +1,28 @@
 import styled from 'styled-components';
 import ChattingContents from './ChattingContents';
-import YoutubeContents from './YoutubeContents';
 
 export default function ControlSidebar({
   backgroundColor,
   toggle,
-  type,
 }: {
   backgroundColor: string;
   toggle: () => void;
-  type: string;
 }) {
   return (
-    <Container backgroundColor={backgroundColor} onClick={toggle} type={type}>
-      {type === 'chatting' ? <ChattingContents /> : <YoutubeContents />}
+    <Container backgroundColor={backgroundColor} onClick={toggle}>
+      <ChattingContents />
     </Container>
   );
 }
 
-const Container = styled.div<{ backgroundColor: string; type: string }>`
+const Container = styled.div<{ backgroundColor: string }>`
   z-index: 1;
   position: absolute;
-  right: ${({ type }) => (type === 'chatting' ? '0' : '')};
-  left: ${({ type }) => (type === 'youtube' ? '0' : '')};
+  right: 0;
   top: 1.6rem;
   width: 8.6rem;
   height: 6.8rem;
-  border-radius: ${({ type }) =>
-    type === 'chatting' ? '1rem 0 0 1rem' : '0 1rem 1rem 0'};
+  border-radius: 1rem 0 0 1rem;
   display: flex;
   align-items: center;
   justify-content: center;

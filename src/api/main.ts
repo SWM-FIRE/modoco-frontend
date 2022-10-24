@@ -150,7 +150,7 @@ const searchYoutubeVideo = (keyword: string) => {
     params: {
       q: keyword,
       part: 'snippet',
-      maxResults: 10,
+      maxResults: 15,
       type: 'video',
     },
   });

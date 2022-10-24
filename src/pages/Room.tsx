@@ -38,22 +38,13 @@ export default function Room() {
     inviteModal,
     codeModal,
     codeModalType,
-    youtubeModal,
     toggleSettingModal,
     toggleSidebarModal,
     toggleProfileModal,
     toggleInviteModal,
     toggleCodeModal,
-    toggleYoutubeModal,
   } = roomModalStore();
-  const {
-    type,
-    searchList,
-    setSearchList,
-    isInPlaylist,
-    addPlaylist,
-    playlist,
-  } = musicStore();
+  const { type } = musicStore();
 
   const theme = getTheme(data?.theme);
 
@@ -86,23 +77,7 @@ export default function Room() {
       <Component>
         <Header theme={data?.theme} />
         <Contents isOpen={sidebarModal}>
-          {youtubeModal && type === 'youtube' && (
-            <YoutubeModal
-              toggle={toggleYoutubeModal}
-              searchList={searchList}
-              setSearchList={setSearchList}
-              isInPlaylist={isInPlaylist}
-              addPlaylist={addPlaylist}
-              playlist={playlist}
-            />
-          )}
-          {!youtubeModal && type === 'youtube' && (
-            <ControlSidebar
-              toggle={toggleYoutubeModal}
-              backgroundColor={theme.chatBackground}
-              type="youtube"
-            />
-          )}
+          {type === 'youtube' && <YoutubeModal />}
           <ScreenShare theme={data?.theme} />
           {sidebarModal ? (
             <Sidebar moderator={data?.moderator.uid} />
@@ -110,7 +85,6 @@ export default function Room() {
             <ControlSidebar
               backgroundColor={theme.chatBackground}
               toggle={onControlSidebarClick}
-              type="chatting"
             />
           )}
         </Contents>
