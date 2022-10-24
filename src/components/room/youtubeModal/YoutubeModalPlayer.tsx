@@ -19,6 +19,7 @@ export default function YoutubeModalPlayer() {
       url={`https://www.youtube.com/watch?v=${list[nowPlaying]}`}
       playing
       controls
+      loop={playlist.length === 1}
       width="58%"
       height="100%"
       pip
