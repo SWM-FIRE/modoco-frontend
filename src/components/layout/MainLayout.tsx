@@ -3,10 +3,12 @@ import { ReactChannelIO } from 'react-channel-plugin';
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import mainModalStore from 'src/stores/mainModalStore';
+import chattingModalStore from 'src/stores/chattingModalStore';
 import Header from './Header';
 import Footer from './Footer';
 import userStore from '../../stores/userStore';
 import NoticeModal from '../notice/NoticeModal';
+import ChattingModal from '../atoms/chattingModal/ChattingModal';
 
 export default function MainLayout() {
   const { uid, nickname } = userStore();
@@ -17,6 +19,7 @@ export default function MainLayout() {
         name: nickname,
       }
     : null;
+  const { isChattingModal } = chattingModalStore();
   return (
     <>
       {uid ? (
@@ -39,6 +42,7 @@ export default function MainLayout() {
         />
       )}
       {isOpenNoticeModal && <NoticeModal />}
+      {isChattingModal && <ChattingModal />}
       <Toaster />
       <Header />
       <Outlet />
