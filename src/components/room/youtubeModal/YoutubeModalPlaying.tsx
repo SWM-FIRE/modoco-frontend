@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import youtubeSearch from '../../../interface/youtubeSearch.interface';
 import musicStore from '../../../stores/room/musicStore';
 
 export default function YoutubeModalPlaying() {
