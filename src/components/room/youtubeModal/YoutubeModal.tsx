@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import YoutubeModalHeader from './YoutubeModalHeader';
 import YoutubeModalInput from './YoutubeModalInput';
-import YoutubeModalPlaying from './YoutubeModalPlaying';
+import YoutubeModalPlaying from './YoutubeModalPlaylist';
 import YoutubeModalSearchList from './YoutubeModalSearchList';
 
 export default function YoutubeModal() {

@@ -5,6 +5,8 @@ interface Music {
   type: string;
   setType: (_type: 'youtube' | 'theme') => void;
   playlist: youtubeSearch[];
+  nowPlaying: number;
+  setNowPlaying: (_nowPlaying: number) => void;
   addPlaylist: (_item: youtubeSearch) => void;
   removePlaylist: (_item: youtubeSearch) => void;
   isInPlaylist: (_item: youtubeSearch) => boolean;
@@ -16,6 +18,8 @@ const MusicStore = create<Music>((set, get) => ({
   type: 'theme',
   setType: (by) => set(() => ({ type: by })),
   playlist: [],
+  nowPlaying: 0,
+  setNowPlaying: (by) => set(() => ({ nowPlaying: by })),
   addPlaylist: (item) =>
     set((state) => ({ playlist: [...state.playlist, item] })),
   removePlaylist: (item) =>
