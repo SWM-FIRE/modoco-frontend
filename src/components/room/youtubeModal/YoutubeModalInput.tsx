@@ -14,7 +14,6 @@ export default function YoutubeModalInput({ setSearchList }) {
     searchYoutubeVideo(newInput)
       .then((res) => {
         setSearchList(res.data.items);
-        setNewInput('');
       })
       .catch((err) => {
         console.log(err);

@@ -20,7 +20,7 @@ export default function YoutubeModalHeader({ toggle }) {
 const Header = styled.div`
   position: relative;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
   align-items: center;
 `;
 
