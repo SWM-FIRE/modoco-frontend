@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import styled from 'styled-components';
 import media from 'src/styles/media';
 import { detailedFriend } from 'src/interface/singleFriend.interface';
+import ChattingUtil from 'src/components/atoms/chattingModal/chattingUtil';
 import { ReactComponent as SendImage } from '../../../assets/svg/MessageSend.svg';
 import FriendIcon from './FriendIcon';
 
@@ -9,6 +11,7 @@ export default function FriendList({
 }: {
   friendList: detailedFriend[];
 }) {
+  const { openChat } = ChattingUtil();
   const filteredFriends = friendList.map((friend) =>
     friend.role === 'RECEIVER' ? friend.sender : friend.receiver,
   );
@@ -18,7 +21,7 @@ export default function FriendList({
       {filteredFriends.map((friend) => (
         <Component key={friend?.uid}>
           <FriendIcon friend={friend} />
-          <SendMessage>
+          <SendMessage onClick={() => openChat(friend?.uid)}>
             <SendButton>
               <SendImage />
             </SendButton>

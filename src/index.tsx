@@ -10,6 +10,7 @@ root.render(
   // <StrictMode>
   <>
     <GlobalStyle />
+    <div id="chatting-modal" />
     <div id="modal" />
     <App />
   </>,

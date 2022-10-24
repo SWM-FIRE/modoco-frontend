@@ -1,10 +1,13 @@
 import React from 'react';
 import { ReactChannelIO } from 'react-channel-plugin';
 import { Outlet } from 'react-router-dom';
+import chattingModalStore from 'src/stores/chattingModalStore';
+import ChattingModal from '../atoms/chattingModal/ChattingModal';
 import userStore from '../../stores/userStore';
 
 export default function RoomLayout() {
   const { uid, nickname } = userStore();
+  const { isChattingModal } = chattingModalStore();
   const profile = uid
     ? {
         email: localStorage.getItem('email'),
@@ -13,6 +16,7 @@ export default function RoomLayout() {
     : null;
   return (
     <>
+      {isChattingModal && <ChattingModal />}
       <Outlet />
       {uid ? (
         <ReactChannelIO
