@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import youtubeSearch from '../../../interface/youtubeSearch.interface';
+// import youtubeSearch from '../../../interface/youtubeSearch.interface';
+import musicStore from '../../../stores/room/musicStore';
 
-export default function YoutubeModalPlaying({
-  playlist,
-}: {
-  playlist: youtubeSearch[];
-}) {
+export default function YoutubeModalPlaying() {
+  const { playlist } = musicStore();
+
   const list = playlist.map((item) => item.id.videoId);
 
   return (
@@ -28,7 +27,7 @@ export default function YoutubeModalPlaying({
 }
 const Playing = styled.div`
   width: 100%;
-  height: 20rem;
+  min-height: 20rem;
   border-top: 1px solid rgba(55, 65, 81, 1);
   padding-top: 1rem;
   display: flex;

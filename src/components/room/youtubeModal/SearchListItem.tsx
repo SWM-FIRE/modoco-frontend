@@ -15,8 +15,8 @@ export default function SearchListItem({
 }) {
   const isAdded = isInPlaylist(item);
   const title =
-    item.snippet.title.length > 35
-      ? `${item.snippet.title.slice(0, 35)}...`
+    item.snippet.title.length > 45
+      ? `${item.snippet.title.slice(0, 45)}...`
       : item.snippet.title;
 
   const onClick = () => {
@@ -49,7 +49,6 @@ export default function SearchListItem({
 
 const Component = styled.div`
   border-radius: 0.6rem;
-  height: inner-content;
 `;
 
 const VideoComponent = styled.div<{ isAdded: boolean }>`
@@ -107,7 +106,7 @@ const TitleComponent = styled.div`
   background-color: #3b3a3a91;
   padding: 0.5rem;
   width: 100%;
-  height: 4rem;
+  /* height: 4rem; */
   border-radius: 0 0 0.6rem 0.6rem;
 `;
 

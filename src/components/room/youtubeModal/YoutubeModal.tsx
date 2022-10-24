@@ -5,24 +5,13 @@ import YoutubeModalInput from './YoutubeModalInput';
 import YoutubeModalPlaying from './YoutubeModalPlaying';
 import YoutubeModalSearchList from './YoutubeModalSearchList';
 
-export default function YoutubeModal({
-  toggle,
-  searchList,
-  setSearchList,
-  isInPlaylist,
-  addPlaylist,
-  playlist,
-}) {
+export default function YoutubeModal() {
   return (
     <Component>
-      <YoutubeModalHeader toggle={toggle} />
-      <YoutubeModalInput setSearchList={setSearchList} />
-      <YoutubeModalPlaying playlist={playlist} />
-      <YoutubeModalSearchList
-        searchList={searchList}
-        isInPlaylist={isInPlaylist}
-        addPlaylist={addPlaylist}
-      />
+      <YoutubeModalHeader />
+      <YoutubeModalInput />
+      <YoutubeModalPlaying />
+      <YoutubeModalSearchList />
     </Component>
   );
 }

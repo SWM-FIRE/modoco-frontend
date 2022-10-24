@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Search } from '../../../assets/svg/Search.svg';
 import { searchYoutubeVideo } from '../../../api/main';
+import musicStore from '../../../stores/room/musicStore';
+import replaceText from './replaceText';
+import youtubeSearch from '../../../interface/youtubeSearch.interface';
 
-export default function YoutubeModalInput({ setSearchList }) {
+export default function YoutubeModalInput() {
+  const { setSearchList } = musicStore();
   const [newInput, setNewInput] = useState('');
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewInput(event.target.value);
@@ -13,6 +17,10 @@ export default function YoutubeModalInput({ setSearchList }) {
     event.preventDefault();
     searchYoutubeVideo(newInput)
       .then((res) => {
+        res.data.items.forEach((item: youtubeSearch) => {
+          // eslint-disable-next-line no-param-reassign
+          item.snippet.title = replaceText(item.snippet.title);
+        });
         setSearchList(res.data.items);
       })
       .catch((err) => {
