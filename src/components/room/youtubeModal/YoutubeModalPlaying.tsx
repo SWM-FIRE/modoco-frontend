@@ -1,24 +1,29 @@
 import styled from 'styled-components';
 import musicStore from '../../../stores/room/musicStore';
+import YoutubeModalPlayer from './YoutubeModalPlayer';
+import { ReactComponent as X } from '../../../assets/svg/X.svg';
 
-export default function YoutubeModalPlaying() {
-  const { playlist } = musicStore();
+export default function YoutubeModalPlaylist() {
+  const { playlist, removePlaylist, nowPlaying, setNowPlaying } = musicStore();
 
-  const list = playlist.map((item) => item.id.videoId);
+  const removeItem = (index: number) => {
+    removePlaylist(playlist[index]);
+    if (index <= nowPlaying && nowPlaying !== 0) {
+      setNowPlaying(nowPlaying - 1);
+    }
+  };
 
   return (
     <Playing>
-      <Video
-        allowFullScreen
-        src={
-          `https://www.youtube.com/embed/${list[0]}?controls=1&autoplay=1&disablekb=1&enablejsapi=1` +
-          `&playlist=${list.join(',')}`
-        }
-        allow="autoplay"
-      />
+      <YoutubeModalPlayer />
       <Playlist>
-        {playlist.map((item) => (
-          <Item key={item.id.videoId}>{item.snippet.title}</Item>
+        {playlist.map((item, index) => (
+          <Item key={item.id.videoId}>
+            <Title>{item.snippet.title}</Title>
+            <DeleteItem type="button" onClick={() => removeItem(index)}>
+              <X />
+            </DeleteItem>
+          </Item>
         ))}
       </Playlist>
     </Playing>
@@ -26,40 +31,59 @@ export default function YoutubeModalPlaying() {
 }
 const Playing = styled.div`
   width: 100%;
-  min-height: 20rem;
+  height: 21rem;
+  min-height: 21rem;
   border-top: 1px solid rgba(55, 65, 81, 1);
   padding-top: 1rem;
   display: flex;
 `;
 
-const Video = styled.iframe`
-  background-color: lightGray;
-  width: 60%;
-  height: 100%;
-`;
-
 const Playlist = styled.ul`
-  width: 40%;
+  width: 42%;
   height: 100%;
   overflow-y: scroll;
   padding: 0.1rem;
+  margin-left: 0.3rem;
+  border: 1px dotted rgba(55, 65, 81, 1);
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 
 const Item = styled.li`
-  display: inline-flex;
+  display: flex;
+  align-items: center;
   color: white;
   font-size: 1.5rem;
   transition: all 0.2s ease-in-out;
-  white-space: nowrap;
   width: 100%;
-  overflow-y: scroll;
-  cursor: pointer;
   padding: 0.3rem 0.5rem;
+  &:hover {
+    background-color: #3b3a3a91;
+  }
+`;
+
+const Title = styled.span`
+  white-space: nowrap;
+  overflow-y: scroll;
+  flex-grow: 1;
+  width: 100%;
   ::-webkit-scrollbar {
     display: none;
+  }
+`;
+
+const DeleteItem = styled.button`
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.4rem;
+  svg {
+    width: 100%;
+    height: 100%;
   }
   &:hover {
     background-color: #3b3a3a91;

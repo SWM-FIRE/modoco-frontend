@@ -152,6 +152,7 @@ const searchYoutubeVideo = (keyword: string) => {
       part: 'snippet',
       maxResults: 15,
       type: 'video',
+      videoEmbeddable: true,
     },
   });
 };
