@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import styled from 'styled-components';
 import media from 'src/styles/media';
+import mainModalStore from 'src/stores/mainModalStore';
 import UserStore from '../../../stores/userStore';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import RoomDetail from '../../atoms/RoomDetail';
@@ -14,11 +15,12 @@ export default function Block({ isMain, data }) {
   const navigate = useNavigate();
   const { nickname } = UserStore();
   const { enterProfile } = useEnterProfile(data?.moderator.uid);
+  const { openLoginModal } = mainModalStore();
 
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (!nickname) {
-      toast.error('로그인이 필요합니다');
+      openLoginModal();
       return;
     }
     if (isMobile) {
