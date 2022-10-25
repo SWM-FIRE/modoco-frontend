@@ -4,17 +4,11 @@ import SearchListItem from './SearchListItem';
 import musicStore from '../../../stores/room/musicStore';
 
 export default function YoutubeModalSearchList() {
-  const { searchList, isInPlaylist, addPlaylist } = musicStore();
-
+  const { searchList } = musicStore();
   return (
     <SearchList>
       {searchList.map((item: youtubeSearch) => (
-        <SearchListItem
-          key={item.id.videoId}
-          item={item}
-          isInPlaylist={isInPlaylist}
-          addPlaylist={addPlaylist}
-        />
+        <SearchListItem key={item.id.videoId} item={item} />
       ))}
     </SearchList>
   );
