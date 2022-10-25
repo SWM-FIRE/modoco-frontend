@@ -1,11 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import YoutubeModalHeader from './YoutubeModalHeader';
 import YoutubeModalInput from './YoutubeModalInput';
 import YoutubeModalPlaying from './YoutubeModalPlaying';
 import YoutubeModalSearchList from './YoutubeModalSearchList';
+import {
+  initSocketConnection,
+  joinYoutube,
+  leaveYoutube,
+  addVideo,
+  disconnectSocket,
+} from '../../../adapters/youtubeSocket';
+import MusicStore from '../../../stores/room/musicStore';
 
 export default function YoutubeModal() {
+  const { roomId } = useParams();
+  const { setType, initPlaylist, initSearchList, addPlaylist } = MusicStore();
+
+  useEffect(() => {
+    initSocketConnection();
+    const addVideoFunc = (data) => {
+      data.playlist.map((item) => addPlaylist(item.video));
+    };
+    joinYoutube(roomId);
+    addVideo(addVideoFunc);
+    return () => {
+      leaveYoutube(roomId);
+      disconnectSocket();
+      setType('theme');
+      initPlaylist();
+      initSearchList();
+    };
+  }, []);
+
   return (
     <Component>
       <YoutubeModalHeader />

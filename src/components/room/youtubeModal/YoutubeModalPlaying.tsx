@@ -18,7 +18,7 @@ export default function YoutubeModalPlaylist() {
       <YoutubeModalPlayer />
       <Playlist>
         {playlist.map((item, index) => (
-          <Item key={item.id.videoId}>
+          <Item key={Symbol(item.id.videoId).toString()}>
             <Title>{item.snippet.title}</Title>
             <DeleteItem type="button" onClick={() => removeItem(index)}>
               <X />

@@ -1,27 +1,27 @@
+import React from 'react';
 import toast from 'react-hot-toast';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import { ReactComponent as Check } from '../../../assets/svg/Check.svg';
 import { ReactComponent as Plus } from '../../../assets/svg/Plus.svg';
 import youtubeSearch from '../../../interface/youtubeSearch.interface';
+import { selectVideo } from '../../../adapters/youtubeSocket';
+import musicStore from '../../../stores/room/musicStore';
 
-export default function SearchListItem({
-  item,
-  isInPlaylist,
-  addPlaylist,
-}: {
-  item: youtubeSearch;
-  isInPlaylist: (_item: youtubeSearch) => boolean;
-  addPlaylist: (_item: youtubeSearch) => void;
-}) {
+export default function SearchListItem({ item }: { item: youtubeSearch }) {
+  const { roomId } = useParams();
+  const { isInPlaylist } = musicStore();
   const isAdded = isInPlaylist(item);
+
   const title =
-    item.snippet.title.length > 45
-      ? `${item.snippet.title.slice(0, 45)}...`
+    item.snippet?.title.length > 45
+      ? `${item.snippet?.title.slice(0, 45)}...`
       : item.snippet.title;
 
-  const onClick = () => {
+  const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
     if (!isAdded) {
-      addPlaylist(item);
+      selectVideo(roomId, item);
       toast.success('플레이리스트에 추가되었습니다.');
     }
   };
@@ -106,7 +106,7 @@ const TitleComponent = styled.div`
   background-color: #3b3a3a91;
   padding: 0.5rem;
   width: 100%;
-  /* height: 4rem; */
+  height: 4rem;
   border-radius: 0 0 0.6rem 0.6rem;
 `;
 

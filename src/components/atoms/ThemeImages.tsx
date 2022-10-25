@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/styles/media';
 import Cosmos from '../../assets/theme/cosmos.png';
 import Fire from '../../assets/theme/fire.png';
 import Ocean from '../../assets/theme/ocean.png';
@@ -84,6 +85,9 @@ const Component = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.6rem;
+  ${media.small} {
+    display: none;
+  }
 `;
 
 const Name = styled.span`
