@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import styled from 'styled-components';
 import media from 'src/styles/media';
+import useDeleteRoom from 'src/hooks/useDeleteRoom';
 import UserStore from '../../../stores/userStore';
 import RoomDetail from '../../atoms/RoomDetail';
 import BlockDetail from './BlockDetail';
+import { ReactComponent as VerticalMenu } from '../../../assets/svg/verticalMenu.svg';
 
 export default function MyBlock({ data }) {
   const navigate = useNavigate();
   const { nickname } = UserStore();
+  const [isDelete, setIsDelete] = useState(false);
+
+  const { mutate, isLoading, isError, isSuccess } = useDeleteRoom(data?.itemId);
+
+  if (isLoading) {
+    return <>loading</>;
+  }
+  if (isError) return <>error</>;
+
+  const toggleDelete = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    setIsDelete(!isDelete);
+  };
 
   const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -28,8 +43,21 @@ export default function MyBlock({ data }) {
     }
     navigate(`/ready/${data.itemId}`);
   };
+
+  const deleteRoom = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    mutate();
+    if (isSuccess) {
+      console.log('successfully deleted room');
+    }
+  };
+
   return (
-    <Container>
+    <Container onClick={() => setIsDelete(false)}>
+      {isDelete && <Delete onClick={deleteRoom}>방 삭제하기</Delete>}
+      <Menu onClick={toggleDelete}>
+        <VerticalMenu />
+      </Menu>
       <BlockDetail data={data} />
       <Entering>
         <RoomDetail data={data} />
@@ -38,6 +66,38 @@ export default function MyBlock({ data }) {
     </Container>
   );
 }
+
+const Delete = styled.div`
+  position: absolute;
+  top: 4rem;
+  right: 2rem;
+  padding: 1rem 3rem;
+  background-color: #191f28;
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  color: #fcfcfd;
+  &:hover {
+    cursor: pointer;
+    background-color: #2f3a4b;
+  }
+`;
+
+const Menu = styled.div`
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  top: 2rem;
+  right: 2rem;
+  cursor: pointer;
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: #fcfcfd;
+    &:hover {
+      fill: rgba(255, 255, 255, 0.6);
+    }
+  }
+`;
 
 const Entering = styled.div`
   display: flex;
@@ -75,6 +135,7 @@ const Enter = styled.button`
 `;
 
 const Container = styled.div`
+  position: relative;
   background-color: #23262f;
   border-radius: 2rem;
   width: 29.4rem;
