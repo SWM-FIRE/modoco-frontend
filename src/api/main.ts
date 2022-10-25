@@ -157,6 +157,11 @@ const searchYoutubeVideo = (keyword: string) => {
   });
 };
 
+// delete room
+const deleteRoom = (roomId: number) => {
+  return authorizationRequest.delete((API.ROOM as string) + roomId);
+};
+
 export {
   getUser,
   getMe,
@@ -175,4 +180,5 @@ export {
   getRecords,
   changeProfile,
   searchYoutubeVideo,
+  deleteRoom,
 };
