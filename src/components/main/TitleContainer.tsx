@@ -1,15 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import toast from 'react-hot-toast';
+import mainModalStore from 'src/stores/mainModalStore';
 import vectors from '../atoms/Vectors';
 import Search from './Search';
 import PositionInterface from '../../interface/position.interface';
 
 export default function TitleContainer() {
+  const { openLoginModal } = mainModalStore();
   const randomEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    toast.error('로그인 후 입장 가능합니다.');
+    openLoginModal();
   };
 
   return (
