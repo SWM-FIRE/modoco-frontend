@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as LeftTwoArrows } from '../../../assets/svg/Room/LeftTwoArrows.svg';
 import { ReactComponent as WhiteYoutube } from '../../../assets/svg/WhiteYoutube.svg';
 
-export default function YoutubeModalHeader() {
+export default React.memo(function YoutubeModalHeader() {
   return (
     <Header>
       <SvgComponent>
@@ -15,7 +15,7 @@ export default function YoutubeModalHeader() {
       </ControlSidebar>
     </Header>
   );
-}
+});
 
 const Header = styled.div`
   position: relative;

@@ -17,8 +17,7 @@ const generateYoutubeSocket = () => {
 };
 
 const initSocketConnection = () => {
-  if (youtubeSocket.socket) return;
-  if (youtubeSocket.socket === null) generateYoutubeSocket();
+  if (!youtubeSocket.socket) generateYoutubeSocket();
   youtubeSocket.socket?.connect();
 };
 
@@ -34,7 +33,6 @@ const disconnectSocket = () => {
   youtubeSocket.socket?.off('playlist:joined');
   youtubeSocket.socket?.off('playlist:sync');
   youtubeSocket.socket?.disconnect();
-  youtubeSocket.socket = null;
 };
 
 const connectedYoutube = () => {
@@ -52,14 +50,13 @@ const joinYoutube = (roomId: string) => {
   console.log(
     `[emit join] waiting for join ${roomId}! ${youtubeSocket.socket?.id}`,
   );
-  joinedYoutube();
 };
 
-const joinedYoutube = () => {
-  youtubeSocket.socket?.on('playlist:joined', (roomId: string) => {
-    console.log(`[on join] joined ${roomId}! ${youtubeSocket.socket?.id}`);
-  });
-};
+// const joinedYoutube = () => {
+//   youtubeSocket.socket?.on('playlist:joined', (roomId: string) => {
+//     console.log(`[on join] joined ${roomId}! ${youtubeSocket.socket?.id}`);
+//   });
+// };
 
 const selectVideo = (roomId: string, video: youtubeSearch) => {
   checkSocket();
@@ -69,7 +66,9 @@ const selectVideo = (roomId: string, video: youtubeSearch) => {
     type: 'sync',
     playlist: [{ video }],
   });
-  console.log(`[emit select] select ${video.id}! ${youtubeSocket.socket?.id}`);
+  console.log(
+    `[emit select] select ${video.id.videoId}! ${youtubeSocket.socket?.id}`,
+  );
 };
 
 const addVideo = (addFunc) => {

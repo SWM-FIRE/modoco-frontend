@@ -10,16 +10,14 @@ import messageStore from '../../../stores/room/messagesStore';
 import roomModalStore from '../../../stores/room/roomModalStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import userPcStore from '../../../stores/room/userPcStore';
-import MusicStore from '../../../stores/room/musicStore';
 
-export default function Header({ theme }) {
+export default function Header({ theme, youtubeModal, setYoutubeModal }) {
   const navigate = useNavigate();
   const { roomId } = useParams();
   const { toggleSettingModal } = roomModalStore();
   const { setUsers } = connectedUsersStore();
   const { stopMediaStream } = useCreateMediaStream();
   const { setMessages } = messageStore();
-  const { type } = MusicStore();
   const { emptyPc } = userPcStore();
   const newSocket = roomSocket.socket;
 
@@ -37,10 +35,14 @@ export default function Header({ theme }) {
 
   return (
     <Component>
-      <Theme theme={theme} type={type} />
+      <Theme theme={theme} youtubeModal={youtubeModal} />
       <Center>
         <Timer />
-        <Settings setSetting={toggleSettingModal} />
+        <Settings
+          setSetting={toggleSettingModal}
+          youtubeModal={youtubeModal}
+          setYoutubeModal={setYoutubeModal}
+        />
       </Center>
       <Button onClick={onClick}>
         나가기 <X />

@@ -12,14 +12,20 @@ import { ReactComponent as Setting } from '../../../assets/svg/settings.svg';
 import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import Youtube from './Youtube';
-import MusicStore from '../../../stores/room/musicStore';
 
-export default function Settings({ setSetting }: { setSetting: () => void }) {
+export default function Settings({
+  setSetting,
+  youtubeModal,
+  setYoutubeModal,
+}: {
+  setSetting: () => void;
+  youtubeModal: boolean;
+  setYoutubeModal: (_by: boolean) => void;
+}) {
   const { roomId } = useParams();
   const { userMic, userVideo } = UserMediaStreamStore((state) => state);
   const { createDisplayStream, stopDisplayStream } = useCreateMediaStream();
   const { emitAudioStateChange } = mediaStateChange();
-  const { type, setType } = MusicStore();
 
   const setMic = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -49,7 +55,7 @@ export default function Settings({ setSetting }: { setSetting: () => void }) {
         {userVideo ? <MonitorOn /> : <MonitorOff />}
       </Button>
       <Button onClick={setMic}>{userMic ? <MicOn /> : <MicOff />}</Button>
-      <Youtube type={type} setType={setType} />
+      <Youtube youtubeModal={youtubeModal} setYoutubeModal={setYoutubeModal} />
       {/* <Button onClick={setVideo}>
         <VideoOff />
       </Button> */}

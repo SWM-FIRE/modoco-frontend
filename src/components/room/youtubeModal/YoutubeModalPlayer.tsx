@@ -1,10 +1,21 @@
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player/youtube';
-import musicStore from '../../../stores/room/musicStore';
+import youtubeSearch from '../../../interface/youtubeSearch.interface';
 
-export default function YoutubeModalPlayer() {
-  const { playlist, nowPlaying, setNowPlaying } = musicStore();
-  const list = playlist.map((item) => item.id.videoId);
+export default React.memo(function YoutubeModalPlayer({
+  playlist,
+  nowPlaying,
+  setNowPlaying,
+}: {
+  playlist: youtubeSearch[];
+  nowPlaying: number;
+  setNowPlaying: React.Dispatch<React.SetStateAction<number>>;
+}) {
+  const list = useMemo(
+    () => playlist.map((item) => item.id.videoId),
+    [playlist],
+  );
 
   const onEnded = () => {
     setNowPlaying((nowPlaying + 1) % playlist.length);
@@ -23,10 +34,11 @@ export default function YoutubeModalPlayer() {
       width="58%"
       height="100%"
       pip
+      volume={0.5}
       onEnded={onEnded}
     />
   );
-}
+});
 
 const Empty = styled.div`
   width: 58%;

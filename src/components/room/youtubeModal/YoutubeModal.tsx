@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
 import YoutubeModalHeader from './YoutubeModalHeader';
 import YoutubeModalInput from './YoutubeModalInput';
-import YoutubeModalPlaying from './YoutubeModalPlaying';
-import YoutubeModalSearchList from './YoutubeModalSearchList';
+import YoutubeModalPlayer from './YoutubeModalPlayer';
+import youtubeSearch from '../../../interface/youtubeSearch.interface';
+import SearchListItem from './SearchListItem';
+import PlaylistItem from './PlaylistItem';
 import {
   initSocketConnection,
   joinYoutube,
@@ -12,34 +13,69 @@ import {
   addVideo,
   disconnectSocket,
 } from '../../../adapters/youtubeSocket';
-import MusicStore from '../../../stores/room/musicStore';
 
-export default function YoutubeModal() {
-  const { roomId } = useParams();
-  const { setType, initPlaylist, initSearchList, addPlaylist } = MusicStore();
+export default function YoutubeModal({ roomId }: { roomId: string }) {
+  const [playlist, setPlaylist] = useState([]);
+  const [searchList, setSearchList] = useState([]);
+  const [nowPlaying, setNowPlaying] = useState<number>(0);
+
+  const isInPlaylist = (video: youtubeSearch) => {
+    return playlist.some((item) => item.id.videoId === video.id.videoId);
+  };
+
+  const removeItem = (index: number) => {
+    setPlaylist(playlist.filter((_, i) => i !== index));
+    if (index <= nowPlaying && nowPlaying !== 0) {
+      setNowPlaying(nowPlaying - 1);
+    }
+  };
 
   useEffect(() => {
     initSocketConnection();
-    const addVideoFunc = (data) => {
-      data.playlist.map((item) => addPlaylist(item.video));
-    };
     joinYoutube(roomId);
+    const addVideoFunc = (data) => {
+      data.playlist.map((item) =>
+        setPlaylist((playlist) => [...playlist, item.video]),
+      );
+    };
     addVideo(addVideoFunc);
     return () => {
       leaveYoutube(roomId);
       disconnectSocket();
-      setType('theme');
-      initPlaylist();
-      initSearchList();
     };
-  }, []);
+  }, [roomId]);
 
   return (
     <Component>
       <YoutubeModalHeader />
-      <YoutubeModalInput />
-      <YoutubeModalPlaying />
-      <YoutubeModalSearchList />
+      <YoutubeModalInput setSearchList={setSearchList} />
+      <Playing>
+        <YoutubeModalPlayer
+          playlist={playlist}
+          nowPlaying={nowPlaying}
+          setNowPlaying={setNowPlaying}
+        />
+        <Playlist>
+          {playlist.map((item, index) => (
+            <PlaylistItem
+              key={Symbol(item.id.videoId).toString()}
+              item={item}
+              index={index}
+              removeItem={removeItem}
+            />
+          ))}
+        </Playlist>
+      </Playing>
+      <SearchList>
+        {searchList.map((item: youtubeSearch) => (
+          <SearchListItem
+            key={item.id.videoId}
+            item={item}
+            roomId={roomId}
+            isInPlaylist={isInPlaylist}
+          />
+        ))}
+      </SearchList>
     </Component>
   );
 }
@@ -62,5 +98,40 @@ const Component = styled.div`
   transition: all 0.25s ease-in-out;
   &:hover {
     transform: translateX(55rem);
+  }
+`;
+
+const Playing = styled.div`
+  width: 100%;
+  height: 21rem;
+  min-height: 21rem;
+  border-top: 1px solid rgba(55, 65, 81, 1);
+  padding-top: 1rem;
+  display: flex;
+`;
+
+const Playlist = styled.ul`
+  width: 42%;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 0.1rem;
+  margin-left: 0.3rem;
+  border: 1px dotted rgba(55, 65, 81, 1);
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const SearchList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  width: 100%;
+  flex-grow: 1;
+  overflow: scroll;
+  margin-top: 1rem;
+
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
