@@ -1,32 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Search } from '../../../assets/svg/Search.svg';
 import { searchYoutubeVideo } from '../../../api/main';
-import musicStore from '../../../stores/room/musicStore';
 import replaceText from './replaceText';
 import youtubeSearch from '../../../interface/youtubeSearch.interface';
 
-export default function YoutubeModalInput() {
-  const { setSearchList } = musicStore();
+export default React.memo(function YoutubeModalInput({
+  setSearchList,
+}: {
+  setSearchList: (_searchList: youtubeSearch[]) => void;
+}) {
   const [newInput, setNewInput] = useState('');
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewInput(event.target.value);
-  };
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    searchYoutubeVideo(newInput)
-      .then((res) => {
-        res.data.items.forEach((item: youtubeSearch) => {
-          // eslint-disable-next-line no-param-reassign
-          item.snippet.title = replaceText(item.snippet.title);
+  const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewInput(event.target.value);
+  }, []);
+
+  const onSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      searchYoutubeVideo(newInput)
+        .then((res) => {
+          res.data.items.forEach((item: youtubeSearch) => {
+            // eslint-disable-next-line no-param-reassign
+            item.snippet.title = replaceText(item.snippet.title);
+          });
+          setSearchList(res.data.items);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        setSearchList(res.data.items);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    },
+    [newInput, setSearchList],
+  );
 
   return (
     <InputComponent onSubmit={onSubmit}>
@@ -36,7 +42,7 @@ export default function YoutubeModalInput() {
       </SearchButton>
     </InputComponent>
   );
-}
+});
 
 const InputComponent = styled.form`
   width: 100%;

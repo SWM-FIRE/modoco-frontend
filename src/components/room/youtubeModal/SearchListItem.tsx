@@ -1,30 +1,43 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
 import { ReactComponent as Check } from '../../../assets/svg/Check.svg';
 import { ReactComponent as Plus } from '../../../assets/svg/Plus.svg';
 import youtubeSearch from '../../../interface/youtubeSearch.interface';
 import { selectVideo } from '../../../adapters/youtubeSocket';
-import musicStore from '../../../stores/room/musicStore';
 
-export default function SearchListItem({ item }: { item: youtubeSearch }) {
-  const { roomId } = useParams();
-  const { isInPlaylist } = musicStore();
-  const isAdded = isInPlaylist(item);
+const calculateTitle = (title: string) => {
+  if (title.length > 45) {
+    return `${title.slice(0, 45)}...`;
+  }
+  return title;
+};
 
-  const title =
-    item.snippet?.title.length > 45
-      ? `${item.snippet?.title.slice(0, 45)}...`
-      : item.snippet.title;
+export default React.memo(function SearchListItem({
+  roomId,
+  item,
+  isInPlaylist,
+}: {
+  roomId: string;
+  item: youtubeSearch;
+  isInPlaylist: (_video: youtubeSearch) => boolean;
+}) {
+  const isAdded = useMemo(() => isInPlaylist(item), [isInPlaylist, item]);
+  const title = useMemo(
+    () => calculateTitle(item.snippet.title),
+    [item.snippet.title],
+  );
 
-  const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    if (!isAdded) {
-      selectVideo(roomId, item);
-      toast.success('플레이리스트에 추가되었습니다.');
-    }
-  };
+  const onClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      if (!isAdded) {
+        selectVideo(roomId, item);
+        toast.success('플레이리스트에 추가되었습니다.');
+      }
+    },
+    [isAdded, item, roomId],
+  );
 
   return (
     <Component>
@@ -45,7 +58,7 @@ export default function SearchListItem({ item }: { item: youtubeSearch }) {
       </TitleComponent>
     </Component>
   );
-}
+});
 
 const Component = styled.div`
   border-radius: 0.6rem;
@@ -63,7 +76,6 @@ const VideoComponent = styled.div<{ isAdded: boolean }>`
     }
   }
   border-radius: 0.6rem 0.6rem 0 0;
-
   #addVideoButton {
     cursor: pointer;
   }

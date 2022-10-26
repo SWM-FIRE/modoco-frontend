@@ -20,16 +20,11 @@ import InviteModal from '../components/room/InviteModal/InviteModal';
 import CodeModal from '../components/room/codeModal/CodeModal';
 import YoutubeModal from '../components/room/youtubeModal/YoutubeModal';
 import { deleteSocket } from '../adapters/roomSocket';
-import musicStore from '../stores/room/musicStore';
+// import musicStore from '../stores/room/musicStore';
 
 export default function Room() {
   const { roomId } = useParams();
   const { isLoading, error, data } = useRoom(roomId);
-  useEffect(() => {
-    return () => {
-      deleteSocket();
-    };
-  }, []);
   const {
     screenModal,
     settingModal,
@@ -38,14 +33,21 @@ export default function Room() {
     inviteModal,
     codeModal,
     codeModalType,
+    youtubeModal,
     toggleSettingModal,
     toggleSidebarModal,
     toggleProfileModal,
     toggleInviteModal,
     toggleCodeModal,
+    setYoutubeModal,
   } = roomModalStore();
-  const { type } = musicStore();
 
+  useEffect(() => {
+    setYoutubeModal(false);
+    return () => {
+      deleteSocket();
+    };
+  }, [setYoutubeModal]);
   const theme = getTheme(data?.theme);
 
   roomConnection(roomId);
@@ -75,9 +77,13 @@ export default function Room() {
         <CodeModal toggle={toggleCodeModal} codeModalType={codeModalType} />
       )}
       <Component>
-        <Header theme={data?.theme} />
+        <Header
+          theme={data?.theme}
+          youtubeModal={youtubeModal}
+          setYoutubeModal={setYoutubeModal}
+        />
         <Contents isOpen={sidebarModal}>
-          {type === 'youtube' && <YoutubeModal />}
+          {youtubeModal && <YoutubeModal roomId={roomId} />}
           <ScreenShare theme={data?.theme} />
           {sidebarModal ? (
             <Sidebar moderator={data?.moderator.uid} />

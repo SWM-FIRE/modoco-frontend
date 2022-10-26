@@ -2,13 +2,13 @@ import styled from 'styled-components';
 import { ReactComponent as WhiteYoutube } from '../../../assets/svg/WhiteYoutube.svg';
 import { ReactComponent as GrayYoutube } from '../../../assets/svg/GrayYoutube.svg';
 
-export default function Youtube({ type, setType }) {
+export default function Youtube({ youtubeModal, setYoutubeModal }) {
   const onClickYoutubeButton = () => {
-    setType(type === 'youtube' ? 'theme' : 'youtube');
+    setYoutubeModal(!youtubeModal);
   };
   return (
     <YoutubeButton onClick={onClickYoutubeButton}>
-      {type === 'youtube' ? <WhiteYoutube /> : <GrayYoutube />}
+      {youtubeModal ? <WhiteYoutube /> : <GrayYoutube />}
     </YoutubeButton>
   );
 }
