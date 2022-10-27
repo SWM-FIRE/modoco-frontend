@@ -1,5 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
-import toast from 'react-hot-toast';
+import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Check } from '../../../assets/svg/Check.svg';
 import { ReactComponent as Plus } from '../../../assets/svg/Plus.svg';
@@ -22,22 +21,15 @@ export default React.memo(function SearchListItem({
   item: youtubeSearch;
   isInPlaylist: (_video: youtubeSearch) => boolean;
 }) {
-  const isAdded = useMemo(() => isInPlaylist(item), [isInPlaylist, item]);
-  const title = useMemo(
-    () => calculateTitle(item.snippet.title),
-    [item.snippet.title],
-  );
+  const isAdded = isInPlaylist(item);
+  const title = calculateTitle(item.snippet.title);
 
-  const onClick = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      if (!isAdded) {
-        selectVideo(roomId, item);
-        toast.success('플레이리스트에 추가되었습니다.');
-      }
-    },
-    [isAdded, item, roomId],
-  );
+  const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (!isAdded) {
+      selectVideo(roomId, item);
+    }
+  };
 
   return (
     <Component>
