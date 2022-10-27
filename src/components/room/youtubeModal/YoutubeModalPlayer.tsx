@@ -29,7 +29,7 @@ export default function YoutubeModalPlayer({
       // eslint-disable-next-line react/jsx-boolean-value
       controls
       loop={playlist.length === 1}
-      width="58%"
+      width="70%"
       height="100%"
       volume={0.1}
       onEnded={onEnded}

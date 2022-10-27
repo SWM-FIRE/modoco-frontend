@@ -114,7 +114,7 @@ const Playing = styled.div`
 `;
 
 const Playlist = styled.ul`
-  width: 42%;
+  width: 30%;
   height: 100%;
   overflow-y: scroll;
   padding: 0.1rem;
