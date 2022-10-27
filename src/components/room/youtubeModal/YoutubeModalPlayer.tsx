@@ -38,7 +38,7 @@ export default function YoutubeModalPlayer({
 }
 
 const Empty = styled.div`
-  width: 58%;
+  width: 70%;
   height: 100%;
   display: flex;
   align-items: center;
