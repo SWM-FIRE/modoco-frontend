@@ -3,6 +3,8 @@ import styled, { ThemeProvider } from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import friendSocket, { generateFriend } from 'src/adapters/friendSocket';
+import useDirectMessage from 'src/adapters/useDirectMessage';
 import { themeFire } from '../styles/theme';
 import RoomCards from '../components/main/RoomCards';
 import MainTitle from '../components/main/MainTitle';
@@ -29,6 +31,11 @@ export default function Main() {
       navigate('/');
     }
   });
+
+  if (!friendSocket.socket) {
+    generateFriend();
+  }
+  useDirectMessage();
 
   return (
     <ThemeProvider theme={themeFire}>

@@ -3,7 +3,7 @@ import { API } from '../config';
 
 const lobbySocket = { socket: null };
 
-const generateSocket = () => {
+const generateLobby = () => {
   lobbySocket.socket = localStorage.getItem('access_token')
     ? io(`${API.SOCKET_LOBBY as string}`, {
         transports: ['websocket', 'polling'],
@@ -18,4 +18,4 @@ const deleteSocket = () => {
 
 export default lobbySocket;
 
-export { generateSocket, deleteSocket };
+export { generateLobby, deleteSocket };
