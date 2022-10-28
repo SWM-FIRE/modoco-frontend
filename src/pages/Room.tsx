@@ -11,23 +11,20 @@ import usePopHistory from '../hooks/usePopHistory';
 import SettingModal from '../components/atoms/settingModal/SettingModal';
 import Header from '../components/room/header/Header';
 import ScreenShare from '../components/room/screenShare/ScreenShare';
-import ControlSidebar from '../components/room/ControlSidebar';
+import ControlSidebar from '../components/room/controlSidebar/ControlSidebar';
 import Sidebar from '../components/room/sideBar/Sidebar';
 import roomModalStore from '../stores/room/roomModalStore';
 import ScreenShareModal from '../components/room/ScreenModal';
 import ProfileModal from '../components/room/profileModal/ProfileModal';
 import InviteModal from '../components/room/InviteModal/InviteModal';
 import CodeModal from '../components/room/codeModal/CodeModal';
+import YoutubeModal from '../components/room/youtubeModal/YoutubeModal';
 import { deleteSocket } from '../adapters/roomSocket';
+// import musicStore from '../stores/room/musicStore';
 
 export default function Room() {
   const { roomId } = useParams();
   const { isLoading, error, data } = useRoom(roomId);
-  useEffect(() => {
-    return () => {
-      deleteSocket();
-    };
-  }, []);
   const {
     screenModal,
     settingModal,
@@ -36,13 +33,21 @@ export default function Room() {
     inviteModal,
     codeModal,
     codeModalType,
+    youtubeModal,
     toggleSettingModal,
     toggleSidebarModal,
     toggleProfileModal,
     toggleInviteModal,
     toggleCodeModal,
+    setYoutubeModal,
   } = roomModalStore();
 
+  useEffect(() => {
+    setYoutubeModal(false);
+    return () => {
+      deleteSocket();
+    };
+  }, [setYoutubeModal]);
   const theme = getTheme(data?.theme);
 
   roomConnection(roomId);
@@ -72,8 +77,13 @@ export default function Room() {
         <CodeModal toggle={toggleCodeModal} codeModalType={codeModalType} />
       )}
       <Component>
-        <Header theme={data?.theme} />
+        <Header
+          theme={data?.theme}
+          youtubeModal={youtubeModal}
+          setYoutubeModal={setYoutubeModal}
+        />
         <Contents isOpen={sidebarModal}>
+          {youtubeModal && <YoutubeModal roomId={roomId} />}
           <ScreenShare theme={data?.theme} />
           {sidebarModal ? (
             <Sidebar moderator={data?.moderator.uid} />

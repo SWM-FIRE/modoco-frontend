@@ -22,7 +22,7 @@ export default function FriendIcon({ friend }: { friend: singleFriend }) {
         <MyAvatar num={friend?.avatar} />
       </AvatarContainer>
       <Information>
-        <Nickname>{friend.nickname}</Nickname>
+        <Nickname>{friend?.nickname}</Nickname>
         {/* <FriendStatus>
               <OnlineStatus isOnline={friend.state !== ''} />
               {friend.state !== '' ? friend.state : '오프라인'}

@@ -27,11 +27,11 @@ export default function NoticeModal() {
       <Content onClick={(e) => e.stopPropagation()}>
         <Container>
           <Contents />
+          <Close>
+            <Text onClick={closeForDay}>하루동안 열지않기</Text>
+            <Text onClick={closeNoticeModal}>닫기</Text>
+          </Close>
         </Container>
-        <Close>
-          <Text onClick={closeForDay}>하루동안 열지않기</Text>
-          <Text onClick={closeNoticeModal}>[닫기]</Text>
-        </Close>
       </Content>
     </Screen>
   );
@@ -45,17 +45,29 @@ const Content = styled.div`
   align-items: center;
 `;
 
-const Text = styled.p`
-  font-size: 1.4rem;
-  cursor: pointer;
+const Close = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
 `;
 
-const Close = styled.div`
-  width: 100%;
-  padding: 1rem 2rem;
+const Text = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  width: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.4rem;
+  cursor: pointer;
 `;
 
 const Screen = styled.div`
@@ -72,6 +84,9 @@ const Screen = styled.div`
 `;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   width: fit-content;
   background-color: black;

@@ -22,6 +22,8 @@ interface Modal {
   codeModal: boolean;
   codeModalType: string;
   toggleCodeModal: (_type: string) => void;
+  youtubeModal: boolean;
+  setYoutubeModal: (_by: boolean) => void;
 }
 
 const roomModalStore = create<Modal>((set) => ({
@@ -55,6 +57,8 @@ const roomModalStore = create<Modal>((set) => ({
     set((state) => ({ codeModal: !state.codeModal }));
     set(() => ({ codeModalType: by }));
   },
+  youtubeModal: false,
+  setYoutubeModal: (by) => set(() => ({ youtubeModal: by })),
 }));
 
 export default roomModalStore;

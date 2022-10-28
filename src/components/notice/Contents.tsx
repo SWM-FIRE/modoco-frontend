@@ -5,12 +5,12 @@ export default function Contents() {
   const onClickDiscord = () => {
     window.open('https://discord.gg/RqYBHcJT4G', '_blank');
   };
-  const onClickNotion = () => {
-    window.open(
-      'https://fortune-innocent-45c.notion.site/513c922718904e2d9d558f39f9513649',
-      '_blank',
-    );
-  };
+  // const onClickNotion = () => {
+  //   window.open(
+  //     'https://fortune-innocent-45c.notion.site/513c922718904e2d9d558f39f9513649',
+  //     '_blank',
+  //   );
+  // };
   return (
     <Component>
       <Title>공지사항✨</Title>
@@ -21,9 +21,7 @@ export default function Contents() {
         <Text>
           온라인 모각코 플랫폼을 만들고 있는 소프트웨어 마에스트로 FIRE팀입니다.
         </Text>
-        <br />
-        <br />
-        <Text>
+        {/* <Text>
           사이트 오픈 기념으로
           <span
             style={{
@@ -41,7 +39,7 @@ export default function Contents() {
             [여기]
           </Button>
           를 클릭해주세요!
-        </Text>
+        </Text> */}
         <br /> <br />
         버그 신고는 왼쪽 아래 채널톡으로 해주시면 감사드리겠습니다 :)
         <br />
@@ -98,12 +96,12 @@ const SvgComponent = styled.div`
 
 const Text = styled.span``;
 
-const Button = styled.button`
-  color: white;
-  cursor: pointer;
-  font-size: 1.6rem;
+// const Button = styled.button`
+//   color: white;
+//   cursor: pointer;
+//   font-size: 1.6rem;
 
-  &:hover {
-    text-decoration: underline;
-  }
-`;
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// `;

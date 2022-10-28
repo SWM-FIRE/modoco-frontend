@@ -11,7 +11,7 @@ import roomModalStore from '../../../stores/room/roomModalStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
 import userPcStore from '../../../stores/room/userPcStore';
 
-export default function Header({ theme }) {
+export default function Header({ theme, youtubeModal, setYoutubeModal }) {
   const navigate = useNavigate();
   const { roomId } = useParams();
   const { toggleSettingModal } = roomModalStore();
@@ -35,10 +35,14 @@ export default function Header({ theme }) {
 
   return (
     <Component>
-      <Theme theme={theme} />
+      <Theme theme={theme} youtubeModal={youtubeModal} />
       <Center>
         <Timer />
-        <Settings setSetting={toggleSettingModal} />
+        <Settings
+          setSetting={toggleSettingModal}
+          youtubeModal={youtubeModal}
+          setYoutubeModal={setYoutubeModal}
+        />
       </Center>
       <Button onClick={onClick}>
         나가기 <X />

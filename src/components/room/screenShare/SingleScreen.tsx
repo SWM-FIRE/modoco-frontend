@@ -85,8 +85,8 @@ export default function SingleScreen({ connectedUser, stream }) {
           <AvatarPosition>
             <AudioTracking stream={stream} />
             <MyAvatar num={Number(connectedUser?.avatar)} />
-            <NameContainer isMe={uid === connectedUser.uid}>
-              {connectedUser.nickname}
+            <NameContainer isMe={uid === connectedUser?.uid}>
+              {connectedUser?.nickname}
             </NameContainer>
           </AvatarPosition>
         </ControlBar>

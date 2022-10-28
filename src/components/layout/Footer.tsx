@@ -44,7 +44,7 @@ export default function Footer() {
           </Copyright>
           <Other>
             <OtherButton onClick={navigateGit}>Github</OtherButton>|
-            <OtherButton onClick={navigateFAQ}>F&Q</OtherButton>|
+            <OtherButton onClick={navigateFAQ}>FAQ</OtherButton>|
             <OtherButton
               data-cy="footer-privacy-policy"
               style={{ fontWeight: 600 }}

@@ -14,20 +14,20 @@ const onChatMessage = (roomId: string) => {
 
   useEffect(() => {
     const receiveMessage = (receiveMsg) => {
-      const isMe = receiveMsg.sender === uid;
+      const isMe = receiveMsg.from === uid;
       const userInfo = isMe
         ? {
-            uid: receiveMsg.sender,
+            uid: receiveMsg.from,
             nickname,
             avatar,
           }
-        : connectedUsers.filter((user) => user.uid === receiveMsg.sender)[0];
+        : connectedUsers.filter((user) => user.uid === receiveMsg.from)[0];
 
       setMessages([
         ...messages.map((m, index) => {
           if (
             index === messages.length - 1 &&
-            m.uid === receiveMsg.sender &&
+            m.uid === receiveMsg.from &&
             moment(m.createdAt).format('LT') ===
               moment(receiveMsg.createdAt).format('LT')
           ) {
@@ -74,7 +74,7 @@ const onChatMessage = (roomId: string) => {
           moment(receiveMsg.createdAt).format('LT')
         ) {
           isHideNicknameAndAvatar = false;
-        } else if (msg[msg.length - 1].uid !== receiveMsg.sender) {
+        } else if (msg[msg.length - 1].uid !== receiveMsg.from) {
           isHideNicknameAndAvatar = false;
         } else if (msg[msg.length - 1].type !== 'MESSAGE') {
           isHideNicknameAndAvatar = false;

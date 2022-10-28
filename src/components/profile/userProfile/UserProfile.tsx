@@ -9,6 +9,7 @@ import useSingleFriend from 'src/hooks/friend/useSingleFriend';
 import useRequestFriend from 'src/hooks/friend/useRequestFriend';
 import useDeleteFriendRequest from 'src/hooks/friend/useDeleteFriendRequest';
 import userStore from 'src/stores/userStore';
+import ChattingUtil from 'src/components/atoms/chattingModal/chattingUtil';
 import Avatar from '../../atoms/Avatar';
 import Group from './Group';
 import Badge from './Badge';
@@ -26,6 +27,7 @@ export default function UserProfile({ isMe, setIsEdit, userId, isModal }) {
   const { setClear } = userStore();
   const navigate = useNavigate();
   const { isLoading, error, refetch, data } = useUser(Number(userId));
+  const { openChat } = ChattingUtil();
 
   const {
     isLoading: friendLoading,
@@ -159,7 +161,7 @@ export default function UserProfile({ isMe, setIsEdit, userId, isModal }) {
         )}
         {isFriend ? (
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button isModal={isModal}>
+            <Button isModal={isModal} onClick={() => openChat(data.uid)}>
               <SendMessageBlack />
               채팅하기
             </Button>

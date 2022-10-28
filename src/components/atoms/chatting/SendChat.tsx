@@ -36,7 +36,7 @@ export default function SendChat({
     newSocket.emit('chatMessage', {
       room: roomId,
       type: 'MESSAGE',
-      sender: uid,
+      from: uid,
       message: newMessage,
       createdAt: new Date(),
     });
@@ -93,6 +93,8 @@ const Input = styled.textarea<{ roomId: string }>`
   color: rgba(255, 255, 255, 1);
   min-height: 2rem;
   max-height: 13rem;
+  resize: none;
+
   ::-webkit-scrollbar {
     width: 0.3rem;
   }

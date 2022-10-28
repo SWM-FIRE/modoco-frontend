@@ -3,6 +3,7 @@ import {
   authorizationRequest,
   unAuthorizationRequest,
   awsRequest,
+  youtubeAxios,
 } from './core/index';
 import { API } from '../config';
 
@@ -139,6 +140,29 @@ const getRecords = () => {
   return authorizationRequest.get(API.RECORDS);
 };
 
+/**
+ * youtube
+ */
+
+// search youtube video
+const searchYoutubeVideo = (keyword: string) => {
+  return youtubeAxios.get(API.YOUTUBE_SEARCH, {
+    params: {
+      q: keyword,
+      part: 'snippet',
+      maxResults: 15,
+      type: 'video',
+      videoEmbeddable: true,
+      videoCategoryId: 10,
+    },
+  });
+};
+
+// delete room
+const deleteRoom = (roomId: number) => {
+  return authorizationRequest.delete((API.ROOM as string) + roomId);
+};
+
 export {
   getUser,
   getMe,
@@ -156,4 +180,6 @@ export {
   getFriend,
   getRecords,
   changeProfile,
+  searchYoutubeVideo,
+  deleteRoom,
 };

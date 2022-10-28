@@ -10,7 +10,6 @@ export default function Auth() {
   useEffect(() => {
     if (accessToken) {
       localStorage.setItem('access_token', accessToken);
-      console.log(accessToken);
       toast.success('로그인이 완료되었습니다');
       navigate('/');
     }

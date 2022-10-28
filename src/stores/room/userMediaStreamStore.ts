@@ -7,8 +7,6 @@ interface MediaStreamInterface {
   setUserMic: (_by: boolean) => void;
   userVideo: boolean;
   setUserVideo: (_by: boolean) => void;
-  userSpeaker: boolean;
-  setUserSpeaker: () => void;
   userAudioInputDevice: MediaDeviceInfo | null;
   setUserAudioInputDevice: (_by: MediaDeviceInfo | null) => void;
   userAudioOutputDevice: MediaDeviceInfo | null;
@@ -29,10 +27,6 @@ const UserMediaStreamStore = create<MediaStreamInterface>((set) => ({
   userVideo: false,
   setUserVideo: (by) => {
     set(() => ({ userVideo: by }));
-  },
-  userSpeaker: true,
-  setUserSpeaker: () => {
-    set((state) => ({ userSpeaker: !state.userSpeaker }));
   },
   userAudioInputDevice: null,
   setUserAudioInputDevice: (by) => {

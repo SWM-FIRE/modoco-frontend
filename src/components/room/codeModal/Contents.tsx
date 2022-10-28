@@ -26,7 +26,7 @@ export default function Contents({
     newSocket.emit('chatMessage', {
       room: roomId,
       type: 'CODE',
-      sender: uid,
+      from: uid,
       message: code,
       createdAt: new Date(),
     });
