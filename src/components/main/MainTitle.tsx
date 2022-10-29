@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import lobbySocket, { generateSocket } from 'src/adapters/lobbySocket';
+import lobbySocket, { generateLobby } from 'src/adapters/lobbySocket';
 import connectedLobbyUsers from '../../stores/connectedLobbyUsers';
 import onChatMessage from '../../adapters/receiveMessage';
 import Search from './Search';
@@ -26,7 +26,7 @@ export default function TitleContainer() {
     connectedLobbyUsers();
 
   if (!lobbySocket.socket) {
-    generateSocket();
+    generateLobby();
   }
   onChatMessage('lobby');
   useEffect(() => {
@@ -36,11 +36,6 @@ export default function TitleContainer() {
         lobbySocket.socket?.emit('joinLobby', { uid: res?.data?.uid });
       });
     });
-
-    // check if joined successfully
-    // lobbySocket.socket?.off('joinedLobby').on('joinedLobby', () => {
-
-    // });
 
     // get new user info
     lobbySocket.socket?.on('newUserJoinedLobby', ({ sid, uid }) => {
@@ -62,7 +57,7 @@ export default function TitleContainer() {
 
     // get existing users info
     lobbySocket.socket?.on('existingUsers', ({ users, current }) => {
-      console.log(current);
+      console.debug('current user', current);
       users.map((user) => {
         getUser(user?.uid).then((res) => {
           const existingUser = findUserByUid(user.uid);

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import mainModalStore from 'src/stores/mainModalStore';
 import { useNavigate } from 'react-router-dom';
+import mainModalStore from 'src/stores/mainModalStore';
+import friendSocket, { recvDirectMessage } from 'src/adapters/friendSocket';
+import directMessageStore from 'src/stores/directMessageStore';
 import UserStore from '../../stores/userStore';
 import Profile from './Profile';
 import HeaderProfileModal from '../headerProfile/HeaderProfileModal';
@@ -10,11 +12,18 @@ import useSetSelf from '../../hooks/useSetSelf';
 import ModocoLogo from '../atoms/ModocoLogo';
 
 export default function Header() {
-  const { isLogin } = UserStore();
+  const { uid, isLogin } = UserStore();
   const navigate = useNavigate();
   const { isOpenProfileModal, closeProfileModal } = mainModalStore();
+  const { appendMessage } = directMessageStore();
 
   useSetSelf();
+  useEffect(() => {
+    recvDirectMessage(appendMessage, uid);
+    return () => {
+      friendSocket.socket?.off('directMessage');
+    };
+  }, [appendMessage, uid, friendSocket.socket]);
   const clickLogo = () => {
     if (localStorage.getItem('access_token')) {
       navigate('/main');
