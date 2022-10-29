@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import toast from 'react-hot-toast';
 import YoutubeModalHeader from './YoutubeModalHeader';
 import YoutubeModalInput from './YoutubeModalInput';
 import YoutubeModalPlayer from './YoutubeModalPlayer';
@@ -34,9 +35,11 @@ export default function YoutubeModal({ roomId }: { roomId: string }) {
     initSocketConnection();
     joinYoutube(roomId);
     const addVideoFunc = (data) => {
+      console.log(data);
       data.playlist.map((item) =>
         setPlaylist((playlist) => [...playlist, item.video]),
       );
+      toast.success(`🎵 ${data.playlist[0].video.snippet.title}`);
     };
     addVideo(addVideoFunc);
     return () => {
@@ -111,7 +114,7 @@ const Playing = styled.div`
 `;
 
 const Playlist = styled.ul`
-  width: 42%;
+  width: 38%;
   height: 100%;
   overflow-y: scroll;
   padding: 0.1rem;

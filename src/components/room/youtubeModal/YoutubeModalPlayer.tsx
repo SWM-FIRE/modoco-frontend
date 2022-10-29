@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player/youtube';
 import youtubeSearch from '../../../interface/youtubeSearch.interface';
 
-export default React.memo(function YoutubeModalPlayer({
+export default function YoutubeModalPlayer({
   playlist,
   nowPlaying,
   setNowPlaying,
@@ -12,10 +12,7 @@ export default React.memo(function YoutubeModalPlayer({
   nowPlaying: number;
   setNowPlaying: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const list = useMemo(
-    () => playlist.map((item) => item.id.videoId),
-    [playlist],
-  );
+  const list = playlist.map((item) => item.id.videoId);
 
   const onEnded = () => {
     setNowPlaying((nowPlaying + 1) % playlist.length);
@@ -29,19 +26,19 @@ export default React.memo(function YoutubeModalPlayer({
     <ReactPlayer
       url={`https://www.youtube.com/watch?v=${list[nowPlaying]}`}
       playing
+      // eslint-disable-next-line react/jsx-boolean-value
       controls
       loop={playlist.length === 1}
-      width="58%"
+      width="62%"
       height="100%"
-      pip
-      volume={0.5}
+      volume={0.1}
       onEnded={onEnded}
     />
   );
-});
+}
 
 const Empty = styled.div`
-  width: 58%;
+  width: 62%;
   height: 100%;
   display: flex;
   align-items: center;

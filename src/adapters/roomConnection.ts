@@ -52,6 +52,10 @@ export const roomConnection = (roomId: string) => {
 
     joinSuccess();
 
+    newSocket?.on('exception', (event) => {
+      console.log('except', event);
+    });
+
     newSocket?.on(SOCKET_EVENT.JOINED_ROOM, (room) => {
       console.log('[roomConnection] joinedRoom', room);
       emitAudioStateChange(roomId, userMic);

@@ -147,7 +147,7 @@ const usePeerConnection = () => {
       }
     };
 
-    const onNewUser = async ({ sid, uid }) => {
+    const onNewUser = async ({ sid, uid }: { sid: string; uid: number }) => {
       emitAudioStateChange(roomId, userMic);
       getUser(uid).then((res) => {
         const existingUser = findUserByUid(uid);

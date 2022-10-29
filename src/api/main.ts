@@ -153,6 +153,7 @@ const searchYoutubeVideo = (keyword: string) => {
       maxResults: 15,
       type: 'video',
       videoEmbeddable: true,
+      videoCategoryId: 10,
     },
   });
 };

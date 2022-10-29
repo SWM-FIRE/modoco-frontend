@@ -5,7 +5,7 @@ import { searchYoutubeVideo } from '../../../api/main';
 import replaceText from './replaceText';
 import youtubeSearch from '../../../interface/youtubeSearch.interface';
 
-export default React.memo(function YoutubeModalInput({
+export default function YoutubeModalInput({
   setSearchList,
 }: {
   setSearchList: (_searchList: youtubeSearch[]) => void;
@@ -16,23 +16,20 @@ export default React.memo(function YoutubeModalInput({
     setNewInput(event.target.value);
   }, []);
 
-  const onSubmit = useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      searchYoutubeVideo(newInput)
-        .then((res) => {
-          res.data.items.forEach((item: youtubeSearch) => {
-            // eslint-disable-next-line no-param-reassign
-            item.snippet.title = replaceText(item.snippet.title);
-          });
-          setSearchList(res.data.items);
-        })
-        .catch((err) => {
-          console.log(err);
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    searchYoutubeVideo(`${newInput}`)
+      .then((res) => {
+        res.data.items.forEach((item: youtubeSearch) => {
+          // eslint-disable-next-line no-param-reassign
+          item.snippet.title = replaceText(item.snippet.title);
         });
-    },
-    [newInput, setSearchList],
-  );
+        setSearchList(res.data.items);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <InputComponent onSubmit={onSubmit}>
@@ -42,7 +39,7 @@ export default React.memo(function YoutubeModalInput({
       </SearchButton>
     </InputComponent>
   );
-});
+}
 
 const InputComponent = styled.form`
   width: 100%;
