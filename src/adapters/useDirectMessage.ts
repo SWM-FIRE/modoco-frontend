@@ -1,14 +1,19 @@
 import { useEffect } from 'react';
 import directMessageStore from 'src/stores/directMessageStore';
-import { syncFriend, recvDirectMessage } from './friendSocket';
+import userStore from 'src/stores/userStore';
+import friendSocket, { generateFriend, syncFriend } from './friendSocket';
 
 const useDirectMessage = () => {
-  const { setMessages, appendMessage } = directMessageStore();
+  const { setMessages } = directMessageStore();
+  const { uid, isLogin } = userStore();
 
   useEffect(() => {
+    generateFriend();
     syncFriend(setMessages);
-    recvDirectMessage(appendMessage);
-  }, [appendMessage, setMessages]);
+    return () => {
+      friendSocket.socket?.off('friend:sync-all');
+    };
+  }, [setMessages, uid, isLogin]);
 };
 
 export default useDirectMessage;

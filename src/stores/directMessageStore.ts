@@ -20,7 +20,7 @@ interface directMessage {
   appendMessage: ({ uid, message }: { uid: number; message: message }) => void;
 }
 
-const directMessageStore = create<directMessage>((set) => ({
+const directMessageStore = create<directMessage>((set, get) => ({
   messages: {},
   setMessages: (by) => {
     set((state) => ({
@@ -30,13 +30,14 @@ const directMessageStore = create<directMessage>((set) => ({
       },
     }));
   },
-  appendMessage: (by) =>
+  appendMessage: (by) => {
     set((state) => ({
       messages: {
         ...state.messages,
         [by.uid]: [...state.messages[by.uid], by.message],
       },
-    })),
+    }));
+  },
 }));
 
 export default directMessageStore;
