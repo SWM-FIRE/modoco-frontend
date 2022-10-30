@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { message } from '../../../interface/directMessage.interface';
+import { newMessageInterface } from 'src/interface/directMessage.interface';
 
 interface target {
   uid: number;
@@ -13,13 +13,15 @@ export default function SingleDirectChat({
   me,
   target,
 }: {
-  singleChat: message;
+  singleChat: newMessageInterface;
   me: number;
   target: target;
 }) {
   const isMe = singleChat.from === me;
-
   const msgRef = useRef(null);
+  const sentHour = new Date(Number(singleChat.createdAt)).getHours();
+  const sentMin = new Date(Number(singleChat.createdAt)).getMinutes();
+
   const onCheckUrl = (message: string, loc: string) => {
     const urlReg =
       /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi;
@@ -47,23 +49,31 @@ export default function SingleDirectChat({
   }, [singleChat.message]);
 
   return (
-    <Container isMe={isMe}>
+    <Container isMe={isMe} isHide={singleChat.isHide}>
       <MessageComponent isMe={isMe}>
-        <Nickname>{isMe ? '나' : `${target.nickname}`}</Nickname>
+        {singleChat.isHide ? null : (
+          <Nickname>{isMe ? '나' : `${target.nickname}`}</Nickname>
+        )}
         <MessageBox isMe={isMe}>
           <Message isMe={isMe} ref={msgRef} />
-          {/* <Time>{moment(time).format('LT')}</Time>} */}
+          {singleChat.hideTime ? null : (
+            // include 0 when time only has one digit
+            <Time>
+              {sentHour < 10 ? `0${sentHour}` : sentHour}:
+              {sentMin < 10 ? `0${sentMin}` : sentMin}
+            </Time>
+          )}
         </MessageBox>
       </MessageComponent>
     </Container>
   );
 }
 
-const Container = styled.li<{ isMe: boolean }>`
+const Container = styled.li<{ isMe: boolean; isHide: boolean }>`
   display: flex;
   flex-direction: ${({ isMe }) => (isMe ? 'row-reverse' : 'row')};
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: ${({ isHide }) => (isHide ? '0.5rem' : '2rem')};
   padding-right: 1rem;
   color: rgb(255, 255, 255);
 `;
@@ -101,8 +111,9 @@ const Message = styled.div<{ isMe: boolean }>`
   }
 `;
 
-// const Time = styled.div`
-//   font-size: 0.8rem;
-//   margin-top: 0.2rem;
-//   flex-shrink: 0;
-// `;
+const Time = styled.div`
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+  color: #bbbaba;
+`;
