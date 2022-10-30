@@ -22,6 +22,12 @@
  * @property {string} VIDEO_STATE_CHANGE - video state change event
  * @property {string} AUDIO_STATE_CHANGE - audio state change event
  * @property {string} EXCEPTION - exception event
+ *
+ * @property {string} JOIN_LOBBY - new user joined event
+ * @property {string} NEW_USER_JOINED_LOBBY - new user joined event to all users in the lobby except the new user
+ * @property {string} EXISTING_LOBBY_USERS - existing users in the lobby
+ * @property {string} LEAVE_LOBBY - user trigger when user intends to leave the lobby
+ * @property {string} LEFT_LOBBY - user left lobby successfully in the Server Side
  */
 export const SOCKET_EVENT = {
   JOIN_ROOM: 'joinRoom',
@@ -44,6 +50,11 @@ export const SOCKET_EVENT = {
   AUDIO_STATE_CHANGE: 'audioStateChange',
   EXCEPTION: 'exception',
   DISCONNECT: 'disconnect',
+  JOIN_LOBBY: 'joinLobby',
+  NEW_USER_JOINED_LOBBY: 'newUserJoinedLobby',
+  EXISTING_LOBBY_USERS: 'existingUsers',
+  LEAVE_LOBBY: 'leaveLobby',
+  LEFT_LOBBY: 'LeftLobby',
 } as const;
 
 export type EVENT = typeof SOCKET_EVENT[keyof typeof SOCKET_EVENT];
