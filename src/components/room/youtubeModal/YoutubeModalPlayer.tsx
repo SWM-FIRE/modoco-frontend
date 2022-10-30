@@ -13,7 +13,6 @@ export default function YoutubeModalPlayer({
   setNowPlaying: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const list = playlist.map((item) => item.id.videoId);
-
   const onEnded = () => {
     setNowPlaying((nowPlaying + 1) % playlist.length);
   };
@@ -31,7 +30,7 @@ export default function YoutubeModalPlayer({
       loop={playlist.length === 1}
       width="62%"
       height="100%"
-      volume={0.1}
+      volume={0.5}
       onEnded={onEnded}
     />
   );
