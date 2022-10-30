@@ -19,9 +19,9 @@ import { ReactComponent as Mail } from '../../../assets/svg/Mail.svg';
 import { ReactComponent as Globe } from '../../../assets/svg/Globe.svg';
 import { ReactComponent as SendMessageBlack } from '../../../assets/svg/SendMessageBlack.svg';
 import { ReactComponent as ShowFriendState } from '../../../assets/svg/ShowFriendState.svg';
-import lobbySocket, { deleteSocket } from '../../../adapters/lobbySocket';
 import SkeletonProfile from '../SkeletonProfile';
 import NoUser from './NoUser';
+import { leaveLobby } from '../../../adapters/lobbySocket';
 
 export default function UserProfile({ isMe, setIsEdit, userId, isModal }) {
   const { setClear } = userStore();
@@ -88,8 +88,7 @@ export default function UserProfile({ isMe, setIsEdit, userId, isModal }) {
   };
 
   const onLogOut = () => {
-    lobbySocket.socket?.emit('leaveLobby');
-    deleteSocket();
+    leaveLobby();
     localStorage.removeItem('access_token');
     setClear();
     toast.success('로그아웃 되었습니다');

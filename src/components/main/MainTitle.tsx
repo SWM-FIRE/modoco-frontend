@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import lobbySocket, { generateSocket } from 'src/adapters/lobbySocket';
+import {
+  lobbySocket,
+  initSocketConnection,
+  onLeftLobby,
+  emitJoinLobby,
+  onNewUserJoinedLobby,
+  onExistingUsers,
+} from 'src/adapters/lobbySocket';
 import connectedLobbyUsers from '../../stores/connectedLobbyUsers';
 import onChatMessage from '../../adapters/receiveMessage';
 import Search from './Search';
@@ -12,7 +19,12 @@ import { getMe, getUser } from '../../api/main';
 export default function TitleContainer() {
   const [isLobby, setLobby] = useState<boolean>(false);
   const [showInvite, setShowInvite] = useState<boolean>(false);
-
+  const inviteCode = localStorage.getItem('inviteId');
+  useEffect(() => {
+    if (inviteCode) {
+      setShowInvite(true);
+    }
+  }, [inviteCode]);
   const onLobbyEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setLobby(!isLobby);
@@ -21,49 +33,29 @@ export default function TitleContainer() {
   const toggleModal = () => {
     setLobby(!isLobby);
   };
-
-  const { connectedUsers, appendUser, removeUser, findUserByUid } =
+  const { connectedUsers, appendUser, findUserByUid, removeUser } =
     connectedLobbyUsers();
-
-  if (!lobbySocket.socket) {
-    generateSocket();
-  }
   onChatMessage('lobby');
+
   useEffect(() => {
-    // send my info
-    lobbySocket.socket?.on('connect', () => {
-      getMe().then((res) => {
-        lobbySocket.socket?.emit('joinLobby', { uid: res?.data?.uid });
-      });
-    });
-
-    // check if joined successfully
-    // lobbySocket.socket?.off('joinedLobby').on('joinedLobby', () => {
-
-    // });
-
-    // get new user info
-    lobbySocket.socket?.on('newUserJoinedLobby', ({ sid, uid }) => {
-      console.log('new user joined lobby', sid, uid);
-      getUser(uid).then((res) => {
-        const newUser = findUserByUid(uid);
+    const newUserJoined = (data) => {
+      getUser(data.uid).then((res) => {
+        const newUser = findUserByUid(data.uid);
         if (!newUser) {
           appendUser({
             nickname: res.data.nickname,
-            uid,
+            uid: data.uid,
             avatar: res.data?.avatar,
-            sid,
+            sid: data.sid,
           });
         } else {
           console.log('already connected');
         }
       });
-    });
+    };
 
-    // get existing users info
-    lobbySocket.socket?.on('existingUsers', ({ users, current }) => {
-      console.log(current);
-      users.map((user) => {
+    const existingUsers = (data) => {
+      data.users.map((user) => {
         getUser(user?.uid).then((res) => {
           const existingUser = findUserByUid(user.uid);
           if (!existingUser) {
@@ -79,29 +71,20 @@ export default function TitleContainer() {
         });
         return user;
       });
-    });
-
-    lobbySocket.socket?.on('LeftLobby', ({ sid }: { sid: string }) => {
-      if (lobbySocket.socket?.id === sid) {
+    };
+    const leftLobby = (data) => {
+      console.log('나감요', connectedUsers);
+      if (lobbySocket.socket?.id === data.sid) {
         return;
       }
-      removeUser(sid);
-    });
-    return () => {
-      lobbySocket.socket?.off('LeftLobby');
-      lobbySocket.socket?.off('existingUsers');
-      lobbySocket.socket?.off('newUserJoinedLobby');
-      lobbySocket.socket?.off('connect');
+      removeUser(data.sid);
     };
-  }, [lobbySocket.socket]);
-
-  // invite code
-  const inviteCode = localStorage.getItem('inviteId');
-  useEffect(() => {
-    if (inviteCode) {
-      setShowInvite(true);
-    }
-  }, []);
+    initSocketConnection(localStorage.getItem('access_token'));
+    emitJoinLobby(getMe);
+    onNewUserJoinedLobby(newUserJoined);
+    onExistingUsers(existingUsers);
+    onLeftLobby(leftLobby);
+  }, [appendUser, findUserByUid, removeUser]);
 
   return (
     <>
