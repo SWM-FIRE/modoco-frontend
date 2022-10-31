@@ -25,9 +25,9 @@ export default function SingleDirectChat({
   const onCheckUrl = (message: string, loc: string) => {
     const urlReg =
       /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi;
-    if (loc === 'url') return message.split(urlReg)[1];
-    if (loc === 'front') return message.split(urlReg)[0];
-    if (loc === 'back') return message.split(urlReg)[3];
+    if (loc === 'url') return message?.split(urlReg)[1];
+    if (loc === 'front') return message?.split(urlReg)[0];
+    if (loc === 'back') return message?.split(urlReg)[3];
     return null;
   };
 
