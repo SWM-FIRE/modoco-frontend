@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
 import mainModalStore from 'src/stores/mainModalStore';
@@ -7,6 +7,7 @@ import Search from './Search';
 import PositionInterface from '../../interface/position.interface';
 
 export default function TitleContainer() {
+  const [searchInput, setSearchInput] = useState('');
   const { openLoginModal } = mainModalStore();
   const randomEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -24,7 +25,7 @@ export default function TitleContainer() {
         <Title color="96CEB4">도란도란</Title>
       </TitleFlex>
       <Title color="ffffff">코딩해요</Title>
-      <Search />
+      <Search searchInput={searchInput} setSearchInput={setSearchInput} />
       <RandomEnter onClick={randomEnter}>로비 입장</RandomEnter>
     </Container>
   );

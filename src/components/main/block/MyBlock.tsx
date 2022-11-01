@@ -9,13 +9,21 @@ import UserStore from '../../../stores/userStore';
 import RoomDetail from '../../atoms/RoomDetail';
 import BlockDetail from './BlockDetail';
 import { ReactComponent as VerticalMenu } from '../../../assets/svg/verticalMenu.svg';
+import { ReactComponent as Lock } from '../../../assets/svg/Lock.svg';
+import blockInterface from '../../../interface/block.interface';
 
-export default function MyBlock({ data }) {
+export default React.memo(function MyBlock({
+  data,
+  openRoomPasswordModal,
+}: {
+  data: blockInterface;
+  openRoomPasswordModal: () => void;
+}) {
   const navigate = useNavigate();
   const { nickname } = UserStore();
   const [isDelete, setIsDelete] = useState(false);
 
-  const { mutate, isLoading, isError, isSuccess } = useDeleteRoom(data?.itemId);
+  const { mutate, isLoading, isError } = useDeleteRoom(data?.itemId);
 
   if (isLoading) {
     return <>loading</>;
@@ -41,15 +49,16 @@ export default function MyBlock({ data }) {
       toast.error('방이 이미 가득 찼습니다');
       return;
     }
+    if (!data.isPublic) {
+      openRoomPasswordModal();
+      return;
+    }
     navigate(`/ready/${data.itemId}`);
   };
 
   const deleteRoom = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     mutate();
-    if (isSuccess) {
-      console.log('successfully deleted room');
-    }
   };
 
   return (
@@ -61,11 +70,13 @@ export default function MyBlock({ data }) {
       <BlockDetail data={data} />
       <Entering>
         <RoomDetail data={data} />
-        <Enter onClick={enterRoom}>입장하기 →</Enter>
+        <Enter onClick={enterRoom}>
+          {!data.isPublic && <Lock />}입장하기 →
+        </Enter>
       </Entering>
     </Container>
   );
-}
+});
 
 const Delete = styled.div`
   position: absolute;

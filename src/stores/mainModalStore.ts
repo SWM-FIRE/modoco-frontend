@@ -10,6 +10,12 @@ interface Modal {
   isOpenNoticeModal: boolean;
   closeNoticeModal: () => void;
   openNoticeModal: () => void;
+  isOpenRoomPasswordModal: boolean;
+  closeRoomPasswordModal: () => void;
+  openRoomPasswordModal: () => void;
+  isLobbyModal: boolean;
+  closeLobbyModal: () => void;
+  openLobbyModal: () => void;
 }
 
 const mainModalStore = create<Modal>((set) => ({
@@ -22,6 +28,12 @@ const mainModalStore = create<Modal>((set) => ({
   isOpenNoticeModal: true,
   closeNoticeModal: () => set(() => ({ isOpenNoticeModal: false })),
   openNoticeModal: () => set(() => ({ isOpenNoticeModal: true })),
+  isOpenRoomPasswordModal: false,
+  closeRoomPasswordModal: () => set(() => ({ isOpenRoomPasswordModal: false })),
+  openRoomPasswordModal: () => set(() => ({ isOpenRoomPasswordModal: true })),
+  isLobbyModal: false,
+  closeLobbyModal: () => set(() => ({ isLobbyModal: false })),
+  openLobbyModal: () => set(() => ({ isLobbyModal: true })),
 }));
 
 export default mainModalStore;

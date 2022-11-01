@@ -9,7 +9,8 @@ import LandingPage from '../components/main/landingPage/LandingPage';
 import mainModalStore from '../stores/mainModalStore';
 
 export default function Landing() {
-  const { isOpenLoginModal } = mainModalStore();
+  const { isOpenLoginModal, openRoomPasswordModal, openLoginModal } =
+    mainModalStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +26,10 @@ export default function Landing() {
       {isOpenLoginModal && <LoginModal />}
       <Container>
         <Title />
-        <Scrolls />
+        <Scrolls
+          openLoginModal={openLoginModal}
+          openRoomPasswordModal={openRoomPasswordModal}
+        />
         <LandingPage />
       </Container>
     </>

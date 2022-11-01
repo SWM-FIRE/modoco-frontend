@@ -7,19 +7,23 @@ import useRooms from '../../hooks/useRooms';
 import { filterBlock } from './block/filterBlock';
 import { ReactComponent as LeftArrow } from '../../assets/svg/Left.svg';
 import { ReactComponent as RightArrow } from '../../assets/svg/Right.svg';
-import searchInputStore from '../../stores/searchInputStore';
 import EmptyBlock from './block/EmptyBlock';
 import { filterMyBlock } from './block/filterMyBlock';
 import MyBlock from './block/MyBlock';
 import CreateRoom from './CreateRoom';
 import MyEmptyBlock from './block/MyEmptyBlock';
 
-export default function RoomCards({
+export default React.memo(function RoomCards({
   openCreateRoom,
+  openLoginModal,
+  openRoomPasswordModal,
+  searchInput,
 }: {
   openCreateRoom: () => void;
+  openLoginModal: () => void;
+  openRoomPasswordModal: () => void;
+  searchInput: string;
 }) {
-  const { searchInput } = searchInputStore();
   const { isLoading, error, data } = useRooms();
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [numOfCards, setNumOfCards] = useState(4);
@@ -91,6 +95,7 @@ export default function RoomCards({
                   <MyBlock
                     key={data.itemId.toString().concat('my')}
                     data={data}
+                    openRoomPasswordModal={openRoomPasswordModal}
                   />
                 );
               })}
@@ -104,12 +109,20 @@ export default function RoomCards({
               <EmptyBlock key={Symbol(index).toString()} isMain={false} />
             ))
           : sortedBlock.map((data) => {
-              return <Block key={data.itemId} isMain data={data} />;
+              return (
+                <Block
+                  key={data.itemId}
+                  isMain
+                  data={data}
+                  openLoginModal={openLoginModal}
+                  openRoomPasswordModal={openRoomPasswordModal}
+                />
+              );
             })}
       </BlockContainer>
     </Container>
   );
-}
+});
 
 const Container = styled.div`
   width: 1260px;
