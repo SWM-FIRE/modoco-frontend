@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Contents from './Contents';
-import mainModalStore from '../../stores/mainModalStore';
+import useMainModal from '../../hooks/useMainModal';
 
 export default function NoticeModal() {
-  const { closeNoticeModal } = mainModalStore();
+  const { setNoticeModal } = useMainModal();
+  const closeNoticeModal = () => {
+    setNoticeModal(false);
+  };
 
   useEffect(() => {
     const noticeCheck = localStorage.getItem('noticeDate');

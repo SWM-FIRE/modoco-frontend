@@ -4,12 +4,12 @@ import { ReactComponent as X } from '../../../assets/svg/X.svg';
 import Participants from './Participants';
 import Chatting from './Chatting';
 
-export default function Lobby({ toggleModal, connectedUsers }) {
+export default function Lobby({ closeModal, connectedUsers }) {
   return (
     <ModalPortal>
-      <Outside onClick={toggleModal}>
+      <Outside onClick={closeModal}>
         <Container onClick={(e) => e.stopPropagation()}>
-          <ExitButton onClick={toggleModal}>
+          <ExitButton onClick={closeModal}>
             <X />
           </ExitButton>
           <MainArea>

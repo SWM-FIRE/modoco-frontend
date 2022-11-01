@@ -2,13 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
 import useEnterProfile from 'src/components/main/useEnterProfile';
-import mainModalStore from 'src/stores/mainModalStore';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import singleFriend from '../../../interface/singleFriend.interface';
+import useMainModal from '../../../hooks/useMainModal';
 
 export default function FriendIcon({ friend }: { friend: singleFriend }) {
   const { enterProfile } = useEnterProfile(friend?.uid);
-  const { closeProfileModal } = mainModalStore();
+  const { setProfileModal } = useMainModal();
+  const closeProfileModal = () => {
+    setProfileModal(false);
+  };
 
   const onFriendProfile = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();

@@ -18,17 +18,18 @@ export default function useCreateRoom({
     theme: '',
     newTag: '',
     tags: [],
-    isPrivate: false,
-    roomPassword: '',
+    isPublic: true,
+    password: '',
   });
-  const { title, details, total, theme, newTag, tags } = inputs;
+  const { title, details, total, theme, newTag, tags, isPublic, password } =
+    inputs;
   const { uid } = userStore((state) => state);
 
   const onChange = (e) => {
-    if (e.target.name === 'isPrivate') {
-      if (e.target.value === 'true') {
-        setInputs({ ...inputs, isPrivate: true });
-      } else setInputs({ ...inputs, isPrivate: false });
+    if (e.target.name === 'isPublic') {
+      if (e.target.value === 'false') {
+        setInputs({ ...inputs, isPublic: false });
+      } else setInputs({ ...inputs, isPublic: true, password: '' });
     } else {
       setInputs({
         ...inputs,
@@ -100,7 +101,17 @@ export default function useCreateRoom({
 
   const useRoomCreator = () => {
     const mutation = useMutation(
-      () => createRoom({ uid }, title, details, tags, Number(total), theme),
+      () =>
+        createRoom(
+          { uid },
+          title,
+          details,
+          tags,
+          Number(total),
+          theme,
+          isPublic,
+          password,
+        ),
       {
         onSuccess: () => {
           closeCreateRoom();
@@ -116,13 +127,20 @@ export default function useCreateRoom({
   };
 
   const isDisable = () => {
-    if (theme === '' || total === '' || title === '') return true;
+    if (
+      theme === '' ||
+      total === '' ||
+      title === '' ||
+      (!isPublic && password.length < 4)
+    )
+      return true;
     return false;
   };
 
   const onSubmit = () => {
     if (isDisable()) return;
     const { mutate } = useRoomCreator();
+    console.log(inputs);
     mutate();
   };
 

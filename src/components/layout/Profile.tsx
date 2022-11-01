@@ -3,17 +3,18 @@ import styled from 'styled-components';
 import media from 'src/styles/media';
 import MyAvatar from '../../assets/avatar/MyAvatar';
 import userStore from '../../stores/userStore';
-import mainModalStore from '../../stores/mainModalStore';
+import useMainModal from '../../hooks/useMainModal';
 import { ReactComponent as TopArrow } from '../../assets/svg/topArrow.svg';
 import { ReactComponent as BottomArrow } from '../../assets/svg/bottomArrow.svg';
 
 export default function Profile() {
   const { nickname, avatar } = userStore();
-  const { isOpenProfileModal, openProfileModal, openLoginModal } =
-    mainModalStore();
-
+  const { isOpenProfileModal, setProfileModal, setLoginModal } = useMainModal();
   return nickname ? (
-    <ProfileContainer onClick={openProfileModal} data-cy="main-profile">
+    <ProfileContainer
+      onClick={() => setProfileModal(true)}
+      data-cy="main-profile"
+    >
       <AvatarContainer>
         <MyAvatar num={avatar} />
       </AvatarContainer>
@@ -22,7 +23,12 @@ export default function Profile() {
       </SvgComponent>
     </ProfileContainer>
   ) : (
-    <Login onClick={openLoginModal} data-cy="main-login-button">
+    <Login
+      onClick={() => {
+        setLoginModal(true);
+      }}
+      data-cy="main-login-button"
+    >
       로그인
     </Login>
   );

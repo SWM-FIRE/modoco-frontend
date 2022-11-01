@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import mainModalStore from 'src/stores/mainModalStore';
 import useAcceptFriendRequest from 'src/hooks/friend/useAcceptFriendRequest';
 import useDeleteFriendRequest from 'src/hooks/friend/useDeleteFriendRequest';
+import useMainModal from '../../../hooks/useMainModal';
 
 export default function AcceptOrDecline({ friend }) {
-  const { closeProfileModal } = mainModalStore();
+  const { setProfileModal } = useMainModal();
+  const closeProfileModal = () => {
+    setProfileModal(false);
+  };
   const {
     mutate: acceptMutate,
     isLoading: acceptLoading,

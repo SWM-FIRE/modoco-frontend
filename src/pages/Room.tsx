@@ -20,7 +20,6 @@ import InviteModal from '../components/room/InviteModal/InviteModal';
 import CodeModal from '../components/room/codeModal/CodeModal';
 import YoutubeModal from '../components/room/youtubeModal/YoutubeModal';
 import { deleteSocket } from '../adapters/roomSocket';
-// import musicStore from '../stores/room/musicStore';
 
 export default function Room() {
   const { roomId } = useParams();

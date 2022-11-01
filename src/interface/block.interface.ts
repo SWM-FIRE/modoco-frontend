@@ -1,7 +1,7 @@
 import User from './user.interface';
 
 export default interface blockInterface {
-  isMain: boolean;
+  // isMain: boolean;
   itemId: number;
   moderator: User;
   title: string;
@@ -10,4 +10,5 @@ export default interface blockInterface {
   current: number;
   total: number;
   theme: string;
+  isPublic: boolean;
 }
