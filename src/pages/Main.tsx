@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { toast } from 'react-hot-toast';
@@ -7,7 +7,7 @@ import useDirectMessage from 'src/adapters/useDirectMessage';
 import { themeFire } from '../styles/theme';
 import RoomCards from '../components/main/RoomCards';
 import CreateRoomModal from '../components/main/createRoomModal/CreateRoomModal';
-import mainModalStore from '../stores/mainModalStore';
+import useMainModal from '../hooks/useMainModal';
 import RoomPasswordModal from '../components/main/roomPasswordModal/RoomPasswordModal';
 import Lobby from '../components/main/lobby/Lobby';
 import connectedLobbyUsers from '../stores/connectedLobbyUsers';
@@ -28,16 +28,35 @@ import { getMe, getUser } from '../api/main';
 export default function Main() {
   const navigate = useNavigate();
   const [isCreateRoomModal, setIsCreateRoomModal] = useState(false);
+  const [roomId, setRoomId] = useState(-1);
   const [searchInput, setSearchInput] = useState('');
   const {
-    openLoginModal,
-    openRoomPasswordModal,
-    closeRoomPasswordModal,
+    setLoginModal,
+    setRoomPasswordModal,
     isOpenRoomPasswordModal,
     isLobbyModal,
-    closeLobbyModal,
-    openLobbyModal,
-  } = mainModalStore();
+    setLobbyModal,
+  } = useMainModal();
+
+  const openLobbyModal = useCallback(() => {
+    setLobbyModal(true);
+  }, [setLobbyModal]);
+
+  const closeRoomPasswordModal = useCallback(() => {
+    setRoomPasswordModal(false);
+  }, [setRoomPasswordModal]);
+
+  const openRoomPasswordModal = useCallback(() => {
+    setRoomPasswordModal(true);
+  }, [setRoomPasswordModal]);
+
+  const closeLobbyModal = useCallback(() => {
+    setLobbyModal(false);
+  }, [setLobbyModal]);
+
+  const openLoginModal = useCallback(() => {
+    setLoginModal(true);
+  }, [setLoginModal]);
 
   const [showInvite, setShowInvite] = useState<boolean>(false);
   const inviteCode = localStorage.getItem('inviteId');
@@ -125,7 +144,10 @@ export default function Main() {
         <CreateRoomModal closeCreateRoom={closeCreateRoom} />
       )}
       {isOpenRoomPasswordModal && (
-        <RoomPasswordModal closeModal={closeRoomPasswordModal} />
+        <RoomPasswordModal
+          roomId={roomId}
+          closeModal={closeRoomPasswordModal}
+        />
       )}
       {isLobbyModal && (
         <Lobby closeModal={closeLobbyModal} connectedUsers={connectedUsers} />
@@ -144,6 +166,7 @@ export default function Main() {
           openRoomPasswordModal={openRoomPasswordModal}
           openLoginModal={openLoginModal}
           searchInput={searchInput}
+          setRoomId={setRoomId}
         />
       </Container>
     </ThemeProvider>

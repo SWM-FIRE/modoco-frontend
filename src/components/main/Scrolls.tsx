@@ -30,6 +30,7 @@ export default function Scrolls({ openLoginModal, openRoomPasswordModal }) {
                   data={data}
                   openRoomPasswordModal={openRoomPasswordModal}
                   openLoginModal={openLoginModal}
+                  setRoomId={null}
                 />
               );
             })}

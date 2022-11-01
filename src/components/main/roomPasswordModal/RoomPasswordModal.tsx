@@ -1,16 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as X } from '../../../assets/svg/X.svg';
+import roomSocket, { generateSocket } from '../../../adapters/roomSocket';
 
-export default function RoomPasswordModal({ closeModal }) {
+export default React.memo(function RoomPasswordModal({
+  roomId,
+  closeModal,
+}: {
+  roomId: number;
+  closeModal: () => void;
+}) {
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (roomSocket.socket === null) {
+      generateSocket();
+    }
+    roomSocket.socket?.on(
+      'canJoinRoom',
+      ({ canJoinRoom }: { canJoinRoom: boolean }) => {
+        if (canJoinRoom) {
+          closeModal();
+          navigate(`/ready/${roomId}`);
+        } else {
+          toast.error('비밀번호를 확인해주세요');
+        }
+      },
+    );
+  }, [closeModal, navigate, roomId]);
   const onChange = (event) => {
     setPassword(event.target.value);
   };
-  const onSubmit = (event) => {
-    event.preventDefault();
-    closeModal();
-  };
+  const onSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      roomSocket.socket?.emit('canJoinRoom', {
+        room: roomId.toString(),
+        password,
+      });
+    },
+    [password, roomId],
+  );
   const isDisabled = () => {
     if (password.length === 4) {
       return false;
@@ -44,7 +76,7 @@ export default function RoomPasswordModal({ closeModal }) {
       </ModalBox>
     </ModalBackground>
   );
-}
+});
 
 const ModalController = styled.div`
   width: 100%;

@@ -6,12 +6,19 @@ import Title from '../components/main/TitleContainer';
 import LoginModal from '../components/login/LoginModal';
 import { getMe } from '../api/main';
 import LandingPage from '../components/main/landingPage/LandingPage';
-import mainModalStore from '../stores/mainModalStore';
+import useMainModal from '../hooks/useMainModal';
 
 export default function Landing() {
-  const { isOpenLoginModal, openRoomPasswordModal, openLoginModal } =
-    mainModalStore();
+  const { isOpenLoginModal, setRoomPasswordModal, setLoginModal } =
+    useMainModal();
   const navigate = useNavigate();
+  const openLoginModal = () => {
+    setLoginModal(true);
+  };
+
+  const openRoomPasswordModal = () => {
+    setRoomPasswordModal(true);
+  };
 
   useEffect(() => {
     getMe().then((res) => {

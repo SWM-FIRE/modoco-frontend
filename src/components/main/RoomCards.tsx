@@ -18,11 +18,13 @@ export default React.memo(function RoomCards({
   openLoginModal,
   openRoomPasswordModal,
   searchInput,
+  setRoomId,
 }: {
   openCreateRoom: () => void;
   openLoginModal: () => void;
   openRoomPasswordModal: () => void;
   searchInput: string;
+  setRoomId: (_id: number) => void;
 }) {
   const { isLoading, error, data } = useRooms();
   const [activeItemIndex, setActiveItemIndex] = useState(0);
@@ -96,6 +98,7 @@ export default React.memo(function RoomCards({
                     key={data.itemId.toString().concat('my')}
                     data={data}
                     openRoomPasswordModal={openRoomPasswordModal}
+                    setRoomId={setRoomId}
                   />
                 );
               })}
@@ -116,6 +119,7 @@ export default React.memo(function RoomCards({
                   data={data}
                   openLoginModal={openLoginModal}
                   openRoomPasswordModal={openRoomPasswordModal}
+                  setRoomId={setRoomId}
                 />
               );
             })}

@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
 import { useNavigate } from 'react-router-dom';
-import mainModalStore from 'src/stores/mainModalStore';
 import friendSocket, { recvDirectMessage } from 'src/adapters/friendSocket';
 import directMessageStore from 'src/stores/directMessageStore';
 import UserStore from '../../stores/userStore';
+import useMainModal from '../../hooks/useMainModal';
 import Profile from './Profile';
 import HeaderProfileModal from '../headerProfile/HeaderProfileModal';
 import useSetSelf from '../../hooks/useSetSelf';
@@ -14,7 +14,7 @@ import ModocoLogo from '../atoms/ModocoLogo';
 export default function Header() {
   const { uid, isLogin } = UserStore();
   const navigate = useNavigate();
-  const { isOpenProfileModal, closeProfileModal } = mainModalStore();
+  const { isOpenProfileModal, setProfileModal } = useMainModal();
   const { appendMessage } = directMessageStore();
 
   useSetSelf();
@@ -34,7 +34,7 @@ export default function Header() {
 
   return (
     <>
-      {isOpenProfileModal && <Screen onClick={closeProfileModal} />}
+      {isOpenProfileModal && <Screen onClick={() => setProfileModal(false)} />}
       <Container>
         <ModocoLogo event={clickLogo} />
         {isLogin ? <Profile /> : <ProfileSkeleton />}
