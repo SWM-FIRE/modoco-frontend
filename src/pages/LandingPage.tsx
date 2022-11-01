@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Scrolls from '../components/main/Scrolls';
@@ -7,18 +7,24 @@ import LoginModal from '../components/login/LoginModal';
 import { getMe } from '../api/main';
 import LandingPage from '../components/main/landingPage/LandingPage';
 import useMainModal from '../hooks/useMainModal';
+import loginModalStore from '../stores/loginModalStore';
 
 export default function Landing() {
-  const { isOpenLoginModal, setRoomPasswordModal, setLoginModal } =
-    useMainModal();
+  const { setRoomPasswordModal } = useMainModal();
+  const { isOpenLoginModal, setLoginModal } = loginModalStore();
   const navigate = useNavigate();
-  const openLoginModal = () => {
-    setLoginModal(true);
-  };
 
-  const openRoomPasswordModal = () => {
+  const openLoginModal = useCallback(() => {
+    setLoginModal(true);
+  }, [setLoginModal]);
+
+  const closeLoginModal = useCallback(() => {
+    setLoginModal(false);
+  }, [setLoginModal]);
+
+  const openRoomPasswordModal = useCallback(() => {
     setRoomPasswordModal(true);
-  };
+  }, [setRoomPasswordModal]);
 
   useEffect(() => {
     getMe().then((res) => {
@@ -26,11 +32,11 @@ export default function Landing() {
         navigate('/main');
       }
     });
-  }, []);
+  }, [navigate]);
 
   return (
     <>
-      {isOpenLoginModal && <LoginModal />}
+      {isOpenLoginModal && <LoginModal closeLoginModal={closeLoginModal} />}
       <Container>
         <Title />
         <Scrolls

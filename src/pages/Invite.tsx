@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import useMe from 'src/hooks/useMe';
@@ -5,14 +6,20 @@ import { AxiosError } from 'axios';
 import LoginModal from '../components/login/LoginModal';
 import Screen from '../components/invite/Screen';
 import RoomDetail from '../components/invite/RoomDetail';
+import loginModalStore from '../stores/loginModalStore';
 
 export default function Invite() {
   const { inviteId } = useParams();
   const navigate = useNavigate();
+  const { setLoginModal } = loginModalStore();
   const token = localStorage.getItem('access_token');
 
   localStorage.setItem('inviteId', inviteId);
   const { isLoading, error, data } = useMe();
+
+  const closeLoginModal = useCallback(() => {
+    setLoginModal(false);
+  }, [setLoginModal]);
 
   // loading to fetch
   if (isLoading) return <Container />;
@@ -30,7 +37,7 @@ export default function Invite() {
     }
     return (
       <Container>
-        <LoginModal />
+        <LoginModal closeLoginModal={closeLoginModal} />
         <Main>
           <Screen />
           <RoomDetail />

@@ -6,13 +6,8 @@ import Auths from './Auths';
 import { ReactComponent as X } from '../../assets/svg/X.svg';
 import ModalTitle from './ModalTitle';
 import UserInput from './UserInput';
-import useMainModal from '../../hooks/useMainModal';
 
-export default function LoginModal() {
-  const { setLoginModal } = useMainModal();
-  const closeLoginModal = () => {
-    setLoginModal(false);
-  };
+export default function LoginModal({ closeLoginModal }) {
   return (
     <ModalBackground onClick={closeLoginModal} data-cy="main-login-outer">
       <ModalBox

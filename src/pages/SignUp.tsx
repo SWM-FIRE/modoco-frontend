@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 import SignUpForm from '../components/signUp/SignUpForm';
-import useMainModal from '../hooks/useMainModal';
 import LoginModal from '../components/login/LoginModal';
+import loginModalStore from '../stores/loginModalStore';
 
 export default function SignUp() {
-  const { isOpenLoginModal } = useMainModal();
+  const { isOpenLoginModal, setLoginModal } = loginModalStore();
+  const closeLoginModal = () => {
+    setLoginModal(false);
+  };
   return (
     <>
       <Component>
         <SignUpForm />
       </Component>
-      {isOpenLoginModal && <LoginModal />}
+      {isOpenLoginModal && <LoginModal closeLoginModal={closeLoginModal} />}
     </>
   );
 }

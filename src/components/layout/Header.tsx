@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
 import { useNavigate } from 'react-router-dom';
@@ -10,12 +10,26 @@ import Profile from './Profile';
 import HeaderProfileModal from '../headerProfile/HeaderProfileModal';
 import useSetSelf from '../../hooks/useSetSelf';
 import ModocoLogo from '../atoms/ModocoLogo';
+import loginModalStore from '../../stores/loginModalStore';
 
 export default function Header() {
   const { uid, isLogin } = UserStore();
   const navigate = useNavigate();
   const { isOpenProfileModal, setProfileModal } = useMainModal();
+  const { setLoginModal } = loginModalStore();
   const { setMessages, messages } = directMessageStore();
+
+  const toggleProfileModal = useCallback(() => {
+    setProfileModal(!isOpenProfileModal);
+  }, [isOpenProfileModal, setProfileModal]);
+
+  const openLoginModal = useCallback(() => {
+    setLoginModal(true);
+  }, [setLoginModal]);
+
+  const closeProfileModal = useCallback(() => {
+    setProfileModal(false);
+  }, [setProfileModal]);
 
   useSetSelf();
   useEffect(() => {
@@ -23,7 +37,8 @@ export default function Header() {
     return () => {
       friendSocket.socket?.off('directMessage');
     };
-  }, [setMessages, uid, friendSocket.socket, messages]);
+  }, [setMessages, uid, messages]);
+
   const clickLogo = () => {
     if (localStorage.getItem('access_token')) {
       navigate('/main');
@@ -37,8 +52,18 @@ export default function Header() {
       {isOpenProfileModal && <Screen onClick={() => setProfileModal(false)} />}
       <Container>
         <ModocoLogo event={clickLogo} />
-        {isLogin ? <Profile /> : <ProfileSkeleton />}
-        {isOpenProfileModal && <HeaderProfileModal />}
+        {isLogin ? (
+          <Profile
+            isOpenProfileModal={isOpenProfileModal}
+            toggleProfileModal={toggleProfileModal}
+            openLoginModal={openLoginModal}
+          />
+        ) : (
+          <ProfileSkeleton />
+        )}
+        {isOpenProfileModal && (
+          <HeaderProfileModal closeProfileModal={closeProfileModal} />
+        )}
       </Container>
     </>
   );
