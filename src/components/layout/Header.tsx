@@ -15,15 +15,15 @@ export default function Header() {
   const { uid, isLogin } = UserStore();
   const navigate = useNavigate();
   const { isOpenProfileModal, setProfileModal } = useMainModal();
-  const { appendMessage } = directMessageStore();
+  const { setMessages, messages } = directMessageStore();
 
   useSetSelf();
   useEffect(() => {
-    recvDirectMessage(appendMessage, uid);
+    recvDirectMessage(setMessages, uid, messages);
     return () => {
       friendSocket.socket?.off('directMessage');
     };
-  }, [appendMessage, uid, friendSocket.socket]);
+  }, [setMessages, uid, friendSocket.socket, messages]);
   const clickLogo = () => {
     if (localStorage.getItem('access_token')) {
       navigate('/main');

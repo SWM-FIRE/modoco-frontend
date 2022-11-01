@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import create from 'zustand';
+import { newMessageInterface } from 'src/interface/directMessage.interface';
 
 export interface message {
   from: number;
@@ -9,15 +10,21 @@ export interface message {
 }
 
 interface directMessage {
-  messages: { [key: string]: message[] };
+  messages: { [key: string]: newMessageInterface[] };
   setMessages: ({
     uid,
     messages,
   }: {
     uid: number;
-    messages: message[];
+    messages: newMessageInterface[];
   }) => void;
-  appendMessage: ({ uid, message }: { uid: number; message: message }) => void;
+  appendMessage: ({
+    uid,
+    message,
+  }: {
+    uid: number;
+    message: newMessageInterface;
+  }) => void;
 }
 
 const directMessageStore = create<directMessage>((set, get) => ({
@@ -34,7 +41,7 @@ const directMessageStore = create<directMessage>((set, get) => ({
     set((state) => ({
       messages: {
         ...state.messages,
-        [by.uid]: [...state.messages[by.uid], by.message],
+        [by.uid]: [by.message, ...state.messages[by.uid]],
       },
     }));
   },
