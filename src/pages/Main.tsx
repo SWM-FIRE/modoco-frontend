@@ -24,6 +24,7 @@ import {
 import onChatMessage from '../adapters/receiveMessage';
 import { ReactComponent as MainFire } from '../assets/svg/MainFire.svg';
 import { getMe, getUser } from '../api/main';
+import loginModalStore from '../stores/loginModalStore';
 
 export default function Main() {
   const navigate = useNavigate();
@@ -31,12 +32,12 @@ export default function Main() {
   const [roomId, setRoomId] = useState(-1);
   const [searchInput, setSearchInput] = useState('');
   const {
-    setLoginModal,
     setRoomPasswordModal,
     isOpenRoomPasswordModal,
     isLobbyModal,
     setLobbyModal,
   } = useMainModal();
+  const { setLoginModal } = loginModalStore();
 
   const openLobbyModal = useCallback(() => {
     setLobbyModal(true);

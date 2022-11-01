@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import useMainModal from '../../hooks/useMainModal';
+import loginModalStore from '../../stores/loginModalStore';
 import vectors from '../atoms/Vectors';
 import Search from './Search';
 import PositionInterface from '../../interface/position.interface';
 
 export default function TitleContainer() {
   const [searchInput, setSearchInput] = useState('');
-  const { setLoginModal } = useMainModal();
+  const { setLoginModal } = loginModalStore();
   const randomEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setLoginModal(true);
