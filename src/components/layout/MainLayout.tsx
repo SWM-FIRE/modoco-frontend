@@ -2,9 +2,9 @@ import React from 'react';
 import { ReactChannelIO } from 'react-channel-plugin';
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import mainModalStore from 'src/stores/mainModalStore';
 import chattingModalStore from 'src/stores/chattingModalStore';
 import Header from './Header';
+import useMainModal from '../../hooks/useMainModal';
 import Footer from './Footer';
 import userStore from '../../stores/userStore';
 import NoticeModal from '../notice/NoticeModal';
@@ -12,7 +12,7 @@ import ChattingModal from '../atoms/chattingModal/ChattingModal';
 
 export default function MainLayout() {
   const { uid, nickname } = userStore();
-  const { isOpenNoticeModal } = mainModalStore();
+  const { isOpenNoticeModal } = useMainModal();
   const profile = uid
     ? {
         email: localStorage.getItem('email'),

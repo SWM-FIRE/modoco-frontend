@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as MessageSend } from '../../../assets/svg/MessageSend.svg';
 import roomSocket from '../../../adapters/roomSocket';
-import lobbySocket from '../../../adapters/lobbySocket';
+import { lobbySocket } from '../../../adapters/lobbySocket';
 
 export default function SendChat({
   roomId,

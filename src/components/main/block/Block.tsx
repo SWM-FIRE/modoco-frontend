@@ -1,39 +1,65 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import mainModalStore from 'src/stores/mainModalStore';
 import UserStore from '../../../stores/userStore';
 import MyAvatar from '../../../assets/avatar/MyAvatar';
 import RoomDetail from '../../atoms/RoomDetail';
 import BlockDetail from './BlockDetail';
 import useEnterProfile from '../useEnterProfile';
+import { ReactComponent as Lock } from '../../../assets/svg/Lock.svg';
+import blockInterface from '../../../interface/block.interface';
 
-export default function Block({ isMain, data }) {
+export default React.memo(function Block({
+  isMain,
+  data,
+  openLoginModal,
+  openRoomPasswordModal,
+  setRoomId,
+}: {
+  isMain: boolean;
+  data: blockInterface;
+  openLoginModal: () => void;
+  openRoomPasswordModal: () => void;
+  setRoomId: (_id: number) => void | null;
+}) {
   const navigate = useNavigate();
   const { nickname } = UserStore();
   const { enterProfile } = useEnterProfile(data?.moderator.uid);
-  const { openLoginModal } = mainModalStore();
 
-  const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (!nickname) {
-      openLoginModal();
-      return;
-    }
-    if (isMobile) {
-      toast.error('모바일에서는 접속이 불가능합니다');
-      return;
-    }
-    if (data.current === data.total) {
-      toast.error('방이 이미 가득 찼습니다');
-      return;
-    }
-
-    navigate(`/ready/${data.itemId}`);
-  };
+  const enterRoom = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      if (!nickname) {
+        openLoginModal();
+        return;
+      }
+      if (isMobile) {
+        toast.error('모바일에서는 접속이 불가능합니다');
+        return;
+      }
+      if (data.current === data.total) {
+        toast.error('방이 이미 가득 찼습니다');
+        return;
+      }
+      if (!data.isPublic) {
+        openRoomPasswordModal();
+        setRoomId(data.itemId);
+        return;
+      }
+      navigate(`/ready/${data.itemId}`);
+    },
+    [
+      data,
+      navigate,
+      nickname,
+      openLoginModal,
+      openRoomPasswordModal,
+      setRoomId,
+    ],
+  );
   return (
     <Container main={isMain} data-cy="main-room-cards">
       <AvatarContainer data-cy="main-room-moderator" onClick={enterProfile}>
@@ -46,12 +72,13 @@ export default function Block({ isMain, data }) {
       <Entering data-cy="main-room-entering">
         <RoomDetail data={data} />
         <Enter onClick={enterRoom} data-cy="main-room-enter">
+          {!data.isPublic && <Lock />}
           입장하기 →
         </Enter>
       </Entering>
     </Container>
   );
-}
+});
 
 const Entering = styled.div`
   display: flex;

@@ -2,13 +2,19 @@ import styled from 'styled-components';
 import chattingModalStore from 'src/stores/chattingModalStore';
 import useUser from 'src/hooks/useUser';
 import MyAvatar from 'src/assets/avatar/MyAvatar';
+import userStore from 'src/stores/userStore';
+import directMessageStore from 'src/stores/directMessageStore';
 import ChattingPortal from './ChattingPortal';
 import SendChat from './SendChat';
+import SingleDirectChat from './SingleDirectChat';
 import { ReactComponent as Close } from '../../../assets/svg/X.svg';
 
 export default function ChattingModal() {
   const { closeChattingModal, chattingFriend } = chattingModalStore();
   const { isLoading, error, data } = useUser(Number(chattingFriend));
+  const { messages } = directMessageStore();
+  const { uid } = userStore();
+
   if (isLoading)
     return (
       <ChattingPortal>
@@ -47,7 +53,20 @@ export default function ChattingModal() {
               {data?.nickname}
             </Avatar>
           </Header>
-          <Content>{chattingFriend}</Content>
+          <Content>
+            {Array.isArray(messages[data.uid]) && messages[data.uid].length > 0
+              ? messages[data.uid].map((singleChat, index) => {
+                  return (
+                    <SingleDirectChat
+                      key={Symbol(index).toString()}
+                      singleChat={singleChat}
+                      target={data}
+                      me={uid}
+                    />
+                  );
+                })
+              : null}
+          </Content>
           <Footer>
             <SendChat uid={data?.uid} />
           </Footer>
@@ -97,6 +116,10 @@ const Header = styled.div`
 const Content = styled.div`
   width: 100%;
   flex-grow: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-bottom: 2rem;
 `;
 
 const Footer = styled.div`
@@ -112,7 +135,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  background-color: #23262f;
+  background-color: #1e1e22;
   padding: 2rem;
   border-radius: 1rem;
 `;

@@ -41,14 +41,14 @@ export default function ReadyPage() {
     }
     if (localStorage.getItem('access_token') && !userMediaStream) {
       createAll();
-    } else {
+    } else if (!localStorage.getItem('access_token')) {
       navigate('/');
       window.location.reload();
     }
     if (!roomSocket.socket) {
       generateSocket();
     }
-  }, []);
+  }, [createAll, navigate, roomId, userMediaStream]);
 
   useSetSelf();
 

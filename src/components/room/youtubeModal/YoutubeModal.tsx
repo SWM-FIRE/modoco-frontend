@@ -35,7 +35,6 @@ export default function YoutubeModal({ roomId }: { roomId: string }) {
     initSocketConnection();
     joinYoutube(roomId);
     const addVideoFunc = (data) => {
-      console.log(data);
       data.playlist.map((item) =>
         setPlaylist((playlist) => [...playlist, item.video]),
       );
@@ -133,7 +132,6 @@ const SearchList = styled.div`
   flex-grow: 1;
   overflow: scroll;
   margin-top: 1rem;
-
   ::-webkit-scrollbar {
     display: none;
   }

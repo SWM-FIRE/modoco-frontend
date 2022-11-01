@@ -3,7 +3,7 @@ import connectedUsersStore from 'src/stores/room/connectedUsersStore';
 import messageStore from 'src/stores/room/messagesStore';
 import lobbyMessageStore from 'src/stores/lobbyMessageStore';
 import roomSocket from './roomSocket';
-import lobbySocket from './lobbySocket';
+import { lobbySocket } from './lobbySocket';
 
 const getSocketData = (roomId: string) => {
   const { connectedUsers: roomConnected } = connectedUsersStore();

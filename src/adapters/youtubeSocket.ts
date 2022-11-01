@@ -3,10 +3,12 @@ import { API } from '../config';
 import youtubeSearch from '../interface/youtubeSearch.interface';
 
 const youtubeSocket = {
-  socket: io(`${API.YOUTUBE_PLAYLIST as string}`, {
-    transports: ['websocket', 'polling'],
-    query: { token: localStorage.getItem('access_token') },
-  }),
+  socket: localStorage.getItem('access_token')
+    ? io(`${API.YOUTUBE_PLAYLIST as string}`, {
+        transports: ['websocket', 'polling'],
+        query: { token: localStorage.getItem('access_token') },
+      })
+    : null,
 };
 
 const generateYoutubeSocket = () => {

@@ -5,6 +5,7 @@ const ROOM = '/rooms/';
 const SESSION = '/session/';
 const SOCKET_ROOM = '/socket/room/';
 const SOCKET_LOBBY = '/socket/lobby/';
+const SOCKET_FRIEND = '/socket/room/';
 const ME = 'me/';
 const RECORDS = '/records/';
 const KAKAO = '/auth/kakao/';
@@ -21,6 +22,7 @@ export const API = {
   BASE_URL: `${BASE_URL}`,
   SOCKET_ROOM: `${BASE_URL}${SOCKET_ROOM}`,
   SOCKET_LOBBY: `${BASE_URL}${SOCKET_LOBBY}`,
+  SOCKET_FRIEND: `${BASE_URL}${SOCKET_FRIEND}`,
   ROOM: `${BASE_URL}${API_VER}${ROOM}`,
   USER: `${BASE_URL}${API_VER}${USER}`,
   SESSION: `${BASE_URL}${API_VER}${SESSION}`,

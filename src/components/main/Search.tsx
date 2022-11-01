@@ -2,11 +2,14 @@ import React from 'react';
 import media from 'src/styles/media';
 import styled from 'styled-components';
 import SearchIcon from '../../assets/svg/Search';
-import searchInputStore from '../../stores/searchInputStore';
 
-export default function Search() {
-  const { searchInput, setSearchInput } = searchInputStore();
-
+export default function Search({
+  setSearchInput,
+  searchInput,
+}: {
+  setSearchInput: (_value: string) => void;
+  searchInput: string;
+}) {
   const changeSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
   };

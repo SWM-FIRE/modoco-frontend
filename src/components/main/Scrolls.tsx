@@ -9,7 +9,7 @@ import { filterBlock } from './block/filterBlock';
 import TagStore from '../../stores/searchInputStore';
 import EmptyBlock from './block/EmptyBlock';
 
-export default function Scrolls() {
+export default function Scrolls({ openLoginModal, openRoomPasswordModal }) {
   const { isLoading, error, data } = useRooms();
   const { searchInput } = TagStore();
   if (error) return <div>An error has occurred: </div>;
@@ -23,7 +23,16 @@ export default function Scrolls() {
               <EmptyBlock key={Symbol(index).toString()} isMain={false} />
             ))
           : filteredBlock.map((data) => {
-              return <Block key={data.itemId} isMain={false} data={data} />;
+              return (
+                <Block
+                  key={data.itemId}
+                  isMain={false}
+                  data={data}
+                  openRoomPasswordModal={openRoomPasswordModal}
+                  openLoginModal={openLoginModal}
+                  setRoomId={null}
+                />
+              );
             })}
       </ScrollMenu>
     </Container>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
@@ -9,13 +9,47 @@ import UserStore from '../../../stores/userStore';
 import RoomDetail from '../../atoms/RoomDetail';
 import BlockDetail from './BlockDetail';
 import { ReactComponent as VerticalMenu } from '../../../assets/svg/verticalMenu.svg';
+import { ReactComponent as Lock } from '../../../assets/svg/Lock.svg';
+import blockInterface from '../../../interface/block.interface';
 
-export default function MyBlock({ data }) {
+export default React.memo(function MyBlock({
+  data,
+  openRoomPasswordModal,
+  setRoomId,
+}: {
+  data: blockInterface;
+  openRoomPasswordModal: () => void;
+  setRoomId: (_id: number) => void;
+}) {
   const navigate = useNavigate();
   const { nickname } = UserStore();
   const [isDelete, setIsDelete] = useState(false);
 
-  const { mutate, isLoading, isError, isSuccess } = useDeleteRoom(data?.itemId);
+  const { mutate, isLoading, isError } = useDeleteRoom(Number(data?.itemId));
+  const enterRoom = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      if (!nickname) {
+        toast.error('로그인이 필요합니다');
+        return;
+      }
+      if (isMobile) {
+        toast.error('모바일에서는 접속이 불가능합니다');
+        return;
+      }
+      if (data.current === data.total) {
+        toast.error('방이 이미 가득 찼습니다');
+        return;
+      }
+      if (!data.isPublic) {
+        setRoomId(data.itemId);
+        openRoomPasswordModal();
+        return;
+      }
+      navigate(`/ready/${data.itemId}`);
+    },
+    [data, navigate, nickname, openRoomPasswordModal, setRoomId],
+  );
 
   if (isLoading) {
     return <>loading</>;
@@ -27,29 +61,9 @@ export default function MyBlock({ data }) {
     setIsDelete(!isDelete);
   };
 
-  const enterRoom = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    if (!nickname) {
-      toast.error('로그인이 필요합니다');
-      return;
-    }
-    if (isMobile) {
-      toast.error('모바일에서는 접속이 불가능합니다');
-      return;
-    }
-    if (data.current === data.total) {
-      toast.error('방이 이미 가득 찼습니다');
-      return;
-    }
-    navigate(`/ready/${data.itemId}`);
-  };
-
   const deleteRoom = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
     mutate();
-    if (isSuccess) {
-      console.log('successfully deleted room');
-    }
   };
 
   return (
@@ -61,11 +75,13 @@ export default function MyBlock({ data }) {
       <BlockDetail data={data} />
       <Entering>
         <RoomDetail data={data} />
-        <Enter onClick={enterRoom}>입장하기 →</Enter>
+        <Enter onClick={enterRoom}>
+          {!data.isPublic && <Lock />}입장하기 →
+        </Enter>
       </Entering>
     </Container>
   );
-}
+});
 
 const Delete = styled.div`
   position: absolute;

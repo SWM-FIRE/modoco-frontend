@@ -76,6 +76,8 @@ const createRoom = (
   tags: string[],
   total: number,
   theme: string,
+  isPublic: boolean,
+  password: string,
 ) => {
   const room = {
     moderator,
@@ -84,6 +86,8 @@ const createRoom = (
     tags,
     total,
     theme,
+    isPublic,
+    password,
   };
   return authorizationRequest.post(API.ROOM, room);
 };

@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import { sendDirectMessage } from 'src/adapters/friendSocket';
 import { ReactComponent as MessageSend } from '../../../assets/svg/MessageSend.svg';
 
 export default function SendChat({ uid }: { uid: number }) {
@@ -8,7 +10,7 @@ export default function SendChat({ uid }: { uid: number }) {
 
   const onMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     event.preventDefault();
-    setNewMessage(() => event.target.value);
+    setNewMessage(event.target.value);
     autoGrow();
   };
 
@@ -18,16 +20,14 @@ export default function SendChat({ uid }: { uid: number }) {
       inputRef.current.style.height = inputRef.current.scrollHeight
         .toString()
         .concat('px');
-      console.log(inputRef.current.style.height);
     }
   };
 
   const onSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (newMessage.trim() === '') return;
-    console.log('send to', uid, newMessage);
-    // emit
-    setNewMessage(() => '');
+    sendDirectMessage(newMessage, uid);
+    setNewMessage('');
     if (inputRef.current) {
       inputRef.current.style.height = '2rem';
     }

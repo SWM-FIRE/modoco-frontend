@@ -13,7 +13,7 @@ import EditNickname from './EditNickname';
 import EditDescription from './EditDescription';
 import UserStore from '../../../stores/userStore';
 import EditLinks from './EditLinks';
-import lobbySocket, { deleteSocket } from '../../../adapters/lobbySocket';
+import { leaveLobby } from '../../../adapters/lobbySocket';
 
 export default function EditUserProfile({ setIsEdit, isModal }) {
   const navigate = useNavigate();
@@ -50,8 +50,7 @@ export default function EditUserProfile({ setIsEdit, isModal }) {
   };
 
   const onLogOut = () => {
-    lobbySocket.socket?.emit('leaveLobby');
-    deleteSocket();
+    leaveLobby();
     localStorage.removeItem('access_token');
     setClear();
     toast.success('로그아웃 되었습니다');

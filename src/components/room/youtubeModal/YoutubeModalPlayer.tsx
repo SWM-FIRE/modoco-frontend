@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import ReactPlayer from 'react-player/youtube';
 import youtubeSearch from '../../../interface/youtubeSearch.interface';
@@ -12,10 +12,14 @@ export default function YoutubeModalPlayer({
   nowPlaying: number;
   setNowPlaying: React.Dispatch<React.SetStateAction<number>>;
 }) {
+  const playerRef = useRef(null);
+  const [volume, setVolume] = useState(0.5);
   const list = playlist.map((item) => item.id.videoId);
-
   const onEnded = () => {
     setNowPlaying((nowPlaying + 1) % playlist.length);
+    if (playerRef.current) {
+      setVolume(playerRef.current.getInternalPlayer().getVolume() / 100);
+    }
   };
 
   if (playlist.length === 0) {
@@ -24,6 +28,7 @@ export default function YoutubeModalPlayer({
 
   return (
     <ReactPlayer
+      ref={playerRef}
       url={`https://www.youtube.com/watch?v=${list[nowPlaying]}`}
       playing
       // eslint-disable-next-line react/jsx-boolean-value
@@ -31,7 +36,7 @@ export default function YoutubeModalPlayer({
       loop={playlist.length === 1}
       width="62%"
       height="100%"
-      volume={0.1}
+      volume={volume}
       onEnded={onEnded}
     />
   );

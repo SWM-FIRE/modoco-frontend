@@ -1,21 +1,26 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
-import mainModalStore from '../stores/mainModalStore';
 import userStore from '../stores/userStore';
 import { login, getMe } from '../api/main';
+import useMainModal from './useMainModal';
 
 export default function useLogin() {
   const navigate = useNavigate();
   const { setNickname, setAvatar, setUid } = userStore();
-  const { closeLoginModal, openLoginModal } = mainModalStore();
+  const { setLoginModal } = useMainModal();
   const [inputs, setInputs] = useState({
     email: localStorage.getItem('email') ?? '',
     password: '',
   });
   const { email, password } = inputs;
   const [isError, setIsError] = useState(false);
-
+  const openLoginModal = () => {
+    setLoginModal(true);
+  };
+  const closeLoginModal = () => {
+    setLoginModal(false);
+  };
   const onChange = (e) => {
     setIsError(false);
     setInputs({
@@ -37,6 +42,8 @@ export default function useLogin() {
         localStorage.setItem('access_token', result.data.access_token);
         getMe()
           .then((res) => {
+            // reload to resolve socket bog
+            window.location.reload();
             setNickname(res.data.nickname);
             setAvatar(res.data.avatar);
             setUid(res.data.uid);

@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import mainModalStore from 'src/stores/mainModalStore';
 import { useNavigate } from 'react-router-dom';
+import friendSocket, { recvDirectMessage } from 'src/adapters/friendSocket';
+import directMessageStore from 'src/stores/directMessageStore';
 import UserStore from '../../stores/userStore';
+import useMainModal from '../../hooks/useMainModal';
 import Profile from './Profile';
 import HeaderProfileModal from '../headerProfile/HeaderProfileModal';
 import useSetSelf from '../../hooks/useSetSelf';
 import ModocoLogo from '../atoms/ModocoLogo';
 
 export default function Header() {
-  const { isLogin } = UserStore();
+  const { uid, isLogin } = UserStore();
   const navigate = useNavigate();
-  const { isOpenProfileModal, closeProfileModal } = mainModalStore();
+  const { isOpenProfileModal, setProfileModal } = useMainModal();
+  const { setMessages, messages } = directMessageStore();
 
   useSetSelf();
+  useEffect(() => {
+    recvDirectMessage(setMessages, uid, messages);
+    return () => {
+      friendSocket.socket?.off('directMessage');
+    };
+  }, [setMessages, uid, friendSocket.socket, messages]);
   const clickLogo = () => {
     if (localStorage.getItem('access_token')) {
       navigate('/main');
@@ -25,7 +34,7 @@ export default function Header() {
 
   return (
     <>
-      {isOpenProfileModal && <Screen onClick={closeProfileModal} />}
+      {isOpenProfileModal && <Screen onClick={() => setProfileModal(false)} />}
       <Container>
         <ModocoLogo event={clickLogo} />
         {isLogin ? <Profile /> : <ProfileSkeleton />}
