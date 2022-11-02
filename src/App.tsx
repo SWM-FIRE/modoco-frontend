@@ -17,10 +17,12 @@ import Invite from './pages/Invite';
 import Error from './pages/Error';
 import Terms from './components/support/Terms';
 import Privacy from './components/support/Privacy';
+import useDirectMessage from './adapters/useDirectMessage';
 
 const queryClient = new QueryClient();
 
 function App() {
+  useDirectMessage();
   return (
     <QueryClientProvider client={queryClient}>
       <Router>

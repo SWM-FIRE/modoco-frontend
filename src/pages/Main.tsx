@@ -3,7 +3,6 @@ import styled, { ThemeProvider } from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import useDirectMessage from 'src/adapters/useDirectMessage';
 import { themeFire } from '../styles/theme';
 import RoomCards from '../components/main/RoomCards';
 import CreateRoomModal from '../components/main/createRoomModal/CreateRoomModal';
@@ -63,7 +62,6 @@ export default function Main() {
   const inviteCode = localStorage.getItem('inviteId');
   const { connectedUsers, appendUser, findUserByUid, removeUser } =
     connectedLobbyUsers();
-  useDirectMessage();
   onChatMessage('lobby');
   useEffect(() => {
     if (!localStorage.getItem('access_token')) {
