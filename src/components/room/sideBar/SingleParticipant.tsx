@@ -33,8 +33,8 @@ export default function SingleParticipant({
           moderator={moderator}
         />
       ) : null}
-      <Container>
-        <AvatarContainer onClick={toggleProfile}>
+      <Container onClick={toggleProfile}>
+        <AvatarContainer>
           <MyAvatar num={user?.avatar} />
           <MicContainer>
             {user?.enabledAudio ? <MicOn /> : <MicOff />}

@@ -3,7 +3,6 @@ import styled, { ThemeProvider } from 'styled-components';
 import { isMobile } from 'react-device-detect';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import useDirectMessage from 'src/adapters/useDirectMessage';
 import { themeFire } from '../styles/theme';
 import RoomCards from '../components/main/RoomCards';
 import CreateRoomModal from '../components/main/createRoomModal/CreateRoomModal';
@@ -63,7 +62,6 @@ export default function Main() {
   const inviteCode = localStorage.getItem('inviteId');
   const { connectedUsers, appendUser, findUserByUid, removeUser } =
     connectedLobbyUsers();
-  useDirectMessage();
   onChatMessage('lobby');
   useEffect(() => {
     if (!localStorage.getItem('access_token')) {
@@ -122,22 +120,25 @@ export default function Main() {
     onLeftLobby(leftLobby);
   }, [appendUser, findUserByUid, removeUser]);
 
-  const onLobbyEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    openLobbyModal();
-  };
+  const onLobbyEnter = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      openLobbyModal();
+    },
+    [openLobbyModal],
+  );
 
-  const openCreateRoom = () => {
+  const openCreateRoom = useCallback(() => {
     if (isMobile) {
       toast.error('모바일에서는 방을 만들 수 없습니다');
       return;
     }
     setIsCreateRoomModal(true);
-  };
+  }, []);
 
-  const closeCreateRoom = () => {
+  const closeCreateRoom = useCallback(() => {
     setIsCreateRoomModal(false);
-  };
+  }, []);
 
   return (
     <ThemeProvider theme={themeFire}>

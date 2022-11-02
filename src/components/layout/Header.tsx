@@ -1,9 +1,7 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
 import { useNavigate } from 'react-router-dom';
-import friendSocket, { recvDirectMessage } from 'src/adapters/friendSocket';
-import directMessageStore from 'src/stores/directMessageStore';
 import UserStore from '../../stores/userStore';
 import useMainModal from '../../hooks/useMainModal';
 import Profile from './Profile';
@@ -13,11 +11,10 @@ import ModocoLogo from '../atoms/ModocoLogo';
 import loginModalStore from '../../stores/loginModalStore';
 
 export default function Header() {
-  const { uid, isLogin } = UserStore();
+  const { isLogin } = UserStore();
   const navigate = useNavigate();
   const { isOpenProfileModal, setProfileModal } = useMainModal();
   const { setLoginModal } = loginModalStore();
-  const { setMessages, messages } = directMessageStore();
 
   const toggleProfileModal = useCallback(() => {
     setProfileModal(!isOpenProfileModal);
@@ -32,12 +29,6 @@ export default function Header() {
   }, [setProfileModal]);
 
   useSetSelf();
-  useEffect(() => {
-    recvDirectMessage(setMessages, uid, messages);
-    return () => {
-      friendSocket.socket?.off('directMessage');
-    };
-  }, [setMessages, uid, messages]);
 
   const clickLogo = () => {
     if (localStorage.getItem('access_token')) {

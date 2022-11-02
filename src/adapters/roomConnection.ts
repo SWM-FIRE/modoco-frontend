@@ -40,8 +40,13 @@ export const roomConnection = (roomId: string) => {
         if (!userMediaStream) {
           await createAll();
         }
-        const payload = { room: roomId, uid };
+        const payload = {
+          room: roomId,
+          uid,
+          password: localStorage.getItem(`${roomId}`),
+        };
         newSocket?.emit(SOCKET_EVENT.JOIN_ROOM, payload);
+        localStorage.removeItem(`${roomId}`);
       } else {
         console.log('[roomConnection] UID가 존재하지 않음');
         alert('잘못된 접근입니다.');
@@ -53,7 +58,12 @@ export const roomConnection = (roomId: string) => {
     joinSuccess();
 
     newSocket?.on('exception', (event) => {
-      console.log('except', event);
+      if (event.status === 'INVALID_PASSWORD') {
+        toast.error('해당 방은 비밀번호가 필요한 방입니다.');
+        navigate('/');
+        window.location.reload();
+      }
+      // console.log('except', event.status);
     });
 
     newSocket?.on(SOCKET_EVENT.JOINED_ROOM, (room) => {

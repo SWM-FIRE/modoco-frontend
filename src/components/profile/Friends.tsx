@@ -60,8 +60,9 @@ const Components = styled.div<{ isModal: boolean }>`
   position: absolute;
   right: 1rem;
   top: 0;
-  @media (max-width: ${(props) => (props.isModal ? '1700px ' : '1020px')}) {
+  @media (max-width: ${(props) => (props.isModal ? '100vw ' : '1020px')}) {
     position: static;
+    padding: 0 3.2rem;
     width: 100%;
     margin-top: 6.4rem;
   }
@@ -69,7 +70,7 @@ const Components = styled.div<{ isModal: boolean }>`
 
 const FriendComponent = styled.div<{ isModal: boolean }>`
   width: 100%;
-  @media (max-width: ${(props) => (props.isModal ? '1700px ' : '1020px')}) {
+  @media (max-width: ${(props) => (props.isModal ? '100vw ' : '1020px')}) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     max-height: 15rem;

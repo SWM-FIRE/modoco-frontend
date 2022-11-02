@@ -3,8 +3,10 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useSingleFriend from 'src/hooks/friend/useSingleFriend';
 import userStore from 'src/stores/userStore';
+import ChattingUtil from 'src/components/atoms/chattingModal/chattingUtil';
 import useKickUser from './useKickUser';
 import ProfileModalHeader from './SideProfileModalHeader';
+import { ReactComponent as SendMessageBlack } from '../../../assets/svg/SendMessageBlack.svg';
 import UserInfo from './UserInfo';
 import Buttons from './Buttons';
 import FriendButtons from './FriendButtons';
@@ -28,6 +30,7 @@ export default function SideProfileModal({
     targetUid: user?.uid,
   });
   const { uid: myUID } = userStore();
+  const { openChat } = ChattingUtil();
   const isModerator = moderator === myUID;
 
   const toggleModal = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -36,7 +39,7 @@ export default function SideProfileModal({
   };
 
   const { isLoading, error, data } = useSingleFriend(user?.uid);
-  if (isLoading) return <>loading</>;
+  if (isLoading) return null;
   if (error) return <>error</>;
 
   const isFriend = !(
@@ -58,7 +61,13 @@ export default function SideProfileModal({
             />
             {!isMe && <ControlVolume user={user} />}
             {isFriend ? (
-              <FriendButtons data={data} toggle={toggle} />
+              <>
+                <FriendButtons data={data} toggle={toggle} />
+                <Button onClick={() => openChat(user?.uid)}>
+                  <SendMessageBlack />
+                  채팅하기
+                </Button>
+              </>
             ) : (
               <Buttons isMe={isMe} toggle={toggle} uid={user.uid} />
             )}
@@ -81,6 +90,7 @@ const Screen = styled.div`
 
 const Body = styled.div`
   display: flex;
+  margin-top: -2rem;
   height: calc(100% - 2.4rem);
   flex-direction: column;
   justify-content: space-between;
@@ -97,7 +107,6 @@ const Container = styled.div`
   width: 32rem;
   background-color: #23262f;
   top: 20rem;
-
   z-index: 2;
   padding: 2rem 2.4rem 3.2rem 2.4rem;
   border-radius: 2rem;
@@ -117,4 +126,23 @@ const Kick = styled.button`
   cursor: pointer;
   border: 1px solid #fb7185;
   color: #fb7185;
+`;
+
+const Button = styled.button`
+  width: 43%;
+  font-size: 1.3rem;
+  margin-top: 1.6rem;
+  padding: 1.2rem 2rem;
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 5rem;
+  svg {
+    width: 1.6rem;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: #f5f5f5;
+  }
 `;
