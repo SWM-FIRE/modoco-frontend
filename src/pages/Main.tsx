@@ -122,22 +122,25 @@ export default function Main() {
     onLeftLobby(leftLobby);
   }, [appendUser, findUserByUid, removeUser]);
 
-  const onLobbyEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    openLobbyModal();
-  };
+  const onLobbyEnter = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      openLobbyModal();
+    },
+    [openLobbyModal],
+  );
 
-  const openCreateRoom = () => {
+  const openCreateRoom = useCallback(() => {
     if (isMobile) {
       toast.error('모바일에서는 방을 만들 수 없습니다');
       return;
     }
     setIsCreateRoomModal(true);
-  };
+  }, []);
 
-  const closeCreateRoom = () => {
+  const closeCreateRoom = useCallback(() => {
     setIsCreateRoomModal(false);
-  };
+  }, []);
 
   return (
     <ThemeProvider theme={themeFire}>
