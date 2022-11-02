@@ -18,19 +18,21 @@ export default React.memo(function RoomPasswordModal({
     if (roomSocket.socket === null) {
       generateSocket();
     }
-    roomSocket.socket?.on(
-      'canJoinRoom',
-      ({ canJoinRoom }: { canJoinRoom: boolean }) => {
+    roomSocket.socket
+      ?.off('canJoinRoom')
+      .on('canJoinRoom', ({ canJoinRoom }: { canJoinRoom: boolean }) => {
         if (canJoinRoom) {
           closeModal();
+          localStorage.setItem(roomId.toString(), password);
           navigate(`/ready/${roomId}`);
         } else {
           toast.error('비밀번호를 확인해주세요');
         }
-      },
-    );
-  }, [closeModal, navigate, roomId]);
+      });
+  }, [closeModal, navigate, roomId, password]);
+
   const onChange = (event) => {
+    event.preventDefault();
     setPassword(event.target.value);
   };
   const onSubmit = useCallback(
@@ -44,7 +46,7 @@ export default React.memo(function RoomPasswordModal({
     [password, roomId],
   );
   const isDisabled = () => {
-    if (password.length === 4) {
+    if (password?.length === 4) {
       return false;
     }
     return true;
