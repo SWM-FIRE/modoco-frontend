@@ -4,8 +4,8 @@ import userStore from 'src/stores/userStore';
 import media from 'src/styles/media';
 import UserProfile from './userProfile/UserProfile';
 import Friends from './Friends';
-import Statistics from './Statistics';
-import Overall from './Overall';
+// import Statistics from './Statistics';
+// import Overall from './Overall';
 import roomModalStore from '../../stores/room/roomModalStore';
 import EditUserProfile from './editUserProfile/EditUserProfile';
 
@@ -36,8 +36,8 @@ export default function Contents({
         )}
         {isMe && <Friends isModal={profileModal} />}
       </UserInformation>
-      <Statistics isMe={isMe} />
-      <Overall isMe={isMe} />
+      {/* <Statistics isMe={isMe} />
+      <Overall isMe={isMe} /> */}
     </Container>
   );
 }
