@@ -81,4 +81,7 @@ const Button = styled.button`
   padding: 1rem 2rem;
   font-size: 1.7rem;
   min-width: 11.7rem;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 `;

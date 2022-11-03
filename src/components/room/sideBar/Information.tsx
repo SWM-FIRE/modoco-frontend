@@ -72,6 +72,9 @@ const ControlSidebar = styled.div`
   gap: 0.9rem;
   cursor: pointer;
   z-index: 999;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 const RoomTitle = styled.div`
