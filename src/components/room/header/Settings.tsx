@@ -74,4 +74,7 @@ const Component = styled.div`
 
 const Button = styled.button`
   cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
