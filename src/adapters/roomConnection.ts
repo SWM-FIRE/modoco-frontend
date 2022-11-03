@@ -46,7 +46,6 @@ export const roomConnection = (roomId: string) => {
           password: localStorage.getItem(`${roomId}`),
         };
         newSocket?.emit(SOCKET_EVENT.JOIN_ROOM, payload);
-        localStorage.removeItem(`${roomId}`);
       } else {
         console.log('[roomConnection] UID가 존재하지 않음');
         alert('잘못된 접근입니다.');
@@ -59,11 +58,11 @@ export const roomConnection = (roomId: string) => {
 
     newSocket?.on('exception', (event) => {
       if (event.status === 'INVALID_PASSWORD') {
-        toast.error('해당 방은 비밀번호가 필요한 방입니다.');
+        alert('해당 방은 비밀번호가 필요한 방입니다.');
         navigate('/');
         window.location.reload();
       }
-      // console.log('except', event.status);
+      console.log('except', event.status);
     });
 
     newSocket?.on(SOCKET_EVENT.JOINED_ROOM, (room) => {
@@ -85,6 +84,7 @@ export const roomConnection = (roomId: string) => {
           if (user.uid === uid) {
             toast.error('이미 접속중인 유저입니다.');
             newSocket.emit('leaveRoom', { room: roomId });
+            localStorage.removeItem(`${roomId}`);
             setUsers([]);
             emptyPc();
             setMessages([]);

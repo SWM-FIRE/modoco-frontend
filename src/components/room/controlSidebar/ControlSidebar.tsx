@@ -30,4 +30,9 @@ const Container = styled.div<{ backgroundColor: string }>`
   background-color: ${({ backgroundColor }) => backgroundColor};
   cursor: pointer;
   box-shadow: 0px 4px 59px rgba(50, 50, 71, 0.3);
+  &:hover {
+    svg {
+      opacity: 0.7;
+    }
+  }
 `;

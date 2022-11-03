@@ -119,6 +119,11 @@ const VolumeControl = styled.div<{ volume: number; youtubeModal: boolean }>`
 const Volume = styled.button<{ youtubeModal: boolean }>`
   cursor: ${(props) => (props.youtubeModal ? 'default' : 'pointer')};
   margin-left: 1.4rem;
+  &:hover {
+    svg {
+      opacity: 0.7;
+    }
+  }
 `;
 
 const Container = styled.div`

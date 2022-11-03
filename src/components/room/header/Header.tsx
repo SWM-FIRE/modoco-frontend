@@ -25,6 +25,7 @@ export default function Header({ theme, youtubeModal, setYoutubeModal }) {
     const result = window.confirm('정말 모도코를 종료하시겠습니까?');
     if (result) {
       newSocket.emit('leaveRoom', { room: roomId });
+      localStorage.removeItem(`${roomId}`);
       setUsers([]);
       emptyPc();
       setMessages([]);
@@ -81,4 +82,7 @@ const Button = styled.button`
   padding: 1rem 2rem;
   font-size: 1.7rem;
   min-width: 11.7rem;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 `;

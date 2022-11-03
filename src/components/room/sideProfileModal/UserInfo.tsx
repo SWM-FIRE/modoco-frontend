@@ -59,10 +59,13 @@ const Container = styled.div`
   height: 4.8rem;
   display: flex;
   align-items: center;
+  width: fit-content;
   gap: 1.2rem;
-  width: 100%;
   font-weight: 500;
   font-size: 2.4rem;
   line-height: 3.6rem;
   color: #f9fafb;
+  &:hover {
+    text-decoration: underline;
+  }
 `;

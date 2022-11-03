@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { getInviteCode } from '../../../api/main';
+import { getInviteCode, getRoom } from '../../../api/main';
 import roomModalStore from '../../../stores/room/roomModalStore';
 
 export default function Invite() {
@@ -11,10 +11,22 @@ export default function Invite() {
   const { roomId } = useParams();
 
   useEffect(() => {
-    getInviteCode(parseInt(roomId, 10)).then((res) => {
-      setInviteCode(`${process.env.REACT_APP_LAMBDA_INVITE}/${res}`);
+    getRoom(roomId).then((res) => {
+      if (res.data.isPublic) {
+        getInviteCode(parseInt(roomId, 10), '').then((res) => {
+          setInviteCode(`${process.env.REACT_APP_LAMBDA_INVITE}/${res.data}`);
+        });
+      } else {
+        const password = localStorage.getItem(`${roomId}`);
+        getInviteCode(parseInt(roomId, 10), password).then((res) => {
+          localStorage.setItem(`${roomId}`, res.data.password);
+          setInviteCode(
+            `${process.env.REACT_APP_LAMBDA_INVITE}/${res.data.roomId}`,
+          );
+        });
+      }
     });
-  }, []);
+  }, [roomId, setInviteCode]);
 
   const code =
     inviteCode.length > 20 ? inviteCode.slice(0, 20).concat('...') : inviteCode;

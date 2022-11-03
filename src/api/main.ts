@@ -64,8 +64,13 @@ const signUp = (
 };
 
 // invite user
-const getInviteCode = (roomId: number) => {
-  return awsRequest.get((API.INVITE as string) + roomId);
+const getInviteCode = (roomId: number, password: string) => {
+  if (password === '') {
+    return awsRequest.get(`${API.INVITE as string}${roomId}`);
+  }
+  return awsRequest.post(`${API.INVITE as string}${roomId}`, {
+    password,
+  });
 };
 
 // create a room

@@ -10,5 +10,6 @@
   "tags": ["Cypress", "JAVA", "GoF"],
   "current": 0,
   "total": 4,
-  "theme": "fire"
+  "theme": "fire",
+  "isPublic": true
 }

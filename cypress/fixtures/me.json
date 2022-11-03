@@ -1,11 +1,17 @@
 {
-  "uid": 211,
-  "kakaoId": null,
-  "googleId": null,
+  "uid": 15,
+  "createdAt": "2022-08-12T05:21:53.225Z",
+  "updatedAt": "2022-10-24T18:34:29.631Z",
+  "nickname": "람다",
+  "email": "a@a.com",
+  "status_quo": "안녕하세요, 코딩 그룻입니다",
+  "avatar": 14,
+  "github_link": "https://github.com/iamgroooooot",
+  "blog_link": "https://coding-groot.tistory.com/",
+  "groups": ["SWM13", "python korea", "test"],
+  "badges": [],
+  "verified": true,
   "githubId": null,
-  "createdAt": "2022-09-16T06:47:23.152Z",
-  "updatedAt": "2022-09-16T06:47:23.152Z",
-  "nickname": "mockCypress",
-  "email": "cypress@soma.com",
-  "avatar": 24
+  "googleId": null,
+  "kakaoId": null
 }

@@ -30,4 +30,7 @@ const Container = styled.div`
 
 const Close = styled.button`
   cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
