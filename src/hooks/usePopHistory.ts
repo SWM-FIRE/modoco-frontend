@@ -20,6 +20,7 @@ export default function usePopHistory(roomId: string) {
       if (action === 'POP') {
         setTimeout(() => {
           roomSocket.socket.emit('leaveRoom', roomId);
+          localStorage.removeItem(`${roomId}`);
           stopMediaStream();
           setMessages([]);
           setUsers([]);

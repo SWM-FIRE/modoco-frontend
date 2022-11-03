@@ -48,7 +48,7 @@ export default function ReadyPage() {
     if (!roomSocket.socket) {
       generateSocket();
     }
-  }, [createAll, navigate, roomId, userMediaStream]);
+  }, [navigate, roomId, userMediaStream]);
 
   useSetSelf();
 
