@@ -7,7 +7,7 @@ const awsRequest = axios.create({
 
 awsRequest.interceptors.response.use(
   (response) => {
-    return response.data;
+    return response;
   },
   (error) => {
     console.warn('[Axios] ', error);
