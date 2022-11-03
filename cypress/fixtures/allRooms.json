@@ -11,7 +11,8 @@
     "tags": ["Cypress", "JAVA", "GoF"],
     "current": 0,
     "total": 4,
-    "theme": "fire"
+    "theme": "fire",
+    "isPublic": true
   },
   {
     "itemId": 2,
@@ -25,7 +26,8 @@
     "tags": ["블로그", "글쓰기", "velog"],
     "current": 2,
     "total": 4,
-    "theme": "camping"
+    "theme": "camping",
+    "isPublic": true
   },
   {
     "itemId": 3,
@@ -39,7 +41,8 @@
     "tags": ["추석", "코딩", "React", "C언어"],
     "current": 3,
     "total": 4,
-    "theme": "camping"
+    "theme": "camping",
+    "isPublic": true
   },
   {
     "itemId": 4,
@@ -53,7 +56,8 @@
     "tags": ["React"],
     "current": 0,
     "total": 4,
-    "theme": "fire"
+    "theme": "fire",
+    "isPublic": true
   },
   {
     "itemId": 5,
@@ -67,7 +71,8 @@
     "tags": [],
     "current": 0,
     "total": 2,
-    "theme": "cosmos"
+    "theme": "cosmos",
+    "isPublic": true
   },
   {
     "itemId": 6,
@@ -81,7 +86,8 @@
     "tags": ["컴공", "핑핑"],
     "current": 0,
     "total": 2,
-    "theme": "cosmos"
+    "theme": "cosmos",
+    "isPublic": true
   },
   {
     "itemId": 7,
@@ -95,7 +101,8 @@
     "tags": [],
     "current": 0,
     "total": 4,
-    "theme": "travel"
+    "theme": "travel",
+    "isPublic": true
   },
   {
     "itemId": 8,
@@ -109,6 +116,7 @@
     "tags": ["엄청", "길지", "안", "되는", "태그"],
     "current": 0,
     "total": 4,
-    "theme": "travel"
+    "theme": "travel",
+    "isPublic": true
   }
 ]

@@ -14,5 +14,6 @@
     "githubId": null,
     "googleId": null,
     "kakaoId": null
-  }
+  },
+  "isPublic": true
 }
