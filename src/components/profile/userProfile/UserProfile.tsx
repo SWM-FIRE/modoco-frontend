@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useUser from 'src/hooks/useUser';
 import { useNavigate } from 'react-router-dom';
@@ -26,34 +26,30 @@ import { leaveLobby } from '../../../adapters/lobbySocket';
 export default function UserProfile({ isMe, setIsEdit, userId, isModal }) {
   const { setClear } = userStore();
   const navigate = useNavigate();
-  const { isLoading, error, refetch, data } = useUser(Number(userId));
+  const { isLoading, error, data } = useUser(Number(userId));
   const { openChat } = ChattingUtil();
+  const [isFriend, setIsFriend] = useState(false);
+  const [isPending, setIsPending] = useState(false);
 
   const {
     isLoading: friendLoading,
     error: friendError,
     data: friendData,
-  } = useSingleFriend(Number(userId));
+  } = useSingleFriend(Number(userId), setIsFriend, setIsPending);
   const {
     mutate: requestMutate,
     isLoading: requestLoading,
     isError: requestError,
-    isSuccess: requestSuccess,
   } = useRequestFriend(Number(userId));
   const {
     mutate: deleteMutate,
     isLoading: deleteLoading,
     isError: deleteError,
-    isSuccess: deleteSuccess,
   } = useDeleteFriendRequest(Number(userId));
 
   useEffect(() => {
-    refetch();
     if (!isMe) setIsEdit(false);
-  }, [refetch, isMe]);
-
-  const isFriend = friendData?.status === 'ACCEPTED';
-  const isPending = friendData?.status === 'PENDING';
+  }, [isMe]);
 
   if (isLoading || friendLoading || requestLoading || deleteLoading) {
     return <SkeletonProfile />;
@@ -74,17 +70,11 @@ export default function UserProfile({ isMe, setIsEdit, userId, isModal }) {
   const sendRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     requestMutate();
-    if (requestSuccess) {
-      console.log('request success');
-    }
   };
 
   const onDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     deleteMutate();
-    if (deleteSuccess) {
-      console.log('delete success');
-    }
   };
 
   const onLogOut = () => {
@@ -174,7 +164,7 @@ export default function UserProfile({ isMe, setIsEdit, userId, isModal }) {
             <Pending
               friendId={Number(userId)}
               friend={friendData}
-              refetch={refetch}
+              // refetch={refetch}
             />
           )
         )}

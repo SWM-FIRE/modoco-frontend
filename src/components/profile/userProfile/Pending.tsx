@@ -1,15 +1,9 @@
 // from User Profile
 import React from 'react';
 import styled from 'styled-components';
-import { toast } from 'react-hot-toast';
 import media from 'src/styles/media';
 import useDeleteFriendRequest from 'src/hooks/friend/useDeleteFriendRequest';
 import useAcceptFriendRequest from 'src/hooks/friend/useAcceptFriendRequest';
-import {
-  QueryObserverResult,
-  RefetchOptions,
-  RefetchQueryFilters,
-} from 'react-query';
 
 interface FriendInterface {
   status: string;
@@ -31,25 +25,19 @@ interface FriendInterface {
 export default function Pending({
   friendId,
   friend,
-  refetch,
 }: {
   friendId: number;
   friend: FriendInterface;
-  refetch: (
-    _options?: RefetchOptions & RefetchQueryFilters<unknown>,
-  ) => Promise<QueryObserverResult<any, unknown>>;
 }) {
   const {
     mutate: deleteMutate,
     isLoading: deleteLoading,
     isError: deleteError,
-    isSuccess: deleteSuccess,
   } = useDeleteFriendRequest(friendId);
   const {
     mutate: acceptMutate,
     isLoading: acceptLoading,
     isError: acceptError,
-    isSuccess: acceptSuccess,
   } = useAcceptFriendRequest(friendId);
 
   if (deleteLoading || acceptLoading) {
@@ -60,19 +48,11 @@ export default function Pending({
   const sendDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     deleteMutate();
-    refetch();
-    if (deleteSuccess) {
-      toast.success('친구 요청을 취소했습니다');
-    }
   };
 
   const sendAccept = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     acceptMutate();
-    refetch();
-    if (acceptSuccess) {
-      toast.success('친구 요청을 수락했습니다');
-    }
   };
   return (
     <Container>

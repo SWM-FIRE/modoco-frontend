@@ -1,30 +1,36 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import { detailedFriend } from 'src/interface/singleFriend.interface';
 import useFriends from 'src/hooks/friend/useFriends';
+import singleFriend from 'src/interface/singleFriend.interface';
 import FriendList from '../profile/friends/FriendList';
 import AddFriend from '../profile/friends/AddFriend';
 
 export default function Friends() {
   const [categoryType, setCategoryType] = useState('friendList');
-  const { isLoading, error, data } = useFriends();
+  const [acceptedFriends, setAcceptedFriends] = useState<singleFriend[]>([]);
+  const [pendingSendFriends, setPendingSendFriends] = useState<singleFriend[]>(
+    [],
+  );
+  const [pendingRecvFriends, setPendingRecvFriends] = useState<singleFriend[]>(
+    [],
+  );
+  const { isLoading, error } = useFriends(
+    setAcceptedFriends,
+    setPendingSendFriends,
+    setPendingRecvFriends,
+  );
+
+  const onClickFriendList = useCallback(() => {
+    setCategoryType('friendList');
+  }, []);
+
+  const onClickAddFriend = useCallback(() => {
+    setCategoryType('addFriend');
+  }, []);
+
   if (isLoading) return <>loading</>;
   if (error) return <>error</>;
-  const acceptedFriends = data.filter(
-    (friend: detailedFriend) => friend.status === 'ACCEPTED',
-  );
-  const pendingFriends = data.filter(
-    (friend: detailedFriend) => friend.status === 'PENDING',
-  );
-
-  const onClickFriendList = () => {
-    setCategoryType('friendList');
-  };
-
-  const onClickAddFriend = () => {
-    setCategoryType('addFriend');
-  };
 
   return (
     <Components>
@@ -46,7 +52,10 @@ export default function Friends() {
         {categoryType === 'friendList' ? (
           <FriendList friendList={acceptedFriends} />
         ) : (
-          <AddFriend friendList={pendingFriends} />
+          <AddFriend
+            pendingSendFriends={pendingSendFriends}
+            pendingRecvFriends={pendingRecvFriends}
+          />
         )}
       </FriendComponent>
     </Components>

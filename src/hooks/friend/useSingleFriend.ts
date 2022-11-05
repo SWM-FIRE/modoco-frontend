@@ -6,6 +6,15 @@ const getAFriend = async (uid: number) => {
   return data;
 };
 
-export default function useSingleFriend(uid: number) {
-  return useQuery(['Friend', 'personal', uid], () => getAFriend(uid));
+export default function useSingleFriend(
+  uid: number,
+  setIsFriend?,
+  setIsPending?,
+) {
+  return useQuery(['friend', 'personal', uid], () => getAFriend(uid), {
+    onSuccess: (data) => {
+      if (setIsFriend) setIsFriend(data.status === 'ACCEPTED');
+      if (setIsPending) setIsPending(data.status === 'PENDING');
+    },
+  });
 }

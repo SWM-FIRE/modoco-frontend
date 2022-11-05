@@ -1,37 +1,38 @@
+import React from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import { detailedFriend } from 'src/interface/singleFriend.interface';
+import singleFriend from 'src/interface/singleFriend.interface';
 import FriendIcon from './FriendIcon';
 import AcceptOrDecline from './AcceptOrDecline';
 
-export default function AddFriend({
-  friendList,
+export default React.memo(function AddFriend({
+  pendingSendFriends,
+  pendingRecvFriends,
 }: {
-  friendList: detailedFriend[];
+  pendingSendFriends: singleFriend[];
+  pendingRecvFriends: singleFriend[];
 }) {
-  const RECV = 'RECEIVER';
-
   return (
     <>
-      {friendList.map((friend, index) => (
+      {pendingRecvFriends.map((friend, index) => (
         <Component key={Symbol(index).toString()}>
-          {friend.role === RECV ? (
-            <FriendIcon friend={friend.sender} />
-          ) : (
-            <FriendIcon friend={friend.receiver} />
-          )}
+          <FriendIcon friend={friend} />
           <Contents>
-            {friend.role === RECV ? (
-              <AcceptOrDecline friend={friend.sender} />
-            ) : (
-              <Text>친구신청 보냄</Text>
-            )}
+            <AcceptOrDecline friend={friend} />
+          </Contents>
+        </Component>
+      ))}
+      {pendingSendFriends.map((friend, index) => (
+        <Component key={Symbol(index).toString()}>
+          <FriendIcon friend={friend} />
+          <Contents>
+            <Text>친구신청 보냄</Text>
           </Contents>
         </Component>
       ))}
     </>
   );
-}
+});
 
 const Component = styled.div`
   display: flex;
