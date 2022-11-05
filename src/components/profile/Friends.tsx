@@ -3,17 +3,11 @@ import styled from 'styled-components';
 import useFriends from 'src/hooks/friend/useFriends';
 import FriendList from './friends/FriendList';
 import AddFriend from './friends/AddFriend';
+import { detailedFriend } from '../../interface/singleFriend.interface';
 
 export default function Friends({ isModal }: { isModal: boolean }) {
   const [categoryType, setCategoryType] = useState('friendList');
-  const [acceptedFriends, setAcceptedFriends] = useState([]);
-  const [pendingSendFriends, setPendingSendFriends] = useState([]);
-  const [pendingRecvFriends, setPendingRecvFriends] = useState([]);
-  const { isLoading, error } = useFriends(
-    setAcceptedFriends,
-    setPendingSendFriends,
-    setPendingRecvFriends,
-  );
+  const { isLoading, error, data } = useFriends();
   if (isLoading) return <>loading</>;
   if (error) return <>error</>;
 
@@ -24,6 +18,26 @@ export default function Friends({ isModal }: { isModal: boolean }) {
   const onClickAddFriend = () => {
     setCategoryType('addFriend');
   };
+
+  console.log(data);
+
+  const acceptedFriends = data
+    ?.filter((friend: detailedFriend) => friend.status === 'ACCEPTED')
+    .map((friend: detailedFriend) => friend.sender || friend.receiver);
+
+  const pendingSendFriends = data
+    ?.filter(
+      (friend: detailedFriend) =>
+        friend.status === 'PENDING' && friend.role === 'SENDER',
+    )
+    .map((friend: detailedFriend) => friend.receiver);
+
+  const pendingRecvFriends = data
+    ?.filter(
+      (friend: detailedFriend) =>
+        friend.status === 'PENDING' && friend.role === 'RECEIVER',
+    )
+    .map((friend: detailedFriend) => friend.sender);
 
   return (
     <Components isModal={isModal}>

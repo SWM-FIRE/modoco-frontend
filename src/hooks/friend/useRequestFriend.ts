@@ -11,6 +11,7 @@ export default function useRequestFriend(uid: number) {
   return useMutation(['friend', 'request', uid], () => requestAFriend(uid), {
     onSuccess: () => {
       queryClient.invalidateQueries(['friend', 'personal', uid]);
+      queryClient.invalidateQueries(['friend']);
     },
   });
 }

@@ -2,24 +2,13 @@ import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
 import useFriends from 'src/hooks/friend/useFriends';
-import singleFriend from 'src/interface/singleFriend.interface';
 import FriendList from '../profile/friends/FriendList';
 import AddFriend from '../profile/friends/AddFriend';
+import { detailedFriend } from '../../interface/singleFriend.interface';
 
 export default function Friends() {
   const [categoryType, setCategoryType] = useState('friendList');
-  const [acceptedFriends, setAcceptedFriends] = useState<singleFriend[]>([]);
-  const [pendingSendFriends, setPendingSendFriends] = useState<singleFriend[]>(
-    [],
-  );
-  const [pendingRecvFriends, setPendingRecvFriends] = useState<singleFriend[]>(
-    [],
-  );
-  const { isLoading, error } = useFriends(
-    setAcceptedFriends,
-    setPendingSendFriends,
-    setPendingRecvFriends,
-  );
+  const { isLoading, error, data } = useFriends();
 
   const onClickFriendList = useCallback(() => {
     setCategoryType('friendList');
@@ -31,6 +20,24 @@ export default function Friends() {
 
   if (isLoading) return <>loading</>;
   if (error) return <>error</>;
+
+  const acceptedFriends = data
+    ?.filter((friend: detailedFriend) => friend.status === 'ACCEPTED')
+    .map((friend: detailedFriend) => friend.sender || friend.receiver);
+
+  const pendingSendFriends = data
+    ?.filter(
+      (friend: detailedFriend) =>
+        friend.status === 'PENDING' && friend.role === 'SENDER',
+    )
+    .map((friend: detailedFriend) => friend.receiver);
+
+  const pendingRecvFriends = data
+    ?.filter(
+      (friend: detailedFriend) =>
+        friend.status === 'PENDING' && friend.role === 'RECEIVER',
+    )
+    .map((friend: detailedFriend) => friend.sender);
 
   return (
     <Components>
