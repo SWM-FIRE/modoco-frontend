@@ -1,13 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-// import toast from 'react-hot-toast';
 import mediaStateChange from '../../../adapters/mediaStateChange';
 import { ReactComponent as MicOff } from '../../../assets/svg/MicOff.svg';
 import { ReactComponent as MicOn } from '../../../assets/svg/MicOn.svg';
 import { ReactComponent as MonitorOn } from '../../../assets/svg/MonitorOn.svg';
 import { ReactComponent as MonitorOff } from '../../../assets/svg/MonitorOff.svg';
-// import { ReactComponent as VideoOff } from '../../../assets/svg/VideoOff.svg';
 import { ReactComponent as Setting } from '../../../assets/svg/settings.svg';
 import UserMediaStreamStore from '../../../stores/room/userMediaStreamStore';
 import { useCreateMediaStream } from '../../../hooks/useCreateMediaStream';
@@ -40,9 +38,6 @@ export default function Settings({
       createDisplayStream();
     }
   };
-  // const setVideo = () => {
-  //   toast.error('준비중입니닷!');
-  // };
 
   const toggleSetting = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -56,9 +51,6 @@ export default function Settings({
       </Button>
       <Button onClick={setMic}>{userMic ? <MicOn /> : <MicOff />}</Button>
       <Youtube youtubeModal={youtubeModal} setYoutubeModal={setYoutubeModal} />
-      {/* <Button onClick={setVideo}>
-        <VideoOff />
-      </Button> */}
       <Button onClick={toggleSetting}>
         <Setting />
       </Button>

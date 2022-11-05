@@ -24,4 +24,7 @@ const YoutubeButton = styled.button`
     width: 100%;
     height: 100%;
   }
+  &:hover {
+    opacity: 0.7;
+  }
 `;

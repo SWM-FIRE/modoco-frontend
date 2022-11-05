@@ -29,18 +29,17 @@ const Component = styled.div<{ roomId: string }>`
 `;
 
 const Icon = styled.button`
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   svg {
-    height: 65%;
-    width: 65%;
+    height: 100%;
+    width: 100%;
   }
   &:hover {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 50%;
+    opacity: 0.7;
   }
 `;
