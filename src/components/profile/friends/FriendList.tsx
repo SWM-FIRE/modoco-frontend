@@ -1,24 +1,20 @@
-/* eslint-disable no-unused-vars */
+import React from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import { detailedFriend } from 'src/interface/singleFriend.interface';
+import singleFriend from 'src/interface/singleFriend.interface';
 import ChattingUtil from 'src/components/atoms/chattingModal/chattingUtil';
 import { ReactComponent as SendImage } from '../../../assets/svg/MessageSend.svg';
 import FriendIcon from './FriendIcon';
 
-export default function FriendList({
+export default React.memo(function FriendList({
   friendList,
 }: {
-  friendList: detailedFriend[];
+  friendList: singleFriend[];
 }) {
   const { openChat } = ChattingUtil();
-  const filteredFriends = friendList.map((friend) =>
-    friend.role === 'RECEIVER' ? friend.sender : friend.receiver,
-  );
-
   return (
     <>
-      {filteredFriends.map((friend) => (
+      {friendList.map((friend) => (
         <Component key={friend?.uid}>
           <FriendIcon friend={friend} />
           <SendMessage onClick={() => openChat(friend?.uid)}>
@@ -30,7 +26,7 @@ export default function FriendList({
       ))}
     </>
   );
-}
+});
 
 const Component = styled.div`
   display: flex;
@@ -39,7 +35,7 @@ const Component = styled.div`
   color: #f9fafb;
   font-size: 1.5rem;
   margin-top: 2.8rem;
-  max-width: 28rem;
+  max-width: 33rem;
   ${media.small} {
     font-size: 1.2rem;
     margin-top: 2rem;

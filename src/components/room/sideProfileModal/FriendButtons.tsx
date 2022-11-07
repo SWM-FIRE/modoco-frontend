@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import DecidedFriend from './DecidedFriend';
 
-export default function FriendButtons({ data, toggle }) {
+export default function FriendButtons({ data }) {
   return (
     <Container>
-      <DecidedFriend data={data} toggle={toggle} />
+      <DecidedFriend data={data} />
 
       {/* <Follow>
         <ExistingUser>

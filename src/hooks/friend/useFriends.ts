@@ -7,5 +7,5 @@ const getFriends = async () => {
 };
 
 export default function useFriends() {
-  return useQuery(['Friend', 'all'], () => getFriends());
+  return useQuery(['friend'], () => getFriends());
 }

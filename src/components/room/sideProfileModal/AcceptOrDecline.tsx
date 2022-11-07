@@ -3,27 +3,21 @@ import styled from 'styled-components';
 import useAcceptFriendRequest from 'src/hooks/friend/useAcceptFriendRequest';
 import useDeleteFriendRequest from 'src/hooks/friend/useDeleteFriendRequest';
 
-export default function AcceptOrDecline({ data, toggle }) {
+export default function AcceptOrDecline({ data }) {
   const {
     mutate: acceptMutate,
     isLoading: acceptLoading,
     isError: acceptError,
-    isSuccess: acceptSuccess,
   } = useAcceptFriendRequest(data?.sender.uid);
 
   const {
     mutate: deleteMutate,
     isLoading: deleteLoading,
     isError: deleteError,
-    isSuccess: deleteSuccess,
   } = useDeleteFriendRequest(data?.sender.uid);
 
   if (acceptLoading || deleteLoading) return null;
   if (acceptError || deleteError) return null;
-  if (acceptSuccess || deleteSuccess) {
-    console.log('success request');
-    toggle();
-  }
 
   const acceptRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

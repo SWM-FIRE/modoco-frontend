@@ -5,20 +5,16 @@ import useRequestFriend from 'src/hooks/friend/useRequestFriend';
 export default function Buttons({
   isMe,
   uid: targetUid,
-  toggle,
 }: {
   isMe: boolean;
   uid: number;
-  toggle: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { mutate, isLoading, isError, isSuccess } = useRequestFriend(targetUid);
+  const { mutate, isLoading, isError } = useRequestFriend(targetUid);
 
   if (isLoading) return null;
   if (isError) return null;
-  if (isSuccess) return null;
   const sendRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    toggle(false);
     mutate();
   };
 

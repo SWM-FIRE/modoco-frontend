@@ -1,30 +1,43 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import media from 'src/styles/media';
-import { detailedFriend } from 'src/interface/singleFriend.interface';
 import useFriends from 'src/hooks/friend/useFriends';
 import FriendList from '../profile/friends/FriendList';
 import AddFriend from '../profile/friends/AddFriend';
+import { detailedFriend } from '../../interface/singleFriend.interface';
 
 export default function Friends() {
   const [categoryType, setCategoryType] = useState('friendList');
   const { isLoading, error, data } = useFriends();
+
+  const onClickFriendList = useCallback(() => {
+    setCategoryType('friendList');
+  }, []);
+
+  const onClickAddFriend = useCallback(() => {
+    setCategoryType('addFriend');
+  }, []);
+
   if (isLoading) return <>loading</>;
   if (error) return <>error</>;
-  const acceptedFriends = data.filter(
-    (friend: detailedFriend) => friend.status === 'ACCEPTED',
-  );
-  const pendingFriends = data.filter(
-    (friend: detailedFriend) => friend.status === 'PENDING',
-  );
 
-  const onClickFriendList = () => {
-    setCategoryType('friendList');
-  };
+  const acceptedFriends = data
+    ?.filter((friend: detailedFriend) => friend.status === 'ACCEPTED')
+    .map((friend: detailedFriend) => friend.sender || friend.receiver);
 
-  const onClickAddFriend = () => {
-    setCategoryType('addFriend');
-  };
+  const pendingSendFriends = data
+    ?.filter(
+      (friend: detailedFriend) =>
+        friend.status === 'PENDING' && friend.role === 'SENDER',
+    )
+    .map((friend: detailedFriend) => friend.receiver);
+
+  const pendingRecvFriends = data
+    ?.filter(
+      (friend: detailedFriend) =>
+        friend.status === 'PENDING' && friend.role === 'RECEIVER',
+    )
+    .map((friend: detailedFriend) => friend.sender);
 
   return (
     <Components>
@@ -46,7 +59,10 @@ export default function Friends() {
         {categoryType === 'friendList' ? (
           <FriendList friendList={acceptedFriends} />
         ) : (
-          <AddFriend friendList={pendingFriends} />
+          <AddFriend
+            pendingSendFriends={pendingSendFriends}
+            pendingRecvFriends={pendingRecvFriends}
+          />
         )}
       </FriendComponent>
     </Components>

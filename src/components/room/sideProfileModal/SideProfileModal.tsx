@@ -62,14 +62,14 @@ export default function SideProfileModal({
             {!isMe && <ControlVolume user={user} />}
             {isFriend ? (
               <>
-                <FriendButtons data={data} toggle={toggle} />
+                <FriendButtons data={data} />
                 <Button onClick={() => openChat(user?.uid)}>
                   <SendMessageBlack />
                   채팅하기
                 </Button>
               </>
             ) : (
-              <Buttons isMe={isMe} toggle={toggle} uid={user.uid} />
+              <Buttons isMe={isMe} uid={user.uid} />
             )}
             {!isMe && isModerator && <Kick onClick={kickUser}>내보내기</Kick>}
           </Body>

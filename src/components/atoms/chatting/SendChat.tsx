@@ -111,4 +111,7 @@ const Button = styled.button`
     width: 2rem;
     height: 2rem;
   }
+  &:hover {
+    opacity: 0.7;
+  }
 `;

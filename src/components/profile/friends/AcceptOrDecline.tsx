@@ -3,33 +3,22 @@ import styled from 'styled-components';
 import media from 'src/styles/media';
 import useAcceptFriendRequest from 'src/hooks/friend/useAcceptFriendRequest';
 import useDeleteFriendRequest from 'src/hooks/friend/useDeleteFriendRequest';
-import useMainModal from '../../../hooks/useMainModal';
 
 export default function AcceptOrDecline({ friend }) {
-  const { setProfileModal } = useMainModal();
-  const closeProfileModal = () => {
-    setProfileModal(false);
-  };
   const {
     mutate: acceptMutate,
     isLoading: acceptLoading,
     isError: acceptError,
-    isSuccess: acceptSuccess,
   } = useAcceptFriendRequest(friend?.uid);
 
   const {
     mutate: deleteMutate,
     isLoading: deleteLoading,
     isError: deleteError,
-    isSuccess: deleteSuccess,
   } = useDeleteFriendRequest(friend?.uid);
 
   if (acceptLoading || deleteLoading) return null;
   if (acceptError || deleteError) return null;
-  if (acceptSuccess || deleteSuccess) {
-    console.log('success request');
-    closeProfileModal();
-  }
 
   const acceptRequest = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -42,11 +31,11 @@ export default function AcceptOrDecline({ friend }) {
   };
   return (
     <Buttons>
-      <Button color="fb7185" onClick={deleteRequest}>
-        거절
-      </Button>
       <Button color="34d399" onClick={acceptRequest}>
         수락
+      </Button>
+      <Button color="fb7185" onClick={deleteRequest}>
+        거절
       </Button>
     </Buttons>
   );

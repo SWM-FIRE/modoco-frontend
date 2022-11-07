@@ -1,21 +1,15 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import useFriends from 'src/hooks/friend/useFriends';
-import { detailedFriend } from 'src/interface/singleFriend.interface';
 import FriendList from './friends/FriendList';
 import AddFriend from './friends/AddFriend';
+import { detailedFriend } from '../../interface/singleFriend.interface';
 
 export default function Friends({ isModal }: { isModal: boolean }) {
   const [categoryType, setCategoryType] = useState('friendList');
   const { isLoading, error, data } = useFriends();
   if (isLoading) return <>loading</>;
   if (error) return <>error</>;
-  const acceptedFriends = data.filter(
-    (friend: detailedFriend) => friend.status === 'ACCEPTED',
-  );
-  const pendingFriends = data.filter(
-    (friend: detailedFriend) => friend.status === 'PENDING',
-  );
 
   const onClickFriendList = () => {
     setCategoryType('friendList');
@@ -24,6 +18,24 @@ export default function Friends({ isModal }: { isModal: boolean }) {
   const onClickAddFriend = () => {
     setCategoryType('addFriend');
   };
+
+  const acceptedFriends = data
+    ?.filter((friend: detailedFriend) => friend.status === 'ACCEPTED')
+    .map((friend: detailedFriend) => friend.sender || friend.receiver);
+
+  const pendingSendFriends = data
+    ?.filter(
+      (friend: detailedFriend) =>
+        friend.status === 'PENDING' && friend.role === 'SENDER',
+    )
+    .map((friend: detailedFriend) => friend.receiver);
+
+  const pendingRecvFriends = data
+    ?.filter(
+      (friend: detailedFriend) =>
+        friend.status === 'PENDING' && friend.role === 'RECEIVER',
+    )
+    .map((friend: detailedFriend) => friend.sender);
 
   return (
     <Components isModal={isModal}>
@@ -45,7 +57,10 @@ export default function Friends({ isModal }: { isModal: boolean }) {
         {categoryType === 'friendList' ? (
           <FriendList friendList={acceptedFriends} />
         ) : (
-          <AddFriend friendList={pendingFriends} />
+          <AddFriend
+            pendingSendFriends={pendingSendFriends}
+            pendingRecvFriends={pendingRecvFriends}
+          />
         )}
       </FriendComponent>
     </Components>
@@ -60,6 +75,7 @@ const Components = styled.div<{ isModal: boolean }>`
   position: absolute;
   right: 1rem;
   top: 0;
+  height: 100%;
   @media (max-width: ${(props) => (props.isModal ? '100vw ' : '1020px')}) {
     position: static;
     padding: 0 3.2rem;
@@ -70,14 +86,16 @@ const Components = styled.div<{ isModal: boolean }>`
 
 const FriendComponent = styled.div<{ isModal: boolean }>`
   width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  /* ::-webkit-scrollbar {
+    display: none;
+  } */
   @media (max-width: ${(props) => (props.isModal ? '100vw ' : '1020px')}) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     max-height: 15rem;
-    overflow: auto;
-    ::-webkit-scrollbar {
-      display: none;
-    }
+    overflow-y: auto;
   }
 `;
 
