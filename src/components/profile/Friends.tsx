@@ -19,8 +19,6 @@ export default function Friends({ isModal }: { isModal: boolean }) {
     setCategoryType('addFriend');
   };
 
-  console.log(data);
-
   const acceptedFriends = data
     ?.filter((friend: detailedFriend) => friend.status === 'ACCEPTED')
     .map((friend: detailedFriend) => friend.sender || friend.receiver);
@@ -77,6 +75,7 @@ const Components = styled.div<{ isModal: boolean }>`
   position: absolute;
   right: 1rem;
   top: 0;
+  height: 100%;
   @media (max-width: ${(props) => (props.isModal ? '100vw ' : '1020px')}) {
     position: static;
     padding: 0 3.2rem;
@@ -87,14 +86,16 @@ const Components = styled.div<{ isModal: boolean }>`
 
 const FriendComponent = styled.div<{ isModal: boolean }>`
   width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  /* ::-webkit-scrollbar {
+    display: none;
+  } */
   @media (max-width: ${(props) => (props.isModal ? '100vw ' : '1020px')}) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     max-height: 15rem;
-    overflow: auto;
-    ::-webkit-scrollbar {
-      display: none;
-    }
+    overflow-y: auto;
   }
 `;
 

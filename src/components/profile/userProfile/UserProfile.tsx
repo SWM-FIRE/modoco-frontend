@@ -160,13 +160,7 @@ export default function UserProfile({ isMe, setIsEdit, userId, isModal }) {
           </div>
         ) : (
           !isMe &&
-          isPending && (
-            <Pending
-              friendId={Number(userId)}
-              friend={friendData}
-              // refetch={refetch}
-            />
-          )
+          isPending && <Pending friendId={Number(userId)} friend={friendData} />
         )}
         {!isMe && !isFriend && !isPending && (
           <Button onClick={sendRequest} isModal={isModal}>

@@ -35,7 +35,7 @@ const Component = styled.div`
   color: #f9fafb;
   font-size: 1.5rem;
   margin-top: 2.8rem;
-  max-width: 28rem;
+  max-width: 33rem;
   ${media.small} {
     font-size: 1.2rem;
     margin-top: 2rem;
