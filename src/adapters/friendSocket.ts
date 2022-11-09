@@ -34,7 +34,13 @@ const syncFriend = (
 ) => {
   friendSocket.socket?.on('friend:sync-all', (data: directMessage[]) => {
     data.forEach((singleData) => {
-      if (singleData.messages.length === 0) return;
+      if (singleData.messages.length === 0) {
+        setMessage({
+          uid: singleData.friend.uid,
+          messages: [],
+        });
+        return;
+      }
       // 가장 최근에 온 순서로 정렬
       const filteredMessage = singleData.messages
         ? singleData.messages.sort((a, b) => {
@@ -107,7 +113,7 @@ const recvDirectMessage = (
     const myChatRoom = messages[targetUid];
 
     // 채팅방에 메세지가 없었을 때
-    if (!myChatRoom) {
+    if (myChatRoom.length === 0) {
       setMessages({
         uid: targetUid,
         messages: [
