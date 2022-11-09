@@ -14,6 +14,10 @@ export default function Invite() {
   const { setLoginModal } = loginModalStore();
   const token = localStorage.getItem('access_token');
 
+  const urlSearch = new URLSearchParams(window.location.search);
+  const password = urlSearch.get('pw');
+  if (password) localStorage.setItem(`${inviteId}`, password);
+
   localStorage.setItem('inviteId', inviteId);
   const { isLoading, error, data } = useMe();
 

@@ -19,9 +19,8 @@ export default function Invite() {
       } else {
         const password = localStorage.getItem(`${roomId}`);
         getInviteCode(parseInt(roomId, 10), password).then((res) => {
-          localStorage.setItem(`${roomId}`, res.data.password);
           setInviteCode(
-            `${process.env.REACT_APP_LAMBDA_INVITE}/${res.data.roomId}`,
+            `${process.env.REACT_APP_LAMBDA_INVITE}/${res.data.roomId}/${res.data.password}`,
           );
         });
       }
