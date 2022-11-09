@@ -34,7 +34,13 @@ const syncFriend = (
 ) => {
   friendSocket.socket?.on('friend:sync-all', (data: directMessage[]) => {
     data.forEach((singleData) => {
-      if (singleData.messages.length === 0) return;
+      if (singleData.messages.length === 0) {
+        setMessage({
+          uid: singleData.friend.uid,
+          messages: [],
+        });
+        return;
+      }
       // 가장 최근에 온 순서로 정렬
       const filteredMessage = singleData.messages
         ? singleData.messages.sort((a, b) => {
