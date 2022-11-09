@@ -43,7 +43,6 @@ export default function useLogin() {
         getMe()
           .then((res) => {
             // reload to resolve socket bog
-            window.location.reload();
             setNickname(res.data.nickname);
             setAvatar(res.data.avatar);
             setUid(res.data.uid);

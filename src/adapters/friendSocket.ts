@@ -107,7 +107,7 @@ const recvDirectMessage = (
     const myChatRoom = messages[targetUid];
 
     // 채팅방에 메세지가 없었을 때
-    if (myChatRoom.length === 0) {
+    if (!myChatRoom) {
       setMessages({
         uid: targetUid,
         messages: [
