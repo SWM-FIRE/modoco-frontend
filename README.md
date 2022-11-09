@@ -1,6 +1,11 @@
-# 모도코
-
+<div align="center">
 <img src="https://user-images.githubusercontent.com/66371206/184502359-9e21d760-282d-4d0e-a19b-d3814cbb9aa8.png" title="modoco"/>
+
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FSWM-FIRE%2Fmodoco-frontend&count_bg=%2396CEB4&title_bg=%23555555&icon=codeigniter.svg&icon_color=%23F58A7D&title=modoco&edge_flat=false)](https://hits.seeyoufarm.com)
+</div>
+
+
+# 모도코 
 
 > **모여서 도란도란 코딩👨‍💻👩‍💻** <br/> **개발기간: 2022.06 ~ 2022.11**
 
