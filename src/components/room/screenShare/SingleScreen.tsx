@@ -59,7 +59,7 @@ export default function SingleScreen({ connectedUser, stream }) {
   const newMessages = messages.filter(
     (message) =>
       message?.uid === connectedUser.uid &&
-      message.type === 'message' &&
+      message.type === 'MESSAGE' &&
       new Date(message.createdAt).getTime() > currentTime.getTime() - 5000,
   );
 
