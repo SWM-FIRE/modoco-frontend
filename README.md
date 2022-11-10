@@ -2,10 +2,10 @@
 <img src="https://user-images.githubusercontent.com/66371206/184502359-9e21d760-282d-4d0e-a19b-d3814cbb9aa8.png" title="modoco"/>
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FSWM-FIRE%2Fmodoco-frontend&count_bg=%2396CEB4&title_bg=%23555555&icon=codeigniter.svg&icon_color=%23F58A7D&title=modoco&edge_flat=false)](https://hits.seeyoufarm.com)
+
 </div>
 
-
-# 모도코 
+# 모도코
 
 > **모여서 도란도란 코딩👨‍💻👩‍💻** <br/> **개발기간: 2022.06 ~ 2022.11**
 
@@ -184,18 +184,22 @@ npx cypress open
 - 화면만으로 부족하다면, 음성을 키고 대화해보세요
 
 ### ⭐️ 채팅
+
 - 모각코 방에서 여러 사람들과 채팅을 할 수 있어요
 - 친구들과 1:1 채팅 또한 가능해요!
 
 ### ⭐️ 유튜브 플레이리스트 듣기
+
 - 나만의 플레이리스트로 커스텀하여 친구들과 노래를 들을 수 있어요
 - 원하지 않는 노래는 삭제도 가능해요
 
 ### ⭐️ 프로필 설정
+
 - 나의 깃허브와 개인 페이지 혹은 블로그 링크를 등록할 수 있어요
 - 간단한 한줄 소개로 자신을 표현해봐요!
 
 ### ⭐ 로비 입장
+
 - 현재 모도코에 있는 모든 사람들을 확인할 수 있어요
 - 전체 채팅을 통해 같이 모각코할 사람을 구해보세요!
 
@@ -211,13 +215,17 @@ npx cypress open
 
 ![WebRTC Sequence Diagram](https://user-images.githubusercontent.com/66371206/185143244-142999a6-9f58-4e56-90ef-598782d7f420.png)
 
-### Room UML Diagram
+### DM Flow
 
-![front-uml](https://user-images.githubusercontent.com/66371206/194737818-1ac02b91-7861-4983-8bc5-b00c2e55d7c8.jpeg)
+![direct_message_sequence_diagram](https://user-images.githubusercontent.com/66371206/201030305-c85815f3-5b42-4f10-9a1a-a3135aa3305a.png)
 
 ---
 
 ## 개발로그 ✏️
+
+[![halang's GitHub stats](https://velog-readme-stats.vercel.app/api?name=lhr4884&slug=모도코에서-코드-리뷰-하실분)](https://velog.io/@lhr4884/%EB%AA%A8%EB%8F%84%EC%BD%94%EC%97%90%EC%84%9C-%EC%BD%94%EB%93%9C-%EB%A6%AC%EB%B7%B0-%ED%95%98%EC%8B%A4%EB%B6%84)
+[![halang's GitHub stats](https://velog-readme-stats.vercel.app/api?name=lhr4884&slug=모여서-각자-코딩모각코할분-들어오세요-i9lbb30z)](https://velog.io/@lhr4884/%EB%AA%A8%EC%97%AC%EC%84%9C-%EA%B0%81%EC%9E%90-%EC%BD%94%EB%94%A9%EB%AA%A8%EA%B0%81%EC%BD%94%ED%95%A0%EB%B6%84-%EB%93%A4%EC%96%B4%EC%98%A4%EC%84%B8%EC%9A%94-i9lbb30z)
+[![071yoon's GitHub stats](https://velog-readme-stats.vercel.app/api?name=071yoon&slug=FIRE는-이렇게-협업했다)](https://velog.io/@071yoon/FIRE%EB%8A%94-%EC%9D%B4%EB%A0%87%EA%B2%8C-%ED%98%91%EC%97%85%ED%96%88%EB%8B%A4)
 
 <details>
 <summary>영기</summary>
