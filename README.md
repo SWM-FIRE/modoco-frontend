@@ -272,3 +272,14 @@ npx cypress open
 [![halang's GitHub stats](https://velog-readme-stats.vercel.app/api?name=lhr4884&slug=React-Carousel-이용한-Carousel-만들기)](https://velog.io/@lhr4884/React-Carousel-%EC%9D%B4%EC%9A%A9%ED%95%9C-Carousel-%EB%A7%8C%EB%93%A4%EA%B8%B0)
 
 </details>
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/63354527/201853029-e92aa913-882f-47b7-be43-5878cb3af169.png" width="30%" >
+</p>
+
+<br/>
+
+<p align="center"><i>This Project is Sponsored by <b>Software Maestro</b></i></p>
+
+This work was supported by the Institute of Information & Communications Technology Planning & Evaluation(IITP) grant funded by the Ministry of Science and ICT(MSIT) (IITP-0000-SW Maestro training course).
+<p align="center">This work was supported by the Institute of Information & Communications Technology Planning & Evaluation(IITP) grant funded by the Ministry of Science and ICT(MSIT) (IITP-0000-SW Maestro training course).</p>
