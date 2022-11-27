@@ -2,12 +2,10 @@
   font-family: GmarketSansBold;
   src: local('GmarketSansTTFBold'), local('GmarketSansTTFBold');
   font-style: normal;
-  src: url('https://static.modocode.com/assets/GmarketSansBold.woff2')
+  src: url('https://s3.modocode.com/assets/GmarketSansBold.woff2')
       format('woff2'),
-    url('https://static.modocode.com/assets/GmarketSansBold.woff')
-      format('woff'),
-    url('https://static.modocode.com/assets/GmarketSansBold.ttf')
-      format('truetype');
+    url('https://s3.modocode.com/assets/GmarketSansBold.woff') format('woff'),
+    url('https://s3.modocode.com/assets/GmarketSansBold.ttf') format('truetype');
 }
 @font-face {
   font-family: GmarketSansMedium;
@@ -17,62 +15,54 @@
       format('woff2'),
     url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansMedium.woff')
       format('woff'),
-    url('https://static.modocode.com/assets/GmarketSansMedium.ttf')
+    url('https://s3.modocode.com/assets/GmarketSansMedium.ttf')
       format('truetype');
 }
 @font-face {
   font-family: IBMPlexSansKRRegular;
   src: local('IBMPlexSansKRRegular'), local('IBMPlexSansKRRegular');
   font-style: normal;
-  src: url('https://static.modocode.com/assets/IBMPlexSansKR.woff2')
-      format('woff2'),
-    url('https://static.modocode.com/assets/IBMPlexSansKR.woff') format('woff'),
-    url('https://static.modocode.com/assets/IBMPlexSansKR.otf')
-      format('opentype'),
-    url('https://static.modocode.com/assets/IBMPlexSansKR.ttf')
-      format('truetype');
+  src: url('https://s3.modocode.com/assets/IBMPlexSansKR.woff2') format('woff2'),
+    url('https://s3.modocode.com/assets/IBMPlexSansKR.woff') format('woff'),
+    url('https://s3.modocode.com/assets/IBMPlexSansKR.otf') format('opentype'),
+    url('https://s3.modocode.com/assets/IBMPlexSansKR.ttf') format('truetype');
 }
 @font-face {
   font-family: IBMPlexMonoRegular;
   src: local('IBMPlexMonoRegular'), local('IBMPlexMonoRegular');
   font-style: normal;
-  src: url('https://static.modocode.com/assets/IBMPlexMono.woff2')
-      format('woff2'),
-    url('https://static.modocode.com/assets/IBMPlexMono.woff') format('woff'),
-    url('https://static.modocode.com/assets/IBMPlexMono.otf') format('opentype'),
-    url('https://static.modocode.com/assets/IBMPlexMono.ttf') format('truetype');
+  src: url('https://s3.modocode.com/assets/IBMPlexMono.woff2') format('woff2'),
+    url('https://s3.modocode.com/assets/IBMPlexMono.woff') format('woff'),
+    url('https://s3.modocode.com/assets/IBMPlexMono.otf') format('opentype'),
+    url('https://s3.modocode.com/assets/IBMPlexMono.ttf') format('truetype');
 }
 @font-face {
   font-family: JostRegular;
-  src: url('https://static.modocode.com/assets/jost.woff2') format('woff2'),
-    url('https://static.modocode.com/assets/jost.woff') format('woff'),
-    url('https://static.modocode.com/assets/jost.ttf') format('truetype');
+  src: url('https://s3.modocode.com/assets/jost.woff2') format('woff2'),
+    url('https://s3.modocode.com/assets/jost.woff') format('woff'),
+    url('https://s3.modocode.com/assets/jost.ttf') format('truetype');
 }
 @font-face {
   font-family: PoppinsRegular;
-  src: url('https://static.modocode.com/assets/poppins.woff2') format('woff2'),
-    url('https://static.modocode.com/assets/poppins.woff') format('woff'),
-    url('https://static.modocode.com/assets/poppins.ttf') format('truetype');
+  src: url('https://s3.modocode.com/assets/poppins.woff2') format('woff2'),
+    url('https://s3.modocode.com/assets/poppins.woff') format('woff'),
+    url('https://s3.modocode.com/assets/poppins.ttf') format('truetype');
 }
 @font-face {
   font-family: PretendardRegular;
   src: local('PretendardRegular'), local('PretendardRegular');
   font-style: normal;
-  src: url('https://static.modocode.com/assets/Pretendard.woff2')
-      format('woff2'),
-    url('https://static.modocode.com/assets/Pretendard.woff') format('woff'),
-    url('https://static.modocode.com/assets/Pretendard.otf') format('opentype'),
-    url('https://static.modocode.com/assets/Pretendard.ttf') format('truetype');
+  src: url('https://s3.modocode.com/assets/Pretendard.woff2') format('woff2'),
+    url('https://s3.modocode.com/assets/Pretendard.woff') format('woff'),
+    url('https://s3.modocode.com/assets/Pretendard.otf') format('opentype'),
+    url('https://s3.modocode.com/assets/Pretendard.ttf') format('truetype');
 }
 @font-face {
   font-family: SFProDisplayRegular;
   src: local('SFProDisplayRegular'), local('SFProDisplayRegular');
   font-style: normal;
-  src: url('https://static.modocode.com/assets/SFProDisplay.woff2')
-      format('woff2'),
-    url('https://static.modocode.com/assets/SFProDisplay.woff') format('woff'),
-    url('https://static.modocode.com/assets/SFProDisplay.otf')
-      format('opentype'),
-    url('https://static.modocode.com/assets/SFProDisplay.ttf')
-      format('truetype');
+  src: url('https://s3.modocode.com/assets/SFProDisplay.woff2') format('woff2'),
+    url('https://s3.modocode.com/assets/SFProDisplay.woff') format('woff'),
+    url('https://s3.modocode.com/assets/SFProDisplay.otf') format('opentype'),
+    url('https://s3.modocode.com/assets/SFProDisplay.ttf') format('truetype');
 }
