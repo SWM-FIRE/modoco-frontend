@@ -18,7 +18,7 @@ export default class Character {
     uid: number,
     canvasRef: React.MutableRefObject<HTMLCanvasElement>,
   ) {
-    this.img.src = 'https://static.modocode.com/svg/dummyAvatar.svg';
+    this.img.src = 'https://s3.modocode.com/svg/dummyAvatar.svg';
     this.uid = uid;
     this.positionX = 0;
     this.positionY = 0;
