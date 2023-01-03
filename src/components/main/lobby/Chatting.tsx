@@ -10,16 +10,6 @@ export default function Chat() {
   const { messages } = lobbyMessageStore();
   const { uid } = userStore();
 
-  useEffect(() => {
-    moveScrollToReceiveMessage('auto', true);
-  }, []);
-
-  useEffect(() => {
-    if (messages[messages.length - 1]?.uid === uid)
-      moveScrollToReceiveMessage('smooth', true);
-    else moveScrollToReceiveMessage('smooth', false);
-  }, [messages]);
-
   const moveScrollToReceiveMessage = useCallback(
     (behavior: string, isFirstView: boolean) => {
       if (chatWindow.current) {
@@ -36,6 +26,16 @@ export default function Chat() {
     },
     [],
   );
+
+  useEffect(() => {
+    moveScrollToReceiveMessage('auto', true);
+  }, [moveScrollToReceiveMessage]);
+
+  useEffect(() => {
+    if (messages[messages.length - 1]?.uid === uid)
+      moveScrollToReceiveMessage('smooth', true);
+    else moveScrollToReceiveMessage('smooth', false);
+  }, [messages, moveScrollToReceiveMessage, uid]);
 
   return (
     <Component>
