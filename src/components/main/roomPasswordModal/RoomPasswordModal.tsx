@@ -31,12 +31,13 @@ export default React.memo(function RoomPasswordModal({
       });
   }, [closeModal, navigate, roomId, password]);
 
-  const onChange = (event) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     setPassword(event.target.value);
   };
+
   const onSubmit = useCallback(
-    (event) => {
+    (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       roomSocket.socket?.emit('canJoinRoom', {
         room: roomId.toString(),
@@ -45,6 +46,7 @@ export default React.memo(function RoomPasswordModal({
     },
     [password, roomId],
   );
+
   const isDisabled = () => {
     if (password?.length === 4) {
       return false;
