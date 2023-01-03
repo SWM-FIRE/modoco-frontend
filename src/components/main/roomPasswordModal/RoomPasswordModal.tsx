@@ -14,6 +14,7 @@ export default React.memo(function RoomPasswordModal({
 }) {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
   useEffect(() => {
     if (roomSocket.socket === null) {
       generateSocket();
@@ -47,12 +48,6 @@ export default React.memo(function RoomPasswordModal({
     [password, roomId],
   );
 
-  const isDisabled = () => {
-    if (password?.length === 4) {
-      return false;
-    }
-    return true;
-  };
   return (
     <ModalBackground onClick={closeModal}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
@@ -75,7 +70,7 @@ export default React.memo(function RoomPasswordModal({
             maxLength={4}
             minLength={4}
           />
-          <Button disabled={isDisabled()}>확인</Button>
+          <Button disabled={password.length !== 4}>확인</Button>
         </Form>
       </ModalBox>
     </ModalBackground>
