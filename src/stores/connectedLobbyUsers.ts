@@ -1,20 +1,14 @@
 /* eslint-disable no-unused-vars */
 import create from 'zustand';
-
-interface User {
-  nickname: string;
-  uid: number;
-  avatar: number;
-  sid: string;
-}
+import { ConnectedUserInterface } from 'src/interface/user.interface';
 
 interface connectedUsers {
-  connectedUsers: User[];
-  setUsers: (_users: User[]) => void;
-  appendUser: (_user: User) => void;
+  connectedUsers: ConnectedUserInterface[];
+  setUsers: (_users: ConnectedUserInterface[]) => void;
+  appendUser: (_user: ConnectedUserInterface) => void;
   removeUser: (_user: string) => void;
-  findUserBySid: (_sid: string) => User;
-  findUserByUid: (_uid: number) => User;
+  findUserBySid: (_sid: string) => ConnectedUserInterface;
+  findUserByUid: (_uid: number) => ConnectedUserInterface;
 }
 const connectedLobbyUsers = create<connectedUsers>((set, get) => ({
   connectedUsers: [],

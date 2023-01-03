@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import { ConnectedUserInterface } from 'src/interface/user.interface';
 import SingleParticipant from './SingleParticipant';
 
 export default function Participants({ connectedUsers }) {
   return (
     <Container>
-      {connectedUsers.map((user) => {
+      {connectedUsers.map((user: ConnectedUserInterface) => {
         return <SingleParticipant user={user} key={user?.uid} />;
       })}
     </Container>
