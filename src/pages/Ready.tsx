@@ -20,8 +20,15 @@ export default function ReadyPage() {
   const [isPrompt, setIsPrompt] = useState(false);
   const [isSetting, setIsSetting] = useState(false);
 
+  type PermissionName =
+    | 'geolocation'
+    | 'notifications'
+    | 'persistent-storage'
+    | 'push'
+    | 'screen-wake-lock'
+    | 'xr-spatial-tracking';
+
   useEffect(() => {
-    // eslint-disable-next-line no-undef
     const permissionName = 'microphone' as PermissionName;
     const checkValid = !!navigator.permissions?.query;
 
