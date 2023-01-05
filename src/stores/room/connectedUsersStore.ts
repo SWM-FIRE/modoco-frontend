@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import create from 'zustand';
-import videoUserInterface from 'src/interface/videoUser';
+import { videoUserInterface } from 'src/interface/video.interface';
 
 interface connectedUsers {
   connectedUsers: videoUserInterface[];

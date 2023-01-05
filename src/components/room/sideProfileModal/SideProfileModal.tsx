@@ -11,7 +11,7 @@ import UserInfo from './UserInfo';
 import Buttons from './Buttons';
 import FriendButtons from './FriendButtons';
 import ControlVolume from './ControlVolume';
-import videoUserInterface from '../../../interface/videoUser';
+import { videoUserInterface } from '../../../interface/video.interface';
 
 export default function SideProfileModal({
   toggle,

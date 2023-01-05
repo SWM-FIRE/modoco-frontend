@@ -5,7 +5,7 @@ import MyAvatar from '../../../assets/avatar/MyAvatar';
 import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
 import { ReactComponent as MicOff } from '../../../assets/svg/SmallMicOff.svg';
 import { ReactComponent as Crown } from '../../../assets/svg/Crown.svg';
-import videoUserInterface from '../../../interface/videoUser';
+import { videoUserInterface } from '../../../interface/video.interface';
 
 export default function SingleParticipant({
   isMe,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as VolumeOn } from '../../../assets/svg/VolumeOn.svg';
 import { ReactComponent as VolumeOff } from '../../../assets/svg/VolumeOff.svg';
-import videoUserInterface from '../../../interface/videoUser';
+import { videoUserInterface } from '../../../interface/video.interface';
 import connectedUsersStore from '../../../stores/room/connectedUsersStore';
 
 export default function ControlVolume({ user }: { user: videoUserInterface }) {

@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { PermissionName } from 'src/interface/video.interface';
 import Card from './card/Card';
 
 export default function RoomDetail({ roomNo: roomId, setIsPrompt }) {
   const navigate = useNavigate();
 
-  // eslint-disable-next-line no-undef
   const permissionName = 'microphone' as PermissionName;
   const checkValid = !!navigator.permissions?.query;
 
