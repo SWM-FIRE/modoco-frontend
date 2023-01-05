@@ -11,7 +11,7 @@ import UserInfo from './UserInfo';
 import Buttons from './Buttons';
 import FriendButtons from './FriendButtons';
 import ControlVolume from './ControlVolume';
-import VideoUserInterface from '../../../interface/VideoUser.interface';
+import videoUserInterface from '../../../interface/videoUser';
 
 export default function SideProfileModal({
   toggle,
@@ -21,7 +21,7 @@ export default function SideProfileModal({
 }: {
   toggle: React.Dispatch<React.SetStateAction<boolean>>;
   isMe: boolean;
-  user: VideoUserInterface;
+  user: videoUserInterface;
   moderator: number;
 }) {
   const { roomId } = useParams();

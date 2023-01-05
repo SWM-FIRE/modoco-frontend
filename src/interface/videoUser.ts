@@ -1,4 +1,4 @@
-export default interface VideoUserInterface {
+export default interface videoUserInterface {
   nickname: string;
   uid: number;
   avatar: number;

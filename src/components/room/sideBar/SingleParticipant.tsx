@@ -5,7 +5,7 @@ import MyAvatar from '../../../assets/avatar/MyAvatar';
 import { ReactComponent as MicOn } from '../../../assets/svg/SmallMicOn.svg';
 import { ReactComponent as MicOff } from '../../../assets/svg/SmallMicOff.svg';
 import { ReactComponent as Crown } from '../../../assets/svg/Crown.svg';
-import VideoUserInterface from '../../../interface/VideoUser.interface';
+import videoUserInterface from '../../../interface/videoUser';
 
 export default function SingleParticipant({
   isMe,
@@ -14,7 +14,7 @@ export default function SingleParticipant({
 }: {
   isMe: boolean;
   moderator: number;
-  user: VideoUserInterface;
+  user: videoUserInterface;
 }) {
   const [showSideProfile, setShowSideProfile] = useState<boolean>(false);
 
