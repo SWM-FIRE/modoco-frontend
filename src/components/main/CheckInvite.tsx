@@ -13,8 +13,8 @@ export default function CheckInvite({
   const navigate = useNavigate();
 
   const { isLoading, data, error } = useRoom(inviteCode);
-  if (isLoading) return null;
-  if (error) return null;
+  if (isLoading) return <div>loading</div>;
+  if (error) return <div>error</div>;
 
   const refuseInvite = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
