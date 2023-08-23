@@ -1,19 +1,9 @@
 /* eslint-disable no-unused-vars */
 import create from 'zustand';
-
-interface VideoUserInterface {
-  nickname: string;
-  uid: number;
-  avatar: number;
-  sid: string;
-  enabledVideo: boolean;
-  enabledAudio: boolean;
-  isAlreadyEntered: boolean;
-  volume: number;
-}
+import { videoUserInterface } from 'src/interface/video.interface';
 
 interface connectedUsers {
-  connectedUsers: VideoUserInterface[];
+  connectedUsers: videoUserInterface[];
   userStream: { [key: string]: MediaStream | null };
   setUserStream: ({
     sid,
@@ -22,11 +12,11 @@ interface connectedUsers {
     sid: string;
     stream: MediaStream;
   }) => void;
-  setUsers: (_users: VideoUserInterface[]) => void;
-  appendUser: (_user: VideoUserInterface) => void;
+  setUsers: (_users: videoUserInterface[]) => void;
+  appendUser: (_user: videoUserInterface) => void;
   removeUser: (_user: string) => void;
-  findUserBySid: (_sid: string) => VideoUserInterface | null;
-  findUserByUid: (_uid: number) => VideoUserInterface | null;
+  findUserBySid: (_sid: string) => videoUserInterface | null;
+  findUserByUid: (_uid: number) => videoUserInterface | null;
   setEnabledAudioByUid: (_uid: number, _enabled: boolean) => void;
   setVolumeByUid: (_uid: number, _volume: number) => void;
   setNicknameByUid: (_uid: number, _nickname: string) => void;

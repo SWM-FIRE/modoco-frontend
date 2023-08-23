@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { PermissionName } from 'src/interface/video.interface';
 import { useCreateMediaStream } from '../hooks/useCreateMediaStream';
 import UserMediaStreamStore from '../stores/room/userMediaStreamStore';
 import SettingModal from '../components/atoms/settingModal/SettingModal';
@@ -21,7 +22,6 @@ export default function ReadyPage() {
   const [isSetting, setIsSetting] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line no-undef
     const permissionName = 'microphone' as PermissionName;
     const checkValid = !!navigator.permissions?.query;
 

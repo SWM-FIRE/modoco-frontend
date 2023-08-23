@@ -7,7 +7,7 @@ export default function AudioTracking({ stream }) {
   const [vol, setVol] = useState<number>(0);
 
   useEffect(() => {
-    let myInterval;
+    let myInterval: ReturnType<typeof setInterval>;
     if (stream && stream.getAudioTracks().length > 0) {
       const { analyser, bufferLength, dataArray } = audioContext(stream);
       myInterval = setInterval(() => {

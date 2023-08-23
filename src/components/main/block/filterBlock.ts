@@ -21,7 +21,7 @@ export const filterBlock = (data, searchInput: string) => {
     if (a.current < b.current) {
       return 1;
     }
-    return b.itemId - a.itemId;
+    return Date.parse(b.createdAt) - Date.parse(a.createdAt);
   });
   return newData;
 };

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as VolumeOn } from '../../../assets/svg/VolumeOn.svg';
 import { ReactComponent as VolumeOff } from '../../../assets/svg/VolumeOff.svg';
-import VideoUserInterface from '../../../interface/VideoUser.interface';
+import { videoUserInterface } from '../../../interface/video.interface';
 import connectedUsersStore from '../../../stores/room/connectedUsersStore';
 
-export default function ControlVolume({ user }: { user: VideoUserInterface }) {
+export default function ControlVolume({ user }: { user: videoUserInterface }) {
   const { setVolumeByUid } = connectedUsersStore();
   const [userSpeaker, setUserSpeaker] = useState(user.enabledAudio);
   const [newVolume, setNewVolume] = useState<number>(

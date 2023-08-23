@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { getTheme } from '../styles/getTheme';
 import onChatMessage from '../adapters/receiveMessage';
-import { roomConnection } from '../adapters/roomConnection';
+import { useRoomConnection } from '../adapters/useRoomConnection';
 import useRoom from '../hooks/useRoom';
 import usePeerConnection from '../hooks/usePeerConnection';
 import usePopHistory from '../hooks/usePopHistory';
@@ -49,7 +49,7 @@ export default function Room() {
   }, [setYoutubeModal]);
   const theme = getTheme(data?.theme);
 
-  roomConnection(roomId);
+  useRoomConnection(roomId);
   onChatMessage(roomId);
   usePeerConnection();
   usePopHistory(roomId);

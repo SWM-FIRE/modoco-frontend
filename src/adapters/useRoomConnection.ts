@@ -1,5 +1,4 @@
 import { toast } from 'react-hot-toast';
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import connectedUsersStore from '../stores/room/connectedUsersStore';
@@ -13,7 +12,7 @@ import mediaStateChange from './mediaStateChange';
 import { SOCKET_EVENT } from './event.enum';
 import { getUser } from '../api/main';
 
-export const roomConnection = (roomId: string) => {
+export const useRoomConnection = (roomId: string) => {
   const navigate = useNavigate();
   const {
     connectedUsers,
