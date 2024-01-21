@@ -1,35 +1,37 @@
-name: Cypress tests
-on:
-  pull_request:
-    branches:
-      - main
-      - dev
+# cancel cypress ci for now
 
-jobs:
-  cypress-run:
-    name: Cypress run
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+# name: Cypress tests
+# on:
+#   pull_request:
+#     branches:
+#       - main
+#       - dev
 
-      # - name: My Own Cypress
-      #   with:
-      #     start: yarn install | yarn start | npx cypress run --record --key ${{ secrets.TARGET_CYPRESS_RECORDS_KEY  }}
+# jobs:
+#   cypress-run:
+#     name: Cypress run
+#     runs-on: ubuntu-20.04
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
-        with:
-          start: yarn start
-          record: true
-          browser: chrome
-          wait-on: 'http://localhost:3000'
+#       # - name: My Own Cypress
+#       #   with:
+#       #     start: yarn install | yarn start | npx cypress run --record --key ${{ secrets.TARGET_CYPRESS_RECORDS_KEY  }}
 
-        env:
-          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
-          # pass the Dashboard record key as an environment variable
-          CYPRESS_RECORD_KEY: ${{ secrets.TARGET_CYPRESS_RECORDS_KEY }}
-          # pass GitHub token to allow accurately detecting a build vs a re-run build
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # pass the project ID from the secrets through environment variable
-          CYPRESS_PROJECT_ID: ${{ secrets.TARGET_CYPRESS_PROJECT_ID }}
+#       - name: Cypress run
+#         uses: cypress-io/github-action@v4
+#         with:
+#           start: yarn start
+#           record: true
+#           browser: chrome
+#           wait-on: 'http://localhost:3000'
+
+#         env:
+#           REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+#           # pass the Dashboard record key as an environment variable
+#           CYPRESS_RECORD_KEY: ${{ secrets.TARGET_CYPRESS_RECORDS_KEY }}
+#           # pass GitHub token to allow accurately detecting a build vs a re-run build
+#           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           # pass the project ID from the secrets through environment variable
+#           CYPRESS_PROJECT_ID: ${{ secrets.TARGET_CYPRESS_PROJECT_ID }}

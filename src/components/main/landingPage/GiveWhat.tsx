@@ -42,11 +42,12 @@ const Container = styled.div`
 `;
 
 const MainTitle = styled.div`
-  left: 50%;
+  left: 10%;
   position: absolute;
   ${media.xlarge} {
     position: relative;
-    left: 0;
+    text-align: right;
+    margin-right: -20%;
     margin-bottom: -5rem;
   }
   font-family: IBMPlexSansKRRegular;
