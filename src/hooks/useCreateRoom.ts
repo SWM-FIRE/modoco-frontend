@@ -140,12 +140,12 @@ export default function useCreateRoom({
   const onSubmit = () => {
     if (isDisable()) return;
     const { mutate } = useRoomCreator();
-    console.log(inputs);
     mutate();
   };
 
   return {
     inputs,
+    onAddTag,
     onChange,
     onKeyPress,
     onDeleteTag,

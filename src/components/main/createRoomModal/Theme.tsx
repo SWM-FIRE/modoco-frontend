@@ -39,18 +39,20 @@ export default function Theme({ onClickTheme }) {
         </SelectIcon>
       </SelectButton>
       {isDropDown && (
-        <DropDown data-cy="create-room-modal-theme-dropdown">
-          {themeJson.map((theme) => (
-            <Option
-              value={theme.value}
-              key={theme.value}
-              onClick={onClickOption}
-              type="button"
-            >
-              {theme.name}
-            </Option>
-          ))}
-        </DropDown>
+        <DropDownPosition>
+          <DropDown data-cy="create-room-modal-theme-dropdown">
+            {themeJson.map((theme) => (
+              <Option
+                value={theme.value}
+                key={theme.value}
+                onClick={onClickOption}
+                type="button"
+              >
+                {theme.name}
+              </Option>
+            ))}
+          </DropDown>
+        </DropDownPosition>
       )}
       {error && <Error />}
     </Component>
@@ -99,16 +101,21 @@ const SelectIcon = styled.div`
   width: 5%;
 `;
 
-const DropDown = styled.div`
+const DropDownPosition = styled.div`
   position: absolute;
+  top: 8.4rem;
+  left: 0;
   width: 100%;
+  overflow: hidden;
+  z-index: 1;
+`;
+
+const DropDown = styled.div`
   background-color: #191f28;
   border-radius: 0.6rem;
-  top: 8.9rem;
-  z-index: 2;
   @keyframes dropdown {
     0% {
-      transform: translateY(-5%);
+      transform: translateY(-100%);
     }
     100% {
       transform: translateY(0);
