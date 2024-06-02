@@ -18,6 +18,7 @@ export default function CreateRoomModal({
     onClickTheme,
     onClickTotal,
     isDisable,
+    onAddTag,
   } = useCreateRoom({ closeCreateRoom });
 
   const { isLoading, mutate } = useRoomCreator();
@@ -49,6 +50,7 @@ export default function CreateRoomModal({
           onClickTheme={onClickTheme}
           onClickTotal={onClickTotal}
           isDisable={isDisable}
+          onAddTag={onAddTag}
         />
       </ModalBox>
     </ModalBackground>

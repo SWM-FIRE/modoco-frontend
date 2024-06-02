@@ -7,6 +7,7 @@ export default function TagsComponent({
   onChange,
   onKeyPress,
   onDeleteTag,
+  onAddTag,
 }) {
   return (
     <>
@@ -32,6 +33,9 @@ export default function TagsComponent({
           onKeyPress={onKeyPress}
           placeholder="태그 입력 후 엔터"
         />
+        <AddTagButton type="button" onClick={onAddTag}>
+          태그 등록
+        </AddTagButton>
       </TagComponent>
     </>
   );
@@ -88,4 +92,24 @@ const TagButton = styled.button`
 const TagName = styled.div`
   color: rgba(69, 178, 107, 1);
   font-family: IBMPlexSansKRRegular, Arial;
+`;
+
+const AddTagButton = styled.button`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8rem;
+  height: 4rem;
+  font-size: 1.4rem;
+  align-items: center;
+  border-radius: 0.6rem;
+  background-color: rgb(51, 55, 69);
+  color: #bdbdbd;
+  padding: 0.5rem 1rem;
+
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(72, 77, 96);
+  }
 `;

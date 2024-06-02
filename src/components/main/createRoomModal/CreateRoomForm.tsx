@@ -16,6 +16,7 @@ export default function CreateRoomForm({
   onClickTheme,
   onClickTotal,
   isDisable,
+  onAddTag,
 }) {
   const { title, details, total, newTag, tags, isPublic, password } = inputs;
 
@@ -34,6 +35,7 @@ export default function CreateRoomForm({
           onChange={onChange}
           onKeyPress={onKeyPress}
           onDeleteTag={onDeleteTag}
+          onAddTag={onAddTag}
         />
       </Section>
       <Total total={total} onClickTotal={onClickTotal} />
